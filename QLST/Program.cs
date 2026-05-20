@@ -16,7 +16,7 @@ namespace QLST
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormHoaDon());
+            Application.Run(new FormThuNgan());
         }
     }
 }
