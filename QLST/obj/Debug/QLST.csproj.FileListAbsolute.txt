@@ -1,0 +1,12 @@
+D:\QLST\QLST\bin\Debug\QLST.exe.config
+D:\QLST\QLST\bin\Debug\QLST.exe
+D:\QLST\QLST\bin\Debug\QLST.pdb
+D:\QLST\QLST\obj\Debug\QLST.csproj.AssemblyReference.cache
+D:\QLST\QLST\obj\Debug\QLST.Properties.Resources.resources
+D:\QLST\QLST\obj\Debug\QLST.csproj.GenerateResource.cache
+D:\QLST\QLST\obj\Debug\QLST.csproj.CoreCompileInputs.cache
+D:\QLST\QLST\obj\Debug\QLST.exe
+D:\QLST\QLST\obj\Debug\QLST.pdb
+D:\QLST\QLST\obj\Debug\QLST.ucHome.resources
+D:\QLST\QLST\obj\Debug\QLST.FormMain.resources
+D:\QLST\QLST\obj\Debug\QLST.FormThuNgan.resources
