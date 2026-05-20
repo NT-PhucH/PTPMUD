@@ -10,24 +10,14 @@ using System.Windows.Forms;
 
 namespace QLST
 {
-    public partial class FormThuNgan : Form
+    public partial class FormHoaDon : Form
     {
-        public FormThuNgan()
+        public FormHoaDon()
         {
             InitializeComponent();
         }
 
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void tabPage1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void FormThuNgan_Load(object sender, EventArgs e)
+        private void label2_Click(object sender, EventArgs e)
         {
 
         }
