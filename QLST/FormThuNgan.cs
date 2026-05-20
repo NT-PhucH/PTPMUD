@@ -57,5 +57,17 @@ namespace QLST
         {
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // Khởi tạo đối tượng FormHoaDon
+            HĐ formHoaDon = new HĐ();
+
+            // Đặt vị trí xuất hiện của FormHoaDon là ở giữa Form cha (FormThuNgan)
+            formHoaDon.StartPosition = FormStartPosition.CenterParent;
+
+            // Hiển thị FormHoaDon dưới dạng Modal Dialog (nằm đè lên và khóa Form dưới)
+            formHoaDon.ShowDialog();
+        }
     }
 }
