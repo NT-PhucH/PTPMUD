@@ -47,34 +47,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FormHoaDon.cs">
+    <Compile Include="BLL %28Bat ngoai le%29\Class1.cs" />
+    <Compile Include="DAL %28Connection Query DB%29\Connection.cs" />
+    <Compile Include="DAL %28Connection Query DB%29\Query DB\C1.cs" />
+    <Compile Include="DTO %28Type OTP%29\Class1.cs" />
+    <Compile Include="GUI %28Giao dien%29\FormHoaDon.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormHoaDon.Designer.cs">
+    <Compile Include="GUI %28Giao dien%29\FormHoaDon.Designer.cs">
       <DependentUpon>FormHoaDon.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormThuNgan.cs">
+    <Compile Include="GUI %28Giao dien%29\FormThuNgan.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormThuNgan.Designer.cs">
+    <Compile Include="GUI %28Giao dien%29\FormThuNgan.Designer.cs">
       <DependentUpon>FormThuNgan.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormLogin.cs">
+    <Compile Include="GUI %28Giao dien%29\FormLogin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormLogin.Designer.cs">
+    <Compile Include="GUI %28Giao dien%29\FormLogin.Designer.cs">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormMain.cs">
+    <Compile Include="GUI %28Giao dien%29\FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormMain.Designer.cs">
+    <Compile Include="GUI %28Giao dien%29\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="HĐ.cs">
+    <Compile Include="GUI %28Giao dien%29\HĐ.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="HĐ.Designer.cs">
+    <Compile Include="GUI %28Giao dien%29\HĐ.Designer.cs">
       <DependentUpon>HĐ.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -85,16 +89,16 @@
     <Compile Include="ucHome.Designer.cs">
       <DependentUpon>ucHome.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="FormHoaDon.resx">
+    <EmbeddedResource Include="GUI %28Giao dien%29\FormHoaDon.resx">
       <DependentUpon>FormHoaDon.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormMain.resx">
+    <EmbeddedResource Include="GUI %28Giao dien%29\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormThuNgan.resx">
+    <EmbeddedResource Include="GUI %28Giao dien%29\FormThuNgan.resx">
       <DependentUpon>FormThuNgan.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="HĐ.resx">
+    <EmbeddedResource Include="GUI %28Giao dien%29\HĐ.resx">
       <DependentUpon>HĐ.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -195,5 +199,6 @@
   <ItemGroup>
     <None Include="Resources\user.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

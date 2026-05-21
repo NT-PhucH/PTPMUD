@@ -1,4 +1,4 @@
-// Nằm trong Project DAL, file DbConnection.cs
+﻿// Nằm trong Project DAL, file DbConnection.cs
 using System.Data.SqlClient;
 
 namespace DAL
