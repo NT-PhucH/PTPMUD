@@ -30,10 +30,10 @@ D:\PTPMUD\Git\QLST\obj\Debug\QLST.csproj.AssemblyReference.cache
 D:\PTPMUD\Git\QLST\obj\Debug\QLST.FormHoaDon.resources
 D:\PTPMUD\Git\QLST\obj\Debug\QLST.FormMain.resources
 D:\PTPMUD\Git\QLST\obj\Debug\QLST.FormThuNgan.resources
+D:\PTPMUD\Git\QLST\obj\Debug\QLST.HĐ.resources
 D:\PTPMUD\Git\QLST\obj\Debug\QLST.Properties.Resources.resources
 D:\PTPMUD\Git\QLST\obj\Debug\QLST.ucHome.resources
 D:\PTPMUD\Git\QLST\obj\Debug\QLST.csproj.GenerateResource.cache
 D:\PTPMUD\Git\QLST\obj\Debug\QLST.csproj.CoreCompileInputs.cache
 D:\PTPMUD\Git\QLST\obj\Debug\QLST.exe
 D:\PTPMUD\Git\QLST\obj\Debug\QLST.pdb
-D:\PTPMUD\Git\QLST\obj\Debug\QLST.HĐ.resources
