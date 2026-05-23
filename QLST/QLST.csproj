@@ -51,55 +51,73 @@
     <Compile Include="DAL %28Connection Query DB%29\Connection.cs" />
     <Compile Include="DAL %28Connection Query DB%29\Query DB\C1.cs" />
     <Compile Include="DTO %28Type OTP%29\Class1.cs" />
-    <Compile Include="GUI %28Giao dien%29\FormHoaDon.cs">
+    <Compile Include="GUI %28Giao dien%29\Hoa Don\FormHoaDon.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\FormHoaDon.Designer.cs">
+    <Compile Include="GUI %28Giao dien%29\Hoa Don\FormHoaDon.Designer.cs">
       <DependentUpon>FormHoaDon.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\FormThuNgan.cs">
+    <Compile Include="GUI %28Giao dien%29\Login\FormLogin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\FormThuNgan.Designer.cs">
-      <DependentUpon>FormThuNgan.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI %28Giao dien%29\FormLogin.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI %28Giao dien%29\FormLogin.Designer.cs">
+    <Compile Include="GUI %28Giao dien%29\Login\FormLogin.Designer.cs">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\FormMain.cs">
+    <Compile Include="GUI %28Giao dien%29\Home\FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\FormMain.Designer.cs">
+    <Compile Include="GUI %28Giao dien%29\Home\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\HĐ.cs">
+    <Compile Include="GUI %28Giao dien%29\Hoa Don\HĐ.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\HĐ.Designer.cs">
+    <Compile Include="GUI %28Giao dien%29\Hoa Don\HĐ.Designer.cs">
       <DependentUpon>HĐ.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\Thu Ngan\FormThuNgan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\Thu Ngan\FormThuNgan.Designer.cs">
+      <DependentUpon>FormThuNgan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\Thu Ngan\KhungMonHang.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\Thu Ngan\KhungMonHang.Designer.cs">
+      <DependentUpon>KhungMonHang.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\Thu Ngan\ProductCard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\Thu Ngan\ProductCard.Designer.cs">
+      <DependentUpon>ProductCard.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ucHome.cs">
+    <Compile Include="GUI %28Giao dien%29\Home\ucHome.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ucHome.Designer.cs">
+    <Compile Include="GUI %28Giao dien%29\Home\ucHome.Designer.cs">
       <DependentUpon>ucHome.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="GUI %28Giao dien%29\FormHoaDon.resx">
+    <EmbeddedResource Include="GUI %28Giao dien%29\Hoa Don\FormHoaDon.resx">
       <DependentUpon>FormHoaDon.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI %28Giao dien%29\FormMain.resx">
+    <EmbeddedResource Include="GUI %28Giao dien%29\Home\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI %28Giao dien%29\FormThuNgan.resx">
+    <EmbeddedResource Include="GUI %28Giao dien%29\Hoa Don\HĐ.resx">
+      <DependentUpon>HĐ.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI %28Giao dien%29\Thu Ngan\FormThuNgan.resx">
       <DependentUpon>FormThuNgan.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI %28Giao dien%29\HĐ.resx">
-      <DependentUpon>HĐ.cs</DependentUpon>
+    <EmbeddedResource Include="GUI %28Giao dien%29\Thu Ngan\KhungMonHang.resx">
+      <DependentUpon>KhungMonHang.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI %28Giao dien%29\Thu Ngan\ProductCard.resx">
+      <DependentUpon>ProductCard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -111,7 +129,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="ucHome.resx">
+    <EmbeddedResource Include="GUI %28Giao dien%29\Home\ucHome.resx">
       <DependentUpon>ucHome.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
