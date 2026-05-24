@@ -49,9 +49,11 @@ namespace QLST.GUI__Giao_dien_
                     }
                 }
             }
-
             this.BackColor = Color.Blue;
+        }
 
+        private void tlpSP_DoubleClick(object sender, EventArgs e)
+        {
             OnSelectProduct?.Invoke(this, EventArgs.Empty);
         }
     }

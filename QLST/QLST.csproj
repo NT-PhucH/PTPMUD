@@ -75,6 +75,12 @@
     <Compile Include="GUI %28Giao dien%29\Hoa Don\HĐ.Designer.cs">
       <DependentUpon>HĐ.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI %28Giao dien%29\Thu Ngan\ChuyenTrang.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\Thu Ngan\ChuyenTrang.Designer.cs">
+      <DependentUpon>ChuyenTrang.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI %28Giao dien%29\Thu Ngan\FormThuNgan.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -109,6 +115,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI %28Giao dien%29\Hoa Don\HĐ.resx">
       <DependentUpon>HĐ.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI %28Giao dien%29\Thu Ngan\ChuyenTrang.resx">
+      <DependentUpon>ChuyenTrang.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI %28Giao dien%29\Thu Ngan\FormThuNgan.resx">
       <DependentUpon>FormThuNgan.cs</DependentUpon>

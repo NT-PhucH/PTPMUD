@@ -57,12 +57,13 @@
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.chuyenTrang1 = new QLST.GUI__Giao_dien_.Thu_Ngan.ChuyenTrang();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.đăngXuấtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel1.SuspendLayout();
             this.panelAccount.SuspendLayout();
             this.cmsAccount.SuspendLayout();
@@ -361,6 +362,7 @@
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
             this.tableLayoutPanel6.Controls.Add(this.panel3, 1, 0);
+            this.tableLayoutPanel6.Controls.Add(this.chuyenTrang1, 0, 0);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 443);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
@@ -437,6 +439,23 @@
             this.comboBox1.Size = new System.Drawing.Size(77, 24);
             this.comboBox1.TabIndex = 1;
             // 
+            // flowLayoutPanel2
+            // 
+            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 53);
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(335, 314);
+            this.flowLayoutPanel2.TabIndex = 2;
+            this.flowLayoutPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel2_Paint);
+            // 
+            // chuyenTrang1
+            // 
+            this.chuyenTrang1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chuyenTrang1.Location = new System.Drawing.Point(3, 3);
+            this.chuyenTrang1.Name = "chuyenTrang1";
+            this.chuyenTrang1.Size = new System.Drawing.Size(94, 48);
+            this.chuyenTrang1.TabIndex = 1;
+            // 
             // pictureBox4
             // 
             this.pictureBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -489,15 +508,6 @@
             this.đăngXuấtToolStripMenuItem.Name = "đăngXuấtToolStripMenuItem";
             this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(150, 26);
             this.đăngXuấtToolStripMenuItem.Text = "Đăng xuất";
-            // 
-            // flowLayoutPanel2
-            // 
-            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 53);
-            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(335, 314);
-            this.flowLayoutPanel2.TabIndex = 2;
-            this.flowLayoutPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel2_Paint);
             // 
             // FormThuNgan
             // 
@@ -574,5 +584,6 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
+        private GUI__Giao_dien_.Thu_Ngan.ChuyenTrang chuyenTrang1;
     }
 }

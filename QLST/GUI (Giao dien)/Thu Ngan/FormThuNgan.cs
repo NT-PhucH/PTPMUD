@@ -63,6 +63,15 @@ namespace QLST
         // Hàm thêm món hàng có đầy đủ tham số
         private void ThemMonHangVaoDanhSach(string maSP, string tenSP, decimal donGia)
         {
+            foreach (Control ctrl in flowLayoutPanel1.Controls)
+            {
+                if (ctrl is KhungMonHang card && card.MaSP == maSP)
+                {
+                    card.TangSoLuong();
+                    return;
+                }
+            }
+
             KhungMonHang cardMoi = new KhungMonHang();
             cardMoi.CapNhatThongTin(maSP, tenSP, donGia);
 
@@ -70,6 +79,16 @@ namespace QLST
 
             flowLayoutPanel1.Controls.Add(cardMoi);
             flowLayoutPanel1.Controls.SetChildIndex(cardMoi, 0);
+
+            int sttMoi = flowLayoutPanel1.Controls.Count;
+            foreach (Control ctrl in flowLayoutPanel1.Controls)
+            {
+                if (ctrl is KhungMonHang c)
+                {
+                    c.GanSTT(sttMoi);
+                    sttMoi--;
+                }
+            }
         }
 
         // ---------------------------------------------------------
@@ -168,7 +187,8 @@ namespace QLST
                 decimal giaTien = 0;
                 decimal.TryParse(clickedCard.ProductPrice.Replace(",", ""), out giaTien);
 
-                ThemMonHangVaoDanhSach("MÃ_TẠM", clickedCard.ProductName, giaTien);
+                // Thay "MÃ_TẠM" bằng tên sản phẩm hoặc mã thực tế để phân biệt
+                ThemMonHangVaoDanhSach(clickedCard.ProductName, clickedCard.ProductName, giaTien);
             }
         }
 
@@ -186,5 +206,6 @@ namespace QLST
         {
 
         }
+        
     }
 }

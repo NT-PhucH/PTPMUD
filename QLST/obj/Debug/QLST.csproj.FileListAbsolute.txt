@@ -53,3 +53,4 @@ C:\Users\AP\source\repos\restore\QLST\obj\Debug\QLST.csproj.GenerateResource.cac
 C:\Users\AP\source\repos\restore\QLST\obj\Debug\QLST.csproj.CoreCompileInputs.cache
 C:\Users\AP\source\repos\restore\QLST\obj\Debug\QLST.exe
 C:\Users\AP\source\repos\restore\QLST\obj\Debug\QLST.pdb
+C:\Users\AP\source\repos\restore\QLST\obj\Debug\QLST.GUI__Giao_dien_.Thu_Ngan.ChuyenTrang.resources

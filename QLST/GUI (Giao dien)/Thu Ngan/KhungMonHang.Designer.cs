@@ -31,20 +31,20 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(KhungMonHang));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblSTT = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnXoa = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.STT = new System.Windows.Forms.Label();
-            this.Xoa = new System.Windows.Forms.Button();
+            this.txtSoLuong = new System.Windows.Forms.TextBox();
             this.lblMaSP = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.lblTenSP = new System.Windows.Forms.Label();
+            this.panel5 = new System.Windows.Forms.Panel();
             this.lblDonGia = new System.Windows.Forms.Label();
+            this.panel6 = new System.Windows.Forms.Panel();
             this.lblThanhTien = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.btnThem = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -83,33 +83,78 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Controls.Add(this.STT);
+            this.panel1.Controls.Add(this.lblSTT);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(13, 63);
             this.panel1.TabIndex = 0;
             // 
+            // lblSTT
+            // 
+            this.lblSTT.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblSTT.Location = new System.Drawing.Point(0, 0);
+            this.lblSTT.Name = "lblSTT";
+            this.lblSTT.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
+            this.lblSTT.Size = new System.Drawing.Size(13, 63);
+            this.lblSTT.TabIndex = 0;
+            this.lblSTT.Text = "1";
+            this.lblSTT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.White;
-            this.panel2.Controls.Add(this.Xoa);
+            this.panel2.Controls.Add(this.btnXoa);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(22, 3);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(19, 63);
             this.panel2.TabIndex = 1;
             // 
+            // btnXoa
+            // 
+            this.btnXoa.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.btnXoa.AutoSize = true;
+            this.btnXoa.Image = ((System.Drawing.Image)(resources.GetObject("btnXoa.Image")));
+            this.btnXoa.Location = new System.Drawing.Point(-3, 11);
+            this.btnXoa.Name = "btnXoa";
+            this.btnXoa.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
+            this.btnXoa.Size = new System.Drawing.Size(22, 32);
+            this.btnXoa.TabIndex = 0;
+            this.btnXoa.UseVisualStyleBackColor = true;
+            this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click);
+            // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.White;
-            this.panel3.Controls.Add(this.textBox1);
+            this.panel3.Controls.Add(this.txtSoLuong);
             this.panel3.Controls.Add(this.lblMaSP);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(47, 3);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(90, 63);
             this.panel3.TabIndex = 2;
+            // 
+            // txtSoLuong
+            // 
+            this.txtSoLuong.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.txtSoLuong.Location = new System.Drawing.Point(4, 39);
+            this.txtSoLuong.Multiline = true;
+            this.txtSoLuong.Name = "txtSoLuong";
+            this.txtSoLuong.Size = new System.Drawing.Size(57, 22);
+            this.txtSoLuong.TabIndex = 1;
+            this.txtSoLuong.Text = "1";
+            this.txtSoLuong.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lblMaSP
+            // 
+            this.lblMaSP.AutoSize = true;
+            this.lblMaSP.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMaSP.Location = new System.Drawing.Point(20, 11);
+            this.lblMaSP.Name = "lblMaSP";
+            this.lblMaSP.Size = new System.Drawing.Size(50, 20);
+            this.lblMaSP.TabIndex = 0;
+            this.lblMaSP.Text = "label1";
             // 
             // panel4
             // 
@@ -122,69 +167,6 @@
             this.panel4.TabIndex = 3;
             this.panel4.Paint += new System.Windows.Forms.PaintEventHandler(this.panel4_Paint);
             // 
-            // panel5
-            // 
-            this.panel5.BackColor = System.Drawing.Color.White;
-            this.panel5.Controls.Add(this.lblDonGia);
-            this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel5.Location = new System.Drawing.Point(466, 3);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(71, 63);
-            this.panel5.TabIndex = 4;
-            // 
-            // panel6
-            // 
-            this.panel6.BackColor = System.Drawing.Color.White;
-            this.panel6.Controls.Add(this.lblThanhTien);
-            this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel6.Location = new System.Drawing.Point(543, 3);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(71, 63);
-            this.panel6.TabIndex = 5;
-            // 
-            // panel7
-            // 
-            this.panel7.BackColor = System.Drawing.Color.White;
-            this.panel7.Controls.Add(this.button1);
-            this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(620, 3);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(23, 63);
-            this.panel7.TabIndex = 6;
-            // 
-            // STT
-            // 
-            this.STT.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.STT.Location = new System.Drawing.Point(0, 0);
-            this.STT.Name = "STT";
-            this.STT.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
-            this.STT.Size = new System.Drawing.Size(13, 63);
-            this.STT.TabIndex = 0;
-            this.STT.Text = "1";
-            this.STT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // Xoa
-            // 
-            this.Xoa.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.Xoa.AutoSize = true;
-            this.Xoa.Image = ((System.Drawing.Image)(resources.GetObject("Xoa.Image")));
-            this.Xoa.Location = new System.Drawing.Point(-3, 11);
-            this.Xoa.Name = "Xoa";
-            this.Xoa.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.Xoa.Size = new System.Drawing.Size(22, 32);
-            this.Xoa.TabIndex = 0;
-            this.Xoa.UseVisualStyleBackColor = true;
-            // 
-            // lblMaSP
-            // 
-            this.lblMaSP.AutoSize = true;
-            this.lblMaSP.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMaSP.Location = new System.Drawing.Point(20, 11);
-            this.lblMaSP.Name = "lblMaSP";
-            this.lblMaSP.Size = new System.Drawing.Size(50, 20);
-            this.lblMaSP.TabIndex = 0;
-            this.lblMaSP.Text = "label1";
-            // 
             // lblTenSP
             // 
             this.lblTenSP.AutoSize = true;
@@ -194,6 +176,16 @@
             this.lblTenSP.Size = new System.Drawing.Size(50, 20);
             this.lblTenSP.TabIndex = 0;
             this.lblTenSP.Text = "label1";
+            // 
+            // panel5
+            // 
+            this.panel5.BackColor = System.Drawing.Color.White;
+            this.panel5.Controls.Add(this.lblDonGia);
+            this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel5.Location = new System.Drawing.Point(466, 3);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(71, 63);
+            this.panel5.TabIndex = 4;
             // 
             // lblDonGia
             // 
@@ -208,6 +200,16 @@
             this.lblDonGia.Text = "label1";
             this.lblDonGia.TextAlign = System.Drawing.ContentAlignment.BottomRight;
             // 
+            // panel6
+            // 
+            this.panel6.BackColor = System.Drawing.Color.White;
+            this.panel6.Controls.Add(this.lblThanhTien);
+            this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel6.Location = new System.Drawing.Point(543, 3);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(71, 63);
+            this.panel6.TabIndex = 5;
+            // 
             // lblThanhTien
             // 
             this.lblThanhTien.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -221,25 +223,26 @@
             this.lblThanhTien.Text = "label1";
             this.lblThanhTien.TextAlign = System.Drawing.ContentAlignment.BottomRight;
             // 
-            // textBox1
+            // panel7
             // 
-            this.textBox1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.textBox1.Location = new System.Drawing.Point(4, 39);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(57, 22);
-            this.textBox1.TabIndex = 1;
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.panel7.BackColor = System.Drawing.Color.White;
+            this.panel7.Controls.Add(this.btnThem);
+            this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel7.Location = new System.Drawing.Point(620, 3);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(23, 63);
+            this.panel7.TabIndex = 6;
             // 
-            // button1
+            // btnThem
             // 
-            this.button1.AutoSize = true;
-            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-            this.button1.Location = new System.Drawing.Point(0, 19);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(22, 23);
-            this.button1.TabIndex = 0;
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnThem.AutoSize = true;
+            this.btnThem.Image = ((System.Drawing.Image)(resources.GetObject("btnThem.Image")));
+            this.btnThem.Location = new System.Drawing.Point(0, 19);
+            this.btnThem.Name = "btnThem";
+            this.btnThem.Size = new System.Drawing.Size(22, 23);
+            this.btnThem.TabIndex = 0;
+            this.btnThem.UseVisualStyleBackColor = true;
+            this.btnThem.Click += new System.EventHandler(this.btThem_Click);
             // 
             // KhungMonHang
             // 
@@ -276,13 +279,13 @@
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.Label STT;
-        private System.Windows.Forms.Button Xoa;
+        private System.Windows.Forms.Label lblSTT;
+        private System.Windows.Forms.Button btnXoa;
         private System.Windows.Forms.Label lblMaSP;
         private System.Windows.Forms.Label lblTenSP;
         private System.Windows.Forms.Label lblDonGia;
         private System.Windows.Forms.Label lblThanhTien;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox txtSoLuong;
+        private System.Windows.Forms.Button btnThem;
     }
 }
