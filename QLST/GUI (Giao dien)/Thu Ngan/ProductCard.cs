@@ -34,7 +34,9 @@ namespace QLST.GUI__Giao_dien_
         public Image ProductImage
         {
             get { return pictureBox1.Image; }
-            set { pictureBox1.Image = value; }
+            set { pictureBox1.Image = value;
+                pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            }
         }
 
         private void tlpSP_Click(object sender, EventArgs e)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QLST.GUI__Giao_dien_.Home;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,84 +8,68 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 namespace QLST
 {
     public partial class FormMain : Form
     {
+        // Tạo các biến vùng chứa để lưu trữ giao diện (Cache)
+        private ucHome _ucHome;
+        private User _ucUser;
+
         public FormMain()
         {
             InitializeComponent();
         }
 
-        // 2. Các hàm bổ trợ (Helper Methods) dùng chung cho các sự kiện
+        private void FormMain_Load(object sender, EventArgs e)
+        {
+            // Khởi tạo sẵn các UserControl ngay khi load Form
+            _ucHome = new ucHome { Dock = DockStyle.Fill };
+            _ucUser = new User { Dock = DockStyle.Fill };
+
+            // Tự động kích hoạt tab Home đầu tiên
+            MenuButton_Click(btnHome, e);
+        }
+
+        // 2. Các hàm bổ trợ (Helper Methods)
         private void ResetButtonColor()
         {
-            // Duyệt qua tất cả các Control nằm bên trong panelMenu
             foreach (Control btn in panelMenu.Controls)
             {
-                // Kiểm tra nếu Control đó đúng là một Nút bấm (Button)
                 if (btn is Button)
                 {
-                    // Trả về màu nền tối mặc định của Menu 
                     btn.BackColor = Color.FromArgb(51, 51, 76);
-
-                    // Trả về màu chữ mặc định 
                     btn.ForeColor = Color.Gainsboro;
                 }
             }
         }
 
-        // 3. Nơi viết các sự kiện (Events) tương tác của người dùng
-
-
-        // 2. HÀM TỐI ƯU: Gộp tất cả các sự kiện Click của Menu làm một
+        // 3. Sự kiện Click chung cho Menu
         private void MenuButton_Click(object sender, EventArgs e)
         {
-            // Ép kiểu 'sender' về thành một Button để máy hiểu nút nào vừa được bấm
-            Button clickedButton = (Button)sender;
+            // Ép kiểu an toàn bằng từ khóa 'as'
+            Button clickedButton = sender as Button;
+            if (clickedButton == null) return; // Nếu không phải Button thì thoát để tránh lỗi
 
-            // Bước 1: Đưa tất cả các nút về màu tối mặc định
+            // Bước 1: Đổi màu nút
             ResetButtonColor();
+            clickedButton.BackColor = Color.FromArgb(33, 157, 212);
+            clickedButton.ForeColor = Color.Gainsboro;
 
-            // Bước 2: Làm sáng ĐÚNG cái nút vừa được click dựa vào biến 'clickedButton'
-            clickedButton.BackColor = Color.FromArgb(33, 157, 212); // Màu nền xanh sáng
-            clickedButton.ForeColor = Color.Gainsboro;              // Màu chữ
-
-            panelContent.Controls.Clear(); // Xóa màn hình cũ đang hiển thị trong vùng trống
+            // Bước 2: Hiển thị UserControl tương ứng
+            panelContent.Controls.Clear(); // Xóa control hiện tại trên panel
 
             if (clickedButton == btnHome)
             {
-                // Khởi tạo và nạp giao diện ucHome vào vùng trống
-                ucHome homeGiaoDien = new ucHome();
-                homeGiaoDien.Dock = DockStyle.Fill;
-                panelContent.Controls.Add(homeGiaoDien);
+                panelContent.Controls.Add(_ucHome);
             }
-            else if (clickedButton == btnShopping)
+            else if (clickedButton == btnUser)
             {
-                // Sau này khi bạn tạo ucShopping thì mở đoạn này ra dùng:
-                // ucShopping shoppingGiaoDien = new ucShopping();
-                // shoppingGiaoDien.Dock = DockStyle.Fill;
-                // panelContent.Controls.Add(shoppingGiaoDien);
+                panelContent.Controls.Add(_ucUser);
             }
         }
-        private void FormMain_Load(object sender, EventArgs e)
-        {
-            // Chỉ cần duy nhất 1 dòng này!
-            // Hàm này sẽ tự kích hoạt làm sáng btnHome và tự nạp luôn ucHome một lần duy nhất.
-            MenuButton_Click(btnHome, e);
-        }
 
-        private void flowLayoutPanel2_Paint(object sender, PaintEventArgs e)
-        {
-            // Để trống hoặc xóa nếu không dùng
-        }
-
-        private void panelContent_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
+        // Xóa bỏ các hàm Paint trống nếu không dùng để code gọn gàng hơn
     }
-
-
-
 }

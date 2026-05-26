@@ -30,9 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChuyenTrang));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.pageNumber = new System.Windows.Forms.Label();
+            this.btnTrai = new System.Windows.Forms.Button();
+            this.btnPhai = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,9 +45,9 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanel1.Controls.Add(this.label1, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.button1, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.button2, 3, 0);
+            this.tableLayoutPanel1.Controls.Add(this.pageNumber, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnTrai, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnPhai, 3, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -56,40 +56,41 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(653, 121);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // label1
+            // pageNumber
             // 
-            this.label1.AutoSize = true;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(230, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(189, 121);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "label1";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.pageNumber.AutoSize = true;
+            this.pageNumber.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pageNumber.Location = new System.Drawing.Point(230, 0);
+            this.pageNumber.Name = "pageNumber";
+            this.pageNumber.Size = new System.Drawing.Size(189, 121);
+            this.pageNumber.TabIndex = 0;
+            this.pageNumber.Text = "1 / 1";
+            this.pageNumber.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // button1
+            // btnTrai
             // 
-            this.button1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-            this.button1.Location = new System.Drawing.Point(129, 44);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(66, 32);
-            this.button1.TabIndex = 1;
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnTrai.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnTrai.FlatAppearance.BorderSize = 0;
+            this.btnTrai.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTrai.Image = ((System.Drawing.Image)(resources.GetObject("btnTrai.Image")));
+            this.btnTrai.Location = new System.Drawing.Point(129, 44);
+            this.btnTrai.Name = "btnTrai";
+            this.btnTrai.Size = new System.Drawing.Size(66, 32);
+            this.btnTrai.TabIndex = 1;
+            this.btnTrai.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnPhai
             // 
-            this.button2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button2.FlatAppearance.BorderSize = 0;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
-            this.button2.Location = new System.Drawing.Point(444, 44);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(85, 32);
-            this.button2.TabIndex = 2;
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnPhai.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnPhai.FlatAppearance.BorderSize = 0;
+            this.btnPhai.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPhai.Image = ((System.Drawing.Image)(resources.GetObject("btnPhai.Image")));
+            this.btnPhai.Location = new System.Drawing.Point(444, 44);
+            this.btnPhai.Name = "btnPhai";
+            this.btnPhai.Size = new System.Drawing.Size(85, 32);
+            this.btnPhai.TabIndex = 2;
+            this.btnPhai.UseVisualStyleBackColor = true;
+            this.btnPhai.Click += new System.EventHandler(this.btnMuiTenPhai_Click);
             // 
             // ChuyenTrang
             // 
@@ -107,8 +108,8 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label pageNumber;
+        private System.Windows.Forms.Button btnTrai;
+        private System.Windows.Forms.Button btnPhai;
     }
 }
