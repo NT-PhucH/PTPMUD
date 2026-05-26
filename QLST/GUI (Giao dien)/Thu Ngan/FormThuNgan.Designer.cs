@@ -58,12 +58,12 @@
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnThanhToan = new System.Windows.Forms.Button();
-            this.chuyenTrang1 = new QLST.GUI__Giao_dien_.Thu_Ngan.ChuyenTrang();
             this.panel4 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.chuyenTrang1 = new QLST.GUI__Giao_dien_.Thu_Ngan.ChuyenTrang();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.panelAccount.SuspendLayout();
@@ -446,14 +446,6 @@
             this.btnThanhToan.UseVisualStyleBackColor = true;
             this.btnThanhToan.Click += new System.EventHandler(this.btnThanhToan_Click);
             // 
-            // chuyenTrang1
-            // 
-            this.chuyenTrang1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chuyenTrang1.Location = new System.Drawing.Point(3, 3);
-            this.chuyenTrang1.Name = "chuyenTrang1";
-            this.chuyenTrang1.Size = new System.Drawing.Size(94, 48);
-            this.chuyenTrang1.TabIndex = 1;
-            // 
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.White;
@@ -509,6 +501,14 @@
             this.flowLayoutPanel2.Size = new System.Drawing.Size(335, 314);
             this.flowLayoutPanel2.TabIndex = 2;
             this.flowLayoutPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel2_Paint);
+            // 
+            // chuyenTrang1
+            // 
+            this.chuyenTrang1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chuyenTrang1.Location = new System.Drawing.Point(3, 3);
+            this.chuyenTrang1.Name = "chuyenTrang1";
+            this.chuyenTrang1.Size = new System.Drawing.Size(94, 48);
+            this.chuyenTrang1.TabIndex = 1;
             // 
             // FormThuNgan
             // 

@@ -21,7 +21,7 @@ namespace QLST.DAL__Connection_Query_DB_.Query_DB
 
         private DataProvider() { }
 
-        private string connectionString = "Data Source=.\\SQLEXPRESS;Initial Catalog=QuanLySieuThi;User ID=sa;Password=Ditme@pple7968";
+        private string connectionString = "Data Source=.\\SQLEXPRESS;Initial Catalog=QuanLySieuThi;Integrated Security=True;";
         public DataTable ExecuteQuery(string query, SqlParameter[] parameters = null)
         {
             DataTable data = new DataTable();
