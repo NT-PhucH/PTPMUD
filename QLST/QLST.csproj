@@ -129,6 +129,9 @@
     <EmbeddedResource Include="GUI %28Giao dien%29\Home\User.resx">
       <DependentUpon>User.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI %28Giao dien%29\Login\FormLogin.resx">
+      <DependentUpon>FormLogin.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI %28Giao dien%29\Thu Ngan\ChuyenTrang.resx">
       <DependentUpon>ChuyenTrang.cs</DependentUpon>
     </EmbeddedResource>
