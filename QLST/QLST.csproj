@@ -85,6 +85,9 @@
     <Compile Include="GUI %28Giao dien%29\Hoa Don\HĐ.Designer.cs">
       <DependentUpon>HĐ.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI %28Giao dien%29\Login\RoundedButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="GUI %28Giao dien%29\Thu Ngan\ChuyenTrang.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -244,6 +247,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\anh_sanpham\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\hide.png" />
+    <Content Include="Resources\show.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
