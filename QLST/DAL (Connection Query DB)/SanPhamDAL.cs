@@ -18,7 +18,17 @@ namespace QLST.DAL__Connection_Query_DB_
 
             DataTable data =
                 DataProvider.Instance.ExecuteQuery(
-                "SELECT MaVach, TenSP, GiaBanHienTai, MaLoai, TonKhoTong, HinhAnh  FROM SanPham");
+                @"
+        SELECT 
+            sp.MaVach, 
+            sp.TenSP, 
+            sp.GiaBanHienTai, 
+            sp.MaLoai,
+            sp.TonKhoTong,
+            sp.HinhAnh,
+            lsp.TenLoai
+        FROM SanPham sp
+        INNER JOIN LoaiSanPham lsp ON sp.MaLoai = lsp.MaLoai");
 
             foreach (DataRow row in data.Rows)
             {
@@ -28,6 +38,7 @@ namespace QLST.DAL__Connection_Query_DB_
                     TenSanPham = row["TenSP"].ToString(),
                     DonGia = Convert.ToInt32(row["GiaBanHienTai"]),
                     MaLoai = row["MaLoai"].ToString(),
+                    TenLoai = row["TenLoai"].ToString(),
                     soLuongTonKho = Convert.ToInt32(row["TonKhoTong"]),
                     HinhAnh = row["HinhAnh"].ToString()
                 };

@@ -22,7 +22,8 @@ namespace QLST
         private int currentPage = 1;
         private int pageSize = 18; // Hiển thị 18 sản phẩm 1 trang (3 cột x 6 hàng)
         private int totalPages = 1;
-        private List<SanPhamDTO> dsspToanBo = new List<SanPhamDTO>(); // Chứa toàn bộ dữ liệu kéo từ DB
+        private List<SanPhamDTO> dsspToanBo = new List<SanPhamDTO>();
+        private List<SanPhamDTO> dsspHienThi = new List<SanPhamDTO>(); // Danh sách đang hiển thị trên màn hình// Chứa toàn bộ dữ liệu kéo từ DB
 
         public FormThuNgan()
         {
@@ -115,6 +116,31 @@ namespace QLST
         {
             SanPhamBLL spBLL = new SanPhamBLL();
             dsspToanBo = spBLL.GetSanPham(); // Lấy tất cả sản phẩm
+            dsspHienThi = new List<SanPhamDTO>(dsspToanBo);
+
+            // ========================================================
+            // LẤY DANH MỤC SẢN PHẨM TỪ LIST GỐC VÀ ĐỔ VÀO COMBOBOX
+            // ========================================================
+
+            // 1. Lọc ra các Loại Sản Phẩm duy nhất (tránh trùng lặp)
+            var danhSachDanhMuc = dsspToanBo
+            .Where(sp => !string.IsNullOrEmpty(sp.MaLoai))
+            .GroupBy(sp => sp.MaLoai) // Gom nhóm theo Mã Loại
+            .Select(group => group.First()) // Lấy sản phẩm đầu tiên làm đại diện cho nhóm đó
+            .Select(sp => new
+            {
+                MaLoai = sp.MaLoai,
+                TenLoai = sp.TenLoai
+            })
+            .ToList();
+
+            // 2. Chèn thêm một mục "Tất cả" lên đầu danh sách (Index 0)
+            danhSachDanhMuc.Insert(0, new { MaLoai = "", TenLoai = "--- Tất cả ---" });
+
+            // 3. Đổ dữ liệu vào ComboBox
+            cboDanhMuc.DataSource = danhSachDanhMuc;
+            cboDanhMuc.DisplayMember = "TenLoai"; // Cái người dùng nhìn thấy
+            cboDanhMuc.ValueMember = "MaLoai";    // Giá trị ngầm để code xử lý logic
 
             // Tính toán tổng số trang
             totalPages = (int)Math.Ceiling((double)dsspToanBo.Count / pageSize);
@@ -139,7 +165,7 @@ namespace QLST
             int chieuCaoThe = (flowLayoutPanel2.ClientSize.Height - (khoangCach * (soHang + 1))) / soHang;
 
             // THUẬT TOÁN PHÂN TRANG: Cắt đúng dữ liệu của trang hiện tại
-            var danhSachTrangHienTai = dsspToanBo.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+            var danhSachTrangHienTai = dsspHienThi.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
 
             foreach (SanPhamDTO sp in danhSachTrangHienTai)
             {
@@ -240,6 +266,46 @@ namespace QLST
             }
         }
 
+        private void ThucHienLocDuLieu()
+        {
+            // 1. Lấy từ khóa người dùng đang gõ (chuyển hết về chữ thường để dễ so sánh)
+            string tuKhoa = txtLocSP.Text.Trim().ToLower();
+
+            // Khởi tạo truy vấn từ danh sách gốc
+            var query = dsspToanBo.AsEnumerable();
+
+            // 2. Lọc theo ComboBox (Nếu có chọn danh mục)
+            // Lưu ý: Tùy vào cách bạn gán dữ liệu cho ComboBox, ví dụ Index 0 là "Tất cả"
+            if (cboDanhMuc.SelectedIndex > 0)
+            {
+                // Rút xuất mã loại đang bị ẩn dưới ComboBox ra
+                string maLoaiDuocChon = cboDanhMuc.SelectedValue.ToString();
+
+                // Lọc những sản phẩm có Mã Loại khớp với mã vừa chọn
+                query = query.Where(sp => sp.MaLoai == maLoaiDuocChon);
+            }
+
+            // 3. Lọc theo TextBox (Live Search theo Mã SP hoặc Tên SP)
+            if (!string.IsNullOrEmpty(tuKhoa))
+            {
+                query = query.Where(sp =>
+                    (sp.MaSanPham != null && sp.MaSanPham.ToLower().Contains(tuKhoa)) ||
+                    (sp.TenSanPham != null && sp.TenSanPham.ToLower().Contains(tuKhoa))
+                );
+            }
+
+            // 4. Đổ kết quả đã lọc vào danh sách hiển thị
+            dsspHienThi = query.ToList();
+
+            // 5. Tính toán lại số trang sau khi lọc
+            totalPages = (int)Math.Ceiling((double)dsspHienThi.Count / pageSize);
+            if (totalPages == 0) totalPages = 1;
+
+            // Đưa về trang 1 và vẽ lại giao diện
+            currentPage = 1;
+            HienThiDanhSachSanPham();
+        }
+
         // Các hàm rỗng không dùng đến (Có thể giữ lại để không bị lỗi file Designer)
         private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e) { }
         private void label5_Click(object sender, EventArgs e) { }
@@ -251,5 +317,19 @@ namespace QLST
         private void flowLayoutPanel2_Paint(object sender, PaintEventArgs e) { }
         private void pictureBox3_Click(object sender, EventArgs e) { }
 
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void cboDanhMuc_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ThucHienLocDuLieu();
+        }
+
+        private void txtLocSP_TextChanged(object sender, EventArgs e)
+        {
+            ThucHienLocDuLieu();
+        }
     }
 }

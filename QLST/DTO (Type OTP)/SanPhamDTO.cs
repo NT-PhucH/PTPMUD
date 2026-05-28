@@ -14,9 +14,9 @@ namespace QLST.DTO__Type_OTP_
             public int DonGia { get; set; }
 
             public string MaLoai { get; set; }
+            public string TenLoai { get; set; }
 
-
-            public int soLuongTonKho { get; set; }
+        public int soLuongTonKho { get; set; }
 
             public string HinhAnh { get; set; }
     }
