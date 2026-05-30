@@ -36,10 +36,13 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnLogIn = new QLST.RoundedButton();
             this.panel4 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.picShowHide = new System.Windows.Forms.PictureBox();
             this.lblMatKhau = new System.Windows.Forms.Label();
+            this.txtMatKhau = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lblEmail = new System.Windows.Forms.Label();
@@ -48,19 +51,16 @@
             this.lblWelcomeBack = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.timerEmail = new System.Windows.Forms.Timer(this.components);
-            this.txtMatKhau = new System.Windows.Forms.TextBox();
-            this.picShowHide = new System.Windows.Forms.PictureBox();
-            this.btnLogIn = new QLST.RoundedButton();
             this.panelTitleBar.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picShowHide)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picShowHide)).BeginInit();
             this.SuspendLayout();
             // 
             // panelTitleBar
@@ -93,6 +93,7 @@
             // btnClose
             // 
             this.btnClose.BackColor = System.Drawing.Color.Transparent;
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnClose.FlatAppearance.BorderSize = 0;
             this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Red;
@@ -149,6 +150,23 @@
             this.tableLayoutPanel4.Size = new System.Drawing.Size(326, 68);
             this.tableLayoutPanel4.TabIndex = 6;
             // 
+            // btnLogIn
+            // 
+            this.btnLogIn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.btnLogIn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnLogIn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnLogIn.FlatAppearance.BorderSize = 0;
+            this.btnLogIn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLogIn.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.btnLogIn.ForeColor = System.Drawing.Color.White;
+            this.btnLogIn.Location = new System.Drawing.Point(19, 3);
+            this.btnLogIn.Name = "btnLogIn";
+            this.btnLogIn.Size = new System.Drawing.Size(287, 62);
+            this.btnLogIn.TabIndex = 0;
+            this.btnLogIn.Text = "ĐĂNG NHẬP";
+            this.btnLogIn.UseVisualStyleBackColor = false;
+            this.btnLogIn.Click += new System.EventHandler(this.btnLogIn_Click);
+            // 
             // panel4
             // 
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
@@ -183,6 +201,18 @@
             this.panel3.Size = new System.Drawing.Size(287, 62);
             this.panel3.TabIndex = 0;
             // 
+            // picShowHide
+            // 
+            this.picShowHide.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picShowHide.Image = ((System.Drawing.Image)(resources.GetObject("picShowHide.Image")));
+            this.picShowHide.Location = new System.Drawing.Point(247, 33);
+            this.picShowHide.Name = "picShowHide";
+            this.picShowHide.Size = new System.Drawing.Size(37, 26);
+            this.picShowHide.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picShowHide.TabIndex = 2;
+            this.picShowHide.TabStop = false;
+            this.picShowHide.Click += new System.EventHandler(this.picShowHide_Click);
+            // 
             // lblMatKhau
             // 
             this.lblMatKhau.AutoSize = true;
@@ -193,6 +223,16 @@
             this.lblMatKhau.TabIndex = 1;
             this.lblMatKhau.Text = "Mật khẩu";
             this.lblMatKhau.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // txtMatKhau
+            // 
+            this.txtMatKhau.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtMatKhau.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.txtMatKhau.Location = new System.Drawing.Point(0, 40);
+            this.txtMatKhau.Name = "txtMatKhau";
+            this.txtMatKhau.Size = new System.Drawing.Size(287, 22);
+            this.txtMatKhau.TabIndex = 0;
+            this.txtMatKhau.UseSystemPasswordChar = true;
             // 
             // tableLayoutPanel2
             // 
@@ -276,49 +316,13 @@
             // 
             this.timerEmail.Interval = 10;
             // 
-            // txtMatKhau
-            // 
-            this.txtMatKhau.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtMatKhau.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.txtMatKhau.Location = new System.Drawing.Point(0, 40);
-            this.txtMatKhau.Name = "txtMatKhau";
-            this.txtMatKhau.Size = new System.Drawing.Size(287, 22);
-            this.txtMatKhau.TabIndex = 0;
-            this.txtMatKhau.UseSystemPasswordChar = true;
-            // 
-            // picShowHide
-            // 
-            this.picShowHide.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picShowHide.Image = ((System.Drawing.Image)(resources.GetObject("picShowHide.Image")));
-            this.picShowHide.Location = new System.Drawing.Point(247, 33);
-            this.picShowHide.Name = "picShowHide";
-            this.picShowHide.Size = new System.Drawing.Size(37, 26);
-            this.picShowHide.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picShowHide.TabIndex = 2;
-            this.picShowHide.TabStop = false;
-            this.picShowHide.Click += new System.EventHandler(this.picShowHide_Click);
-            // 
-            // btnLogIn
-            // 
-            this.btnLogIn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.btnLogIn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnLogIn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnLogIn.FlatAppearance.BorderSize = 0;
-            this.btnLogIn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLogIn.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.btnLogIn.ForeColor = System.Drawing.Color.White;
-            this.btnLogIn.Location = new System.Drawing.Point(19, 3);
-            this.btnLogIn.Name = "btnLogIn";
-            this.btnLogIn.Size = new System.Drawing.Size(287, 62);
-            this.btnLogIn.TabIndex = 0;
-            this.btnLogIn.Text = "ĐĂNG NHẬP";
-            this.btnLogIn.UseVisualStyleBackColor = false;
-            // 
             // FormLogin
             // 
+            this.AcceptButton = this.btnLogIn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(947, 561);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.panelTitleBar);
@@ -328,6 +332,7 @@
             this.Name = "FormLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormLogin";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormLogin_FormClosing);
             this.panelTitleBar.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
@@ -335,11 +340,11 @@
             this.tableLayoutPanel3.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picShowHide)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picShowHide)).EndInit();
             this.ResumeLayout(false);
 
         }

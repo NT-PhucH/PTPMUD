@@ -1,4 +1,5 @@
-﻿using QLST.GUI__Giao_dien_.Home;
+﻿using QLST.DTO__Type_OTP_;
+using QLST.GUI__Giao_dien_.Home;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,6 +21,15 @@ namespace QLST
         public FormMain()
         {
             InitializeComponent();
+        }
+
+        public FormMain(NhanVienDTO loggedInUser)
+        {
+            InitializeComponent();
+            if(loggedInUser.Role == 0)
+            {
+                btnShopping.Visible = true;
+            }
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -67,6 +77,14 @@ namespace QLST
             else if (clickedButton == btnUser)
             {
                 panelContent.Controls.Add(_ucUser);
+            }
+        }
+
+        private void btnLogOut_Click(object sender, EventArgs e)
+        {
+            if(MessageBox.Show("Bạn có chắc muốn đăng xuất?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                this.Close(); // Đóng FormMain để trở về FormLogin
             }
         }
 

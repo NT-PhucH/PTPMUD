@@ -49,11 +49,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL %28Bat ngoai le%29\Class1.cs" />
+    <Compile Include="BLL %28Bat ngoai le%29\NhanVienBLL.cs" />
     <Compile Include="BLL %28Bat ngoai le%29\SanPhamBLL.cs" />
+    <Compile Include="DAL %28Connection Query DB%29\NhanVienDAL.cs" />
     <Compile Include="DAL %28Connection Query DB%29\Query DB\C1.cs" />
     <Compile Include="DAL %28Connection Query DB%29\Query DB\DataProvider.cs" />
     <Compile Include="DAL %28Connection Query DB%29\SanPhamDAL.cs" />
     <Compile Include="DTO %28Type OTP%29\Class1.cs" />
+    <Compile Include="DTO %28Type OTP%29\NhanVienDTO.cs" />
     <Compile Include="DTO %28Type OTP%29\SanPhamDTO.cs" />
     <Compile Include="GUI %28Giao dien%29\Hoa Don\FormHoaDon.cs">
       <SubType>Form</SubType>

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using QLST.BLL__Bat_ngoai_le_;
+using QLST.DTO__Type_OTP_;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -240,6 +242,41 @@ namespace QLST
             {
                 // Khi mật khẩu hiển thị chữ -> Hiển thị icon mắt mở
                 picShowHide.Image = Properties.Resources.show;
+            }
+        }
+        private NhanVienBLL nhanVienBLL = new NhanVienBLL();
+
+        private void btnLogIn_Click(object sender, EventArgs e)
+        {
+            string username = txtEmail.Text.Trim();
+            string password = txtMatKhau.Text.Trim();
+            string message;
+
+            NhanVienDTO loggedInUser = nhanVienBLL.Login(username, password, out message);
+
+            if (loggedInUser != null)
+            {
+                // Thành công, có thể hiển thị lời chào dựa trên tên
+                MessageBox.Show($"Xin chào {loggedInUser.TenNV}!", "Đăng nhập thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Mở Form Main và truyền DTO sang để phân quyền
+                FormMain mainForm = new FormMain(loggedInUser); 
+                this.Hide(); // Ẩn Form Login khi mở Form Main
+                mainForm.ShowDialog();
+                this.Visible = true;
+            }
+            else
+            {
+                // Thất bại, in ra câu thông báo lỗi từ BLL
+                MessageBox.Show(message, "Lỗi đăng nhập", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void FormLogin_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(MessageBox.Show("Bạn có muốn thoát khỏi ứng dụng?", "Xác nhận thoát", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            {
+                e.Cancel = true;
             }
         }
     }
