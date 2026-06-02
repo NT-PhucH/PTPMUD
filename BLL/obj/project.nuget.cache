@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "c7+fa+iKqAc=",
+  "success": true,
+  "projectFilePath": "D:\\PTPMUD\\BLL\\BLL.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\PC_VICTORTA\\.nuget\\packages\\system.configuration.configurationmanager\\10.0.8\\system.configuration.configurationmanager.10.0.8.nupkg.sha512",
+    "C:\\Users\\PC_VICTORTA\\.nuget\\packages\\system.diagnostics.eventlog\\10.0.8\\system.diagnostics.eventlog.10.0.8.nupkg.sha512",
+    "C:\\Users\\PC_VICTORTA\\.nuget\\packages\\system.security.cryptography.protecteddata\\10.0.8\\system.security.cryptography.protecteddata.10.0.8.nupkg.sha512"
+  ],
+  "logs": []
+}

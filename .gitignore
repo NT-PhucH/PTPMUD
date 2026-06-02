@@ -1,1 +1,7 @@
+QLST/bin/
+QLST/obj/
 .vs/
+[Dd]ebug/
+[Rr]elease/
+*.user
+*.suo

@@ -8,10 +8,11 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>QLST</RootNamespace>
     <AssemblyName>QLST</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -22,6 +23,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <PreferNativeArm64>true</PreferNativeArm64>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,6 +36,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
+      <HintPath>packages\BouncyCastle.Cryptography.2.6.2\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.5, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>packages\iTextSharp.5.5.13.5\lib\net461\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -49,13 +58,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL %28Bat ngoai le%29\Class1.cs" />
+    <Compile Include="BLL %28Bat ngoai le%29\HoaDonBLL.cs" />
     <Compile Include="BLL %28Bat ngoai le%29\NhanVienBLL.cs" />
     <Compile Include="BLL %28Bat ngoai le%29\SanPhamBLL.cs" />
+    <Compile Include="DAL %28Connection Query DB%29\DonTamDAL.cs" />
+    <Compile Include="DAL %28Connection Query DB%29\HoaDonDAL.cs" />
     <Compile Include="DAL %28Connection Query DB%29\NhanVienDAL.cs" />
     <Compile Include="DAL %28Connection Query DB%29\Query DB\C1.cs" />
     <Compile Include="DAL %28Connection Query DB%29\Query DB\DataProvider.cs" />
     <Compile Include="DAL %28Connection Query DB%29\SanPhamDAL.cs" />
-    <Compile Include="DTO %28Type OTP%29\Class1.cs" />
+    <Compile Include="DTO %28Type OTP%29\ChiTietHDDTO.cs" />
+    <Compile Include="DTO %28Type OTP%29\SessionManager.cs" />
+    <Compile Include="DTO %28Type OTP%29\HoaDonDTO.cs" />
     <Compile Include="DTO %28Type OTP%29\NhanVienDTO.cs" />
     <Compile Include="DTO %28Type OTP%29\SanPhamDTO.cs" />
     <Compile Include="GUI %28Giao dien%29\Hoa Don\FormHoaDon.cs">
@@ -115,6 +129,7 @@
     <Compile Include="GUI %28Giao dien%29\Thu Ngan\ProductCard.Designer.cs">
       <DependentUpon>ProductCard.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\InHoaDonHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GUI %28Giao dien%29\Home\ucHome.cs">
@@ -163,6 +178,7 @@
     <EmbeddedResource Include="GUI %28Giao dien%29\Home\ucHome.resx">
       <DependentUpon>ucHome.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

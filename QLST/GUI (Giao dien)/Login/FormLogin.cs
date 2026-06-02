@@ -259,6 +259,9 @@ namespace QLST
                 // Thành công, có thể hiển thị lời chào dựa trên tên
                 MessageBox.Show($"Xin chào {loggedInUser.TenNV}!", "Đăng nhập thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                // Lưu thông tin vào SessionManager toàn cục
+                SessionManager.NhanVienDangNhap = loggedInUser;
+
                 // Mở Form Main và truyền DTO sang để phân quyền
                 FormMain mainForm = new FormMain(loggedInUser); 
                 this.Hide(); // Ẩn Form Login khi mở Form Main

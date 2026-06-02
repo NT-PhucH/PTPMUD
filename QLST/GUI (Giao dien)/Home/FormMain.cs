@@ -17,6 +17,8 @@ namespace QLST
         // Tạo các biến vùng chứa để lưu trữ giao diện (Cache)
         private ucHome _ucHome;
         private User _ucUser;
+        private FormThuNgan formThuNgan;
+        private NhanVienDTO _loggedInUser;
 
         public FormMain()
         {
@@ -26,6 +28,7 @@ namespace QLST
         public FormMain(NhanVienDTO loggedInUser)
         {
             InitializeComponent();
+            _loggedInUser = loggedInUser;
             if(loggedInUser.Role == 0)
             {
                 btnShopping.Visible = true;
@@ -37,6 +40,7 @@ namespace QLST
             // Khởi tạo sẵn các UserControl ngay khi load Form
             _ucHome = new ucHome { Dock = DockStyle.Fill };
             _ucUser = new User { Dock = DockStyle.Fill };
+            formThuNgan = new FormThuNgan() { Dock = DockStyle.Fill };
 
             // Tự động kích hoạt tab Home đầu tiên
             MenuButton_Click(btnHome, e);
@@ -77,6 +81,14 @@ namespace QLST
             else if (clickedButton == btnUser)
             {
                 panelContent.Controls.Add(_ucUser);
+            }
+            else if (clickedButton == btnShopping)
+            {
+                panelContent.Controls.Clear();
+                formThuNgan.TopLevel = false;
+                //formThuNgan.FormBorderStyle = FormBorderStyle.None;
+                panelContent.Controls.Add(formThuNgan);
+                formThuNgan.Show();
             }
         }
 
