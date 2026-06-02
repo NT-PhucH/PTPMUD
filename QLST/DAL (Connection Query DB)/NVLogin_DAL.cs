@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace QLST.DAL__Connection_Query_DB_
 {
-    public class NhanVienDAL
+    public class NVLogin_DAL
     {
         public NhanVienDTO GetNhanVienByLogin(string username, string password)
         {

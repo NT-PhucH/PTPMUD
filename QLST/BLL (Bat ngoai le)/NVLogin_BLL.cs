@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace QLST.BLL__Bat_ngoai_le_
 {
-    public class NhanVienBLL
+    public class NVLogin_BLL
     {
-        private NhanVienDAL nhanVienDAL = new NhanVienDAL();
+        private NVLogin_DAL nhanVienDAL = new NVLogin_DAL();
 
         public NhanVienDTO Login(string username, string password, out string message)
         {

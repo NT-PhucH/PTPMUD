@@ -114,7 +114,7 @@ namespace QLST
         // Hàm này CHỈ GỌI 1 LẦN khi load Form để kéo dữ liệu từ SQL lên RAM
         private void LoadDuLieuBanDau()
         {
-            SanPhamBLL spBLL = new SanPhamBLL();
+            TrungbaySP_BLL spBLL = new TrungbaySP_BLL();
             dsspToanBo = spBLL.GetSanPham(); // Lấy tất cả sản phẩm
             dsspHienThi = new List<SanPhamDTO>(dsspToanBo);
 

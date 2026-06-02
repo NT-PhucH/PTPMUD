@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace QLST.DAL__Connection_Query_DB_
 {
-    public class HoaDonDAL
+    public class ThanhToanHD_DAL
     {
         public bool LuuHoaDonChinhThuc(HoaDonDTO donHang, decimal tienKhachDua, decimal tienThua)
         {

@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace QLST.BLL__Bat_ngoai_le_
 {
-    public class SanPhamBLL
+    public class TrungbaySP_BLL
     {
-        private SanPhamDAL dssp = new SanPhamDAL();
+        private TrungbaySP_DAL dssp = new TrungbaySP_DAL();
 
         public List<SanPhamDTO> GetSanPham()
         {

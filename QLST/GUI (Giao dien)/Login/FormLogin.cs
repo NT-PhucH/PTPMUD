@@ -244,7 +244,7 @@ namespace QLST
                 picShowHide.Image = Properties.Resources.show;
             }
         }
-        private NhanVienBLL nhanVienBLL = new NhanVienBLL();
+        private NVLogin_BLL nhanVienBLL = new NVLogin_BLL();
 
         private void btnLogIn_Click(object sender, EventArgs e)
         {

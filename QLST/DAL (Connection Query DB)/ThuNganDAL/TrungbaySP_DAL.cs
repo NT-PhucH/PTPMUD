@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace QLST.DAL__Connection_Query_DB_
 {
-    public class SanPhamDAL
+    public class TrungbaySP_DAL
     {
         public List<SanPhamDTO> GetAllSanPham()
         {

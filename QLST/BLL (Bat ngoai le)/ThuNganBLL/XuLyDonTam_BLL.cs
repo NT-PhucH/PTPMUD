@@ -9,9 +9,8 @@ using System.Threading.Tasks;
 
 namespace QLST.BLL__Bat_ngoai_le_
 {
-    public class HoaDonBLL
+    public class XuLyHoaDonTam_BLL
     {
-        private HoaDonDAL hoaDonDAL = new HoaDonDAL();
         private DonTamDAL donTamDAL = new DonTamDAL(); // Khởi tạo thêm DAL xử lý bảng tạm
 
         // 1. Lấy số lượng đơn đang chờ (để hiển thị lên chuông vàng)
@@ -99,10 +98,6 @@ namespace QLST.BLL__Bat_ngoai_le_
             return donKhoiPhuc;
         }
 
-        // 5. Chuyển đơn hàng xuống DAL để lưu bảng HoaDon chính thức khi thanh toán xong
-        public bool ThanhToanDonHang(HoaDonDTO donHang, decimal tienKhachDua, decimal tienThua)
-        {
-            return hoaDonDAL.LuuHoaDonChinhThuc(donHang, tienKhachDua, tienThua);
-        }
+        
     }
 }
