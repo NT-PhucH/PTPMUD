@@ -59,7 +59,6 @@ C:\Users\AP\source\repos\restore\QLST\bin\Debug\QLST.exe.config
 C:\Users\AP\source\repos\restore\QLST\bin\Debug\QLST.exe
 C:\Users\AP\source\repos\restore\QLST\bin\Debug\QLST.pdb
 C:\Users\AP\source\repos\restore\QLST\obj\Debug\QLST.csproj.AssemblyReference.cache
-C:\Users\AP\source\repos\restore\QLST\obj\Debug\QLST.FormHoaDon.resources
 C:\Users\AP\source\repos\restore\QLST\obj\Debug\QLST.FormMain.resources
 C:\Users\AP\source\repos\restore\QLST\obj\Debug\QLST.HĐ.resources
 C:\Users\AP\source\repos\restore\QLST\obj\Debug\QLST.GUI__Giao_dien_.Home.User.resources

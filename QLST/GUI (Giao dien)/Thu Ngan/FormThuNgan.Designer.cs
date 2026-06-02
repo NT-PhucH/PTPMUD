@@ -39,7 +39,6 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.cmsAccount = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.đăngXuấtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmsThongBao = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -63,6 +62,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.tíchĐiểmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chuyenTrang1 = new QLST.GUI__Giao_dien_.Thu_Ngan.ChuyenTrang();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
@@ -146,7 +146,7 @@
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox3.TabIndex = 3;
             this.pictureBox3.TabStop = false;
-            this.pictureBox3.Click += new System.EventHandler(this.pictureBox3_Click);
+            this.pictureBox3.Click += new System.EventHandler(this.PictureBox3_Click);
             // 
             // txtTimKiem
             // 
@@ -182,22 +182,17 @@
             // 
             this.cmsAccount.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.cmsAccount.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tíchĐiểmToolStripMenuItem,
             this.đăngXuấtToolStripMenuItem});
             this.cmsAccount.Name = "contextMenuStrip1";
-            this.cmsAccount.Size = new System.Drawing.Size(151, 30);
+            this.cmsAccount.Size = new System.Drawing.Size(215, 84);
             // 
             // đăngXuấtToolStripMenuItem
             // 
             this.đăngXuấtToolStripMenuItem.Image = global::QLST.Properties.Resources.logout__1_;
             this.đăngXuấtToolStripMenuItem.Name = "đăngXuấtToolStripMenuItem";
-            this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(150, 26);
+            this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(214, 26);
             this.đăngXuấtToolStripMenuItem.Text = "Đăng xuất";
-            // 
-            // cmsThongBao
-            // 
-            this.cmsThongBao.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.cmsThongBao.Name = "cmsThongBao";
-            this.cmsThongBao.Size = new System.Drawing.Size(61, 4);
             // 
             // tableLayoutPanel1
             // 
@@ -295,13 +290,12 @@
             this.label9.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(159, 66);
+            this.label9.Location = new System.Drawing.Point(179, 66);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(59, 23);
+            this.label9.Size = new System.Drawing.Size(20, 23);
             this.label9.TabIndex = 7;
-            this.label9.Text = "label9";
+            this.label9.Text = "0";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label9.Click += new System.EventHandler(this.label9_Click);
             // 
             // label3
             // 
@@ -320,11 +314,11 @@
             this.label8.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(159, 44);
+            this.label8.Location = new System.Drawing.Point(179, 44);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(59, 22);
+            this.label8.Size = new System.Drawing.Size(20, 22);
             this.label8.TabIndex = 6;
-            this.label8.Text = "label8";
+            this.label8.Text = "0";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label5
@@ -338,20 +332,18 @@
             this.label5.TabIndex = 3;
             this.label5.Text = "GIẢM GIÁ";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // label7
             // 
             this.label7.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(159, 22);
+            this.label7.Location = new System.Drawing.Point(179, 22);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(59, 22);
+            this.label7.Size = new System.Drawing.Size(20, 22);
             this.label7.TabIndex = 5;
-            this.label7.Text = "label7";
+            this.label7.Text = "0";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
             // label4
             // 
@@ -370,11 +362,11 @@
             this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(159, 0);
+            this.label6.Location = new System.Drawing.Point(179, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(59, 22);
+            this.label6.Size = new System.Drawing.Size(20, 22);
             this.label6.TabIndex = 4;
-            this.label6.Text = "label6";
+            this.label6.Text = "0";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // flowLayoutPanel1
@@ -387,7 +379,6 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(516, 398);
             this.flowLayoutPanel1.TabIndex = 1;
             this.flowLayoutPanel1.WrapContents = false;
-            this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
             // 
             // tableLayoutPanel5
             // 
@@ -408,7 +399,6 @@
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.tableLayoutPanel5.Size = new System.Drawing.Size(341, 500);
             this.tableLayoutPanel5.TabIndex = 3;
-            this.tableLayoutPanel5.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel5_Paint);
             // 
             // tableLayoutPanel6
             // 
@@ -500,7 +490,12 @@
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(335, 314);
             this.flowLayoutPanel2.TabIndex = 2;
-            this.flowLayoutPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel2_Paint);
+            // 
+            // tíchĐiểmToolStripMenuItem
+            // 
+            this.tíchĐiểmToolStripMenuItem.Name = "tíchĐiểmToolStripMenuItem";
+            this.tíchĐiểmToolStripMenuItem.Size = new System.Drawing.Size(214, 26);
+            this.tíchĐiểmToolStripMenuItem.Text = "Tích điểm";
             // 
             // chuyenTrang1
             // 
@@ -561,7 +556,6 @@
         private System.Windows.Forms.ToolStripMenuItem đăngXuấtToolStripMenuItem;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.ContextMenuStrip cmsThongBao;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Panel panel2;
@@ -586,5 +580,6 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private GUI__Giao_dien_.Thu_Ngan.ChuyenTrang chuyenTrang1;
+        private System.Windows.Forms.ToolStripMenuItem tíchĐiểmToolStripMenuItem;
     }
 }

@@ -55,12 +55,6 @@
     <Compile Include="DAL %28Connection Query DB%29\SanPhamDAL.cs" />
     <Compile Include="DTO %28Type OTP%29\Class1.cs" />
     <Compile Include="DTO %28Type OTP%29\SanPhamDTO.cs" />
-    <Compile Include="GUI %28Giao dien%29\Hoa Don\FormHoaDon.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI %28Giao dien%29\Hoa Don\FormHoaDon.Designer.cs">
-      <DependentUpon>FormHoaDon.cs</DependentUpon>
-    </Compile>
     <Compile Include="GUI %28Giao dien%29\Home\User.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -120,9 +114,6 @@
     <Compile Include="GUI %28Giao dien%29\Home\ucHome.Designer.cs">
       <DependentUpon>ucHome.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="GUI %28Giao dien%29\Hoa Don\FormHoaDon.resx">
-      <DependentUpon>FormHoaDon.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="GUI %28Giao dien%29\Home\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
