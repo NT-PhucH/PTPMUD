@@ -69,6 +69,22 @@ namespace QLST
                 panelContent.Controls.Add(_ucUser);
             }
         }
+        private void btnLogOut_Click(object sender, EventArgs e)
+        {
+            DialogResult dr = MessageBox.Show("Bạn có chắc chắn muốn đăng xuất không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (dr == DialogResult.Yes)
+            {
+                // 1. Chạy một luồng ứng dụng mới độc lập bắt đầu từ Form Đăng nhập
+                // Thay "FormDangNhap" bằng đúng tên Class Form đăng nhập của dự án của bạn
+                System.Threading.Thread t = new System.Threading.Thread(() => Application.Run(new FormLogin()));
+                t.SetApartmentState(System.Threading.ApartmentState.STA);
+                t.Start();
+
+                // 2. Đóng và hủy hoàn toàn Form hiện tại cùng tất cả tài nguyên đi kèm
+                this.Close();
+            }
+        }
 
         // Xóa bỏ các hàm Paint trống nếu không dùng để code gọn gàng hơn
     }

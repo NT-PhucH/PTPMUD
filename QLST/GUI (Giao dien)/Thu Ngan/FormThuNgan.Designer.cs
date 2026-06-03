@@ -38,6 +38,7 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.cmsAccount = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tíchĐiểmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.đăngXuấtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -57,13 +58,12 @@
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnThanhToan = new System.Windows.Forms.Button();
+            this.chuyenTrang1 = new QLST.GUI__Giao_dien_.Thu_Ngan.ChuyenTrang();
             this.panel4 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.tíchĐiểmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.chuyenTrang1 = new QLST.GUI__Giao_dien_.Thu_Ngan.ChuyenTrang();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.panelAccount.SuspendLayout();
@@ -185,13 +185,19 @@
             this.tíchĐiểmToolStripMenuItem,
             this.đăngXuấtToolStripMenuItem});
             this.cmsAccount.Name = "contextMenuStrip1";
-            this.cmsAccount.Size = new System.Drawing.Size(215, 84);
+            this.cmsAccount.Size = new System.Drawing.Size(151, 56);
+            // 
+            // tíchĐiểmToolStripMenuItem
+            // 
+            this.tíchĐiểmToolStripMenuItem.Name = "tíchĐiểmToolStripMenuItem";
+            this.tíchĐiểmToolStripMenuItem.Size = new System.Drawing.Size(150, 26);
+            this.tíchĐiểmToolStripMenuItem.Text = "Tích điểm";
             // 
             // đăngXuấtToolStripMenuItem
             // 
             this.đăngXuấtToolStripMenuItem.Image = global::QLST.Properties.Resources.logout__1_;
             this.đăngXuấtToolStripMenuItem.Name = "đăngXuấtToolStripMenuItem";
-            this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(214, 26);
+            this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(150, 26);
             this.đăngXuấtToolStripMenuItem.Text = "Đăng xuất";
             // 
             // tableLayoutPanel1
@@ -436,6 +442,14 @@
             this.btnThanhToan.UseVisualStyleBackColor = true;
             this.btnThanhToan.Click += new System.EventHandler(this.btnThanhToan_Click);
             // 
+            // chuyenTrang1
+            // 
+            this.chuyenTrang1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chuyenTrang1.Location = new System.Drawing.Point(3, 3);
+            this.chuyenTrang1.Name = "chuyenTrang1";
+            this.chuyenTrang1.Size = new System.Drawing.Size(94, 48);
+            this.chuyenTrang1.TabIndex = 1;
+            // 
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.White;
@@ -490,20 +504,6 @@
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(335, 314);
             this.flowLayoutPanel2.TabIndex = 2;
-            // 
-            // tíchĐiểmToolStripMenuItem
-            // 
-            this.tíchĐiểmToolStripMenuItem.Name = "tíchĐiểmToolStripMenuItem";
-            this.tíchĐiểmToolStripMenuItem.Size = new System.Drawing.Size(214, 26);
-            this.tíchĐiểmToolStripMenuItem.Text = "Tích điểm";
-            // 
-            // chuyenTrang1
-            // 
-            this.chuyenTrang1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chuyenTrang1.Location = new System.Drawing.Point(3, 3);
-            this.chuyenTrang1.Name = "chuyenTrang1";
-            this.chuyenTrang1.Size = new System.Drawing.Size(94, 48);
-            this.chuyenTrang1.TabIndex = 1;
             // 
             // FormThuNgan
             // 
