@@ -1,129 +1,171 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace QLST
 {
     public partial class HĐ : Form
     {
+        #region 1. THUỘC TÍNH (PROPERTIES) TRUYỀN DỮ LIỆU
+
+        // Thuộc tính để nhận tổng tiền cần thu từ FormThuNgan truyền sang
+        public decimal TongTienCanThu { get; set; }
+
+        #endregion
+
+        #region 2. KHỞI TẠO FORM & SỰ KIỆN HỆ THỐNG
+
         public HĐ()
         {
             InitializeComponent();
+            RegisterEvents();
+        }
+
+        private void RegisterEvents()
+        {
+            this.Load += HĐ_Load;
+
+            // Đăng ký sự kiện thay đổi phương thức thanh toán
+            radioTienMat.CheckedChanged += RadioTienMat_CheckedChanged;
+            radioChuyenKhoan.CheckedChanged += RadioChuyenKhoan_CheckedChanged;
+
+            // Đăng ký sự kiện nhập tiền khách đưa
+            textKhachDua.TextChanged += TextKhachDua_TextChanged;
+
+            // Đăng ký sự kiện click cho các nút chức năng
+            picClose.Click += PicClose_Click;
+            picAnHD.Click += PicAnHD_Click;
+            button1.Click += BtnKhongInHD_Click;
+            button2.Click += BtnHoanTat_Click;
         }
 
         private void HĐ_Load(object sender, EventArgs e)
         {
+            // Hiển thị số tiền cần thu lên giao diện khi nạp Form
+            lblTongThu.Text = TongTienCanThu.ToString("N0");
+            lblTienThua.Text = "0";
 
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel3_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label4_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel5_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void label1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            // Báo cho FormThuNgan biết là hành động này bị hủy
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label11_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label6_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label9_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-            // Báo cho FormThuNgan biết là hành động này bị hủy
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            // Báo cho FormThuNgan biết là hành động này bị hủy
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
-        }
-
-        private void pictureBox3_Click(object sender, EventArgs e)
-        {
-            // Báo cho FormThuNgan biết là hành động này bị hủy
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
-        }
-
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
-        {
-            // 2. Hiển thị ảnh QR lên
-            pictureQR.Visible = true;
-        }
-
-        private void pictureQR_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void radioTienMat_CheckedChanged(object sender, EventArgs e)
-        {
+            // Mặc định chọn phương thức Tiền mặt khi mở Form
+            radioTienMat.Checked = true;
             pictureQR.Visible = false;
         }
+
+        #endregion
+
+        #region 3. LOGIC XỬ LÝ TÍNH TOÁN TIỀN MẶT & TIỀN THỪA
+
+        private void TextKhachDua_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(textKhachDua.Text))
+            {
+                lblTienThua.Text = "0";
+                return;
+            }
+
+            // Bỏ các dấu phân cách nghìn nếu có để tính toán chính xác
+            string cleanInput = textKhachDua.Text.Replace(",", "").Replace(".", "");
+
+            if (decimal.TryParse(cleanInput, out decimal tienKhachDua))
+            {
+                // Tự động định dạng lại chuỗi tiền tệ khi người dùng đang nhập cho dễ nhìn (Ví dụ: 100,000)
+                textKhachDua.TextChanged -= TextKhachDua_TextChanged;
+                textKhachDua.Text = tienKhachDua.ToString("N0");
+                textKhachDua.SelectionStart = textKhachDua.Text.Length; // Đẩy con trỏ chuột về cuối
+                textKhachDua.TextChanged += TextKhachDua_TextChanged;
+
+                // Tính tiền thừa trả khách
+                decimal tienThua = tienKhachDua - TongTienCanThu;
+
+                if (tienThua >= 0)
+                {
+                    lblTienThua.Text = tienThua.ToString("N0");
+                    lblTienThua.ForeColor = Color.Green; // Tiền hợp lệ hiện màu xanh
+                }
+                else
+                {
+                    lblTienThua.Text = $"Thiếu: {Math.Abs(tienThua):N0}";
+                    lblTienThua.ForeColor = Color.Red; // Thiếu tiền hiện màu đỏ
+                }
+            }
+            else
+            {
+                lblTienThua.Text = "Không hợp lệ";
+                lblTienThua.ForeColor = Color.Red;
+            }
+        }
+
+        private void RadioTienMat_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioTienMat.Checked)
+            {
+                // Hiện các control nhập tiền mặt, ẩn ảnh QR code đi
+                pictureQR.Visible = false; 
+                txtKhachDua.Visible = true;
+                textKhachDua.Visible = true;
+                vnd1.Visible = true;
+                txtTienThua.Visible = true;
+                lblTienThua.Visible = true;
+                vnd2.Visible = true;
+            }
+        }
+
+        private void RadioChuyenKhoan_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioChuyenKhoan.Checked) 
+            {
+                // Hiện ảnh QR thanh toán, ẩn toàn bộ phần tính tiền thừa đi cho gọn giao diện
+                pictureQR.Visible = true;
+                txtKhachDua.Visible = false;
+                textKhachDua.Visible = false;
+                vnd1.Visible = false;
+                txtTienThua.Visible = false;
+                lblTienThua.Visible = false;
+                vnd2.Visible = false;
+            }
+        }
+
+        #endregion
+
+        #region 4. SỰ KIỆN ĐIỀU HƯỚNG & ĐÓNG FORM (BUTTONS & PICTUREBOXES)
+
+        // Bấm nút X hoặc nút "Không in HĐ" -> Hủy giao dịch thanh toán
+        private void PicClose_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel; 
+            this.Close(); 
+        }
+
+        private void BtnKhongInHD_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel; 
+            this.Close(); 
+        }
+
+        // Bấm nút "Hoàn tất" -> Xác nhận thanh toán thành công thành công
+        private void BtnHoanTat_Click(object sender, EventArgs e)
+        {
+            // Nếu dùng tiền mặt, kiểm tra xem khách đưa đủ tiền chưa
+            if (radioTienMat.Checked)
+            {
+                string cleanInput = textKhachDua.Text.Replace(",", "").Replace(".", "");
+                if (!decimal.TryParse(cleanInput, out decimal tienKhachDua) || tienKhachDua < TongTienCanThu)
+                {
+                    MessageBox.Show("Số tiền khách đưa chưa đủ hoặc không hợp lệ!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+
+            this.DialogResult = DialogResult.OK; // Trả về trạng thái hoàn thành giao dịch thành công
+            this.Close();
+        }
+
+        // Bấm nút Ẩn Hóa Đơn -> Đưa đơn vào khay hệ thống chờ (Dropdown thông báo)
+        private void PicAnHD_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Retry; // Trả về Retry để báo FormThuNgan chuyển vào bộ nhớ tạm
+            this.Close(); 
+        }
+
+        #endregion
     }
 }

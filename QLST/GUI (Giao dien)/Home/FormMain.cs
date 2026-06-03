@@ -1,5 +1,4 @@
-﻿using QLST.DTO__Type_OTP_;
-using QLST.GUI__Giao_dien_.Home;
+﻿using QLST.GUI__Giao_dien_.Home;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,22 +16,10 @@ namespace QLST
         // Tạo các biến vùng chứa để lưu trữ giao diện (Cache)
         private ucHome _ucHome;
         private User _ucUser;
-        private FormThuNgan formThuNgan;
-        private NhanVienDTO _loggedInUser;
 
         public FormMain()
         {
             InitializeComponent();
-        }
-
-        public FormMain(NhanVienDTO loggedInUser)
-        {
-            InitializeComponent();
-            _loggedInUser = loggedInUser;
-            if(loggedInUser.Role == 0)
-            {
-                btnShopping.Visible = true;
-            }
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -40,7 +27,6 @@ namespace QLST
             // Khởi tạo sẵn các UserControl ngay khi load Form
             _ucHome = new ucHome { Dock = DockStyle.Fill };
             _ucUser = new User { Dock = DockStyle.Fill };
-            formThuNgan = new FormThuNgan() { Dock = DockStyle.Fill };
 
             // Tự động kích hoạt tab Home đầu tiên
             MenuButton_Click(btnHome, e);
@@ -82,21 +68,21 @@ namespace QLST
             {
                 panelContent.Controls.Add(_ucUser);
             }
-            else if (clickedButton == btnShopping)
-            {
-                panelContent.Controls.Clear();
-                formThuNgan.TopLevel = false;
-                //formThuNgan.FormBorderStyle = FormBorderStyle.None;
-                panelContent.Controls.Add(formThuNgan);
-                formThuNgan.Show();
-            }
         }
-
         private void btnLogOut_Click(object sender, EventArgs e)
         {
-            if(MessageBox.Show("Bạn có chắc muốn đăng xuất?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            DialogResult dr = MessageBox.Show("Bạn có chắc chắn muốn đăng xuất không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (dr == DialogResult.Yes)
             {
-                this.Close(); // Đóng FormMain để trở về FormLogin
+                // 1. Chạy một luồng ứng dụng mới độc lập bắt đầu từ Form Đăng nhập
+                // Thay "FormDangNhap" bằng đúng tên Class Form đăng nhập của dự án của bạn
+                System.Threading.Thread t = new System.Threading.Thread(() => Application.Run(new FormLogin()));
+                t.SetApartmentState(System.Threading.ApartmentState.STA);
+                t.Start();
+
+                // 2. Đóng và hủy hoàn toàn Form hiện tại cùng tất cả tài nguyên đi kèm
+                this.Close();
             }
         }
 

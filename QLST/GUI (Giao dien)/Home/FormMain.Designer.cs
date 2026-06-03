@@ -89,7 +89,6 @@
             this.btnSettings.Text = "        Settings";
             this.btnSettings.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSettings.UseVisualStyleBackColor = false;
-            this.btnSettings.Visible = false;
             this.btnSettings.Click += new System.EventHandler(this.MenuButton_Click);
             // 
             // btnThongKe
@@ -110,7 +109,6 @@
             this.btnThongKe.Text = "        Thống kê";
             this.btnThongKe.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnThongKe.UseVisualStyleBackColor = false;
-            this.btnThongKe.Visible = false;
             this.btnThongKe.Click += new System.EventHandler(this.MenuButton_Click);
             // 
             // btnTichDiem
@@ -131,7 +129,6 @@
             this.btnTichDiem.Text = "        Tích điểm";
             this.btnTichDiem.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnTichDiem.UseVisualStyleBackColor = false;
-            this.btnTichDiem.Visible = false;
             this.btnTichDiem.Click += new System.EventHandler(this.MenuButton_Click);
             // 
             // btnUser
@@ -152,7 +149,6 @@
             this.btnUser.Text = "        User";
             this.btnUser.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnUser.UseVisualStyleBackColor = false;
-            this.btnUser.Visible = false;
             this.btnUser.Click += new System.EventHandler(this.MenuButton_Click);
             // 
             // btnKho
@@ -173,7 +169,6 @@
             this.btnKho.Text = "        Kho";
             this.btnKho.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnKho.UseVisualStyleBackColor = false;
-            this.btnKho.Visible = false;
             this.btnKho.Click += new System.EventHandler(this.MenuButton_Click);
             // 
             // btnShopping
@@ -194,7 +189,6 @@
             this.btnShopping.Text = "        Shopping";
             this.btnShopping.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnShopping.UseVisualStyleBackColor = false;
-            this.btnShopping.Visible = false;
             this.btnShopping.Click += new System.EventHandler(this.MenuButton_Click);
             // 
             // btnHome
