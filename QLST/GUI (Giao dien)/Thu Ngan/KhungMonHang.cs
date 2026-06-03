@@ -12,43 +12,69 @@ namespace QLST.GUI__Giao_dien_
 {
     public partial class KhungMonHang : UserControl
     {
+        private decimal donGiaGoc = 0;
+
+        // Thêm event để báo cáo thay đổi lên FormThuNgan
+        public event EventHandler DuLieuThayDoi;
+
+        // Thêm 2 thuộc tính để FormThuNgan có thể lấy số liệu
+        public int SoLuong => int.TryParse(txtSoLuong.Text, out int sl) ? sl : 0;
+        public decimal ThanhTien => donGiaGoc * SoLuong;
+
         public KhungMonHang()
         {
             InitializeComponent();
         }
 
-        private void panel4_Paint(object sender, PaintEventArgs e)
-        {
+        private void panel4_Paint(object sender, PaintEventArgs e) { }
 
+        private void TinhThanhTien()
+        {
+            if (int.TryParse(txtSoLuong.Text, out int soLuong))
+            {
+                lblThanhTien.Text = (donGiaGoc * soLuong).ToString("N0");
+            }
+            else
+            {
+                lblThanhTien.Text = "0";
+            }
+            // Kích hoạt sự kiện mỗi khi tiền hoặc số lượng thay đổi
+            DuLieuThayDoi?.Invoke(this, EventArgs.Empty);
         }
+
         public void CapNhatThongTin(string maSP, string tenSP, decimal donGia)
         {
-            // Giả sử bạn đã đặt tên các Label trong KhungMonHang tương ứng như sau:
             lblMaSP.Text = maSP;
             lblTenSP.Text = tenSP;
-            lblDonGia.Text = donGia.ToString("N0"); // Format số tiền có dấu phẩy
-            lblThanhTien.Text = donGia.ToString("N0");
+            donGiaGoc = donGia;
+            lblDonGia.Text = donGia.ToString("N0");
+            TinhThanhTien();
         }
+
         private void btThem_Click(object sender, EventArgs e)
         {
             if (int.TryParse(txtSoLuong.Text, out int soLuong))
             {
                 txtSoLuong.Text = (soLuong + 1).ToString();
+                TinhThanhTien();
             }
         }
-        // 1. Trong file KhungMonHang.cs, thêm hàm gán Số thứ tự:
+
         public void GanSTT(int stt)
         {
-            lblSTT.Text = stt.ToString(); // Thay "lblSTT" bằng tên Label chứa số thứ tự của bạn
+            lblSTT.Text = stt.ToString();
         }
 
-        // 2. Cập nhật lại sự kiện nút Xóa (trong KhungMonHang.cs) để tự động đánh lại số cho chuẩn khi có thẻ bị xóa:
         private void btnXoa_Click(object sender, EventArgs e)
         {
             if (this.Parent != null)
             {
                 Control parent = this.Parent;
                 parent.Controls.Remove(this);
+
+                // Gọi event báo cho FormThuNgan biết đã xóa sản phẩm để tính lại tổng
+                DuLieuThayDoi?.Invoke(this, EventArgs.Empty);
+
                 this.Dispose();
 
                 int stt = parent.Controls.Count;
@@ -62,6 +88,7 @@ namespace QLST.GUI__Giao_dien_
                 }
             }
         }
+
         public string MaSP
         {
             get { return lblMaSP.Text; }
@@ -72,9 +99,13 @@ namespace QLST.GUI__Giao_dien_
             if (int.TryParse(txtSoLuong.Text, out int soLuong))
             {
                 txtSoLuong.Text = (soLuong + 1).ToString();
+                TinhThanhTien();
             }
         }
 
-
+        private void txtSoLuong_TextChanged(object sender, EventArgs e)
+        {
+            TinhThanhTien();
+        }
     }
 }
