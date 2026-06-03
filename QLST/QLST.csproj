@@ -59,15 +59,15 @@
   <ItemGroup>
     <Compile Include="BLL %28Bat ngoai le%29\Class1.cs" />
     <Compile Include="BLL %28Bat ngoai le%29\ThuNganBLL\ThanhToan_BLL.cs" />
-    <Compile Include="BLL %28Bat ngoai le%29\ThuNganBLL\XuLyHoaDonTam_BLL.cs" />
     <Compile Include="BLL %28Bat ngoai le%29\NVLogin_BLL.cs" />
     <Compile Include="BLL %28Bat ngoai le%29\ThuNganBLL\TrungbaySP_BLL.cs" />
-    <Compile Include="DAL %28Connection Query DB%29\ThuNganDAL\DonTamDAL.cs" />
+    <Compile Include="BLL %28Bat ngoai le%29\ThuNganBLL\XuLyDonTam_BLL.cs" />
     <Compile Include="DAL %28Connection Query DB%29\ThuNganDAL\ThanhToanHD_DAL.cs" />
     <Compile Include="DAL %28Connection Query DB%29\NVLogin_DAL.cs" />
     <Compile Include="DAL %28Connection Query DB%29\Core\C1.cs" />
     <Compile Include="DAL %28Connection Query DB%29\Core\DataProvider.cs" />
     <Compile Include="DAL %28Connection Query DB%29\ThuNganDAL\TrungbaySP_DAL.cs" />
+    <Compile Include="DAL %28Connection Query DB%29\ThuNganDAL\XuLyDonTam_DAL.cs" />
     <Compile Include="DTO %28Type OTP%29\ChiTietHDDTO.cs" />
     <Compile Include="DTO %28Type OTP%29\SessionManager.cs" />
     <Compile Include="DTO %28Type OTP%29\HoaDonDTO.cs" />
