@@ -14,6 +14,8 @@ namespace QLST.GUI__Giao_dien_
     {
         private decimal donGiaGoc = 0;
 
+        public int SanPhamID { get; set; }
+
         // Thêm event để báo cáo thay đổi lên FormThuNgan
         public event EventHandler DuLieuThayDoi;
 

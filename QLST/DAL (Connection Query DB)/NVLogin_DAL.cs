@@ -16,7 +16,7 @@ namespace QLST.DAL__Connection_Query_DB_
         {
             NhanVienDTO nv = null;
 
-            string query = "SELECT MaNV, TenNV, Username, Password, Role, SoDienThoai, CaLamViec, TrangThai, DuongDanAnh " +
+            string query = "SELECT MaNV, TenNV, Username, Password, Role, SoDienThoai, CaLamViec, TrangThai " +
                            "FROM NhanVien " +
                            "WHERE Username = @Username AND Password = @Password";
             SqlParameter[] parameters = new SqlParameter[] {
@@ -41,7 +41,6 @@ namespace QLST.DAL__Connection_Query_DB_
                     SoDienThoai = row["SoDienThoai"] != DBNull.Value ? row["SoDienThoai"].ToString() : null,
                     CaLamViec = row["CaLamViec"] != DBNull.Value ? row["CaLamViec"].ToString() : null,
                     TrangThai = row["TrangThai"] != DBNull.Value ? Convert.ToBoolean(row["TrangThai"]) : false,
-                    DuongDanAnh = row["DuongDanAnh"] != DBNull.Value ? row["DuongDanAnh"].ToString() : null
                 };
             }
             // Trả về DTO (nếu sai tài khoản/mật khẩu thì data.Rows.Count = 0, nv sẽ bằng null)

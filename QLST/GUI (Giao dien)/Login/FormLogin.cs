@@ -256,16 +256,33 @@ namespace QLST
 
             if (loggedInUser != null)
             {
-                // Thành công, có thể hiển thị lời chào dựa trên tên
+                // Thành công, hiển thị lời chào dựa trên tên
                 MessageBox.Show($"Xin chào {loggedInUser.TenNV}!", "Đăng nhập thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Lưu thông tin vào SessionManager toàn cục
                 SessionManager.NhanVienDangNhap = loggedInUser;
 
-                // Mở Form Main và truyền DTO sang để phân quyền
-                FormMain mainForm = new FormMain(loggedInUser); 
-                this.Hide(); // Ẩn Form Login khi mở Form Main
-                mainForm.ShowDialog();
+                this.Hide(); // Ẩn Form Login đi trước khi mở form mới
+
+                // Phân quyền dựa vào thuộc tính Role (Quyền) của NhanVienDTO
+                if (loggedInUser.Role == 1)
+                {
+                    // Role = 1 (Quản lý/Admin) -> Mở FormMain
+                    FormMain mainForm = new FormMain(loggedInUser);
+                    mainForm.ShowDialog();
+                }
+                else
+                {
+                    // Role khác (Ví dụ Role = 2, Thu ngân) -> Mở FormThuNgan
+                    FormThuNgan thuNganForm = new FormThuNgan();
+
+                    // Lưu ý: Nếu FormThuNgan của bạn yêu cầu truyền 'loggedInUser' vào giống FormMain, 
+                    // thì bạn sửa dòng trên thành: FormThuNgan thuNganForm = new FormThuNgan(loggedInUser);
+
+                    thuNganForm.ShowDialog();
+                }
+
+                // Hiện lại Form Login sau khi người dùng tắt FormMain hoặc FormThuNgan (hoặc bạn có thể dùng this.Close() để thoát hẳn)
                 this.Visible = true;
             }
             else

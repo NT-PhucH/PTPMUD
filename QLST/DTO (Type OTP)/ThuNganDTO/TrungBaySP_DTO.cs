@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace QLST.DTO__Type_OTP_
 {
-    public class SanPhamDTO
+    public class TrungBaySP_DTO
     {
-            public string MaSanPham { get; set; }
+        public int SanPhamID { get; set; }
+        public string MaSanPham { get; set; }
             public string TenSanPham { get; set; }
 
             public int DonGia { get; set; }
@@ -16,7 +17,7 @@ namespace QLST.DTO__Type_OTP_
             public string MaLoai { get; set; }
             public string TenLoai { get; set; }
 
-        public int soLuongTonKho { get; set; }
+            public int soLuongTonKho { get; set; }
 
             public string HinhAnh { get; set; }
     }

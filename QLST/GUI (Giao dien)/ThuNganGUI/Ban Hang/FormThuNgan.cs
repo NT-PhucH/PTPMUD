@@ -1,5 +1,6 @@
 ﻿using QLST.BLL__Bat_ngoai_le_;
 using QLST.DTO__Type_OTP_;
+using QLST.DTO__Type_OTP_.ThuNganOTP;
 using QLST.GUI__Giao_dien_;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace QLST
         private int currentPage = 1;
         private readonly int pageSize = 18; // 3 cột x 6 hàng
         private int totalPages = 1;
-        private List<SanPhamDTO> dsspToanBo = new List<SanPhamDTO>();
+        private List<TrungBaySP_DTO> dsspToanBo = new List<TrungBaySP_DTO>();
 
         // Cấu hình giao diện lưới sản phẩm
         private readonly int SO_COT = 3;
@@ -276,7 +277,87 @@ namespace QLST
             pnlDropdownThongBao.Visible = false;
             TinhTongDonHang(); // Tính toán lại tiền ngay khi khôi phục đơn
         }
+        private void btnThanhToan_Click(object sender, EventArgs e)
+        {
+            if (flowLayoutPanel1.Controls.Count == 0)
+            {
+                MessageBox.Show("Không có sản phẩm nào để thanh toán!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
+            // Lấy số tiền hiện tại trên giao diện giỏ hàng
+            decimal.TryParse(label9.Text.Replace(",", ""), out decimal tongTien);
+
+            HĐ formHoaDon = new HĐ();
+            formHoaDon.TongTienCanThu = tongTien; // Truyền tiền qua form hóa đơn
+            formHoaDon.StartPosition = FormStartPosition.CenterParent;
+
+            DialogResult ketQua = formHoaDon.ShowDialog();
+
+            if (ketQua == DialogResult.Retry)
+            {
+                LuuTamHoaDonHienTai();
+            }
+            else if (ketQua == DialogResult.OK)
+            {
+                // Lấy 3 thông tin quan trọng từ formHoaDon về
+                string cachTra = formHoaDon.PhuongThucThanhToan;
+                long khachDua = formHoaDon.TienKhachDua;
+                long traLai = formHoaDon.TienThua;
+
+                try
+                {
+                    // === 1. SỬA LỖI TÊN CLASS: Dùng ThanhToan_DTO thay cho ChiTietHD_DTO ===
+                    List<ThanhToan_DTO> dsChiTiet = new List<ThanhToan_DTO>();
+
+                    foreach (Control ctrl in flowLayoutPanel1.Controls)
+                    {
+                        if (ctrl is KhungMonHang card)
+                        {
+                            ThanhToan_DTO chiTiet = new ThanhToan_DTO
+                            {
+                                SanPhamID = card.SanPhamID, // Lấy ID ẩn từ KhungMonHang
+                                SoLuongMua = card.SoLuong,
+                                DonGiaBan = (int)(card.ThanhTien / card.SoLuong),
+                                ThanhTien = (long)card.ThanhTien
+                            };
+                            dsChiTiet.Add(chiTiet);
+                        }
+                    }
+
+                    // === 2. CHUẨN BỊ THÔNG TIN CHUNG ===
+                    string maHD = "HD_" + DateTime.Now.ToString("ddMMyy_HHmmss");
+
+                    // Tạm thời hardcode ID nhân viên là 1 để test thanh toán
+                    int nhanVienID = 1;
+
+                    // === 3. SỬA LỖI TRUYỀN THIẾU THAM SỐ ===
+                    ThanhToan_BLL bll = new ThanhToan_BLL();
+                    string thongBaoKetQua = "";
+
+                    // TRUYỀN ĐỦ THAM SỐ: maHD, nhanVienID, tongTien, cachTra, khachDua, traLai, dsChiTiet, thongBaoKetQua
+                    bool ketQuaLuuDB = bll.XuLyThanhToan(maHD, nhanVienID, (long)tongTien, cachTra, khachDua, traLai, dsChiTiet, out thongBaoKetQua);
+
+                    if (ketQuaLuuDB)
+                    {
+                        // === 4. THANH TOÁN THÀNH CÔNG -> DỌN DẸP UI ===
+                        flowLayoutPanel1.Controls.Clear();
+                        TinhTongDonHang();
+                        LoadDuLieuBanDau();
+
+                        MessageBox.Show("Giao dịch thanh toán hoàn tất và đã lưu vào hệ thống thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Thanh toán thất bại: " + thongBaoKetQua, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Đã xảy ra lỗi trong quá trình xử lý hóa đơn: " + ex.Message, "Lỗi phần mềm", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
         #endregion
 
         #region 4. LOGIC GIỎ HÀNG (BÊN TRÁI MÀN HÌNH)
@@ -321,7 +402,8 @@ namespace QLST
             flowLayoutPanel1.ResumeLayout();
         }
 
-        private void ThemMonHangVaoDanhSach(string maSP, string tenSP, decimal donGia)
+
+        private void ThemMonHangVaoDanhSach(string maSP, string tenSP, decimal donGia, int sanPhamID)
         {
             // Nếu sản phẩm đã tồn tại, tăng số lượng lên 1
             foreach (Control ctrl in flowLayoutPanel1.Controls)
@@ -337,6 +419,10 @@ namespace QLST
             KhungMonHang cardMoi = new KhungMonHang();
             cardMoi.DuLieuThayDoi += KhungMonHang_DuLieuThayDoi;
             cardMoi.CapNhatThongTin(maSP, tenSP, donGia);
+
+
+            cardMoi.SanPhamID = sanPhamID;
+
             cardMoi.Width = flowLayoutPanel1.ClientSize.Width - cardMoi.Margin.Left - cardMoi.Margin.Right - 5;
 
             flowLayoutPanel1.Controls.Add(cardMoi);
@@ -363,41 +449,12 @@ namespace QLST
                 string maCanTim = txtTimKiem.Text.Trim();
                 if (!string.IsNullOrEmpty(maCanTim))
                 {
-                    ThemMonHangVaoDanhSach(maCanTim, "Tên Sản Phẩm Quét Được", 150000);
                     txtTimKiem.Clear();
                 }
             }
         }
 
-        private void btnThanhToan_Click(object sender, EventArgs e)
-        {
-            if (flowLayoutPanel1.Controls.Count == 0) 
-    {
-                MessageBox.Show("Không có sản phẩm nào để thanh toán!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // Lấy số tiền hiện tại trên giao diện giỏ hàng
-            decimal.TryParse(label9.Text.Replace(",", ""), out decimal tongTien);
-
-    HĐ formHoaDon = new HĐ(); 
-    formHoaDon.TongTienCanThu = tongTien; // <--- Truyền tiền cực kỳ khoa học qua thuộc tính vừa tạo
-            formHoaDon.StartPosition = FormStartPosition.CenterParent; 
-
-    DialogResult ketQua = formHoaDon.ShowDialog(); 
-
-    if (ketQua == DialogResult.Retry)
-            {
-                LuuTamHoaDonHienTai(); 
-    }
-            else if (ketQua == DialogResult.OK)
-            {
-                // Thanh toán hoàn tất -> Xóa sạch giỏ hàng hiện tại để tiếp tục làm việc
-                flowLayoutPanel1.Controls.Clear(); 
-        TinhTongDonHang(); 
-        MessageBox.Show("Giao dịch thanh toán hoàn tất thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
+        
 
         #endregion
 
@@ -405,7 +462,7 @@ namespace QLST
 
         private void LoadDuLieuBanDau()
         {
-            SanPhamBLL spBLL = new SanPhamBLL();
+            TrungBaySP_BLL spBLL = new TrungBaySP_BLL();
             dsspToanBo = spBLL.GetSanPham();
 
             totalPages = (int)Math.Ceiling((double)dsspToanBo.Count / pageSize);
@@ -435,7 +492,7 @@ namespace QLST
             // Thuật toán lấy sản phẩm phân trang dựa theo LINQ Skip - Take
             var danhSachTrangHienTai = dsspToanBo.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
 
-            foreach (SanPhamDTO sp in danhSachTrangHienTai)
+            foreach (TrungBaySP_DTO sp in danhSachTrangHienTai)
             {
                 ProductCard card = new ProductCard
                 {
@@ -445,6 +502,7 @@ namespace QLST
                     Height = chieuCaoThe,
                     Margin = new Padding(KHOANG_CACH / 2)
                 };
+                card.Tag = sp;
 
                 LoadProductImage(sp.HinhAnh, card);
                 card.OnSelectProduct += Card_OnSelectProduct;
@@ -473,14 +531,20 @@ namespace QLST
                 HienThiDanhSachSanPham();
             }
         }
-
         private void Card_OnSelectProduct(object sender, EventArgs e)
         {
             if (sender is ProductCard clickedCard)
             {
-                decimal giaTien = 0;
-                decimal.TryParse(clickedCard.ProductPrice.Replace(",", ""), out giaTien);
-                ThemMonHangVaoDanhSach(clickedCard.ProductName, clickedCard.ProductName, giaTien);
+                TrungBaySP_DTO spThucTe = clickedCard.Tag as TrungBaySP_DTO;
+                if (spThucTe != null)
+                {
+                    ThemMonHangVaoDanhSach(
+                        spThucTe.MaSanPham,
+                        spThucTe.TenSanPham,
+                        spThucTe.DonGia,
+                        spThucTe.SanPhamID  // Truyền cái khóa chính vào đây
+                    );
+                }
             }
         }
 
@@ -539,5 +603,20 @@ namespace QLST
         }
 
         #endregion
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void flowLayoutPanel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

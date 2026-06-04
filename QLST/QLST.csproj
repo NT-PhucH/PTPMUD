@@ -57,32 +57,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BLL %28Bat ngoai le%29\Class1.cs" />
+    <Compile Include="BLL %28Bat ngoai le%29\QuanLyBLL\ThongKe_BLL.cs" />
     <Compile Include="BLL %28Bat ngoai le%29\ThuNganBLL\ThanhToan_BLL.cs" />
-    <Compile Include="BLL %28Bat ngoai le%29\ThuNganBLL\XuLyHoaDonTam_BLL.cs" />
+    <Compile Include="BLL %28Bat ngoai le%29\ThuNganBLL\TrungBaySP_BLL.cs" />
     <Compile Include="BLL %28Bat ngoai le%29\NVLogin_BLL.cs" />
-    <Compile Include="BLL %28Bat ngoai le%29\ThuNganBLL\TrungbaySP_BLL.cs" />
-    <Compile Include="DAL %28Connection Query DB%29\ThuNganDAL\DonTamDAL.cs" />
-    <Compile Include="DAL %28Connection Query DB%29\ThuNganDAL\ThanhToanHD_DAL.cs" />
+    <Compile Include="DAL %28Connection Query DB%29\DB_Connection.cs" />
+    <Compile Include="DAL %28Connection Query DB%29\ThuNganDAL\ThanhToan_DAL.cs" />
+    <Compile Include="DAL %28Connection Query DB%29\QuanLyDAL\ThongKe_DAL.cs" />
+    <Compile Include="DAL %28Connection Query DB%29\ThuNganDAL\TrungBaySP_DAL.cs" />
     <Compile Include="DAL %28Connection Query DB%29\NVLogin_DAL.cs" />
-    <Compile Include="DAL %28Connection Query DB%29\Core\C1.cs" />
     <Compile Include="DAL %28Connection Query DB%29\Core\DataProvider.cs" />
-    <Compile Include="DAL %28Connection Query DB%29\ThuNganDAL\TrungbaySP_DAL.cs" />
-    <Compile Include="DTO %28Type OTP%29\ChiTietHDDTO.cs" />
+    <Compile Include="DTO %28Type OTP%29\QuanLyDTO\ThongKe_DTO.cs" />
     <Compile Include="DTO %28Type OTP%29\SessionManager.cs" />
-    <Compile Include="DTO %28Type OTP%29\HoaDonDTO.cs" />
     <Compile Include="DTO %28Type OTP%29\NhanVienDTO.cs" />
-    <Compile Include="DTO %28Type OTP%29\SanPhamDTO.cs" />
-    <Compile Include="GUI %28Giao dien%29\Hoa Don\FormHoaDon.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI %28Giao dien%29\Hoa Don\FormHoaDon.Designer.cs">
-      <DependentUpon>FormHoaDon.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI %28Giao dien%29\Home\User.cs">
+    <Compile Include="DTO %28Type OTP%29\ThuNganDTO\ThanhToan_DTO.cs" />
+    <Compile Include="DTO %28Type OTP%29\ThuNganDTO\TrungBaySP_DTO.cs" />
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Kho\ucKho.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\Home\User.Designer.cs">
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Home\User.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Home\User.Designer.cs">
       <DependentUpon>User.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI %28Giao dien%29\Login\FormLogin.cs">
@@ -91,79 +87,76 @@
     <Compile Include="GUI %28Giao dien%29\Login\FormLogin.Designer.cs">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\Home\FormMain.cs">
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\Home\FormMain.Designer.cs">
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\Hoa Don\HĐ.cs">
+    <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Hoa Don\HĐ.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\Hoa Don\HĐ.Designer.cs">
+    <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Hoa Don\HĐ.Designer.cs">
       <DependentUpon>HĐ.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI %28Giao dien%29\Login\RoundedButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\Thu Ngan\ChuyenTrang.cs">
+    <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Ban Hang\ChuyenTrang.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\Thu Ngan\ChuyenTrang.Designer.cs">
+    <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Ban Hang\ChuyenTrang.Designer.cs">
       <DependentUpon>ChuyenTrang.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\Thu Ngan\FormThuNgan.cs">
+    <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Ban Hang\FormThuNgan.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\Thu Ngan\FormThuNgan.Designer.cs">
+    <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Ban Hang\FormThuNgan.Designer.cs">
       <DependentUpon>FormThuNgan.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\Thu Ngan\KhungMonHang.cs">
+    <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Ban Hang\KhungMonHang.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\Thu Ngan\KhungMonHang.Designer.cs">
+    <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Ban Hang\KhungMonHang.Designer.cs">
       <DependentUpon>KhungMonHang.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\Thu Ngan\ProductCard.cs">
+    <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Ban Hang\ProductCard.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\Thu Ngan\ProductCard.Designer.cs">
+    <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Ban Hang\ProductCard.Designer.cs">
       <DependentUpon>ProductCard.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\InHoaDonHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GUI %28Giao dien%29\Home\ucHome.cs">
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Home\ucHome.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\Home\ucHome.Designer.cs">
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Home\ucHome.Designer.cs">
       <DependentUpon>ucHome.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="GUI %28Giao dien%29\Hoa Don\FormHoaDon.resx">
-      <DependentUpon>FormHoaDon.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI %28Giao dien%29\Home\FormMain.resx">
+    <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI %28Giao dien%29\Hoa Don\HĐ.resx">
+    <EmbeddedResource Include="GUI %28Giao dien%29\ThuNganGUI\Hoa Don\HĐ.resx">
       <DependentUpon>HĐ.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI %28Giao dien%29\Home\User.resx">
+    <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\Home\User.resx">
       <DependentUpon>User.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI %28Giao dien%29\Login\FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI %28Giao dien%29\Thu Ngan\ChuyenTrang.resx">
+    <EmbeddedResource Include="GUI %28Giao dien%29\ThuNganGUI\Ban Hang\ChuyenTrang.resx">
       <DependentUpon>ChuyenTrang.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI %28Giao dien%29\Thu Ngan\FormThuNgan.resx">
+    <EmbeddedResource Include="GUI %28Giao dien%29\ThuNganGUI\Ban Hang\FormThuNgan.resx">
       <DependentUpon>FormThuNgan.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI %28Giao dien%29\Thu Ngan\KhungMonHang.resx">
+    <EmbeddedResource Include="GUI %28Giao dien%29\ThuNganGUI\Ban Hang\KhungMonHang.resx">
       <DependentUpon>KhungMonHang.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI %28Giao dien%29\Thu Ngan\ProductCard.resx">
+    <EmbeddedResource Include="GUI %28Giao dien%29\ThuNganGUI\Ban Hang\ProductCard.resx">
       <DependentUpon>ProductCard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -176,7 +169,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="GUI %28Giao dien%29\Home\ucHome.resx">
+    <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\Home\ucHome.resx">
       <DependentUpon>ucHome.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
@@ -266,8 +259,7 @@
     <None Include="Resources\user.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="BLL %28Bat ngoai le%29\QuanLyBLL\" />
-    <Folder Include="DAL %28Connection Query DB%29\QuanLyDAL\" />
+    <Folder Include="GUI %28Giao dien%29\QuanLyGUI\QL_User\" />
     <Folder Include="Resources\anh_sanpham\" />
   </ItemGroup>
   <ItemGroup>

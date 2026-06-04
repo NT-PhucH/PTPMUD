@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QLST.DAL__Connection_Query_DB_.Query_DB
+namespace QLST.DTO__Type_OTP_.QuanLyOTP
 {
-    internal class C1
+    internal class ThongKe_DTO
     {
     }
 }

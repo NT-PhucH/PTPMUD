@@ -1,4 +1,6 @@
-﻿using QLST.GUI__Giao_dien_.Home;
+﻿using QLST.DTO__Type_OTP_;
+using QLST.GUI__Giao_dien_;
+using QLST.GUI__Giao_dien_.Home;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,9 +19,20 @@ namespace QLST
         private ucHome _ucHome;
         private User _ucUser;
 
+        // 1. Tạo biến để hứng dữ liệu người dùng đang đăng nhập
+        private NhanVienDTO _nhanVienHienTai;
+
+        // Hàm mặc định (Giữ lại để bản vẽ Designer của Visual Studio không bị lỗi)
         public FormMain()
         {
             InitializeComponent();
+        }
+
+        // 2. Thêm một hàm khởi tạo MỚI chuyên dùng để nhận dữ liệu từ FormLogin
+        public FormMain(NhanVienDTO user)
+        {
+            InitializeComponent();
+            _nhanVienHienTai = user; // Cất dữ liệu người dùng vào biến để lát nữa dùng (VD: hiển thị tên)
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -30,6 +43,9 @@ namespace QLST
 
             // Tự động kích hoạt tab Home đầu tiên
             MenuButton_Click(btnHome, e);
+
+            // (Tùy chọn) Bạn có thể dùng biến _nhanVienHienTai để hiển thị tên lên giao diện ở đây
+            // Ví dụ: lblTenNhanVien.Text = "Xin chào: " + _nhanVienHienTai.TenNV;
         }
 
         // 2. Các hàm bổ trợ (Helper Methods)
@@ -68,6 +84,26 @@ namespace QLST
             {
                 panelContent.Controls.Add(_ucUser);
             }
+            else if (clickedButton == btnKho)
+            {
+                ucKho giaoDienKho = new ucKho { Dock = DockStyle.Fill };
+                panelContent.Controls.Clear();
+                panelContent.Controls.Add(giaoDienKho);
+            }
+            else if (clickedButton == btnSettings)
+            {
+                // Tạo form Thu Ngân
+                FormThuNgan frmThuNgan = new FormThuNgan();
+
+                // TUYỆT CHIÊU: Lột bỏ vỏ bọc cửa sổ để biến Form thành UserControl
+                frmThuNgan.TopLevel = false;
+                frmThuNgan.FormBorderStyle = FormBorderStyle.None; // Bỏ viền và nút X đỏ
+                frmThuNgan.Dock = DockStyle.Fill;                  // Phóng to lắp đầy panel
+
+                // Nhét vào panel và ép nó hiển thị ra
+                panelContent.Controls.Add(frmThuNgan);
+                frmThuNgan.Show();
+            }
         }
         private void btnLogOut_Click(object sender, EventArgs e)
         {
@@ -84,6 +120,11 @@ namespace QLST
                 // 2. Đóng và hủy hoàn toàn Form hiện tại cùng tất cả tài nguyên đi kèm
                 this.Close();
             }
+        }
+
+        private void panelContent_Paint(object sender, PaintEventArgs e)
+        {
+
         }
 
         // Xóa bỏ các hàm Paint trống nếu không dùng để code gọn gàng hơn

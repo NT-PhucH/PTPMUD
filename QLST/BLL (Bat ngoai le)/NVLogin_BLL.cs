@@ -40,7 +40,7 @@ namespace QLST.BLL__Bat_ngoai_le_
             catch (Exception ex)
             {
                 // Log lỗi nếu cần thiết
-                message = "Đã xảy ra lỗi khi đăng nhập. Vui lòng thử lại sau.";
+                message = "Lỗi chi tiết: " + ex.Message;
                 return null;
             }
         }

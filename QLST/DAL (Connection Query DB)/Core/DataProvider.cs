@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -15,13 +14,15 @@ namespace QLST.DAL__Connection_Query_DB_.Query_DB
 
         public static DataProvider Instance
         {
-            get { if(instance == null) instance = new DataProvider(); return instance; }
+            get { if (instance == null) instance = new DataProvider(); return instance; }
             private set { instance = value; }
         }
 
         private DataProvider() { }
 
-        private string connectionString = "Data Source=.\\SQLEXPRESS;Initial Catalog=QuanLySieuThi;Integrated Security=True;";
+        // 👉 SỬA Ở ĐÂY: Trỏ sang file DB_Connection để lấy chuỗi kết nối
+        private string connectionString = DB_Connection.GetConnectionString();
+
         public DataTable ExecuteQuery(string query, SqlParameter[] parameters = null)
         {
             DataTable data = new DataTable();

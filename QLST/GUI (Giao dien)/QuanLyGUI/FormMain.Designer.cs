@@ -48,9 +48,10 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(200, 0);
+            this.panel1.Location = new System.Drawing.Point(300, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(913, 80);
+            this.panel1.Size = new System.Drawing.Size(1370, 125);
             this.panel1.TabIndex = 1;
             // 
             // panelMenu
@@ -67,8 +68,9 @@
             this.panelMenu.Controls.Add(this.btnLogOut);
             this.panelMenu.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelMenu.Location = new System.Drawing.Point(0, 0);
+            this.panelMenu.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panelMenu.Name = "panelMenu";
-            this.panelMenu.Size = new System.Drawing.Size(200, 709);
+            this.panelMenu.Size = new System.Drawing.Size(300, 1061);
             this.panelMenu.TabIndex = 2;
             // 
             // btnSettings
@@ -81,10 +83,11 @@
             this.btnSettings.ForeColor = System.Drawing.Color.Gainsboro;
             this.btnSettings.Image = global::QLST.Properties.Resources.settings;
             this.btnSettings.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSettings.Location = new System.Drawing.Point(0, 440);
+            this.btnSettings.Location = new System.Drawing.Point(0, 689);
+            this.btnSettings.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnSettings.Name = "btnSettings";
-            this.btnSettings.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.btnSettings.Size = new System.Drawing.Size(200, 60);
+            this.btnSettings.Padding = new System.Windows.Forms.Padding(18, 0, 0, 0);
+            this.btnSettings.Size = new System.Drawing.Size(300, 94);
             this.btnSettings.TabIndex = 26;
             this.btnSettings.Text = "        Settings";
             this.btnSettings.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -101,10 +104,11 @@
             this.btnThongKe.ForeColor = System.Drawing.Color.Gainsboro;
             this.btnThongKe.Image = global::QLST.Properties.Resources.chat_arrow_grow;
             this.btnThongKe.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnThongKe.Location = new System.Drawing.Point(0, 380);
+            this.btnThongKe.Location = new System.Drawing.Point(0, 595);
+            this.btnThongKe.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnThongKe.Name = "btnThongKe";
-            this.btnThongKe.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.btnThongKe.Size = new System.Drawing.Size(200, 60);
+            this.btnThongKe.Padding = new System.Windows.Forms.Padding(18, 0, 0, 0);
+            this.btnThongKe.Size = new System.Drawing.Size(300, 94);
             this.btnThongKe.TabIndex = 25;
             this.btnThongKe.Text = "        Thống kê";
             this.btnThongKe.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -121,10 +125,11 @@
             this.btnTichDiem.ForeColor = System.Drawing.Color.Gainsboro;
             this.btnTichDiem.Image = global::QLST.Properties.Resources.supplier;
             this.btnTichDiem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnTichDiem.Location = new System.Drawing.Point(0, 320);
+            this.btnTichDiem.Location = new System.Drawing.Point(0, 501);
+            this.btnTichDiem.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnTichDiem.Name = "btnTichDiem";
-            this.btnTichDiem.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.btnTichDiem.Size = new System.Drawing.Size(200, 60);
+            this.btnTichDiem.Padding = new System.Windows.Forms.Padding(18, 0, 0, 0);
+            this.btnTichDiem.Size = new System.Drawing.Size(300, 94);
             this.btnTichDiem.TabIndex = 24;
             this.btnTichDiem.Text = "        Tích điểm";
             this.btnTichDiem.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -141,10 +146,11 @@
             this.btnUser.ForeColor = System.Drawing.Color.Gainsboro;
             this.btnUser.Image = global::QLST.Properties.Resources.users;
             this.btnUser.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnUser.Location = new System.Drawing.Point(0, 260);
+            this.btnUser.Location = new System.Drawing.Point(0, 407);
+            this.btnUser.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnUser.Name = "btnUser";
-            this.btnUser.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.btnUser.Size = new System.Drawing.Size(200, 60);
+            this.btnUser.Padding = new System.Windows.Forms.Padding(18, 0, 0, 0);
+            this.btnUser.Size = new System.Drawing.Size(300, 94);
             this.btnUser.TabIndex = 23;
             this.btnUser.Text = "        User";
             this.btnUser.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -161,10 +167,11 @@
             this.btnKho.ForeColor = System.Drawing.Color.Gainsboro;
             this.btnKho.Image = global::QLST.Properties.Resources.boxes;
             this.btnKho.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnKho.Location = new System.Drawing.Point(0, 200);
+            this.btnKho.Location = new System.Drawing.Point(0, 313);
+            this.btnKho.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnKho.Name = "btnKho";
-            this.btnKho.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.btnKho.Size = new System.Drawing.Size(200, 60);
+            this.btnKho.Padding = new System.Windows.Forms.Padding(18, 0, 0, 0);
+            this.btnKho.Size = new System.Drawing.Size(300, 94);
             this.btnKho.TabIndex = 22;
             this.btnKho.Text = "        Kho";
             this.btnKho.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -181,10 +188,11 @@
             this.btnShopping.ForeColor = System.Drawing.Color.Gainsboro;
             this.btnShopping.Image = global::QLST.Properties.Resources.shopping;
             this.btnShopping.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnShopping.Location = new System.Drawing.Point(0, 140);
+            this.btnShopping.Location = new System.Drawing.Point(0, 219);
+            this.btnShopping.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnShopping.Name = "btnShopping";
-            this.btnShopping.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.btnShopping.Size = new System.Drawing.Size(200, 60);
+            this.btnShopping.Padding = new System.Windows.Forms.Padding(18, 0, 0, 0);
+            this.btnShopping.Size = new System.Drawing.Size(300, 94);
             this.btnShopping.TabIndex = 21;
             this.btnShopping.Text = "        Shopping";
             this.btnShopping.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -201,10 +209,11 @@
             this.btnHome.ForeColor = System.Drawing.Color.Gainsboro;
             this.btnHome.Image = global::QLST.Properties.Resources.home2;
             this.btnHome.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnHome.Location = new System.Drawing.Point(0, 80);
+            this.btnHome.Location = new System.Drawing.Point(0, 125);
+            this.btnHome.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnHome.Name = "btnHome";
-            this.btnHome.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.btnHome.Size = new System.Drawing.Size(200, 60);
+            this.btnHome.Padding = new System.Windows.Forms.Padding(18, 0, 0, 0);
+            this.btnHome.Size = new System.Drawing.Size(300, 94);
             this.btnHome.TabIndex = 20;
             this.btnHome.Text = "        Home";
             this.btnHome.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -216,8 +225,9 @@
             this.panelLogo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(58)))));
             this.panelLogo.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelLogo.Location = new System.Drawing.Point(0, 0);
+            this.panelLogo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panelLogo.Name = "panelLogo";
-            this.panelLogo.Size = new System.Drawing.Size(200, 80);
+            this.panelLogo.Size = new System.Drawing.Size(300, 125);
             this.panelLogo.TabIndex = 19;
             // 
             // btnLogOut
@@ -230,10 +240,11 @@
             this.btnLogOut.ForeColor = System.Drawing.Color.Gainsboro;
             this.btnLogOut.Image = global::QLST.Properties.Resources.logout;
             this.btnLogOut.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLogOut.Location = new System.Drawing.Point(0, 649);
+            this.btnLogOut.Location = new System.Drawing.Point(0, 967);
+            this.btnLogOut.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnLogOut.Name = "btnLogOut";
-            this.btnLogOut.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.btnLogOut.Size = new System.Drawing.Size(200, 60);
+            this.btnLogOut.Padding = new System.Windows.Forms.Padding(18, 0, 0, 0);
+            this.btnLogOut.Size = new System.Drawing.Size(300, 94);
             this.btnLogOut.TabIndex = 18;
             this.btnLogOut.Text = "        Log Out";
             this.btnLogOut.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -243,21 +254,24 @@
             // panelContent
             // 
             this.panelContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelContent.Location = new System.Drawing.Point(200, 80);
+            this.panelContent.Location = new System.Drawing.Point(300, 125);
+            this.panelContent.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panelContent.Name = "panelContent";
-            this.panelContent.Size = new System.Drawing.Size(913, 629);
+            this.panelContent.Size = new System.Drawing.Size(1370, 936);
             this.panelContent.TabIndex = 3;
+            this.panelContent.Paint += new System.Windows.Forms.PaintEventHandler(this.panelContent_Paint);
             // 
             // FormMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(246)))), ((int)(((byte)(247)))));
-            this.ClientSize = new System.Drawing.Size(1113, 709);
+            this.ClientSize = new System.Drawing.Size(1670, 1061);
             this.Controls.Add(this.panelContent);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panelMenu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "QLST";

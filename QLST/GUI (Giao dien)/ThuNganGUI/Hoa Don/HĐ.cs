@@ -8,8 +8,17 @@ namespace QLST
     {
         #region 1. THUỘC TÍNH (PROPERTIES) TRUYỀN DỮ LIỆU
 
+        #region 1. THUỘC TÍNH (PROPERTIES) TRUYỀN DỮ LIỆU
+
         // Thuộc tính để nhận tổng tiền cần thu từ FormThuNgan truyền sang
         public decimal TongTienCanThu { get; set; }
+
+        // 👉 BỔ SUNG 3 TÚI CHỨA DỮ LIỆU ĐỂ TRẢ VỀ CHO FORM THU NGÂN
+        public string PhuongThucThanhToan { get; private set; }
+        public long TienKhachDua { get; private set; }
+        public long TienThua { get; private set; }
+
+        #endregion
 
         #endregion
 
@@ -144,15 +153,28 @@ namespace QLST
         // Bấm nút "Hoàn tất" -> Xác nhận thanh toán thành công thành công
         private void BtnHoanTat_Click(object sender, EventArgs e)
         {
-            // Nếu dùng tiền mặt, kiểm tra xem khách đưa đủ tiền chưa
-            if (radioTienMat.Checked)
+            // 1. LẤY PHƯƠNG THỨC THANH TOÁN
+            if (radioChuyenKhoan.Checked)
             {
+                PhuongThucThanhToan = "Chuyển khoản";
+                TienKhachDua = (long)TongTienCanThu; // Chuyển khoản thì coi như đưa vừa đủ
+                TienThua = 0;
+            }
+            else
+            {
+                PhuongThucThanhToan = "Tiền mặt";
+
+                // Kiểm tra tiền khách đưa
                 string cleanInput = textKhachDua.Text.Replace(",", "").Replace(".", "");
                 if (!decimal.TryParse(cleanInput, out decimal tienKhachDua) || tienKhachDua < TongTienCanThu)
                 {
                     MessageBox.Show("Số tiền khách đưa chưa đủ hoặc không hợp lệ!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
+                    return; // Dừng lại không cho thanh toán
                 }
+
+                // Lưu thông tin tiền bạc lại
+                TienKhachDua = (long)tienKhachDua;
+                TienThua = (long)(tienKhachDua - TongTienCanThu);
             }
 
             this.DialogResult = DialogResult.OK; // Trả về trạng thái hoàn thành giao dịch thành công
@@ -167,5 +189,10 @@ namespace QLST
         }
 
         #endregion
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

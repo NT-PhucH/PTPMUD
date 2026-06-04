@@ -1,20 +1,26 @@
 ﻿using QLST.DAL__Connection_Query_DB_;
 using QLST.DTO__Type_OTP_;
+using QLST.DTO__Type_OTP_.ThuNganOTP;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QLST.BLL__Bat_ngoai_le_
 {
     public class ThanhToan_BLL
     {
-        private ThanhToanHD_DAL hoaDonDAL = new ThanhToanHD_DAL();
+        private ThanhToan_DAL dal = new ThanhToan_DAL();
 
-        public bool ThanhToanDonHang(HoaDonDTO donHang, decimal tienKhachDua, decimal tienThua)
+        public bool XuLyThanhToan(string maHD, int nhanVienID, long tongTien, string phuongThucTT, long tienKhachDua, long tienThua, List<ThanhToan_DTO> dsChiTiet, out string thongBao)
         {
-            return hoaDonDAL.LuuHoaDonChinhThuc(donHang, tienKhachDua, tienThua);
+            // Kiểm tra nghiệp vụ an toàn: Giỏ hàng trống không cho phép gửi xuống DB
+            if (dsChiTiet == null || dsChiTiet.Count == 0)
+            {
+                thongBao = "Giỏ hàng rỗng, không thể xử lý thanh toán!";
+                return false;
+            }
+
+            // Gọi xuống tầng dữ liệu xử lý tiếp
+            return dal.ThucHienThanhToan(maHD, nhanVienID, tongTien, phuongThucTT, tienKhachDua, tienThua, dsChiTiet, out thongBao);
         }
     }
 }

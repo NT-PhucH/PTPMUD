@@ -10,35 +10,25 @@ using System.Threading.Tasks;
 
 namespace QLST.DAL__Connection_Query_DB_
 {
-    public class TrungbaySP_DAL
+    public class TrungBaySP_DAL
     {
-        public List<SanPhamDTO> GetAllSanPham()
+        public List<TrungBaySP_DTO> GetAllSanPham()
         {
-            List<SanPhamDTO> list = new List<SanPhamDTO>();
+            List<TrungBaySP_DTO> list = new List<TrungBaySP_DTO>();
 
             DataTable data =
                 DataProvider.Instance.ExecuteQuery(
-                @"
-        SELECT 
-            sp.MaVach, 
-            sp.TenSP, 
-            sp.GiaBanHienTai, 
-            sp.MaLoai,
-            sp.TonKhoTong,
-            sp.HinhAnh,
-            lsp.TenLoai
-        FROM SanPham sp
-        INNER JOIN LoaiSanPham lsp ON sp.MaLoai = lsp.MaLoai");
+                "SELECT SanPhamID, MaVach, TenSP, GiaBanHienTai, LoaiSanPhamID, TonKhoTong, HinhAnh  FROM SanPham");
 
             foreach (DataRow row in data.Rows)
             {
-                SanPhamDTO sanPham = new SanPhamDTO()
+                TrungBaySP_DTO sanPham = new TrungBaySP_DTO()
                 {
+                    SanPhamID = Convert.ToInt32(row["SanPhamID"]),
                     MaSanPham = row["MaVach"].ToString(),
                     TenSanPham = row["TenSP"].ToString(),
                     DonGia = Convert.ToInt32(row["GiaBanHienTai"]),
-                    MaLoai = row["MaLoai"].ToString(),
-                    TenLoai = row["TenLoai"].ToString(),
+                    MaLoai = row["LoaiSanPhamID"].ToString(),
                     soLuongTonKho = Convert.ToInt32(row["TonKhoTong"]),
                     HinhAnh = row["HinhAnh"].ToString()
                 };
