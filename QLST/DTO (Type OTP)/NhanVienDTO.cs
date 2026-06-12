@@ -8,6 +8,7 @@ namespace QLST.DTO__Type_OTP_
 {
     public class NhanVienDTO
     {
+        public int NhanVienID { get; set; }
         public string MaNV { get; set; }
         public string TenNV { get; set; }
         public string Username { get; set; }

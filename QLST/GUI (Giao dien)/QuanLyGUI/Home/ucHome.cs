@@ -43,7 +43,7 @@ namespace QLST
         private void LoadDashboardData()
         {
             // 1. GỌI TẦNG BLL LẤY DỮ LIỆU THẬT
-            ThongKe_BLL thongKeBLL = new ThongKe_BLL();
+            ThongKeHome_BLL thongKeBLL = new ThongKeHome_BLL();
 
             double doanhThuHomQua = thongKeBLL.LayDoanhThuNgay(DateTime.Today.AddDays(-1));
             double doanhThuHomNay = thongKeBLL.LayDoanhThuNgay(DateTime.Today);
