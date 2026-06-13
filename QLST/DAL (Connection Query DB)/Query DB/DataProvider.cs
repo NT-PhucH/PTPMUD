@@ -19,9 +19,18 @@ namespace QLST.DAL__Connection_Query_DB_.Query_DB
             private set { instance = value; }
         }
 
-        private DataProvider() { }
+        private const string ConnectionStringName = "QuanLySieuThiv2";
+        private const string DefaultConnectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=QuanLySieuThiv2;Integrated Security=True;TrustServerCertificate=True";
+        private readonly string connectionString;
 
-        private string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=QuanLySieuThi;Integrated Security=True";
+        private DataProvider()
+        {
+            ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings[ConnectionStringName];
+            connectionString = settings != null && !string.IsNullOrWhiteSpace(settings.ConnectionString)
+                ? settings.ConnectionString
+                : DefaultConnectionString;
+        }
+
         public DataTable ExecuteQuery(string query, SqlParameter[] parameters = null)
         {
             DataTable data = new DataTable();

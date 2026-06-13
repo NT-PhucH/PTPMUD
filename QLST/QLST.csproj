@@ -55,6 +55,18 @@
     <Compile Include="DAL %28Connection Query DB%29\SanPhamDAL.cs" />
     <Compile Include="DTO %28Type OTP%29\Class1.cs" />
     <Compile Include="DTO %28Type OTP%29\SanPhamDTO.cs" />
+    <Compile Include="GUI %28Giao dien%29\Hoa Don\ModernButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\Hoa Don\PaymentSelectorBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\Hoa Don\PaymentSelectorBar.Designer.cs">
+      <DependentUpon>PaymentSelectorBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\Hoa Don\UnderlineTextBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="GUI %28Giao dien%29\Home\User.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -105,6 +117,12 @@
     </Compile>
     <Compile Include="GUI %28Giao dien%29\Thu Ngan\ProductCard.Designer.cs">
       <DependentUpon>ProductCard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\Thu Ngan\ToggleButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\Thu Ngan\ToggleButton.Designer.cs">
+      <DependentUpon>ToggleButton.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

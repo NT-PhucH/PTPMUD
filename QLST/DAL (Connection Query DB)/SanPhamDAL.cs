@@ -18,7 +18,7 @@ namespace QLST.DAL__Connection_Query_DB_
 
             DataTable data =
                 DataProvider.Instance.ExecuteQuery(
-                "SELECT MaVach, TenSP, GiaBanHienTai, MaLoai, TonKhoTong, HinhAnh  FROM SanPham");
+                "SELECT MaVach, TenSP, GiaBanHienTai, LoaiSanPhamID AS MaLoai, TonKhoTong, HinhAnh FROM SanPham");
 
             foreach (DataRow row in data.Rows)
             {

@@ -1,7 +1,5 @@
-C:\Users\AP\source\repos\restore\QLST\bin\Debug\QLST.exe.config
-C:\Users\AP\source\repos\restore\QLST\bin\Debug\QLST.exe
-C:\Users\AP\source\repos\restore\QLST\bin\Debug\QLST.pdb
 C:\Users\AP\source\repos\restore\QLST\obj\Debug\QLST.csproj.AssemblyReference.cache
+C:\Users\AP\source\repos\restore\QLST\obj\Debug\QLST.GUI__Giao_dien_.Hoa_Don.HoaDon.resources
 C:\Users\AP\source\repos\restore\QLST\obj\Debug\QLST.FormMain.resources
 C:\Users\AP\source\repos\restore\QLST\obj\Debug\QLST.HĐ.resources
 C:\Users\AP\source\repos\restore\QLST\obj\Debug\QLST.GUI__Giao_dien_.Home.User.resources
@@ -14,5 +12,8 @@ C:\Users\AP\source\repos\restore\QLST\obj\Debug\QLST.Properties.Resources.resour
 C:\Users\AP\source\repos\restore\QLST\obj\Debug\QLST.ucHome.resources
 C:\Users\AP\source\repos\restore\QLST\obj\Debug\QLST.csproj.GenerateResource.cache
 C:\Users\AP\source\repos\restore\QLST\obj\Debug\QLST.csproj.CoreCompileInputs.cache
+C:\Users\AP\source\repos\restore\QLST\bin\Debug\QLST.exe.config
+C:\Users\AP\source\repos\restore\QLST\bin\Debug\QLST.exe
+C:\Users\AP\source\repos\restore\QLST\bin\Debug\QLST.pdb
 C:\Users\AP\source\repos\restore\QLST\obj\Debug\QLST.exe
 C:\Users\AP\source\repos\restore\QLST\obj\Debug\QLST.pdb
