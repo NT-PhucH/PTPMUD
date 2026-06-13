@@ -118,6 +118,9 @@
     <Compile Include="GUI %28Giao dien%29\QuanLyGUI\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Ban Hang\ToggleButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Hoa Don\HĐ.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -150,6 +153,18 @@
     </Compile>
     <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Ban Hang\ProductCard.Designer.cs">
       <DependentUpon>ProductCard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Hoa Don\ModernButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Hoa Don\PaymentSelectorBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Hoa Don\PaymentSelectorBar.Designer.cs">
+      <DependentUpon>PaymentSelectorBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Hoa Don\UnderlineTextBox.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Helpers\InHoaDonHelper.cs" />
     <Compile Include="Program.cs" />
