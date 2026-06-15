@@ -93,18 +93,14 @@ namespace QLST
             }*/
             else if (clickedButton == btnSettings)
             {
-                // Tạo form Thu Ngân
-                FormThuNgan frmThuNgan = new FormThuNgan();
-
-                // TUYỆT CHIÊU: Lột bỏ vỏ bọc cửa sổ để biến Form thành UserControl
-                frmThuNgan.TopLevel = false;
-                frmThuNgan.FormBorderStyle = FormBorderStyle.None; // Bỏ viền và nút X đỏ
-                frmThuNgan.Dock = DockStyle.Fill;                  // Phóng to lắp đầy panel
-
-                // Nhét vào panel và ép nó hiển thị ra
-                panelContent.Controls.Add(frmThuNgan);
-                frmThuNgan.Show();
+                frmSettings frmKHo = new frmSettings();
+                frmKHo.TopLevel = false;
+                frmKHo.FormBorderStyle = FormBorderStyle.None;
+                frmKHo.Dock = DockStyle.Fill;
+                panelContent.Controls.Add(frmKHo);
+                frmKHo.Show();
             }
+            
             /*else if (clickedButton == btnKho) // đổi tên button cho đúng
             {
                 frmQuanLySanPham frmSP = new frmQuanLySanPham();
@@ -116,7 +112,7 @@ namespace QLST
             }*/
             else if (clickedButton == btnKho) // đổi tên button cho đúng
             {
-                
+
                 frmQuanLyKho frmKHo = new frmQuanLyKho();
                 frmKHo.TopLevel = false;
                 frmKHo.FormBorderStyle = FormBorderStyle.None;
@@ -137,6 +133,29 @@ namespace QLST
             else if (clickedButton == btn2)
             {
                 frmThongKe frmNV = new frmThongKe();
+                frmNV.TopLevel = false;
+                frmNV.FormBorderStyle = FormBorderStyle.None;
+                frmNV.Dock = DockStyle.Fill;
+                panelContent.Controls.Add(frmNV);
+                frmNV.Show();
+            }
+            else if (clickedButton == btn3)
+            {
+                // Tạo form Thu Ngân
+                FormThuNgan frmThuNgan = new FormThuNgan();
+
+                // TUYỆT CHIÊU: Lột bỏ vỏ bọc cửa sổ để biến Form thành UserControl
+                frmThuNgan.TopLevel = false;
+                frmThuNgan.FormBorderStyle = FormBorderStyle.None; // Bỏ viền và nút X đỏ
+                frmThuNgan.Dock = DockStyle.Fill;                  // Phóng to lắp đầy panel
+
+                // Nhét vào panel và ép nó hiển thị ra
+                panelContent.Controls.Add(frmThuNgan);
+                frmThuNgan.Show();
+            }
+            else if (clickedButton == btn4)
+            {
+                frmQuanLyKhachHang frmNV = new frmQuanLyKhachHang();
                 frmNV.TopLevel = false;
                 frmNV.FormBorderStyle = FormBorderStyle.None;
                 frmNV.Dock = DockStyle.Fill;
