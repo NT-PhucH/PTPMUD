@@ -67,6 +67,7 @@
     <Compile Include="BLL %28Bat ngoai le%29\ThuNganBLL\ThanhToan_BLL.cs" />
     <Compile Include="BLL %28Bat ngoai le%29\ThuNganBLL\TrungBaySP_BLL.cs" />
     <Compile Include="BLL %28Bat ngoai le%29\NVLogin_BLL.cs" />
+    <Compile Include="DAL %28Connection Query DB%29\Core\ThamSo_DAL.cs" />
     <Compile Include="DAL %28Connection Query DB%29\DB_Connection.cs" />
     <Compile Include="DAL %28Connection Query DB%29\QuanLyDAL\KhachHang_DAL.cs" />
     <Compile Include="DAL %28Connection Query DB%29\QuanLyDAL\Kho_DAL.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="DTO %28Type OTP%29\QuanLyDTO\ThongKe_DTO.cs" />
     <Compile Include="DTO %28Type OTP%29\SessionManager.cs" />
     <Compile Include="DTO %28Type OTP%29\NhanVienDTO.cs" />
+    <Compile Include="DTO %28Type OTP%29\ThamSo_DTO.cs" />
     <Compile Include="DTO %28Type OTP%29\ThuNganDTO\ThanhToan_DTO.cs" />
     <Compile Include="DTO %28Type OTP%29\ThuNganDTO\TrungBaySP_DTO.cs" />
     <Compile Include="GUI %28Giao dien%29\QuanLyGUI\frmQuanLyKhachHang.cs">
@@ -130,11 +132,11 @@
     <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Ban Hang\ToggleButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Hoa Don\HĐ.cs">
+    <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Hoa Don\frmThanhToan.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Hoa Don\HĐ.Designer.cs">
-      <DependentUpon>HĐ.cs</DependentUpon>
+    <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Hoa Don\frmThanhToan.Designer.cs">
+      <DependentUpon>frmThanhToan.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI %28Giao dien%29\Login\RoundedButton.cs">
       <SubType>Component</SubType>
@@ -172,6 +174,9 @@
     <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Hoa Don\PaymentSelectorBar.Designer.cs">
       <DependentUpon>PaymentSelectorBar.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Hoa Don\ucHoaDon.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Hoa Don\UnderlineTextBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -196,8 +201,8 @@
     <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\frmThongKe.resx">
       <DependentUpon>frmThongKe.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI %28Giao dien%29\ThuNganGUI\Hoa Don\HĐ.resx">
-      <DependentUpon>HĐ.cs</DependentUpon>
+    <EmbeddedResource Include="GUI %28Giao dien%29\ThuNganGUI\Hoa Don\frmThanhToan.resx">
+      <DependentUpon>frmThanhToan.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\Home\User.resx">
       <DependentUpon>User.cs</DependentUpon>
@@ -216,6 +221,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI %28Giao dien%29\ThuNganGUI\Ban Hang\ProductCard.resx">
       <DependentUpon>ProductCard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI %28Giao dien%29\ThuNganGUI\Hoa Don\PaymentSelectorBar.resx">
+      <DependentUpon>PaymentSelectorBar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

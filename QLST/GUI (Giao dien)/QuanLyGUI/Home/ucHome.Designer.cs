@@ -403,7 +403,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "ucHome";
             this.Size = new System.Drawing.Size(1684, 1261);
-            this.Load += new System.EventHandler(this.ucHome_Load);
+            
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();

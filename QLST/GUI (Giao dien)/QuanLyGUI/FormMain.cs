@@ -91,6 +91,24 @@ namespace QLST
                 panelContent.Controls.Clear();
                 panelContent.Controls.Add(giaoDienKho);
             }*/
+            else if (clickedButton == btnTichDiem)
+            {
+                frmQuanLyKhachHang frmNV = new frmQuanLyKhachHang();
+                frmNV.TopLevel = false;
+                frmNV.FormBorderStyle = FormBorderStyle.None;
+                frmNV.Dock = DockStyle.Fill;
+                panelContent.Controls.Add(frmNV);
+                frmNV.Show();
+            }
+            else if (clickedButton == btnThongKe)
+            {
+                frmThongKe frmNV = new frmThongKe();
+                frmNV.TopLevel = false;
+                frmNV.FormBorderStyle = FormBorderStyle.None;
+                frmNV.Dock = DockStyle.Fill;
+                panelContent.Controls.Add(frmNV);
+                frmNV.Show();
+            }
             else if (clickedButton == btnSettings)
             {
                 frmSettings frmKHo = new frmSettings();
@@ -100,8 +118,8 @@ namespace QLST
                 panelContent.Controls.Add(frmKHo);
                 frmKHo.Show();
             }
-            
-            /*else if (clickedButton == btnKho) // đổi tên button cho đúng
+
+            else if (clickedButton == btn2) // đổi tên button cho đúng
             {
                 frmQuanLySanPham frmSP = new frmQuanLySanPham();
                 frmSP.TopLevel = false;
@@ -109,7 +127,7 @@ namespace QLST
                 frmSP.Dock = DockStyle.Fill;
                 panelContent.Controls.Add(frmSP);
                 frmSP.Show();
-            }*/
+            }
             else if (clickedButton == btnKho) // đổi tên button cho đúng
             {
 
@@ -130,16 +148,8 @@ namespace QLST
                 frmNCC.Show();
 
             }
-            else if (clickedButton == btn2)
-            {
-                frmThongKe frmNV = new frmThongKe();
-                frmNV.TopLevel = false;
-                frmNV.FormBorderStyle = FormBorderStyle.None;
-                frmNV.Dock = DockStyle.Fill;
-                panelContent.Controls.Add(frmNV);
-                frmNV.Show();
-            }
-            else if (clickedButton == btn3)
+            
+            else if (clickedButton == btnShopping)
             {
                 // Tạo form Thu Ngân
                 FormThuNgan frmThuNgan = new FormThuNgan();
@@ -153,15 +163,7 @@ namespace QLST
                 panelContent.Controls.Add(frmThuNgan);
                 frmThuNgan.Show();
             }
-            else if (clickedButton == btn4)
-            {
-                frmQuanLyKhachHang frmNV = new frmQuanLyKhachHang();
-                frmNV.TopLevel = false;
-                frmNV.FormBorderStyle = FormBorderStyle.None;
-                frmNV.Dock = DockStyle.Fill;
-                panelContent.Controls.Add(frmNV);
-                frmNV.Show();
-            }
+            
         }
         private void btnLogOut_Click(object sender, EventArgs e)
         {

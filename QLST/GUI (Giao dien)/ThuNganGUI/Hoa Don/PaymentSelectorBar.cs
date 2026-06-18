@@ -91,7 +91,7 @@ namespace QLST
 
             // 4. Vẽ Nội dung (Icon, Chữ, Dấu tích)
             DrawButtonContent(g, "Tiền mặt", rectCash, isCashSelected, true);
-            DrawButtonContent(g, "Chuyển khoản", rectTransfer, !isCashSelected, false);
+            DrawButtonContent(g, "QR", rectTransfer, !isCashSelected, false);
         }
 
         // --- HÀM VẼ CHI TIẾT BÊN TRONG MỖI NÚT ---
@@ -170,6 +170,23 @@ namespace QLST
             path.AddArc(rect.X, rect.Bottom - radius, radius, radius, 90, 90);
             path.CloseFigure();
             return path;
+        }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // PaymentSelectorBar
+            // 
+            this.Name = "PaymentSelectorBar";
+            this.Load += new System.EventHandler(this.PaymentSelectorBar_Load);
+            this.ResumeLayout(false);
+
+        }
+
+        private void PaymentSelectorBar_Load(object sender, EventArgs e)
+        {
+
         }
     }
 

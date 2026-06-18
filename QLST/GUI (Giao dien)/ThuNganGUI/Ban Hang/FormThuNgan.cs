@@ -2,6 +2,7 @@
 using QLST.DTO__Type_OTP_;
 using QLST.DTO__Type_OTP_.ThuNganOTP;
 using QLST.GUI__Giao_dien_;
+using QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,6 +32,7 @@ namespace QLST
         // Thành phần UI động cho Dropdown Thông báo (Hóa đơn tạm)
         private Panel pnlDropdownThongBao;
         private FlowLayoutPanel flpDanhSachThongBao;
+        private object formHoaDon;
         private readonly List<HoaDonTam> danhSachHoaDonTam = new List<HoaDonTam>();
 
         // Lớp cấu trúc dữ liệu lưu trữ hóa đơn tạm thời
@@ -281,81 +283,52 @@ namespace QLST
         {
             if (flowLayoutPanel1.Controls.Count == 0)
             {
-                MessageBox.Show("Không có sản phẩm nào để thanh toán!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Không có sản phẩm nào để thanh toán!",
+                    "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Lấy số tiền hiện tại trên giao diện giỏ hàng
-            decimal.TryParse(label9.Text.Replace(",", ""), out decimal tongTien);
+            // ── 1. Build danh sách DongHoaDon từ giỏ hàng ────────────────────────
+            var danhSachSP = new List<DongHoaDon>();
+            long tongTienChua = 0;
 
-            HĐ formHoaDon = new HĐ();
-            formHoaDon.TongTienCanThu = tongTien; // Truyền tiền qua form hóa đơn
-            formHoaDon.StartPosition = FormStartPosition.CenterParent;
+            foreach (Control ctrl in flowLayoutPanel1.Controls)
+            {
+                if (ctrl is KhungMonHang card)
+                {
+                    long donGia = (long)(card.ThanhTien / card.SoLuong);
+                    long thanhTien = (long)card.ThanhTien;
+                    danhSachSP.Add(new DongHoaDon
+                    {
+                        MaVach = card.MaSP,
+                        TenSP = card.TenSP,       // ← nếu KhungMonHang có property TenSP
+                        SoLuong = card.SoLuong,
+                        DonGia = donGia,
+                        ThanhTien = thanhTien,
+                        SanPhamID = card.SanPhamID
+                    });
+                    tongTienChua += thanhTien;
+                }
+            }
 
-            DialogResult ketQua = formHoaDon.ShowDialog();
+            // ── 2. Mở frmThanhToan mới ────────────────────────────────────────────
+            var formThanhToan = new frmThanhToan(danhSachSP, tongTienChua);
+            formThanhToan.StartPosition = FormStartPosition.CenterParent;
+            DialogResult ketQua = formThanhToan.ShowDialog();
 
+            // ── 3. Xử lý kết quả ─────────────────────────────────────────────────
             if (ketQua == DialogResult.Retry)
             {
                 LuuTamHoaDonHienTai();
             }
             else if (ketQua == DialogResult.OK)
             {
-                // Lấy 3 thông tin quan trọng từ formHoaDon về
-                string cachTra = formHoaDon.PhuongThucThanhToan;
-                long khachDua = formHoaDon.TienKhachDua;
-                long traLai = formHoaDon.TienThua;
-
-                try
-                {
-                    // === 1. SỬA LỖI TÊN CLASS: Dùng ThanhToan_DTO thay cho ChiTietHD_DTO ===
-                    List<ThanhToan_DTO> dsChiTiet = new List<ThanhToan_DTO>();
-
-                    foreach (Control ctrl in flowLayoutPanel1.Controls)
-                    {
-                        if (ctrl is KhungMonHang card)
-                        {
-                            ThanhToan_DTO chiTiet = new ThanhToan_DTO
-                            {
-                                SanPhamID = card.SanPhamID, // Lấy ID ẩn từ KhungMonHang
-                                SoLuongMua = card.SoLuong,
-                                DonGiaBan = (int)(card.ThanhTien / card.SoLuong),
-                                ThanhTien = (long)card.ThanhTien
-                            };
-                            dsChiTiet.Add(chiTiet);
-                        }
-                    }
-
-                    // === 2. CHUẨN BỊ THÔNG TIN CHUNG ===
-                    string maHD = "HD_" + DateTime.Now.ToString("ddMMyy_HHmmss");
-
-                    // Tạm thời hardcode ID nhân viên là 1 để test thanh toán
-                    int nhanVienID = 1;
-
-                    // === 3. SỬA LỖI TRUYỀN THIẾU THAM SỐ ===
-                    ThanhToan_BLL bll = new ThanhToan_BLL();
-                    string thongBaoKetQua = "";
-
-                    // TRUYỀN ĐỦ THAM SỐ: maHD, nhanVienID, tongTien, cachTra, khachDua, traLai, dsChiTiet, thongBaoKetQua
-                    bool ketQuaLuuDB = bll.XuLyThanhToan(maHD, nhanVienID, (long)tongTien, cachTra, khachDua, traLai, dsChiTiet, out thongBaoKetQua);
-
-                    if (ketQuaLuuDB)
-                    {
-                        // === 4. THANH TOÁN THÀNH CÔNG -> DỌN DẸP UI ===
-                        flowLayoutPanel1.Controls.Clear();
-                        TinhTongDonHang();
-                        LoadDuLieuBanDau();
-
-                        MessageBox.Show("Giao dịch thanh toán hoàn tất và đã lưu vào hệ thống thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Thanh toán thất bại: " + thongBaoKetQua, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Đã xảy ra lỗi trong quá trình xử lý hóa đơn: " + ex.Message, "Lỗi phần mềm", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                // TODO: Gọi ThanhToan_BLL lưu DB khi bạn kia làm xong
+                flowLayoutPanel1.Controls.Clear();
+                TinhTongDonHang();
+                LoadDuLieuBanDau();
+                MessageBox.Show("Thanh toán thành công!", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
         #endregion
@@ -583,7 +556,7 @@ namespace QLST
 
         private void panelAccount_MouseEnter(object sender, EventArgs e)
         {
-            cmsAccount.Show(panelAccount, new Point(0, panelAccount.Height));
+            //cmsAccount.Show(panelAccount, new Point(0, panelAccount.Height));
         }
         private void MenuDangXuat_Click(object sender, EventArgs e)
         {
@@ -615,6 +588,11 @@ namespace QLST
         }
 
         private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }

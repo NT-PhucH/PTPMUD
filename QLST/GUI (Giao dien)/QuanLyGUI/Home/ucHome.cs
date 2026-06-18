@@ -13,25 +13,38 @@ namespace QLST
 {
     public partial class ucHome : UserControl
     {
+        // THÊM BIẾN FLAG NÀY: Để tránh việc dữ liệu bị gọi load trùng 2 lần khi khởi động
+        private bool _isFirstLoad = true;
+
         public ucHome()
         {
             InitializeComponent();
 
             // --- BẬT TÍNH NĂNG DOUBLEBUFFERED ĐỂ GIẢM NHẤP NHÁY ---
-            // Cách 1: Sử dụng Reflection để bật thuộc tính DoubleBuffered ẩn
             typeof(UserControl).InvokeMember("DoubleBuffered",
                 System.Reflection.BindingFlags.SetProperty | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic,
                 null, this, new object[] { true });
 
-            // Hoặc cách 2 đơn giản hơn (nếu bạn kế thừa trực tiếp từ Control):
-            // this.DoubleBuffered = true;
+            // ĐĂNG KÝ CÁC SỰ KIỆN NGAY TẠI ĐÂY (An toàn tuyệt đối, không chạm vào Designer)
+            this.Load += UcHome_Load;
+            this.VisibleChanged += UcHome_VisibleChanged;
         }
 
-        // Sự kiện chạy khi giao diện ucHome được nạp lên màn hình
-        private void ucHome_Load(object sender, EventArgs e)
+        // 1. CHẠY KHI MỞ APP LÊN LẦN ĐẦU TIÊN
+        private void UcHome_Load(object sender, EventArgs e)
         {
-            // Gọi hàm nạp dữ liệu ngay khi vừa mở màn hình lên
             LoadDashboardData();
+            _isFirstLoad = false; // Đánh dấu đã chạy xong lần đầu
+        }
+
+        // 2. CHẠY KHI CHUYỂN QUA LẠI GIỮA CÁC TAB
+        private void UcHome_VisibleChanged(object sender, EventArgs e)
+        {
+            // Chỉ chạy khi tab được hiện lên VÀ không phải là lần load đầu tiên (để tránh trùng lặp)
+            if (this.Visible && !_isFirstLoad)
+            {
+                LoadDashboardData();
+            }
         }
 
         /// <summary>
@@ -77,6 +90,19 @@ namespace QLST
                     lblDoanhThuHomNay.ForeColor = Color.FromArgb(51, 51, 51);
                 }
             }
+            // =======================================================
+            // CHÈN ĐOẠN CODE MỚI NÀY VÀO ĐÂY ĐỂ ĐỔI CHỮ VÀ HIỂN THỊ SỐ
+            // =======================================================
+            // 1. Đổi tiêu đề từ "Tổng đơn hàng:" thành "Tổng hóa đơn hôm nay:" tại lúc chạy
+            label2.Text = "Tổng hóa đơn hôm nay:";
+
+            // 2. Gọi tầng BLL lấy tổng số hóa đơn thực tế trong ngày hôm nay từ database
+            int soLuongHoaDonNay = thongKeBLL.LaySoLuongHoaDonNgay(DateTime.Today);
+
+            // 3. Hiển thị con số đó lên label hiển thị giá trị (lblTongDonHang)
+            lblTongDonHang.Text = soLuongHoaDonNay.ToString("N0") + " hóa đơn";
+            lblTongDonHang.ForeColor = Color.FromArgb(0, 122, 204); // Đổi sang màu xanh dương cho đẹp
+            lblTongDonHang.Font = new Font("Segoe UI", 12f, FontStyle.Bold); // Định dạng chữ to rõ ràng
 
             // =======================================================
             // XỬ LÝ VẼ BIỂU ĐỒ ĐỘNG CUỘN 7 NGÀY GẦN NHẤT + NGÀY MAI
@@ -110,6 +136,28 @@ namespace QLST
                     double doanhThuNgayCu = thongKeBLL.LayDoanhThuNgay(ngayHienTai);
                     chartDoanhThu.Series["Doanh thu"].Points.AddXY(tenThu, doanhThuNgayCu);
                 }
+            }
+            // CẬP NHẬT CẢNH BÁO KHO
+            lbHangHetTon.Items.Clear();
+            List<string> sapHetTon = thongKeBLL.LayDanhSachSapHetTon();
+            if (sapHetTon.Count > 0)
+            {
+                foreach (var item in sapHetTon) lbHangHetTon.Items.Add(item);
+            }
+            else
+            {
+                lbHangHetTon.Items.Add("✓ Kho hàng ổn định, không có SP sắp hết.");
+            }
+
+            lbHangHetHan.Items.Clear();
+            List<string> sapHetHan = thongKeBLL.LayDanhSachSapHetHan();
+            if (sapHetHan.Count > 0)
+            {
+                foreach (var item in sapHetHan) lbHangHetHan.Items.Add(item);
+            }
+            else
+            {
+                lbHangHetHan.Items.Add("✓ Không có SP sắp hết hạn.");
             }
         }
 

@@ -95,6 +95,10 @@ namespace QLST.GUI__Giao_dien_
         {
             get { return lblMaSP.Text; }
         }
+        public string TenSP
+        {
+            get { return lblTenSP.Text; }
+        }
 
         public void TangSoLuong()
         {

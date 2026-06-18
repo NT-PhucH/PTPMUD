@@ -1,5 +1,6 @@
 ﻿using QLST.DAL__Connection_Query_DB_;
 using System;
+using System.Collections.Generic;
 
 namespace QLST.BLL__Bat_ngoai_le_
 {
@@ -11,5 +12,11 @@ namespace QLST.BLL__Bat_ngoai_le_
         {
             return dal.GetDoanhThuTheoNgay(ngay);
         }
+        public int LaySoLuongHoaDonNgay(DateTime ngay)
+        {
+            return dal.GetSoLuongHoaDonTheoNgay(ngay);
+        }
+        public List<string> LayDanhSachSapHetTon() => dal.GetHangSapHetTon();
+        public List<string> LayDanhSachSapHetHan() => dal.GetHangSapHetHan();
     }
 }
