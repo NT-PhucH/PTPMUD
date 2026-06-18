@@ -1,28 +1,19 @@
 ﻿using System;
+using System.Data;
 using System.Drawing;
+using System.Linq;
+using System.Reflection.Emit;
 using System.Windows.Forms;
 
 namespace QLST
 {
     public partial class HĐ : Form
     {
-        #region 1. THUỘC TÍNH (PROPERTIES) TRUYỀN DỮ LIỆU
-
-        #region 1. THUỘC TÍNH (PROPERTIES) TRUYỀN DỮ LIỆU
-
-        // Thuộc tính để nhận tổng tiền cần thu từ FormThuNgan truyền sang
-        public decimal TongTienCanThu { get; set; }
-
-        // 👉 BỔ SUNG 3 TÚI CHỨA DỮ LIỆU ĐỂ TRẢ VỀ CHO FORM THU NGÂN
-        public string PhuongThucThanhToan { get; private set; }
-        public long TienKhachDua { get; private set; }
-        public long TienThua { get; private set; }
-
-        #endregion
-
-        #endregion
-
-        #region 2. KHỞI TẠO FORM & SỰ KIỆN HỆ THỐNG
+        public decimal TongTienCanThu { get; set; } // Nhận từ FormThuNgan truyền sang
+        public string PhuongThucThanhToan { get; set; }
+        public long TienKhachDua { get; set; }
+        public long TienThua { get; set; }
+        private bool isFormatting = false; // Cờ hiệu để tránh lỗi lặp vô hạn khi format text
 
         public HĐ()
         {
@@ -34,165 +25,257 @@ namespace QLST
         {
             this.Load += HĐ_Load;
 
-            // Đăng ký sự kiện thay đổi phương thức thanh toán
-            radioTienMat.CheckedChanged += RadioTienMat_CheckedChanged;
-            radioChuyenKhoan.CheckedChanged += RadioChuyenKhoan_CheckedChanged;
-
-            // Đăng ký sự kiện nhập tiền khách đưa
-            textKhachDua.TextChanged += TextKhachDua_TextChanged;
-
-            // Đăng ký sự kiện click cho các nút chức năng
+            // Sự kiện đóng Form
             picClose.Click += PicClose_Click;
             picAnHD.Click += PicAnHD_Click;
-            button1.Click += BtnKhongInHD_Click;
-            button2.Click += BtnHoanTat_Click;
+            btnKhongInHD.Click += BtnKhongInHD_Click;
+            btnInHD.Click += BtnHoanTat_Click;
+
+            txtGiamGia.TextChanged += O_NhapTien_TextChanged;
+            txtVAT.TextChanged += O_NhapTien_TextChanged;
+            txtThuKhac.TextChanged += O_NhapTien_TextChanged;
+            txtKhachDua.TextChanged += O_NhapTien_TextChanged;
+
+            // Cập nhật tên txtSDT ở đây
+            txtSDT.TextChanged += O_NhapSDT_TextChanged;
+
+            // THÊM DÒNG NÀY: Sự kiện gạt nút tích điểm
+            toggleButton3.CheckedChanged += ToggleButton3_CheckedChanged;
         }
 
         private void HĐ_Load(object sender, EventArgs e)
         {
-            // Hiển thị số tiền cần thu lên giao diện khi nạp Form
-            lblTongThu.Text = TongTienCanThu.ToString("N0");
-            lblTienThua.Text = "0";
+            // Nạp dữ liệu ban đầu lên UI
+            lblTongTienHang.Text = TongTienCanThu.ToString("N0");
+            label14.Text = "0";
 
-            // Mặc định chọn phương thức Tiền mặt khi mở Form
-            radioTienMat.Checked = true;
-            pictureQR.Visible = false;
+            // THÊM 2 DÒNG NÀY: Ẩn phần quy đổi và tắt nút gạt tích điểm lúc ban đầu
+            panel13.Visible = false;
+            toggleButton3.Checked = false;
+
+            // Tính toán ngay lần đầu mở form
+            TinhToanHoaDon();
         }
 
-        #endregion
-
-        #region 3. LOGIC XỬ LÝ TÍNH TOÁN TIỀN MẶT & TIỀN THỪA
-
-        private void TextKhachDua_TextChanged(object sender, EventArgs e)
+        // ==========================================
+        // KHU VỰC 1: HÀM XỬ LÝ LOGIC TÍNH TOÁN
+        // ==========================================
+        private void TinhToanHoaDon()
         {
-            if (string.IsNullOrWhiteSpace(textKhachDua.Text))
+            // 1. Lấy dữ liệu từ các ô nhập (nếu để trống thì tính là 0)
+            decimal giamGia = ParseMoney(txtGiamGia.Text);
+            decimal vat = ParseMoney(txtVAT.Text);
+            decimal thuKhac = ParseMoney(txtThuKhac.Text);
+            decimal tienKhachDua = ParseMoney(txtKhachDua.Text);
+
+            // 2. Tính khách cần trả
+            decimal khachCanTra = TongTienCanThu - giamGia + vat + thuKhac;
+            if (khachCanTra < 0) khachCanTra = 0;
+
+            // 3. Đẩy kết quả lên UI
+            label10.Text = khachCanTra.ToString("N0");
+            label16.Text = khachCanTra.ToString("N0");
+            lblKhachThanhToan.Text = khachCanTra.ToString("N0");
+
+            // ==========================================
+            // LOGIC MỚI: TÍNH ĐIỂM QUY ĐỔI (Dựa trên Tổng tiền hàng ban đầu)
+            // ==========================================
+            // Lấy TongTienCanThu chia cho 1000 thay vì khachCanTra
+            int diemQuyDoi = (int)(TongTienCanThu / 1000);
+
+            // Hiển thị lên Label
+            lblQuyDoiDiem.Text = "+" + diemQuyDoi.ToString("N0") + " điểm";
+
+
+            // ==========================================
+            // KIỂM TRA ĐỔI MÀU CHỮ TIỀN KHÁCH ĐƯA
+            // ==========================================
+            if (tienKhachDua > 0 && tienKhachDua < khachCanTra)
             {
-                lblTienThua.Text = "0";
-                return;
-            }
-
-            // Bỏ các dấu phân cách nghìn nếu có để tính toán chính xác
-            string cleanInput = textKhachDua.Text.Replace(",", "").Replace(".", "");
-
-            if (decimal.TryParse(cleanInput, out decimal tienKhachDua))
-            {
-                // Tự động định dạng lại chuỗi tiền tệ khi người dùng đang nhập cho dễ nhìn (Ví dụ: 100,000)
-                textKhachDua.TextChanged -= TextKhachDua_TextChanged;
-                textKhachDua.Text = tienKhachDua.ToString("N0");
-                textKhachDua.SelectionStart = textKhachDua.Text.Length; // Đẩy con trỏ chuột về cuối
-                textKhachDua.TextChanged += TextKhachDua_TextChanged;
-
-                // Tính tiền thừa trả khách
-                decimal tienThua = tienKhachDua - TongTienCanThu;
-
-                if (tienThua >= 0)
-                {
-                    lblTienThua.Text = tienThua.ToString("N0");
-                    lblTienThua.ForeColor = Color.Green; // Tiền hợp lệ hiện màu xanh
-                }
-                else
-                {
-                    lblTienThua.Text = $"Thiếu: {Math.Abs(tienThua):N0}";
-                    lblTienThua.ForeColor = Color.Red; // Thiếu tiền hiện màu đỏ
-                }
+                txtKhachDua.ForeColor = Color.Red; // Thiếu tiền -> Chữ đỏ
             }
             else
             {
-                lblTienThua.Text = "Không hợp lệ";
-                lblTienThua.ForeColor = Color.Red;
+                txtKhachDua.ForeColor = Color.Black; // Đủ tiền hoặc trống -> Chữ đen
             }
-        }
 
-        private void RadioTienMat_CheckedChanged(object sender, EventArgs e)
-        {
-            if (radioTienMat.Checked)
+            // 4. Tính tiền thừa
+            decimal tienThua = tienKhachDua - khachCanTra;
+            if (tienKhachDua > 0 && tienThua >= 0)
             {
-                // Hiện các control nhập tiền mặt, ẩn ảnh QR code đi
-                pictureQR.Visible = false; 
-                txtKhachDua.Visible = true;
-                textKhachDua.Visible = true;
-                vnd1.Visible = true;
-                txtTienThua.Visible = true;
-                lblTienThua.Visible = true;
-                vnd2.Visible = true;
+                lblTienThua.Text = tienThua.ToString("N0");
             }
-        }
-
-        private void RadioChuyenKhoan_CheckedChanged(object sender, EventArgs e)
-        {
-            if (radioChuyenKhoan.Checked) 
+            else
             {
-                // Hiện ảnh QR thanh toán, ẩn toàn bộ phần tính tiền thừa đi cho gọn giao diện
-                pictureQR.Visible = true;
-                txtKhachDua.Visible = false;
-                textKhachDua.Visible = false;
-                vnd1.Visible = false;
-                txtTienThua.Visible = false;
-                lblTienThua.Visible = false;
-                vnd2.Visible = false;
+                lblTienThua.Text = "0";
             }
         }
 
-        #endregion
+        // Hàm hỗ trợ: Chuyển đổi "1,000,000" về số thực tế 1000000 để máy tính hiểu
+        private decimal ParseMoney(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input)) return 0;
+            // Xóa dấu phẩy để parse
+            string cleanInput = input.Replace(",", "").Replace(".", "");
+            if (decimal.TryParse(cleanInput, out decimal result))
+                return result;
+            return 0;
+        }
 
-        #region 4. SỰ KIỆN ĐIỀU HƯỚNG & ĐÓNG FORM (BUTTONS & PICTUREBOXES)
+        // ==========================================
+        // KHU VỰC 2: RÀNG BUỘC KÝ TỰ VÀ ĐỊNH DẠNG
+        // ==========================================
+        private void O_NhapTien_TextChanged(object sender, EventArgs e)
+        {
+            if (isFormatting) return;
 
-        // Bấm nút X hoặc nút "Không in HĐ" -> Hủy giao dịch thanh toán
+            UnderlineTextBox txt = sender as UnderlineTextBox;
+            if (txt == null) return;
+
+            isFormatting = true;
+
+            // Lưu lại vị trí con trỏ hiện tại và độ dài văn bản cũ
+            int cursorPosition = txt.SelectionStart;
+            int oldLength = txt.Text.Length;
+
+            // Lọc lấy số
+            string digitsOnly = new string(txt.Text.Where(char.IsDigit).ToArray());
+
+            if (decimal.TryParse(digitsOnly, out decimal value) && value > 0)
+            {
+                txt.Text = value.ToString("N0"); // Tự động thêm dấu phẩy
+            }
+            else
+            {
+                txt.Text = "";
+            }
+
+            // Tính toán lại vị trí con trỏ chuột cho mượt mà
+            int newLength = txt.Text.Length;
+            cursorPosition += (newLength - oldLength); // Bù trừ số dấu phẩy được sinh ra
+            if (cursorPosition < 0) cursorPosition = 0;
+
+            // Trả con trỏ về đúng vị trí
+            txt.SelectionStart = cursorPosition;
+
+            isFormatting = false;
+
+            // Tự động tính toán lại Form
+            TinhToanHoaDon();
+        }
+        private void O_NhapSDT_TextChanged(object sender, EventArgs e)
+        {
+            UnderlineTextBox txt = sender as UnderlineTextBox;
+            if (txt != null)
+            {
+                // Lọc ký tự chỉ giữ lại số
+                string digitsOnly = new string(txt.Text.Where(char.IsDigit).ToArray());
+                if (txt.Text != digitsOnly)
+                {
+                    txt.Text = digitsOnly;
+                }
+
+                // LOGIC MỚI: Nếu ô SĐT bị xóa trống mà nút tích điểm đang bật, thì tự động tắt nút đi
+                if (string.IsNullOrWhiteSpace(txt.Text) && toggleButton3.Checked)
+                {
+                    toggleButton3.Checked = false;
+                }
+            }
+        }
+
+        private void underlineTextBox5_Load(object sender, EventArgs e)
+        {
+            // Phương thức trống do Designer sinh ra, cứ giữ nguyên
+        }
+
+        // ==========================================
+        // KHU VỰC 3: CÁC NÚT ĐIỀU HƯỚNG
+        // ==========================================
         private void PicClose_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel; 
-            this.Close(); 
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
         }
 
         private void BtnKhongInHD_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel; 
-            this.Close(); 
-        }
+            decimal khachCanTra = ParseMoney(lblKhachThanhToan.Text);
+            decimal tienKhachDua = ParseMoney(txtKhachDua.Text);
 
-        // Bấm nút "Hoàn tất" -> Xác nhận thanh toán thành công thành công
-        private void BtnHoanTat_Click(object sender, EventArgs e)
-        {
-            // 1. LẤY PHƯƠNG THỨC THANH TOÁN
-            if (radioChuyenKhoan.Checked)
+            if (tienKhachDua < khachCanTra)
             {
-                PhuongThucThanhToan = "Chuyển khoản";
-                TienKhachDua = (long)TongTienCanThu; // Chuyển khoản thì coi như đưa vừa đủ
-                TienThua = 0;
-            }
-            else
-            {
-                PhuongThucThanhToan = "Tiền mặt";
-
-                // Kiểm tra tiền khách đưa
-                string cleanInput = textKhachDua.Text.Replace(",", "").Replace(".", "");
-                if (!decimal.TryParse(cleanInput, out decimal tienKhachDua) || tienKhachDua < TongTienCanThu)
-                {
-                    MessageBox.Show("Số tiền khách đưa chưa đủ hoặc không hợp lệ!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return; // Dừng lại không cho thanh toán
-                }
-
-                // Lưu thông tin tiền bạc lại
-                TienKhachDua = (long)tienKhachDua;
-                TienThua = (long)(tienKhachDua - TongTienCanThu);
+                // Chỉ nháy con trỏ lại vào ô nhập và không làm gì cả (vì chữ đã đỏ rồi)
+                txtKhachDua.Focus();
+                return;
             }
 
-            this.DialogResult = DialogResult.OK; // Trả về trạng thái hoàn thành giao dịch thành công
+            // Nếu đủ tiền thì mới đóng form và báo thành công
+            this.DialogResult = DialogResult.OK;
             this.Close();
         }
 
-        // Bấm nút Ẩn Hóa Đơn -> Đưa đơn vào khay hệ thống chờ (Dropdown thông báo)
+        private void BtnHoanTat_Click(object sender, EventArgs e)
+        {
+            decimal khachCanTra = ParseMoney(lblKhachThanhToan.Text);
+            decimal tienKhachDua = ParseMoney(txtKhachDua.Text);
+
+            // Kiểm tra thiếu tiền
+            if (tienKhachDua < khachCanTra)
+            {
+                txtKhachDua.Focus();
+                return; // Chặn không cho thanh toán
+            }
+
+            // ==========================================
+            // THÊM ĐOẠN NÀY: LƯU DỮ LIỆU TRƯỚC KHI ĐÓNG FORM
+            // ==========================================
+            this.TienKhachDua = (long)tienKhachDua;
+            this.TienThua = (long)ParseMoney(lblTienThua.Text);
+
+            // Ghi chú: Nếu bạn đã xử lý được Custom Control PaymentSelectorBar thì lấy từ đó. 
+            // Nếu chưa, tạm thời gán cứng là "Tiền mặt" để test lưu Database không bị lỗi:
+            this.PhuongThucThanhToan = "Tiền mặt";
+
+            // Xác nhận hoàn tất và đóng
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
         private void PicAnHD_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Retry; // Trả về Retry để báo FormThuNgan chuyển vào bộ nhớ tạm
-            this.Close(); 
+            this.DialogResult = DialogResult.Retry;
+            this.Close();
         }
-
-        #endregion
-
-        private void label1_Click(object sender, EventArgs e)
+        private void ToggleButton3_CheckedChanged(object sender, EventArgs e)
         {
+            // Nếu người dùng gạt nút sang BẬT (Màu xanh)
+            if (toggleButton3.Checked)
+            {
+                // Kiểm tra xem ô SĐT có trống không
+                if (string.IsNullOrWhiteSpace(txtSDT.Text))
+                {
+                    // Nếu trống -> Báo lỗi, ép nút gạt quay về TẮT và ẩn Panel
+                    MessageBox.Show("Vui lòng nhập Số điện thoại của khách hàng trước khi bật Tích điểm!", "Yêu cầu nhập SĐT", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
+                    toggleButton3.Checked = false; // Trả về màu xám
+                    panel13.Visible = false; // Tiếp tục ẩn
+                    txtSDT.Focus(); // Nháy chuột luôn vào ô SĐT cho người dùng nhập
+                }
+                else
+                {
+                    // Đã có SĐT -> Cho phép bật và hiện Panel quy đổi điểm
+                    panel13.Visible = true;
+
+                    // (Mai sau bạn có CSDL thì sẽ gọi hàm kiểm tra SĐT ở cơ sở dữ liệu tại vị trí này)
+                }
+            }
+            // Nếu người dùng gạt nút sang TẮT (Màu xám)
+            else
+            {
+                panel13.Visible = false; // Ẩn Panel đi
+            }
         }
+
+
     }
 }
