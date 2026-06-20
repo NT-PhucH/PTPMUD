@@ -308,6 +308,23 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
             // Tái sử dụng 100% hàm vẽ chung cho bản in thật
             VeHoaDonChung(pe.Graphics, pe.MarginBounds.Left, pe.MarginBounds.Top, pe.MarginBounds.Width);
         }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // ucHoaDon
+            // 
+            this.Name = "ucHoaDon";
+            this.Load += new System.EventHandler(this.ucHoaDon_Load);
+            this.ResumeLayout(false);
+
+        }
+
+        private void ucHoaDon_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 
     // ── DTO dòng sản phẩm trong hóa đơn ─────────────────────────────────────

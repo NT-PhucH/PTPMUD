@@ -225,6 +225,9 @@
     <EmbeddedResource Include="GUI %28Giao dien%29\ThuNganGUI\Hoa Don\PaymentSelectorBar.resx">
       <DependentUpon>PaymentSelectorBar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI %28Giao dien%29\ThuNganGUI\Hoa Don\ucHoaDon.resx">
+      <DependentUpon>ucHoaDon.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
