@@ -2,6 +2,7 @@
 using QLST.GUI__Giao_dien_;
 using QLST.GUI__Giao_dien_.Home;
 using QLST.GUI__Giao_dien_.QuanLyGUI;
+using QLST.GUI__Giao_dien_.QuanLyGUI.QL_User;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -83,7 +84,12 @@ namespace QLST
             }
             else if (clickedButton == btnUser)
             {
-                panelContent.Controls.Add(_ucUser);
+                frmQuanLyNhanVien frmNV = new frmQuanLyNhanVien();
+                frmNV.TopLevel = false;
+                frmNV.FormBorderStyle = FormBorderStyle.None;
+                frmNV.Dock = DockStyle.Fill;
+                panelContent.Controls.Add(frmNV);
+                frmNV.Show();
             }
             /*else if (clickedButton == btnKho)
             {
@@ -119,14 +125,14 @@ namespace QLST
                 frmKHo.Show();
             }
 
-            else if (clickedButton == btn2) // đổi tên button cho đúng
+            else if (clickedButton == btnLSHD) // đổi tên button cho đúng
             {
-                frmQuanLySanPham frmSP = new frmQuanLySanPham();
-                frmSP.TopLevel = false;
-                frmSP.FormBorderStyle = FormBorderStyle.None;
-                frmSP.Dock = DockStyle.Fill;
-                panelContent.Controls.Add(frmSP);
-                frmSP.Show();
+                frmQuanLyDonHang frmHD = new frmQuanLyDonHang();
+                frmHD.TopLevel = false;
+                frmHD.FormBorderStyle = FormBorderStyle.None;
+                frmHD.Dock = DockStyle.Fill;
+                panelContent.Controls.Add(frmHD);
+                frmHD.Show();
             }
             else if (clickedButton == btnKho) // đổi tên button cho đúng
             {
@@ -163,7 +169,18 @@ namespace QLST
                 panelContent.Controls.Add(frmThuNgan);
                 frmThuNgan.Show();
             }
-            
+
+            else if (clickedButton == btn1)
+            {
+                frmQuanLyNCC frmNCC = new frmQuanLyNCC();
+                frmNCC.TopLevel = false;
+                frmNCC.FormBorderStyle = FormBorderStyle.None;
+                frmNCC.Dock = DockStyle.Fill;
+                panelContent.Controls.Add(frmNCC);
+                frmNCC.Show();
+
+            }
+
         }
         private void btnLogOut_Click(object sender, EventArgs e)
         {
