@@ -31,44 +31,49 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.panel1 = new System.Windows.Forms.Panel();
             this.panelMenu = new System.Windows.Forms.Panel();
-            this.btn4 = new System.Windows.Forms.Button();
-            this.btn3 = new System.Windows.Forms.Button();
             this.btnLSHD = new System.Windows.Forms.Button();
-            this.btn1 = new System.Windows.Forms.Button();
             this.btnSettings = new System.Windows.Forms.Button();
             this.btnThongKe = new System.Windows.Forms.Button();
             this.btnTichDiem = new System.Windows.Forms.Button();
             this.btnUser = new System.Windows.Forms.Button();
+            this.panelKhoSubMenu = new System.Windows.Forms.Panel();
+            this.btnCanhBao = new System.Windows.Forms.Button();
+            this.btnLichSu = new System.Windows.Forms.Button();
+            this.btnXuatKho = new System.Windows.Forms.Button();
+            this.btnNhapHang = new System.Windows.Forms.Button();
             this.btnKho = new System.Windows.Forms.Button();
             this.btnShopping = new System.Windows.Forms.Button();
             this.btnHome = new System.Windows.Forms.Button();
             this.panelLogo = new System.Windows.Forms.Panel();
             this.btnLogOut = new System.Windows.Forms.Button();
             this.panelContent = new System.Windows.Forms.Panel();
+            this.btnQLNCC = new System.Windows.Forms.Button();
+            this.btnQLSP = new System.Windows.Forms.Button();
             this.panelMenu.SuspendLayout();
+            this.panelKhoSubMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(200, 0);
+            this.panel1.Location = new System.Drawing.Point(224, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(913, 80);
+            this.panel1.Size = new System.Drawing.Size(889, 80);
             this.panel1.TabIndex = 1;
             // 
             // panelMenu
             // 
             this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
-            this.panelMenu.Controls.Add(this.btn4);
-            this.panelMenu.Controls.Add(this.btn3);
+            this.panelMenu.Controls.Add(this.btnQLSP);
             this.panelMenu.Controls.Add(this.btnLSHD);
-            this.panelMenu.Controls.Add(this.btn1);
+            this.panelMenu.Controls.Add(this.btnQLNCC);
             this.panelMenu.Controls.Add(this.btnSettings);
             this.panelMenu.Controls.Add(this.btnThongKe);
             this.panelMenu.Controls.Add(this.btnTichDiem);
             this.panelMenu.Controls.Add(this.btnUser);
+            this.panelMenu.Controls.Add(this.panelKhoSubMenu);
             this.panelMenu.Controls.Add(this.btnKho);
             this.panelMenu.Controls.Add(this.btnShopping);
             this.panelMenu.Controls.Add(this.btnHome);
@@ -78,50 +83,8 @@
             this.panelMenu.Location = new System.Drawing.Point(0, 0);
             this.panelMenu.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panelMenu.Name = "panelMenu";
-            this.panelMenu.Size = new System.Drawing.Size(200, 714);
+            this.panelMenu.Size = new System.Drawing.Size(224, 714);
             this.panelMenu.TabIndex = 2;
-            // 
-            // btn4
-            // 
-            this.btn4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
-            this.btn4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btn4.FlatAppearance.BorderSize = 0;
-            this.btn4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn4.ForeColor = System.Drawing.Color.Gainsboro;
-            this.btn4.Image = global::QLST.Properties.Resources.chat_arrow_grow;
-            this.btn4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn4.Location = new System.Drawing.Point(0, 680);
-            this.btn4.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btn4.Name = "btn4";
-            this.btn4.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.btn4.Size = new System.Drawing.Size(200, 60);
-            this.btn4.TabIndex = 30;
-            this.btn4.Text = "        Test4";
-            this.btn4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn4.UseVisualStyleBackColor = false;
-            this.btn4.Click += new System.EventHandler(this.MenuButton_Click);
-            // 
-            // btn3
-            // 
-            this.btn3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
-            this.btn3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btn3.FlatAppearance.BorderSize = 0;
-            this.btn3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn3.ForeColor = System.Drawing.Color.Gainsboro;
-            this.btn3.Image = global::QLST.Properties.Resources.chat_arrow_grow;
-            this.btn3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn3.Location = new System.Drawing.Point(0, 620);
-            this.btn3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btn3.Name = "btn3";
-            this.btn3.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.btn3.Size = new System.Drawing.Size(200, 60);
-            this.btn3.TabIndex = 29;
-            this.btn3.Text = "        Test3";
-            this.btn3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn3.UseVisualStyleBackColor = false;
-            this.btn3.Click += new System.EventHandler(this.MenuButton_Click);
             // 
             // btnLSHD
             // 
@@ -133,37 +96,16 @@
             this.btnLSHD.ForeColor = System.Drawing.Color.Gainsboro;
             this.btnLSHD.Image = global::QLST.Properties.Resources.chat_arrow_grow;
             this.btnLSHD.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLSHD.Location = new System.Drawing.Point(0, 560);
+            this.btnLSHD.Location = new System.Drawing.Point(0, 720);
             this.btnLSHD.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnLSHD.Name = "btnLSHD";
             this.btnLSHD.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.btnLSHD.Size = new System.Drawing.Size(200, 60);
+            this.btnLSHD.Size = new System.Drawing.Size(224, 60);
             this.btnLSHD.TabIndex = 28;
             this.btnLSHD.Text = "        Lịch sử đơn hàng";
             this.btnLSHD.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnLSHD.UseVisualStyleBackColor = false;
             this.btnLSHD.Click += new System.EventHandler(this.MenuButton_Click);
-            // 
-            // btn1
-            // 
-            this.btn1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
-            this.btn1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btn1.FlatAppearance.BorderSize = 0;
-            this.btn1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn1.ForeColor = System.Drawing.Color.Gainsboro;
-            this.btn1.Image = global::QLST.Properties.Resources.chat_arrow_grow;
-            this.btn1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn1.Location = new System.Drawing.Point(0, 500);
-            this.btn1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btn1.Name = "btn1";
-            this.btn1.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.btn1.Size = new System.Drawing.Size(200, 60);
-            this.btn1.TabIndex = 27;
-            this.btn1.Text = "Test 1";
-            this.btn1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn1.UseVisualStyleBackColor = false;
-            this.btn1.Click += new System.EventHandler(this.MenuButton_Click);
             // 
             // btnSettings
             // 
@@ -175,11 +117,11 @@
             this.btnSettings.ForeColor = System.Drawing.Color.Gainsboro;
             this.btnSettings.Image = global::QLST.Properties.Resources.settings;
             this.btnSettings.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSettings.Location = new System.Drawing.Point(0, 440);
+            this.btnSettings.Location = new System.Drawing.Point(0, 600);
             this.btnSettings.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.btnSettings.Size = new System.Drawing.Size(200, 60);
+            this.btnSettings.Size = new System.Drawing.Size(224, 60);
             this.btnSettings.TabIndex = 26;
             this.btnSettings.Text = "        Settings";
             this.btnSettings.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -196,11 +138,11 @@
             this.btnThongKe.ForeColor = System.Drawing.Color.Gainsboro;
             this.btnThongKe.Image = global::QLST.Properties.Resources.chat_arrow_grow;
             this.btnThongKe.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnThongKe.Location = new System.Drawing.Point(0, 380);
+            this.btnThongKe.Location = new System.Drawing.Point(0, 540);
             this.btnThongKe.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnThongKe.Name = "btnThongKe";
             this.btnThongKe.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.btnThongKe.Size = new System.Drawing.Size(200, 60);
+            this.btnThongKe.Size = new System.Drawing.Size(224, 60);
             this.btnThongKe.TabIndex = 25;
             this.btnThongKe.Text = "        Thống kê";
             this.btnThongKe.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -217,11 +159,11 @@
             this.btnTichDiem.ForeColor = System.Drawing.Color.Gainsboro;
             this.btnTichDiem.Image = global::QLST.Properties.Resources.supplier;
             this.btnTichDiem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnTichDiem.Location = new System.Drawing.Point(0, 320);
+            this.btnTichDiem.Location = new System.Drawing.Point(0, 480);
             this.btnTichDiem.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnTichDiem.Name = "btnTichDiem";
             this.btnTichDiem.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.btnTichDiem.Size = new System.Drawing.Size(200, 60);
+            this.btnTichDiem.Size = new System.Drawing.Size(224, 60);
             this.btnTichDiem.TabIndex = 24;
             this.btnTichDiem.Text = "        Tích điểm";
             this.btnTichDiem.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -238,16 +180,99 @@
             this.btnUser.ForeColor = System.Drawing.Color.Gainsboro;
             this.btnUser.Image = global::QLST.Properties.Resources.users;
             this.btnUser.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnUser.Location = new System.Drawing.Point(0, 260);
+            this.btnUser.Location = new System.Drawing.Point(0, 420);
             this.btnUser.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnUser.Name = "btnUser";
             this.btnUser.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.btnUser.Size = new System.Drawing.Size(200, 60);
+            this.btnUser.Size = new System.Drawing.Size(224, 60);
             this.btnUser.TabIndex = 23;
             this.btnUser.Text = "        User";
             this.btnUser.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnUser.UseVisualStyleBackColor = false;
             this.btnUser.Click += new System.EventHandler(this.MenuButton_Click);
+            // 
+            // panelKhoSubMenu
+            // 
+            this.panelKhoSubMenu.AutoSize = true;
+            this.panelKhoSubMenu.Controls.Add(this.btnCanhBao);
+            this.panelKhoSubMenu.Controls.Add(this.btnLichSu);
+            this.panelKhoSubMenu.Controls.Add(this.btnXuatKho);
+            this.panelKhoSubMenu.Controls.Add(this.btnNhapHang);
+            this.panelKhoSubMenu.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelKhoSubMenu.Location = new System.Drawing.Point(0, 260);
+            this.panelKhoSubMenu.Name = "panelKhoSubMenu";
+            this.panelKhoSubMenu.Size = new System.Drawing.Size(224, 160);
+            this.panelKhoSubMenu.TabIndex = 29;
+            this.panelKhoSubMenu.Visible = false;
+            // 
+            // btnCanhBao
+            // 
+            this.btnCanhBao.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
+            this.btnCanhBao.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnCanhBao.FlatAppearance.BorderSize = 0;
+            this.btnCanhBao.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCanhBao.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCanhBao.ForeColor = System.Drawing.Color.White;
+            this.btnCanhBao.Location = new System.Drawing.Point(0, 120);
+            this.btnCanhBao.Name = "btnCanhBao";
+            this.btnCanhBao.Size = new System.Drawing.Size(224, 40);
+            this.btnCanhBao.TabIndex = 3;
+            this.btnCanhBao.Text = "      Cảnh báo";
+            this.btnCanhBao.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCanhBao.UseVisualStyleBackColor = false;
+            this.btnCanhBao.Click += new System.EventHandler(this.MenuButton_Click);
+            // 
+            // btnLichSu
+            // 
+            this.btnLichSu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
+            this.btnLichSu.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnLichSu.FlatAppearance.BorderSize = 0;
+            this.btnLichSu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLichSu.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLichSu.ForeColor = System.Drawing.Color.White;
+            this.btnLichSu.Location = new System.Drawing.Point(0, 80);
+            this.btnLichSu.Name = "btnLichSu";
+            this.btnLichSu.Size = new System.Drawing.Size(224, 40);
+            this.btnLichSu.TabIndex = 2;
+            this.btnLichSu.Text = "      Lịch sử";
+            this.btnLichSu.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLichSu.UseVisualStyleBackColor = false;
+            this.btnLichSu.Click += new System.EventHandler(this.MenuButton_Click);
+            // 
+            // btnXuatKho
+            // 
+            this.btnXuatKho.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
+            this.btnXuatKho.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnXuatKho.FlatAppearance.BorderSize = 0;
+            this.btnXuatKho.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnXuatKho.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnXuatKho.ForeColor = System.Drawing.Color.White;
+            this.btnXuatKho.Location = new System.Drawing.Point(0, 40);
+            this.btnXuatKho.Name = "btnXuatKho";
+            this.btnXuatKho.Size = new System.Drawing.Size(224, 40);
+            this.btnXuatKho.TabIndex = 1;
+            this.btnXuatKho.Text = "      Xuất kho";
+            this.btnXuatKho.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnXuatKho.UseVisualStyleBackColor = false;
+            this.btnXuatKho.Click += new System.EventHandler(this.MenuButton_Click);
+            // 
+            // btnNhapHang
+            // 
+            this.btnNhapHang.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
+            this.btnNhapHang.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnNhapHang.FlatAppearance.BorderSize = 0;
+            this.btnNhapHang.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNhapHang.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNhapHang.ForeColor = System.Drawing.Color.White;
+            this.btnNhapHang.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnNhapHang.Location = new System.Drawing.Point(0, 0);
+            this.btnNhapHang.Name = "btnNhapHang";
+            this.btnNhapHang.Size = new System.Drawing.Size(224, 40);
+            this.btnNhapHang.TabIndex = 0;
+            this.btnNhapHang.Text = "      Nhập hàng";
+            this.btnNhapHang.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnNhapHang.UseVisualStyleBackColor = false;
+            this.btnNhapHang.Click += new System.EventHandler(this.MenuButton_Click);
             // 
             // btnKho
             // 
@@ -263,12 +288,13 @@
             this.btnKho.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnKho.Name = "btnKho";
             this.btnKho.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.btnKho.Size = new System.Drawing.Size(200, 60);
+            this.btnKho.Size = new System.Drawing.Size(224, 60);
             this.btnKho.TabIndex = 22;
             this.btnKho.Text = "        Kho";
             this.btnKho.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnKho.UseVisualStyleBackColor = false;
             this.btnKho.Click += new System.EventHandler(this.MenuButton_Click);
+            this.btnKho.Paint += new System.Windows.Forms.PaintEventHandler(this.btnKho_Paint);
             // 
             // btnShopping
             // 
@@ -284,7 +310,7 @@
             this.btnShopping.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnShopping.Name = "btnShopping";
             this.btnShopping.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.btnShopping.Size = new System.Drawing.Size(200, 60);
+            this.btnShopping.Size = new System.Drawing.Size(224, 60);
             this.btnShopping.TabIndex = 21;
             this.btnShopping.Text = "        Shopping";
             this.btnShopping.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -305,7 +331,7 @@
             this.btnHome.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnHome.Name = "btnHome";
             this.btnHome.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.btnHome.Size = new System.Drawing.Size(200, 60);
+            this.btnHome.Size = new System.Drawing.Size(224, 60);
             this.btnHome.TabIndex = 20;
             this.btnHome.Text = "        Home";
             this.btnHome.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -319,7 +345,7 @@
             this.panelLogo.Location = new System.Drawing.Point(0, 0);
             this.panelLogo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panelLogo.Name = "panelLogo";
-            this.panelLogo.Size = new System.Drawing.Size(200, 80);
+            this.panelLogo.Size = new System.Drawing.Size(224, 80);
             this.panelLogo.TabIndex = 19;
             // 
             // btnLogOut
@@ -336,7 +362,7 @@
             this.btnLogOut.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnLogOut.Name = "btnLogOut";
             this.btnLogOut.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.btnLogOut.Size = new System.Drawing.Size(200, 60);
+            this.btnLogOut.Size = new System.Drawing.Size(224, 60);
             this.btnLogOut.TabIndex = 18;
             this.btnLogOut.Text = "        Log Out";
             this.btnLogOut.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -346,12 +372,53 @@
             // panelContent
             // 
             this.panelContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelContent.Location = new System.Drawing.Point(200, 80);
+            this.panelContent.Location = new System.Drawing.Point(224, 80);
             this.panelContent.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panelContent.Name = "panelContent";
-            this.panelContent.Size = new System.Drawing.Size(913, 634);
+            this.panelContent.Size = new System.Drawing.Size(889, 634);
             this.panelContent.TabIndex = 3;
-            this.panelContent.Paint += new System.Windows.Forms.PaintEventHandler(this.panelContent_Paint);
+            // 
+            // btnQLNCC
+            // 
+            this.btnQLNCC.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
+            this.btnQLNCC.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnQLNCC.FlatAppearance.BorderSize = 0;
+            this.btnQLNCC.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnQLNCC.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnQLNCC.ForeColor = System.Drawing.Color.Gainsboro;
+            this.btnQLNCC.Image = global::QLST.Properties.Resources.chat_arrow_grow;
+            this.btnQLNCC.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnQLNCC.Location = new System.Drawing.Point(0, 660);
+            this.btnQLNCC.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnQLNCC.Name = "btnQLNCC";
+            this.btnQLNCC.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
+            this.btnQLNCC.Size = new System.Drawing.Size(224, 60);
+            this.btnQLNCC.TabIndex = 27;
+            this.btnQLNCC.Text = "        SP";
+            this.btnQLNCC.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnQLNCC.UseVisualStyleBackColor = false;
+            this.btnQLNCC.Click += new System.EventHandler(this.MenuButton_Click);
+            // 
+            // btnQLSP
+            // 
+            this.btnQLSP.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
+            this.btnQLSP.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnQLSP.FlatAppearance.BorderSize = 0;
+            this.btnQLSP.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnQLSP.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnQLSP.ForeColor = System.Drawing.Color.Gainsboro;
+            this.btnQLSP.Image = global::QLST.Properties.Resources.chat_arrow_grow;
+            this.btnQLSP.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnQLSP.Location = new System.Drawing.Point(0, 780);
+            this.btnQLSP.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnQLSP.Name = "btnQLSP";
+            this.btnQLSP.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
+            this.btnQLSP.Size = new System.Drawing.Size(224, 60);
+            this.btnQLSP.TabIndex = 28;
+            this.btnQLSP.Text = "        NCC";
+            this.btnQLSP.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnQLSP.UseVisualStyleBackColor = false;
+            this.btnQLSP.Click += new System.EventHandler(this.MenuButton_Click);
             // 
             // FormMain
             // 
@@ -370,6 +437,8 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.panelMenu.ResumeLayout(false);
+            this.panelMenu.PerformLayout();
+            this.panelKhoSubMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -387,10 +456,13 @@
         private System.Windows.Forms.Button btnHome;
         private System.Windows.Forms.Panel panelLogo;
         private System.Windows.Forms.Panel panelContent;
-        private System.Windows.Forms.Button btn3;
         private System.Windows.Forms.Button btnLSHD;
-        private System.Windows.Forms.Button btn1;
-        private System.Windows.Forms.Button btn4;
+        private System.Windows.Forms.Panel panelKhoSubMenu;
+        private System.Windows.Forms.Button btnCanhBao;
+        private System.Windows.Forms.Button btnLichSu;
+        private System.Windows.Forms.Button btnXuatKho;
+        private System.Windows.Forms.Button btnNhapHang;
+        private System.Windows.Forms.Button btnQLNCC;
+        private System.Windows.Forms.Button btnQLSP;
     }
 }
-
