@@ -1,9 +1,4 @@
-﻿// ===================================================
-// File: NhaCungCap_DAL.cs
-// Đặt vào: DAL (Connection Query DB) > QuanLyDAL
-// XÓA file NhaCungCap_Stub.cs sau khi thêm file này!
-// ===================================================
-using QLST.DAL__Connection_Query_DB_.Query_DB;
+﻿using QLST.DAL__Connection_Query_DB_.Query_DB;
 using QLST.DTO__Type_OTP_.QuanLyDTO;
 using System;
 using System.Collections.Generic;
@@ -14,19 +9,19 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
 {
     public class NhaCungCap_DAL
     {
-        // ── LẤY TẤT CẢ (kèm thống kê số phiếu + tổng tiền) ──────────────────
+        // ── LẤY TẤT CẢ ───────────────────────────────────────────────────────
         public List<NhaCungCap_DTO> GetAll()
         {
             var list = new List<NhaCungCap_DTO>();
             string sql = @"
-                SELECT ncc.NhaCungCapID, ncc.MaNCC, ncc.TenNCC,
-                       ncc.SoDienThoai, ncc.DiaChi,
+                SELECT ncc.NhaCungCapID, ncc.MaNCC, ncc.TenNCC, 
+                       ncc.SoDienThoai, ncc.DiaChi, ncc.TrangThai,
                        COUNT(pn.PhieuNhapID)       AS TongPhieuNhap,
                        ISNULL(SUM(pn.TongTienThanhToan), 0) AS TongTienNhap
                 FROM NhaCungCap ncc
                 LEFT JOIN PhieuNhap pn ON ncc.NhaCungCapID = pn.NhaCungCapID
                 GROUP BY ncc.NhaCungCapID, ncc.MaNCC, ncc.TenNCC,
-                         ncc.SoDienThoai, ncc.DiaChi
+                         ncc.SoDienThoai, ncc.DiaChi, ncc.TrangThai
                 ORDER BY ncc.TenNCC";
             DataTable dt = DataProvider.Instance.ExecuteQuery(sql);
             foreach (DataRow row in dt.Rows)
@@ -39,8 +34,8 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
         {
             var list = new List<NhaCungCap_DTO>();
             string sql = @"
-                SELECT ncc.NhaCungCapID, ncc.MaNCC, ncc.TenNCC,
-                       ncc.SoDienThoai, ncc.DiaChi,
+                SELECT ncc.NhaCungCapID, ncc.MaNCC, ncc.TenNCC, 
+                       ncc.SoDienThoai, ncc.DiaChi, ncc.TrangThai,
                        COUNT(pn.PhieuNhapID)       AS TongPhieuNhap,
                        ISNULL(SUM(pn.TongTienThanhToan), 0) AS TongTienNhap
                 FROM NhaCungCap ncc
@@ -48,8 +43,8 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
                 WHERE ncc.TenNCC LIKE N'%' + @kw + '%'
                    OR ncc.MaNCC  LIKE '%' + @kw + '%'
                    OR ncc.SoDienThoai LIKE '%' + @kw + '%'
-                GROUP BY ncc.NhaCungCapID, ncc.MaNCC, ncc.TenNCC,
-                         ncc.SoDienThoai, ncc.DiaChi
+                GROUP BY ncc.NhaCungCapID, ncc.MaNCC, ncc.TenNCC, 
+                         ncc.SoDienThoai, ncc.DiaChi, ncc.TrangThai
                 ORDER BY ncc.TenNCC";
             DataTable dt = DataProvider.Instance.ExecuteQuery(sql, new SqlParameter[] {
                 new SqlParameter("@kw", keyword)
@@ -59,30 +54,34 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
             return list;
         }
 
-        // ── THÊM ─────────────────────────────────────────────────────────────
+        // ── THÊM (TỰ SINH MÃ BẰNG SQL) ───────────────────────────────────────
         public bool Insert(NhaCungCap_DTO ncc)
         {
             string sql = @"
+                DECLARE @NextID INT = ISNULL((SELECT MAX(NhaCungCapID) FROM NhaCungCap), 0) + 1;
+                DECLARE @NewMaNCC VARCHAR(20) = 'NCC' + RIGHT('0000' + CAST(@NextID AS VARCHAR(4)), 4);
+
                 INSERT INTO NhaCungCap (MaNCC, TenNCC, SoDienThoai, DiaChi)
-                VALUES (@Ma, @Ten, @SDT, @DC)";
+                VALUES (@NewMaNCC, @Ten, @SDT, @DC)";
+
             int rows = DataProvider.Instance.ExecuteNonQuery(sql, new SqlParameter[] {
-                new SqlParameter("@Ma",  ncc.MaNCC),
                 new SqlParameter("@Ten", ncc.TenNCC),
                 new SqlParameter("@SDT", (object)ncc.SoDienThoai ?? DBNull.Value),
                 new SqlParameter("@DC",  (object)ncc.DiaChi      ?? DBNull.Value)
             });
+
             return rows > 0;
         }
 
-        // ── SỬA ──────────────────────────────────────────────────────────────
+        // ── SỬA ────────────────────────────────────────────────────
         public bool Update(NhaCungCap_DTO ncc)
         {
             string sql = @"
                 UPDATE NhaCungCap
-                SET MaNCC = @Ma, TenNCC = @Ten, SoDienThoai = @SDT, DiaChi = @DC
+                SET TenNCC = @Ten, SoDienThoai = @SDT, DiaChi = @DC
                 WHERE NhaCungCapID = @ID";
+
             int rows = DataProvider.Instance.ExecuteNonQuery(sql, new SqlParameter[] {
-                new SqlParameter("@Ma",  ncc.MaNCC),
                 new SqlParameter("@Ten", ncc.TenNCC),
                 new SqlParameter("@SDT", (object)ncc.SoDienThoai ?? DBNull.Value),
                 new SqlParameter("@DC",  (object)ncc.DiaChi      ?? DBNull.Value),
@@ -91,39 +90,18 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
             return rows > 0;
         }
 
-        // ── XÓA ──────────────────────────────────────────────────────────────
-        public bool Delete(int id)
+        // ── BẬT / TẮT TRẠNG THÁI ───────────────────────────
+        public bool ToggleTrangThai(int id)
         {
-            // Kiểm tra còn phiếu nhập không
-            object count = DataProvider.Instance.ExecuteScalar(
-                "SELECT COUNT(*) FROM PhieuNhap WHERE NhaCungCapID = @ID",
-                new SqlParameter[] { new SqlParameter("@ID", id) });
-            if (Convert.ToInt32(count) > 0) return false;
+            string sql = @"
+                UPDATE NhaCungCap
+                SET TrangThai = CASE WHEN TrangThai = 1 THEN 0 ELSE 1 END
+                WHERE NhaCungCapID = @ID";
 
-            int rows = DataProvider.Instance.ExecuteNonQuery(
-                "DELETE FROM NhaCungCap WHERE NhaCungCapID = @ID",
-                new SqlParameter[] { new SqlParameter("@ID", id) });
+            int rows = DataProvider.Instance.ExecuteNonQuery(sql, new SqlParameter[] {
+                new SqlParameter("@ID", id)
+            });
             return rows > 0;
-        }
-
-        // ── KIỂM TRA MÃ TRÙNG ────────────────────────────────────────────────
-        public bool IsMaExists(string maNCC, int excludeID = 0)
-        {
-            object result = DataProvider.Instance.ExecuteScalar(
-                "SELECT COUNT(*) FROM NhaCungCap WHERE MaNCC = @Ma AND NhaCungCapID <> @ID",
-                new SqlParameter[] {
-                    new SqlParameter("@Ma",  maNCC),
-                    new SqlParameter("@ID",  excludeID)
-                });
-            return Convert.ToInt32(result) > 0;
-        }
-
-        // ── SINH MÃ TỰ ĐỘNG ──────────────────────────────────────────────────
-        public string SinhMaNCC()
-        {
-            object result = DataProvider.Instance.ExecuteScalar(
-                "SELECT COUNT(*) FROM NhaCungCap");
-            return $"NCC{Convert.ToInt32(result) + 1:D4}";
         }
 
         // ── HELPER ───────────────────────────────────────────────────────────
@@ -135,7 +113,8 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
             SoDienThoai = row["SoDienThoai"] == DBNull.Value ? "" : row["SoDienThoai"].ToString(),
             DiaChi = row["DiaChi"] == DBNull.Value ? "" : row["DiaChi"].ToString(),
             TongPhieuNhap = Convert.ToInt32(row["TongPhieuNhap"]),
-            TongTienNhap = Convert.ToInt64(row["TongTienNhap"])
+            TongTienNhap = Convert.ToInt64(row["TongTienNhap"]),
+            TrangThai = Convert.ToBoolean(row["TrangThai"])
         };
     }
 }

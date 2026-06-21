@@ -1,7 +1,4 @@
-﻿// ===================================================
-// File: NhaCungCap_BLL.cs
-// Đặt vào: BLL (Bat ngoai le) > QuanLyBLL
-// ===================================================
+﻿
 using QLST.DAL__Connection_Query_DB_.QuanLyDAL;
 using QLST.DTO__Type_OTP_.QuanLyDTO;
 using System.Collections.Generic;
@@ -12,6 +9,7 @@ namespace QLST.BLL__Bat_ngoai_le_.QuanLyBLL
     {
         private readonly NhaCungCap_DAL _dal = new NhaCungCap_DAL();
 
+        // ── LẤY TẤT CẢ VÀ TÌM KIẾM  ───────────────────────────
         public List<NhaCungCap_DTO> GetAll() => _dal.GetAll();
 
         public List<NhaCungCap_DTO> Search(string keyword)
@@ -20,30 +18,40 @@ namespace QLST.BLL__Bat_ngoai_le_.QuanLyBLL
             return _dal.Search(keyword.Trim());
         }
 
+        // ── THÊM  ─────────
         public (bool ok, string msg) Them(NhaCungCap_DTO ncc)
         {
             if (string.IsNullOrWhiteSpace(ncc.TenNCC))
                 return (false, "Vui lòng nhập tên nhà cung cấp!");
-            if (_dal.IsMaExists(ncc.MaNCC))
-                return (false, "Mã NCC đã tồn tại!");
-            ncc.MaNCC = string.IsNullOrWhiteSpace(ncc.MaNCC) ? _dal.SinhMaNCC() : ncc.MaNCC.Trim();
-            return _dal.Insert(ncc) ? (true, "Thêm nhà cung cấp thành công!") : (false, "Thêm thất bại!");
+
+            return _dal.Insert(ncc)
+                ? (true, "Thêm nhà cung cấp thành công!")
+                : (false, "Thêm thất bại!");
         }
 
+        // ── SỬA  ───────────────────────────
         public (bool ok, string msg) Sua(NhaCungCap_DTO ncc)
         {
+            if (ncc.NhaCungCapID <= 0)
+                return (false, "Không xác định được ID nhà cung cấp!");
+
             if (string.IsNullOrWhiteSpace(ncc.TenNCC))
                 return (false, "Vui lòng nhập tên nhà cung cấp!");
-            if (_dal.IsMaExists(ncc.MaNCC, ncc.NhaCungCapID))
-                return (false, "Mã NCC đã tồn tại ở nhà cung cấp khác!");
-            return _dal.Update(ncc) ? (true, "Cập nhật thành công!") : (false, "Cập nhật thất bại!");
+
+            return _dal.Update(ncc)
+                ? (true, "Cập nhật thành công!")
+                : (false, "Cập nhật thất bại!");
         }
 
-        public (bool ok, string msg) Xoa(int id)
+        // ── THAY ĐỔI TRẠNG THÁI  ─────────
+        public (bool ok, string msg) ThayDoiTrangThai(int id)
         {
-            bool ok = _dal.Delete(id);
-            return ok ? (true, "Đã xóa nhà cung cấp!")
-                      : (false, "Không thể xóa! NCC này còn liên kết với phiếu nhập hàng.");
+            if (id <= 0)
+                return (false, "Không xác định được ID!");
+
+            return _dal.ToggleTrangThai(id)
+                ? (true, "Đã thay đổi trạng thái nhà cung cấp!")
+                : (false, "Lỗi hệ thống: Không thể thay đổi trạng thái!");
         }
     }
 }

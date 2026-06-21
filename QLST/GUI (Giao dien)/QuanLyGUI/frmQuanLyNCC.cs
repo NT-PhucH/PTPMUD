@@ -1,8 +1,4 @@
-﻿// ===================================================
-// File: frmQuanLyNCC.cs
-// Đặt vào: GUI (Giao dien) > QuanLyGUI
-// ===================================================
-using QLST.BLL__Bat_ngoai_le_.QuanLyBLL;
+﻿using QLST.BLL__Bat_ngoai_le_.QuanLyBLL;
 using QLST.DTO__Type_OTP_.QuanLyDTO;
 using System;
 using System.Drawing;
@@ -13,11 +9,11 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
     public class frmQuanLyNCC : Form
     {
         private readonly NhaCungCap_BLL _bll = new NhaCungCap_BLL();
-        private int _selectedID = -1;
+        private int _selectedID = -1; // Biến lưu giữ ID ngầm
 
         private DataGridView dgvNCC;
         private TextBox txtTimKiem, txtMaNCC, txtTenNCC, txtSDT, txtDiaChi;
-        private Button btnThem, btnSua, btnXoa, btnLamMoi;
+        private Button btnThem, btnSua, btnTrangThai, btnLamMoi;
         private Label lblTongNCC, lblTongTien;
 
         public frmQuanLyNCC()
@@ -29,12 +25,11 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
         private void BuildUI()
         {
             Text = "Quản lý nhà cung cấp";
-            Size = new Size(1100, 660);
+            Size = new Size(1150, 660);
             StartPosition = FormStartPosition.CenterScreen;
             Font = new Font("Segoe UI", 9.5f);
             BackColor = Color.FromArgb(245, 247, 250);
 
-            // Header
             var header = new Panel { Dock = DockStyle.Top, Height = 50, BackColor = Color.FromArgb(30, 40, 60) };
             header.Controls.Add(new Label
             {
@@ -45,7 +40,6 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
                 AutoSize = true
             });
 
-            // Thanh tìm kiếm
             var pSearch = new Panel { Dock = DockStyle.Top, Height = 45, BackColor = Color.White, Padding = new Padding(10, 8, 10, 0) };
             pSearch.Controls.Add(new Label { Text = "🔍 Tìm kiếm:", Location = new Point(10, 12), AutoSize = true });
             txtTimKiem = new TextBox { Location = new Point(100, 9), Width = 300 };
@@ -57,9 +51,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             pSearch.Controls.Add(lblTongNCC);
             pSearch.Controls.Add(lblTongTien);
 
-            // Panel trái: DataGridView
-            var pLeft = new Panel { Location = new Point(0, 95), Width = 680, Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom };
-            pLeft.Height = 565;
+            var pLeft = new Panel { Location = new Point(0, 95), Width = 730, Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom, Height = 565 };
 
             dgvNCC = new DataGridView
             {
@@ -81,26 +73,27 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             dgvNCC.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(240, 244, 255);
             dgvNCC.SelectionChanged += DgvNCC_SelectionChanged;
 
-            dgvNCC.Columns.Add(new DataGridViewTextBoxColumn { Name = "colID", HeaderText = "ID", FillWeight = 5 });
+            // ── ĐỊNH NGHĨA CỘT DATAGRIDVIEW ──
+            dgvNCC.Columns.Add(new DataGridViewTextBoxColumn { Name = "colID", HeaderText = "ID", Visible = false }); // CỘT ẨN
             dgvNCC.Columns.Add(new DataGridViewTextBoxColumn { Name = "colMa", HeaderText = "Mã NCC", FillWeight = 12 });
-            dgvNCC.Columns.Add(new DataGridViewTextBoxColumn { Name = "colTen", HeaderText = "Tên NCC", FillWeight = 28 });
+            dgvNCC.Columns.Add(new DataGridViewTextBoxColumn { Name = "colTen", HeaderText = "Tên NCC", FillWeight = 25 });
             dgvNCC.Columns.Add(new DataGridViewTextBoxColumn { Name = "colSDT", HeaderText = "SĐT", FillWeight = 13 });
-            dgvNCC.Columns.Add(new DataGridViewTextBoxColumn { Name = "colDC", HeaderText = "Địa chỉ", FillWeight = 22 });
-            dgvNCC.Columns.Add(new DataGridViewTextBoxColumn { Name = "colSoPN", HeaderText = "Số phiếu nhập", FillWeight = 10, DefaultCellStyle = { Alignment = DataGridViewContentAlignment.MiddleCenter } });
+            dgvNCC.Columns.Add(new DataGridViewTextBoxColumn { Name = "colDC", HeaderText = "Địa chỉ", FillWeight = 20 });
+            dgvNCC.Columns.Add(new DataGridViewTextBoxColumn { Name = "colSoPN", HeaderText = "Số PN", FillWeight = 8, DefaultCellStyle = { Alignment = DataGridViewContentAlignment.MiddleCenter } });
             dgvNCC.Columns.Add(new DataGridViewTextBoxColumn { Name = "colTong", HeaderText = "Tổng tiền nhập", FillWeight = 15, DefaultCellStyle = { Alignment = DataGridViewContentAlignment.MiddleRight } });
+            dgvNCC.Columns.Add(new DataGridViewTextBoxColumn { Name = "colTrangThai", HeaderText = "Trạng thái", FillWeight = 15, DefaultCellStyle = { Alignment = DataGridViewContentAlignment.MiddleCenter } });
 
             pLeft.Controls.Add(dgvNCC);
 
-            // Panel phải: Form nhập liệu
             var pRight = new Panel
             {
-                Location = new Point(685, 95),
+                Location = new Point(735, 95),
                 Width = 400,
                 Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom,
                 BackColor = Color.White,
-                Padding = new Padding(15)
+                Padding = new Padding(15),
+                Height = 565
             };
-            pRight.Height = 565;
 
             int y = 15;
             pRight.Controls.Add(MakeBold("THÔNG TIN NHÀ CUNG CẤP", 15, y));
@@ -108,14 +101,9 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             y += 35;
             pRight.Controls.Add(MakeLabel("Mã NCC:", 15, y));
             txtMaNCC = MakeTextBox(15, y + 22, 340);
-            pRight.Controls.Add(new Label
-            {
-                Text = "* Để trống = tự sinh mã",
-                Location = new Point(15, y + 45),
-                AutoSize = true,
-                ForeColor = Color.Gray,
-                Font = new Font("Segoe UI", 8.5f, FontStyle.Italic)
-            });
+            txtMaNCC.ReadOnly = true;
+            txtMaNCC.BackColor = Color.FromArgb(245, 245, 245);
+            pRight.Controls.Add(new Label { Text = "* Hệ thống tự động phát sinh mã", Location = new Point(15, y + 45), AutoSize = true, ForeColor = Color.Gray, Font = new Font("Segoe UI", 8.5f, FontStyle.Italic) });
             pRight.Controls.Add(txtMaNCC);
 
             y += 60;
@@ -128,24 +116,18 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
 
             y += 60;
             pRight.Controls.Add(MakeLabel("Địa chỉ:", 15, y));
-            txtDiaChi = new TextBox
-            {
-                Location = new Point(15, y + 22),
-                Width = 340,
-                Height = 70,
-                Multiline = true,
-                ScrollBars = ScrollBars.Vertical
-            };
+            txtDiaChi = new TextBox { Location = new Point(15, y + 22), Width = 340, Height = 70, Multiline = true, ScrollBars = ScrollBars.Vertical };
             pRight.Controls.Add(txtDiaChi);
 
             y += 110;
             btnThem = MakeBtn("➕ THÊM", 15, y, 100, Color.FromArgb(34, 139, 34));
             btnSua = MakeBtn("✏ SỬA", 125, y, 100, Color.FromArgb(30, 100, 200));
-            btnXoa = MakeBtn("🗑 XÓA", 235, y, 100, Color.FromArgb(200, 50, 50));
+            btnTrangThai = MakeBtn("⏸ NGỪNG GD", 235, y, 120, Color.FromArgb(200, 50, 50));
+
             btnThem.Click += BtnThem_Click;
             btnSua.Click += BtnSua_Click;
-            btnXoa.Click += BtnXoa_Click;
-            pRight.Controls.AddRange(new Control[] { btnThem, btnSua, btnXoa });
+            btnTrangThai.Click += BtnTrangThai_Click;
+            pRight.Controls.AddRange(new Control[] { btnThem, btnSua, btnTrangThai });
 
             y += 45;
             btnLamMoi = MakeBtn("🔄 Làm mới", 15, y, 340, Color.FromArgb(130, 130, 130));
@@ -173,12 +155,16 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             foreach (var n in list)
             {
                 tongTien += n.TongTienNhap;
+                string strTrangThai = n.TrangThai ? "✅ Hoạt động" : "❌ Ngừng GD";
+
                 dgvNCC.Rows.Add(n.NhaCungCapID, n.MaNCC, n.TenNCC, n.SoDienThoai,
-                    n.DiaChi, n.TongPhieuNhap, string.Format("{0:N0} đ", n.TongTienNhap));
+                    n.DiaChi, n.TongPhieuNhap, string.Format("{0:N0} đ", n.TongTienNhap), strTrangThai);
             }
             lblTongNCC.Text = $"Tổng NCC: {list.Count}";
             lblTongTien.Text = $"Tổng tiền nhập: {tongTien:N0} đ";
 
+            dgvNCC.ClearSelection();
+            ClearForm();
             dgvNCC.SelectionChanged += DgvNCC_SelectionChanged;
         }
 
@@ -186,63 +172,61 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
         {
             if (dgvNCC.SelectedRows.Count == 0) return;
             var row = dgvNCC.SelectedRows[0];
+
             _selectedID = Convert.ToInt32(row.Cells["colID"].Value);
             txtMaNCC.Text = row.Cells["colMa"].Value?.ToString();
             txtTenNCC.Text = row.Cells["colTen"].Value?.ToString();
             txtSDT.Text = row.Cells["colSDT"].Value?.ToString();
             txtDiaChi.Text = row.Cells["colDC"].Value?.ToString();
+
+            string trangThaiHienTai = row.Cells["colTrangThai"].Value?.ToString();
+            if (trangThaiHienTai != null && trangThaiHienTai.Contains("Hoạt động"))
+            {
+                btnTrangThai.Text = "⏸ NGỪNG GD";
+                btnTrangThai.BackColor = Color.FromArgb(200, 50, 50);
+            }
+            else
+            {
+                btnTrangThai.Text = "▶ MỞ LẠI";
+                btnTrangThai.BackColor = Color.FromArgb(34, 139, 34);
+            }
         }
 
         private void BtnThem_Click(object sender, EventArgs e)
         {
             var (ok, msg) = _bll.Them(BuildDTO());
-            MessageBox.Show(msg, "Thông báo", MessageBoxButtons.OK,
-                ok ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
-            if (ok) { ClearForm(); LoadData(); }
-        }
-
-        private void InitializeComponent()
-        {
-            this.SuspendLayout();
-            // 
-            // frmQuanLyNCC
-            // 
-            this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Name = "frmQuanLyNCC";
-            this.Load += new System.EventHandler(this.frmQuanLyNCC_Load);
-            this.ResumeLayout(false);
-
-        }
-
-        private void frmQuanLyNCC_Load(object sender, EventArgs e)
-        {
-
+            MessageBox.Show(msg, "Thông báo", MessageBoxButtons.OK, ok ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
+            if (ok) { LoadData(); }
         }
 
         private void BtnSua_Click(object sender, EventArgs e)
         {
             if (_selectedID <= 0) { MessageBox.Show("Vui lòng chọn NCC cần sửa!"); return; }
-            var dto = BuildDTO(); dto.NhaCungCapID = _selectedID;
+            var dto = BuildDTO();
+            dto.NhaCungCapID = _selectedID;
+
             var (ok, msg) = _bll.Sua(dto);
-            MessageBox.Show(msg, "Thông báo", MessageBoxButtons.OK,
-                ok ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
-            if (ok) { ClearForm(); LoadData(); }
+            MessageBox.Show(msg, "Thông báo", MessageBoxButtons.OK, ok ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
+            if (ok) { LoadData(); }
         }
 
-        private void BtnXoa_Click(object sender, EventArgs e)
+        private void BtnTrangThai_Click(object sender, EventArgs e)
         {
-            if (_selectedID <= 0) { MessageBox.Show("Vui lòng chọn NCC cần xóa!"); return; }
-            if (MessageBox.Show("Xóa nhà cung cấp này?", "Xác nhận",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
-            var (ok, msg) = _bll.Xoa(_selectedID);
-            MessageBox.Show(msg, "Thông báo", MessageBoxButtons.OK,
-                ok ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
-            if (ok) { ClearForm(); LoadData(); }
+            if (_selectedID <= 0) { MessageBox.Show("Vui lòng chọn NCC cần thao tác!"); return; }
+
+            string hoiText = btnTrangThai.Text == "⏸ NGỪNG GD"
+                ? "Ngừng giao dịch với nhà cung cấp này?"
+                : "Mở lại giao dịch với nhà cung cấp này?";
+
+            if (MessageBox.Show(hoiText, "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+
+            var (ok, msg) = _bll.ThayDoiTrangThai(_selectedID);
+            if (ok) { LoadData(); }
+            else { MessageBox.Show(msg, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
         }
 
         private NhaCungCap_DTO BuildDTO() => new NhaCungCap_DTO
         {
-            MaNCC = txtMaNCC.Text.Trim(),
             TenNCC = txtTenNCC.Text.Trim(),
             SoDienThoai = txtSDT.Text.Trim(),
             DiaChi = txtDiaChi.Text.Trim()
@@ -252,27 +236,26 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
         {
             _selectedID = -1;
             txtMaNCC.Text = txtTenNCC.Text = txtSDT.Text = txtDiaChi.Text = "";
+            btnTrangThai.Text = "⏸ NGỪNG GD";
+            btnTrangThai.BackColor = Color.FromArgb(200, 50, 50);
             dgvNCC.ClearSelection();
         }
 
-        private Label MakeLabel(string t, int x, int y) =>
-            new Label { Text = t, Location = new Point(x, y), AutoSize = true };
-        private Label MakeBold(string t, int x, int y) =>
-            new Label { Text = t, Location = new Point(x, y), AutoSize = true, Font = new Font("Segoe UI", 10f, FontStyle.Bold), ForeColor = Color.FromArgb(30, 40, 60) };
-        private TextBox MakeTextBox(int x, int y, int w) =>
-            new TextBox { Location = new Point(x, y), Width = w };
+        private Label MakeLabel(string t, int x, int y) => new Label { Text = t, Location = new Point(x, y), AutoSize = true };
+        private Label MakeBold(string t, int x, int y) => new Label { Text = t, Location = new Point(x, y), AutoSize = true, Font = new Font("Segoe UI", 10f, FontStyle.Bold), ForeColor = Color.FromArgb(30, 40, 60) };
+        private TextBox MakeTextBox(int x, int y, int w) => new TextBox { Location = new Point(x, y), Width = w };
         private Button MakeBtn(string t, int x, int y, int w, Color c) =>
-            new Button
-            {
-                Text = t,
-                Location = new Point(x, y),
-                Width = w,
-                Height = 32,
-                BackColor = c,
-                ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat,
-                Font = new Font("Segoe UI", 9f, FontStyle.Bold),
-                Cursor = Cursors.Hand
-            };
+            new Button { Text = t, Location = new Point(x, y), Width = w, Height = 32, BackColor = c, ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Font = new Font("Segoe UI", 9f, FontStyle.Bold), Cursor = Cursors.Hand };
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Name = "frmQuanLyNCC";
+            this.Load += new System.EventHandler(this.frmQuanLyNCC_Load);
+            this.ResumeLayout(false);
+        }
+
+        private void frmQuanLyNCC_Load(object sender, EventArgs e) { }
     }
 }
