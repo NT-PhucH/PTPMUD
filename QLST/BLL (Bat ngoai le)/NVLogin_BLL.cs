@@ -12,7 +12,7 @@ namespace QLST.BLL__Bat_ngoai_le_
     {
         private NVLogin_DAL nhanVienDAL = new NVLogin_DAL();
 
-        public NhanVienDTO Login(string username, string password, out string message)
+        public QLNV_DTO Login(string username, string password, out string message)
         {
             message = string.Empty;
             // Kiểm tra đầu vào
@@ -23,7 +23,7 @@ namespace QLST.BLL__Bat_ngoai_le_
             }
             try
             {
-                NhanVienDTO nv = nhanVienDAL.GetNhanVienByLogin(username, password);
+                QLNV_DTO nv = nhanVienDAL.GetNhanVienByLogin(username, password);
                 if (nv == null)
                 {
                     message = "Tên đăng nhập hoặc mật khẩu không đúng.";

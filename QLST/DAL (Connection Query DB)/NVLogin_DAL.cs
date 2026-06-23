@@ -12,9 +12,9 @@ namespace QLST.DAL__Connection_Query_DB_
 {
     public class NVLogin_DAL
     {
-        public NhanVienDTO GetNhanVienByLogin(string username, string password)
+        public QLNV_DTO GetNhanVienByLogin(string username, string password)
         {
-            NhanVienDTO nv = null;
+            QLNV_DTO nv = null;
 
             string query = "SELECT MaNV, TenNV, Username, Password, Role, SoDienThoai, CaLamViec, TrangThai " +
                            "FROM NhanVien " +
@@ -29,7 +29,7 @@ namespace QLST.DAL__Connection_Query_DB_
             if (data != null && data.Rows.Count > 0) { 
                 DataRow row = data.Rows[0];
 
-                nv = new NhanVienDTO()
+                nv = new QLNV_DTO()
                 {
                     MaNV = row["MaNV"].ToString(),
                     TenNV = row["TenNV"].ToString(),

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QLST.DTO__Type_OTP_
 {
-    public class NhanVienDTO
+    public class QLNV_DTO
     {
         public int NhanVienID { get; set; }
         public string MaNV { get; set; }

@@ -1,7 +1,4 @@
-﻿// ===================================================
-// File: SanPham_DTO.cs
-// Đặt vào: DTO (Type OTP) > QuanLyDTO
-// ===================================================
+﻿
 using System;
 
 namespace QLST.DTO__Type_OTP_.QuanLyDTO
@@ -16,11 +13,13 @@ namespace QLST.DTO__Type_OTP_.QuanLyDTO
         public string TenLoai { get; set; }
         public int TonKhoTong { get; set; }
         public string HinhAnh { get; set; }
+        public bool TrangThai { get; set; }
     }
 
     public class LoaiSanPham_DTO
     {
         public int LoaiSanPhamID { get; set; }
         public string TenLoai { get; set; }
+        public bool TrangThai { get; set; }
     }
 }

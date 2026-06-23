@@ -1,8 +1,4 @@
-﻿// ===================================================
-// File: ThamSo_DAL.cs
-// Đặt vào: DAL (Connection Query DB) > Core
-//          (cùng chỗ với DataProvider vì dùng toàn app)
-// ===================================================
+﻿
 using QLST.DAL__Connection_Query_DB_.Query_DB;
 using QLST.DTO__Type_OTP_;
 using System;
@@ -11,19 +7,19 @@ using System.Data.SqlClient;
 
 namespace QLST.DAL__Connection_Query_DB_.Core
 {
-    public class ThamSo_DAL
+    public class Setting_DAL
     {
-        // Luôn chỉ có 1 dòng duy nhất (ID = 1)
-        public ThamSoHeThong_DTO Get()
+        
+        public Setting_DTO Get()
         {
             DataTable dt = DataProvider.Instance.ExecuteQuery(
                 "SELECT TOP 1 * FROM ThamSoHeThong ORDER BY ID");
 
-            if (dt.Rows.Count == 0) return new ThamSoHeThong_DTO();
+            if (dt.Rows.Count == 0) return new Setting_DTO();
             return MapRow(dt.Rows[0]);
         }
 
-        public bool Update(ThamSoHeThong_DTO ts)
+        public bool Update(Setting_DTO ts)
         {
             string sql = @"
                 UPDATE ThamSoHeThong SET
@@ -55,7 +51,7 @@ namespace QLST.DAL__Connection_Query_DB_.Core
             return rows > 0;
         }
 
-        private ThamSoHeThong_DTO MapRow(DataRow row) => new ThamSoHeThong_DTO
+        private Setting_DTO MapRow(DataRow row) => new Setting_DTO
         {
             ID = Convert.ToInt32(row["ID"]),
             TenCuaHang = row["TenCuaHang"].ToString(),

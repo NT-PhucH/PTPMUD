@@ -252,7 +252,7 @@ namespace QLST
             string password = txtMatKhau.Text.Trim();
             string message;
 
-            NhanVienDTO loggedInUser = nhanVienBLL.Login(username, password, out message);
+            QLNV_DTO loggedInUser = nhanVienBLL.Login(username, password, out message);
 
             if (loggedInUser != null)
             {

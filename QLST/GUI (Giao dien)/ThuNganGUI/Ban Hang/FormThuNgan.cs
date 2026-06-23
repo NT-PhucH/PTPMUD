@@ -288,8 +288,8 @@ namespace QLST
                 return;
             }
 
-            // ── 1. Build danh sách DongHoaDon từ giỏ hàng ────────────────────────
-            var danhSachSP = new List<DongHoaDon>();
+            // ── 1. Build danh sách ChiTietHoaDonIn_DTO từ giỏ hàng ────────────────────────
+            var danhSachSP = new List<ChiTietHoaDonIn_DTO>();
             long tongTienChua = 0;
 
             foreach (Control ctrl in flowLayoutPanel1.Controls)
@@ -298,7 +298,7 @@ namespace QLST
                 {
                     long donGia = (long)(card.ThanhTien / card.SoLuong);
                     long thanhTien = (long)card.ThanhTien;
-                    danhSachSP.Add(new DongHoaDon
+                    danhSachSP.Add(new ChiTietHoaDonIn_DTO
                     {
                         MaVach = card.MaSP,
                         TenSP = card.TenSP,       // ← nếu KhungMonHang có property TenSP

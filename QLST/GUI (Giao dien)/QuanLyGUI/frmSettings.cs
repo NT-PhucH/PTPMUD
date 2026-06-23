@@ -14,8 +14,8 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
 {
     public class frmSettings : Form
     {
-        private readonly ThamSo_DAL _dal = new ThamSo_DAL();
-        private ThamSoHeThong_DTO _ts;
+        private readonly Setting_DAL _dal = new Setting_DAL();
+        private Setting_DTO _ts;
 
         // Controls Tab 1
         private TextBox txtTenCH, txtDiaChi, txtSDT, txtHotlineShip, txtEmail;
@@ -26,10 +26,10 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
         private Panel panelPreview;
 
         // Static cache để các form khác đọc được
-        private static ThamSoHeThong_DTO _cache;
-        public static ThamSoHeThong_DTO LayCauHinh()
+        private static Setting_DTO _cache;
+        public static Setting_DTO LayCauHinh()
         {
-            if (_cache == null) _cache = new ThamSo_DAL().Get();
+            if (_cache == null) _cache = new Setting_DAL().Get();
             return _cache;
         }
 

@@ -16,9 +16,9 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
     public partial class frmThanhToan : Form
     {
         // ── Dữ liệu truyền vào ────────────────────────────────────────────────
-        private List<DongHoaDon> _danhSachSP;
+        private List<ChiTietHoaDonIn_DTO> _danhSachSP;
         private long _tongTienChua;
-        private ThamSoHeThong_DTO _cfg;
+        private Setting_DTO _cfg;
         private PictureBox _picQR;
 
         // ── Khách hàng tìm được ───────────────────────────────────────────────
@@ -27,16 +27,19 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
         // ── ucHoaDon nhúng vào panel1 ─────────────────────────────────────────
         private ucHoaDon _ucHD;
 
+        // ── KHAY DỮ LIỆU CHUẨN ĐỂ TRUYỀN XUỐNG ucHoaDon ────────────────────────
+        private HoaDonIn_DTO _hdData = new HoaDonIn_DTO();
+
         // ── Flag tránh vòng lặp TextChanged ──────────────────────────────────
         private bool _dangChonKH = false;
 
         // ── Constructor ───────────────────────────────────────────────────────
-        public frmThanhToan(List<DongHoaDon> danhSachSP, long tongTienChua)
+        public frmThanhToan(List<ChiTietHoaDonIn_DTO> danhSachSP, long tongTienChua)
         {
             InitializeComponent();
             _danhSachSP = danhSachSP;
             _tongTienChua = tongTienChua;
-            _cfg = new ThamSo_DAL().Get();
+            _cfg = new Setting_DAL().Get(); // Lưu ý: Nếu có Setting_BLL, bạn có thể gọi Setting_BLL.LayCauHinh() cho nhanh
             this.Load += frmThanhToan_Load;
         }
 
@@ -49,17 +52,17 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
             KhoiTaoSuKien();
             TinhVaHienThi();
 
-            // KHỞI TẠO QR ĐỘNG (Bạn có thể gán Image bằng mã QR thật của cửa hàng)
+            // KHỞI TẠO QR ĐỘNG
             _picQR = new PictureBox
             {
                 Dock = DockStyle.Fill,
                 SizeMode = PictureBoxSizeMode.Zoom,
                 BackColor = Color.White,
                 Visible = false,
-                // Image = Image.FromFile("duong_dan_den_file_qr_cua_ban.jpg") // Gán ảnh QR tĩnh vào đây
+                // Image = Image.FromFile("duong_dan_den_file_qr_cua_ban.jpg") 
             };
             panel2.Controls.Add(_picQR);
-            _picQR.BringToFront(); // Đưa QR lên trên cùng để không bị che
+            _picQR.BringToFront(); 
         }
 
         // ── Nhúng ucHoaDon vào panel1 ─────────────────────────────────────────
@@ -68,12 +71,15 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
             _ucHD = new ucHoaDon { Dock = DockStyle.Fill };
             panel1.Controls.Add(_ucHD);
 
-            _ucHD.CauHinh = _cfg;
-            _ucHD.MaHoaDon = $"HD{DateTime.Now:ddMMyyyy}{new Random().Next(1000, 9999)}";
-            _ucHD.TenThuNgan = SessionManager.NhanVienDangNhap?.TenNV ?? "";
-            _ucHD.MaThuNgan = SessionManager.NhanVienDangNhap?.MaNV ?? "";
-            _ucHD.DanhSachSP = _danhSachSP;
-            _ucHD.TenKhach = "Khách lẻ";
+            // GÁN DỮ LIỆU VÀO KHAY THAY VÌ GÁN TRỰC TIẾP VÀO ucHD
+            _hdData.CauHinh = _cfg;
+            _hdData.MaHoaDon = $"HD{DateTime.Now:ddMMyyyy}{new Random().Next(1000, 9999)}";
+            _hdData.TenThuNgan = SessionManager.NhanVienDangNhap?.TenNV ?? "";
+            _hdData.MaThuNgan = SessionManager.NhanVienDangNhap?.MaNV ?? "";
+            _hdData.DanhSachSP = _danhSachSP;
+            _hdData.TenKhach = "Khách lẻ";
+
+            CapNhatHoaDon(); // Truyền khay vào ucHD
         }
 
         // ── Gán sự kiện ──────────────────────────────────────────────────────
@@ -91,9 +97,9 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
                 this.BeginInvoke(new Action(() => {
                     bool laChuyenKhoan = !paymentSelectorBar1.IsCashSelected;
 
-                    // SỬA 1: Trả lại đúng vị trí chữ (Chuyển khoản = Chuyển Khoản)
-                    _ucHD.PhuongThucTT = laChuyenKhoan ? "Chuyển Khoản" : "Tiền Mặt";
-                    _ucHD.AnTienThua = laChuyenKhoan;
+                    // CẬP NHẬT VÀO KHAY DỮ LIỆU
+                    _hdData.PhuongThucTT = laChuyenKhoan ? "Chuyển Khoản" : "Tiền Mặt";
+                    _hdData.AnTienThua = laChuyenKhoan;
 
                     panel14.Visible = !laChuyenKhoan;
                     if (_picQR != null) _picQR.Visible = laChuyenKhoan;
@@ -102,15 +108,13 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
                     {
                         int vatPct = _cfg?.VAT ?? 0;
                         long tongSau = (long)(_tongTienChua * (1 + vatPct / 100.0));
-                        _ucHD.TienKhachDua = tongSau;
-                        _ucHD.TienThua = 0;
+                        
+                        _hdData.TienKhachDua = tongSau;
+                        _hdData.TienThua = 0;
                         CapNhatHoaDon();
                     }
                     else
                     {
-                        // SỬA 2: LỖI KHÔNG ĐỒNG BỘ TIỀN.
-                        // Khi chọn lại Tiền Mặt, phải gọi hàm này để nó đọc số từ txtKhachDua 
-                        // và in lên hóa đơn ngay lập tức.
                         TinhTienThua();
                     }
                 }));
@@ -124,16 +128,17 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
             long tienVAT = vatPct > 0 ? (long)(_tongTienChua * vatPct / 100.0) : 0;
             long tongSau = _tongTienChua + tienVAT;
 
-            //lblKhachThanhToan.Text = $"{tongSau:N0} đ";
             txtKhachDua.Text = LamTronTien(tongSau).ToString();
             lblTienThua.Text = "0 đ";
 
-            _ucHD.TongTienChua = _tongTienChua;
-            _ucHD.TienVAT = tienVAT;
-            _ucHD.TongTienSau = tongSau;
-            _ucHD.TienKhachDua = LamTronTien(tongSau);
-            _ucHD.TienThua = LamTronTien(tongSau) - tongSau;
-            _ucHD.AnTienThua = false;
+            // CẬP NHẬT VÀO KHAY DỮ LIỆU
+            _hdData.TongTienChua = _tongTienChua;
+            _hdData.TienVAT = tienVAT;
+            _hdData.TongTienSau = tongSau;
+            _hdData.TienKhachDua = LamTronTien(tongSau);
+            _hdData.TienThua = LamTronTien(tongSau) - tongSau;
+            _hdData.AnTienThua = false;
+            
             CapNhatHoaDon();
         }
 
@@ -171,36 +176,17 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
             {
                 var row = new Panel
                 {
-                    Location = new Point(0, y),
-                    Size = new Size(panel5.Width - 2, 52),
-                    BackColor = Color.White,
-                    Cursor = Cursors.Hand,
-                    Tag = kh
+                    Location = new Point(0, y), Size = new Size(panel5.Width - 2, 52),
+                    BackColor = Color.White, Cursor = Cursors.Hand, Tag = kh
                 };
-                row.Paint += (s, pe) =>
-                    pe.Graphics.DrawLine(Pens.LightGray, 0, row.Height - 1, row.Width, row.Height - 1);
+                row.Paint += (s, pe) => pe.Graphics.DrawLine(Pens.LightGray, 0, row.Height - 1, row.Width, row.Height - 1);
 
                 string hang = LayHang(kh.DiemTichLuy);
 
-                var lblTen = new Label
-                {
-                    Text = $"{kh.TenKH}",
-                    Location = new Point(10, 7),
-                    Size = new Size(panel5.Width - 20, 18),
-                    Font = new Font("Segoe UI", 9.5f, FontStyle.Bold),
-                    ForeColor = Color.FromArgb(30, 100, 200)
-                };
-                var lblInfo = new Label
-                {
-                    Text = $"📞 {kh.SDT}   ⭐ {kh.DiemTichLuy:N0} điểm  {hang}",
-                    Location = new Point(10, 29),
-                    Size = new Size(panel5.Width - 20, 16),
-                    Font = new Font("Segoe UI", 8.5f),
-                    ForeColor = Color.Gray
-                };
+                var lblTen = new Label { Text = $"{kh.TenKH}", Location = new Point(10, 7), Size = new Size(panel5.Width - 20, 18), Font = new Font("Segoe UI", 9.5f, FontStyle.Bold), ForeColor = Color.FromArgb(30, 100, 200) };
+                var lblInfo = new Label { Text = $"📞 {kh.SDT}   ⭐ {kh.DiemTichLuy:N0} điểm  {hang}", Location = new Point(10, 29), Size = new Size(panel5.Width - 20, 16), Font = new Font("Segoe UI", 8.5f), ForeColor = Color.Gray };
 
-                row.Controls.Add(lblTen);
-                row.Controls.Add(lblInfo);
+                row.Controls.Add(lblTen); row.Controls.Add(lblInfo);
 
                 EventHandler chon = (s, e) => ChonKhachHang(kh);
                 row.Click += chon; lblTen.Click += chon; lblInfo.Click += chon;
@@ -215,25 +201,13 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
         private void HienNutTaoMoi(string keyword)
         {
             panel5.AutoScroll = false;
-            panel5.Controls.Add(new Label
-            {
-                Text = $"Không tìm thấy KH \"{keyword}\"",
-                Location = new Point(10, 14),
-                Size = new Size(panel5.Width - 20, 18),
-                Font = new Font("Segoe UI", 9f),
-                ForeColor = Color.Gray
-            });
+            panel5.Controls.Add(new Label { Text = $"Không tìm thấy KH \"{keyword}\"", Location = new Point(10, 14), Size = new Size(panel5.Width - 20, 18), Font = new Font("Segoe UI", 9f), ForeColor = Color.Gray });
 
             var btnTao = new Button
             {
-                Text = "➕  Tạo khách hàng mới",
-                Location = new Point(10, 40),
-                Size = new Size(panel5.Width - 20, 34),
-                FlatStyle = FlatStyle.Flat,
-                BackColor = Color.FromArgb(0, 85, 204),
-                ForeColor = Color.White,
-                Font = new Font("Segoe UI", 9.5f, FontStyle.Bold),
-                Cursor = Cursors.Hand
+                Text = "➕  Tạo khách hàng mới", Location = new Point(10, 40), Size = new Size(panel5.Width - 20, 34),
+                FlatStyle = FlatStyle.Flat, BackColor = Color.FromArgb(0, 85, 204), ForeColor = Color.White,
+                Font = new Font("Segoe UI", 9.5f, FontStyle.Bold), Cursor = Cursors.Hand
             };
             btnTao.FlatAppearance.BorderSize = 0;
             btnTao.Click += (s, e) => MoFormTaoKhach(keyword);
@@ -248,9 +222,11 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
             _dangChonKH = false;
 
             HienThiThongTinKhach();
-            _ucHD.TenKhach = kh.TenKH;
-            _ucHD.MaKhach = kh.KhachHangID.ToString();
-            _ucHD.DiemTichLuy = kh.DiemTichLuy;
+            
+            // CẬP NHẬT VÀO KHAY DỮ LIỆU
+            _hdData.TenKhach = kh.TenKH;
+            _hdData.MaKhach = kh.KhachHangID.ToString();
+            _hdData.DiemTichLuy = kh.DiemTichLuy;
             CapNhatHoaDon();
         }
 
@@ -258,13 +234,14 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
         {
             _khachHang = null;
             panel5.Controls.Clear();
-            _ucHD.TenKhach = "Khách lẻ";
-            _ucHD.MaKhach = "";
-            _ucHD.DiemTichLuy = 0;
+            
+            // CẬP NHẬT VÀO KHAY DỮ LIỆU
+            _hdData.TenKhach = "Khách lẻ";
+            _hdData.MaKhach = "";
+            _hdData.DiemTichLuy = 0;
             CapNhatHoaDon();
         }
 
-        // ── Card KH gọn: Tên (+ nút đổi khách cùng dòng) / SĐT / Điểm + Hạng ──
         private void HienThiThongTinKhach()
         {
             panel5.Controls.Clear();
@@ -272,57 +249,19 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
 
             string hang = LayHang(_khachHang.DiemTichLuy);
 
-            // Nút đổi khách — đặt bên PHẢI, cùng dòng với tên khách
-            var btnHuy = new Button
-            {
-                Text = "✕ Đổi",
-                Size = new Size(70, 26),
-                Location = new Point(panel5.Width - 80, 11),
-                Anchor = AnchorStyles.Top | AnchorStyles.Right,
-                FlatStyle = FlatStyle.Flat,
-                BackColor = Color.FromArgb(220, 53, 69),
-                ForeColor = Color.White,
-                Font = new Font("Segoe UI", 8.5f),
-                Cursor = Cursors.Hand
-            };
+            var btnHuy = new Button { Text = "✕ Đổi", Size = new Size(70, 26), Location = new Point(panel5.Width - 80, 11), Anchor = AnchorStyles.Top | AnchorStyles.Right, FlatStyle = FlatStyle.Flat, BackColor = Color.FromArgb(220, 53, 69), ForeColor = Color.White, Font = new Font("Segoe UI", 8.5f), Cursor = Cursors.Hand };
             btnHuy.FlatAppearance.BorderSize = 0;
             btnHuy.Click += (s, e) => { txtSDT.Clear(); DatKhachLe(); };
             panel5.Controls.Add(btnHuy);
 
-            // Tên — chiếm phần còn lại bên trái, không đè lên nút
-            panel5.Controls.Add(new Label
-            {
-                Text = $"✅  {_khachHang.TenKH}",
-                Location = new Point(10, 12),
-                Size = new Size(panel5.Width - 100, 22),
-                Font = new Font("Segoe UI", 10.5f, FontStyle.Bold),
-                ForeColor = Color.FromArgb(30, 100, 200),
-                AutoEllipsis = true
-            });
-            // SĐT
-            panel5.Controls.Add(new Label
-            {
-                Text = $"📞  {_khachHang.SDT}",
-                Location = new Point(10, 40),
-                Size = new Size(panel5.Width - 20, 18),
-                Font = new Font("Segoe UI", 9.5f),
-                ForeColor = Color.DimGray
-            });
-            // Điểm + Hạng
-            panel5.Controls.Add(new Label
-            {
-                Text = $"⭐  {_khachHang.DiemTichLuy:N0} điểm   {hang}",
-                Location = new Point(10, 64),
-                Size = new Size(panel5.Width - 20, 18),
-                Font = new Font("Segoe UI", 9.5f, FontStyle.Bold),
-                ForeColor = Color.FromArgb(200, 120, 0)
-            });
+            panel5.Controls.Add(new Label { Text = $"✅  {_khachHang.TenKH}", Location = new Point(10, 12), Size = new Size(panel5.Width - 100, 22), Font = new Font("Segoe UI", 10.5f, FontStyle.Bold), ForeColor = Color.FromArgb(30, 100, 200), AutoEllipsis = true });
+            panel5.Controls.Add(new Label { Text = $"📞  {_khachHang.SDT}", Location = new Point(10, 40), Size = new Size(panel5.Width - 20, 18), Font = new Font("Segoe UI", 9.5f), ForeColor = Color.DimGray });
+            panel5.Controls.Add(new Label { Text = $"⭐  {_khachHang.DiemTichLuy:N0} điểm   {hang}", Location = new Point(10, 64), Size = new Size(panel5.Width - 20, 18), Font = new Font("Segoe UI", 9.5f, FontStyle.Bold), ForeColor = Color.FromArgb(200, 120, 0) });
         }
 
         private void MoFormTaoKhach(string sdtMacDinh)
         {
-            string ten = Microsoft.VisualBasic.Interaction.InputBox(
-                $"Nhập tên khách hàng (SĐT: {sdtMacDinh}):", "Tạo khách mới", "");
+            string ten = Microsoft.VisualBasic.Interaction.InputBox($"Nhập tên khách hàng (SĐT: {sdtMacDinh}):", "Tạo khách mới", "");
             if (string.IsNullOrWhiteSpace(ten)) return;
             try
             {
@@ -332,13 +271,9 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
                     var ds = new KhachHang_DAL().Search(sdtMacDinh);
                     if (ds.Count > 0) ChonKhachHang(ds[0]);
                 }
-                else
-                    MessageBox.Show("Tạo khách hàng thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                else MessageBox.Show("Tạo khách hàng thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            catch (Exception ex) { MessageBox.Show("Lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
         private void TinhTienThua()
@@ -351,14 +286,20 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
                 long thua = khachDua - tongSau;
                 lblTienThua.Text = thua >= 0 ? $"{thua:N0} đ" : "Chưa đủ tiền!";
                 lblTienThua.ForeColor = thua >= 0 ? Color.FromArgb(34, 139, 34) : Color.Red;
-                _ucHD.TienKhachDua = khachDua;
-                _ucHD.TienThua = Math.Max(0, thua);
+                
+                // CẬP NHẬT VÀO KHAY DỮ LIỆU
+                _hdData.TienKhachDua = khachDua;
+                _hdData.TienThua = Math.Max(0, thua);
                 CapNhatHoaDon();
             }
         }
 
-
-        private void CapNhatHoaDon() => _ucHD.CapNhat();
+        // ── ĐƯA KHAY DỮ LIỆU XUỐNG UCHOADON VÀ VẼ LẠI ─────────────────────────
+        private void CapNhatHoaDon() 
+        {
+            _ucHD.DuLieu = _hdData;
+            _ucHD.CapNhat();
+        }
 
         // ── Nút Hoàn Tất ─────────────────────────────────────────────────────
         private void btnInHD_Click(object sender, EventArgs e)
@@ -367,19 +308,16 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
             long tongSau = (long)(_tongTienChua * (1 + vatPct / 100.0));
             bool laChuyenKhoan = !paymentSelectorBar1.IsCashSelected;
 
-            // Validate chỉ khi tiền mặt
             if (!laChuyenKhoan)
             {
-                if (!long.TryParse(txtKhachDua.Text.Replace(",", "").Replace(".", "").Trim(), out long kd)
-                    || kd < tongSau)
+                if (!long.TryParse(txtKhachDua.Text.Replace(",", "").Replace(".", "").Trim(), out long kd) || kd < tongSau)
                 {
-                    MessageBox.Show("Số tiền khách đưa chưa đủ!", "Lỗi",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Số tiền khách đưa chưa đủ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
             }
 
-            // Build chi tiết hóa đơn
+            // Build chi tiết hóa đơn đẩy xuống Database
             var dsChiTiet = new List<QLST.DTO__Type_OTP_.ThuNganOTP.ThanhToan_DTO>();
             foreach (var dong in _danhSachSP)
             {
@@ -393,53 +331,38 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
             }
 
             long tienKhachDua = laChuyenKhoan
-                ? tongSau  // chuyển khoản: đúng số, không làm tròn
+                ? tongSau 
                 : long.Parse(txtKhachDua.Text.Replace(",", "").Replace(".", "").Trim());
             long tienThua = laChuyenKhoan ? 0 : tienKhachDua - tongSau;
             string phuong = laChuyenKhoan ? "Chuyển Khoản" : "Tiền Mặt";
 
-            // ── FIX FK: lấy NhanVienID (int) đúng field, không parse MaNV ──
-            // SessionManager cần expose NhanVienID (int). Nếu có thì dùng:
-            //   int nhanVienID = SessionManager.NhanVienDangNhap?.NhanVienID ?? 0;
-            // Nếu chỉ có MaNV dạng "NV001" thì phải query DB để lấy ID, hoặc
-            // thêm property NhanVienID vào NhanVien_DTO và gán khi login.
-            // Tạm thời lấy an toàn nhất:
             int nhanVienID = 1;
             var nv = SessionManager.NhanVienDangNhap;
             if (nv != null)
             {
-                // Ưu tiên dùng NhanVienID nếu DTO có field đó
-                // nhanVienID = nv.NhanVienID;
-                // Fallback: thử parse MaNV nếu lỡ là số thuần
                 int.TryParse(nv.MaNV, out nhanVienID);
             }
 
             if (nhanVienID <= 0)
             {
-                MessageBox.Show(
-                    "Không xác định được nhân viên đang đăng nhập (NhanVienID = 0).\n" +
-                    "Vui lòng kiểm tra: SessionManager.NhanVienDangNhap cần có property NhanVienID (int) khớp với bảng NhanVien.",
-                    "Lỗi dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Không xác định được nhân viên đang đăng nhập (NhanVienID = 0).", "Lỗi dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             int? khID = null;
-            if (_khachHang != null)
-            {
-                khID = _khachHang.KhachHangID; // Tùy thuộc vào kiểu dữ liệu KhachHangID trong DTO của bạn
-            }
+            if (_khachHang != null) khID = _khachHang.KhachHangID;
 
-            // Tính điểm cộng (Ví dụ: 10k VNĐ = 1 điểm, bạn có thể chỉnh lại tỉ lệ chia)
             int diemCong = khID.HasValue ? (int)(tongSau / 10000) : 0;
             var bll = new QLST.BLL__Bat_ngoai_le_.ThanhToan_BLL();
+            
+            // LẤY MÃ HÓA ĐƠN TỪ KHAY DỮ LIỆU
             bool ok = bll.XuLyThanhToan(
-                _ucHD.MaHoaDon, nhanVienID, khID, diemCong, tongSau, phuong,
+                _hdData.MaHoaDon, nhanVienID, khID, diemCong, tongSau, phuong,
                 tienKhachDua, tienThua, dsChiTiet, out string thongBao);
 
             if (!ok)
             {
-                MessageBox.Show("Lỗi thanh toán: " + thongBao, "Lỗi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi thanh toán: " + thongBao, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -447,8 +370,7 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
                 ? "Thanh toán chuyển khoản thành công!\n\nBạn có muốn in hóa đơn không?"
                 : $"Thanh toán thành công!\nTiền thừa: {tienThua:N0} đ\n\nBạn có muốn in hóa đơn không?";
 
-            if (MessageBox.Show(noidung, "Thành công",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+            if (MessageBox.Show(noidung, "Thành công", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                 _ucHD.InHoaDon();
 
             DialogResult = DialogResult.OK;
@@ -457,63 +379,17 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
 
         private void label15_Click(object sender, EventArgs e) { }
         private void panel1_Paint(object sender, System.Windows.Forms.PaintEventArgs e) { }
-
-        // ── Helpers ──────────────────────────────────────────────────────────
         private long LamTronTien(long tien) => ((tien + 999) / 1000) * 1000;
-
-        private string LayHang(int diem) =>
-            diem >= 1000 ? "💎 VIP" :
-            diem >= 500 ? "🥇 Vàng" :
-            diem >= 100 ? "🏅 Bạc" : "Thường";
-
-        private void panel14_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void panel5_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void panel4_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void panel12_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void panel3_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void paymentSelectorBar1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void frmThanhToanold_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtSDT_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label11_Click(object sender, EventArgs e)
-        {
-
-        }
+        private string LayHang(int diem) => diem >= 1000 ? "💎 VIP" : diem >= 500 ? "🥇 Vàng" : diem >= 100 ? "🏅 Bạc" : "Thường";
+        private void panel14_Paint(object sender, PaintEventArgs e) { }
+        private void panel5_Paint(object sender, PaintEventArgs e) { }
+        private void panel4_Paint(object sender, PaintEventArgs e) { }
+        private void panel12_Paint(object sender, PaintEventArgs e) { }
+        private void panel2_Paint(object sender, PaintEventArgs e) { }
+        private void panel3_Paint(object sender, PaintEventArgs e) { }
+        private void paymentSelectorBar1_Load(object sender, EventArgs e) { }
+        private void frmThanhToanold_Load(object sender, EventArgs e) { }
+        private void txtSDT_Load(object sender, EventArgs e) { }
+        private void label11_Click(object sender, EventArgs e) { }
     }
 }

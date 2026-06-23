@@ -61,17 +61,22 @@
     <Compile Include="BLL %28Bat ngoai le%29\QuanLyBLL\KhachHang_BLL.cs" />
     <Compile Include="BLL %28Bat ngoai le%29\QuanLyBLL\Kho_BLL.cs" />
     <Compile Include="BLL %28Bat ngoai le%29\QuanLyBLL\NhaCungCap_BLL.cs" />
+    <Compile Include="BLL %28Bat ngoai le%29\QuanLyBLL\QLHD_BLL.cs" />
+    <Compile Include="BLL %28Bat ngoai le%29\QuanLyBLL\QLNV_BLL.cs" />
     <Compile Include="BLL %28Bat ngoai le%29\QuanLyBLL\SanPham_BLL.cs" />
+    <Compile Include="BLL %28Bat ngoai le%29\QuanLyBLL\Setting_BLL.cs" />
     <Compile Include="BLL %28Bat ngoai le%29\QuanLyBLL\ThongKeHome_BLL.cs" />
     <Compile Include="BLL %28Bat ngoai le%29\QuanLyBLL\ThongKe_BLL.cs" />
     <Compile Include="BLL %28Bat ngoai le%29\ThuNganBLL\ThanhToan_BLL.cs" />
     <Compile Include="BLL %28Bat ngoai le%29\ThuNganBLL\TrungBaySP_BLL.cs" />
     <Compile Include="BLL %28Bat ngoai le%29\NVLogin_BLL.cs" />
-    <Compile Include="DAL %28Connection Query DB%29\Core\ThamSo_DAL.cs" />
+    <Compile Include="DAL %28Connection Query DB%29\QuanLyDAL\Setting_DAL.cs" />
     <Compile Include="DAL %28Connection Query DB%29\DB_Connection.cs" />
     <Compile Include="DAL %28Connection Query DB%29\QuanLyDAL\KhachHang_DAL.cs" />
     <Compile Include="DAL %28Connection Query DB%29\QuanLyDAL\Kho_DAL.cs" />
     <Compile Include="DAL %28Connection Query DB%29\QuanLyDAL\NhaCungCap_DAL.cs" />
+    <Compile Include="DAL %28Connection Query DB%29\QuanLyDAL\QLHD_DAL.cs" />
+    <Compile Include="DAL %28Connection Query DB%29\QuanLyDAL\QLNV_DAL.cs" />
     <Compile Include="DAL %28Connection Query DB%29\QuanLyDAL\SanPham_DAL.cs" />
     <Compile Include="DAL %28Connection Query DB%29\QuanLyDAL\ThongKe_DAL.cs" />
     <Compile Include="DAL %28Connection Query DB%29\ThuNganDAL\ThanhToan_DAL.cs" />
@@ -79,6 +84,7 @@
     <Compile Include="DAL %28Connection Query DB%29\ThuNganDAL\TrungBaySP_DAL.cs" />
     <Compile Include="DAL %28Connection Query DB%29\NVLogin_DAL.cs" />
     <Compile Include="DAL %28Connection Query DB%29\Core\DataProvider.cs" />
+    <Compile Include="DTO %28Type OTP%29\QuanLyDTO\HoaDon_DTO.cs" />
     <Compile Include="DTO %28Type OTP%29\QuanLyDTO\KhachHang_DTO.cs" />
     <Compile Include="DTO %28Type OTP%29\QuanLyDTO\Kho_DTO.cs" />
     <Compile Include="DTO %28Type OTP%29\QuanLyDTO\NhaCungCap_DTO.cs" />
@@ -86,10 +92,17 @@
     <Compile Include="DTO %28Type OTP%29\QuanLyDTO\ThongKeHome_DTO.cs" />
     <Compile Include="DTO %28Type OTP%29\QuanLyDTO\ThongKe_DTO.cs" />
     <Compile Include="DTO %28Type OTP%29\SessionManager.cs" />
-    <Compile Include="DTO %28Type OTP%29\NhanVienDTO.cs" />
-    <Compile Include="DTO %28Type OTP%29\ThamSo_DTO.cs" />
+    <Compile Include="DTO %28Type OTP%29\QuanLyDTO\QLNV_DTO.cs" />
+    <Compile Include="DTO %28Type OTP%29\QuanLyDTO\Setting_DTO.cs" />
+    <Compile Include="DTO %28Type OTP%29\ThuNganDTO\HoaDonIn_DTO.cs" />
     <Compile Include="DTO %28Type OTP%29\ThuNganDTO\ThanhToan_DTO.cs" />
     <Compile Include="DTO %28Type OTP%29\ThuNganDTO\TrungBaySP_DTO.cs" />
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\frmQuanLyDonHang.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\frmQuanLyDonHang.Designer.cs">
+      <DependentUpon>frmQuanLyDonHang.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI %28Giao dien%29\QuanLyGUI\frmQuanLyKhachHang.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,6 +112,12 @@
     <Compile Include="GUI %28Giao dien%29\QuanLyGUI\frmQuanLyNCC.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\frmQuanLyNhanVien.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\frmQuanLyNhanVien.Designer.cs">
+      <DependentUpon>frmQuanLyNhanVien.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI %28Giao dien%29\QuanLyGUI\frmQuanLySanPham.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,6 +126,24 @@
     </Compile>
     <Compile Include="GUI %28Giao dien%29\QuanLyGUI\frmThongKe.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Home\subpanelKho\ucNhapHang.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Home\subpanelKho\ucNhapHang.Designer.cs">
+      <DependentUpon>ucNhapHang.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Home\ucSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Home\ucSettings.Designer.cs">
+      <DependentUpon>ucSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Home\ucThongKe.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Home\ucThongKe.Designer.cs">
+      <DependentUpon>ucThongKe.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Kho\ucKho.cs">
       <SubType>UserControl</SubType>
@@ -192,14 +229,29 @@
     <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\frmQuanLyDonHang.resx">
+      <DependentUpon>frmQuanLyDonHang.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\frmQuanLyKho.resx">
       <DependentUpon>frmQuanLyKho.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\frmQuanLyNCC.resx">
       <DependentUpon>frmQuanLyNCC.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\frmQuanLyNhanVien.resx">
+      <DependentUpon>frmQuanLyNhanVien.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\frmThongKe.resx">
       <DependentUpon>frmThongKe.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\Home\subpanelKho\ucNhapHang.resx">
+      <DependentUpon>ucNhapHang.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\Home\ucSettings.resx">
+      <DependentUpon>ucSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\Home\ucThongKe.resx">
+      <DependentUpon>ucThongKe.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI %28Giao dien%29\ThuNganGUI\Hoa Don\frmThanhToan.resx">
       <DependentUpon>frmThanhToan.cs</DependentUpon>
@@ -230,14 +282,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\Home\ucHome.resx">
       <DependentUpon>ucHome.cs</DependentUpon>
     </EmbeddedResource>
@@ -246,6 +293,11 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -332,6 +384,8 @@
     <Folder Include="Resources\anh_sanpham\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\arrow_up.png" />
+    <None Include="Resources\arrow_down.png" />
     <Content Include="Resources\hide.png" />
     <Content Include="Resources\show.png" />
   </ItemGroup>

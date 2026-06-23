@@ -1,7 +1,4 @@
-﻿// ===================================================
-// File: SanPham_DAL.cs
-// Đặt vào: DAL (Connection Query DB) > QuanLyDAL
-// ===================================================
+﻿
 using QLST.DAL__Connection_Query_DB_.Query_DB;
 using QLST.DTO__Type_OTP_.QuanLyDTO;
 using System;
@@ -13,20 +10,19 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
 {
     public class SanPham_DAL
     {
-        // ── LẤY TẤT CẢ SẢN PHẨM (kèm tên loại) ──────────────────────────────
+        // ── LẤY TẤT CẢ SẢN PHẨM ──────────────────────────────
         public List<SanPham_DTO> GetAll()
         {
             var list = new List<SanPham_DTO>();
             string sql = @"
                 SELECT sp.SanPhamID, sp.MaVach, sp.TenSP, sp.GiaBanHienTai,
-                       sp.LoaiSanPhamID, lsp.TenLoai, sp.TonKhoTong, sp.HinhAnh
+                       sp.LoaiSanPhamID, lsp.TenLoai, sp.TonKhoTong, sp.HinhAnh, sp.TrangThai
                 FROM SanPham sp
                 LEFT JOIN LoaiSanPham lsp ON sp.LoaiSanPhamID = lsp.LoaiSanPhamID
                 ORDER BY sp.TenSP";
 
             DataTable dt = DataProvider.Instance.ExecuteQuery(sql);
-            foreach (DataRow row in dt.Rows)
-                list.Add(MapRow(row));
+            foreach (DataRow row in dt.Rows) list.Add(MapRow(row));
             return list;
         }
 
@@ -36,7 +32,7 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
             var list = new List<SanPham_DTO>();
             string sql = @"
                 SELECT sp.SanPhamID, sp.MaVach, sp.TenSP, sp.GiaBanHienTai,
-                       sp.LoaiSanPhamID, lsp.TenLoai, sp.TonKhoTong, sp.HinhAnh
+                       sp.LoaiSanPhamID, lsp.TenLoai, sp.TonKhoTong, sp.HinhAnh, sp.TrangThai
                 FROM SanPham sp
                 LEFT JOIN LoaiSanPham lsp ON sp.LoaiSanPhamID = lsp.LoaiSanPhamID
                 WHERE sp.TenSP LIKE N'%' + @kw + '%'
@@ -46,8 +42,7 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
             DataTable dt = DataProvider.Instance.ExecuteQuery(sql, new SqlParameter[] {
                 new SqlParameter("@kw", keyword)
             });
-            foreach (DataRow row in dt.Rows)
-                list.Add(MapRow(row));
+            foreach (DataRow row in dt.Rows) list.Add(MapRow(row));
             return list;
         }
 
@@ -57,7 +52,7 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
             var list = new List<SanPham_DTO>();
             string sql = @"
                 SELECT sp.SanPhamID, sp.MaVach, sp.TenSP, sp.GiaBanHienTai,
-                       sp.LoaiSanPhamID, lsp.TenLoai, sp.TonKhoTong, sp.HinhAnh
+                       sp.LoaiSanPhamID, lsp.TenLoai, sp.TonKhoTong, sp.HinhAnh, sp.TrangThai
                 FROM SanPham sp
                 LEFT JOIN LoaiSanPham lsp ON sp.LoaiSanPhamID = lsp.LoaiSanPhamID
                 WHERE sp.LoaiSanPhamID = @loaiID
@@ -66,8 +61,7 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
             DataTable dt = DataProvider.Instance.ExecuteQuery(sql, new SqlParameter[] {
                 new SqlParameter("@loaiID", loaiID)
             });
-            foreach (DataRow row in dt.Rows)
-                list.Add(MapRow(row));
+            foreach (DataRow row in dt.Rows) list.Add(MapRow(row));
             return list;
         }
 
@@ -94,12 +88,11 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
         {
             string sql = @"
                 UPDATE SanPham
-                SET MaVach = @MaVach, TenSP = @TenSP, GiaBanHienTai = @Gia,
+                SET TenSP = @TenSP, GiaBanHienTai = @Gia,
                     LoaiSanPhamID = @LoaiID, HinhAnh = @Anh
                 WHERE SanPhamID = @ID";
 
             int rows = DataProvider.Instance.ExecuteNonQuery(sql, new SqlParameter[] {
-                new SqlParameter("@MaVach", sp.MaVach),
                 new SqlParameter("@TenSP",  sp.TenSP),
                 new SqlParameter("@Gia",    sp.GiaBanHienTai),
                 new SqlParameter("@LoaiID", sp.LoaiSanPhamID),
@@ -109,10 +102,13 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
             return rows > 0;
         }
 
-        // ── XÓA SẢN PHẨM ──────────────────────────────────────────────────────
-        public bool Delete(int sanPhamID)
+        // ── BẬT/TẮT TRẠNG THÁI SẢN PHẨM (XÓA MỀM) ─────────────────────────────
+        public bool ToggleTrangThai(int sanPhamID)
         {
-            string sql = "DELETE FROM SanPham WHERE SanPhamID = @ID";
+            string sql = @"
+                UPDATE SanPham 
+                SET TrangThai = CASE WHEN TrangThai = 1 THEN 0 ELSE 1 END 
+                WHERE SanPhamID = @ID";
             int rows = DataProvider.Instance.ExecuteNonQuery(sql, new SqlParameter[] {
                 new SqlParameter("@ID", sanPhamID)
             });
@@ -130,17 +126,18 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
             return Convert.ToInt32(result) > 0;
         }
 
-        // ── LẤY TẤT CẢ LOẠI SẢN PHẨM ─────────────────────────────────────────
+        // ── LẤY TẤT CẢ LOẠI SẢN PHẨM ĐANG HOẠT ĐỘNG ──────────────────────────
         public List<LoaiSanPham_DTO> GetAllLoai()
         {
             var list = new List<LoaiSanPham_DTO>();
             DataTable dt = DataProvider.Instance.ExecuteQuery(
-                "SELECT LoaiSanPhamID, TenLoai FROM LoaiSanPham ORDER BY TenLoai");
+                "SELECT LoaiSanPhamID, TenLoai, TrangThai FROM LoaiSanPham WHERE TrangThai = 1 ORDER BY TenLoai");
             foreach (DataRow row in dt.Rows)
                 list.Add(new LoaiSanPham_DTO
                 {
                     LoaiSanPhamID = Convert.ToInt32(row["LoaiSanPhamID"]),
-                    TenLoai = row["TenLoai"].ToString()
+                    TenLoai = row["TenLoai"].ToString(),
+                    TrangThai = Convert.ToBoolean(row["TrangThai"])
                 });
             return list;
         }
@@ -167,7 +164,8 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
                 LoaiSanPhamID = row["LoaiSanPhamID"] == DBNull.Value ? 0 : Convert.ToInt32(row["LoaiSanPhamID"]),
                 TenLoai = row["TenLoai"] == DBNull.Value ? "" : row["TenLoai"].ToString(),
                 TonKhoTong = row["TonKhoTong"] == DBNull.Value ? 0 : Convert.ToInt32(row["TonKhoTong"]),
-                HinhAnh = row["HinhAnh"] == DBNull.Value ? "" : row["HinhAnh"].ToString()
+                HinhAnh = row["HinhAnh"] == DBNull.Value ? "" : row["HinhAnh"].ToString(),
+                TrangThai = row.Table.Columns.Contains("TrangThai") ? Convert.ToBoolean(row["TrangThai"]) : true
             };
         }
     }
