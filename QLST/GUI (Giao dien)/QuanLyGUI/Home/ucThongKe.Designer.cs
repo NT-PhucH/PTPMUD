@@ -17,15 +17,14 @@
 
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
-            this.pnlFilter = new System.Windows.Forms.Panel();
+            this.tlpFilter = new System.Windows.Forms.TableLayoutPanel();
             this.btnLoc = new System.Windows.Forms.Button();
-            this.cboCaLamViec = new System.Windows.Forms.ComboBox();
-            this.cboThuNgan = new System.Windows.Forms.ComboBox();
-            this.dtDenNgay = new System.Windows.Forms.DateTimePicker();
             this.dtTuNgay = new System.Windows.Forms.DateTimePicker();
+            this.dtDenNgay = new System.Windows.Forms.DateTimePicker();
+            this.cboThoiGian = new System.Windows.Forms.ComboBox();
             this.tlpKPI = new System.Windows.Forms.TableLayoutPanel();
             this.pnlKPI1 = new System.Windows.Forms.Panel();
             this.lblDoanhThu = new System.Windows.Forms.Label();
@@ -42,22 +41,13 @@
             this.tlpMiddle = new System.Windows.Forms.TableLayoutPanel();
             this.chartDoanhThu = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.pnlTopProduct = new System.Windows.Forms.Panel();
-            this.lbTopProduct = new System.Windows.Forms.ListBox();
-            this.lblTitleTop = new System.Windows.Forms.Label();
-            this.tlpRisks = new System.Windows.Forms.TableLayoutPanel();
-            this.pnlRisk1 = new System.Windows.Forms.Panel();
-            this.txtHangHoaRisk = new System.Windows.Forms.TextBox();
-            this.lblRisk1Title = new System.Windows.Forms.Label();
-            this.pnlRisk2 = new System.Windows.Forms.Panel();
-            this.txtGiaoDichRisk = new System.Windows.Forms.TextBox();
-            this.lblRisk2Title = new System.Windows.Forms.Label();
-            this.dgvGiaoDich = new System.Windows.Forms.DataGridView();
-            this.pnlFooter = new System.Windows.Forms.Panel();
-            this.btnExportPDF = new System.Windows.Forms.Button();
-            this.btnExportExcel = new System.Windows.Forms.Button();
             this.btnCTTopSp = new System.Windows.Forms.Button();
+            this.dgvTopProduct = new System.Windows.Forms.DataGridView();
+            this.lblTitleTop = new System.Windows.Forms.Label();
+            this.pnlBottom = new System.Windows.Forms.Panel();
+            this.btnXuatData = new System.Windows.Forms.Button();
             this.tlpMain.SuspendLayout();
-            this.pnlFilter.SuspendLayout();
+            this.tlpFilter.SuspendLayout();
             this.tlpKPI.SuspendLayout();
             this.pnlKPI1.SuspendLayout();
             this.pnlKPI2.SuspendLayout();
@@ -66,105 +56,104 @@
             this.tlpMiddle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartDoanhThu)).BeginInit();
             this.pnlTopProduct.SuspendLayout();
-            this.tlpRisks.SuspendLayout();
-            this.pnlRisk1.SuspendLayout();
-            this.pnlRisk2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvGiaoDich)).BeginInit();
-            this.pnlFooter.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTopProduct)).BeginInit();
+            this.pnlBottom.SuspendLayout();
             this.SuspendLayout();
             // 
             // tlpMain
             // 
             this.tlpMain.ColumnCount = 1;
             this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpMain.Controls.Add(this.pnlFilter, 0, 0);
+            this.tlpMain.Controls.Add(this.tlpFilter, 0, 0);
             this.tlpMain.Controls.Add(this.tlpKPI, 0, 1);
             this.tlpMain.Controls.Add(this.tlpMiddle, 0, 2);
-            this.tlpMain.Controls.Add(this.tlpRisks, 0, 3);
-            this.tlpMain.Controls.Add(this.dgvGiaoDich, 0, 4);
-            this.tlpMain.Controls.Add(this.pnlFooter, 0, 5);
+            this.tlpMain.Controls.Add(this.pnlBottom, 0, 3);
             this.tlpMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpMain.Location = new System.Drawing.Point(0, 0);
             this.tlpMain.Name = "tlpMain";
-            this.tlpMain.RowCount = 6;
+            this.tlpMain.RowCount = 4;
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45F));
-            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 110F));
-            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 55F));
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tlpMain.Size = new System.Drawing.Size(1100, 800);
             this.tlpMain.TabIndex = 0;
             // 
-            // pnlFilter
+            // tlpFilter
             // 
-            this.pnlFilter.BackColor = System.Drawing.Color.White;
-            this.pnlFilter.Controls.Add(this.btnLoc);
-            this.pnlFilter.Controls.Add(this.cboCaLamViec);
-            this.pnlFilter.Controls.Add(this.cboThuNgan);
-            this.pnlFilter.Controls.Add(this.dtDenNgay);
-            this.pnlFilter.Controls.Add(this.dtTuNgay);
-            this.pnlFilter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlFilter.Location = new System.Drawing.Point(5, 5);
-            this.pnlFilter.Margin = new System.Windows.Forms.Padding(5);
-            this.pnlFilter.Name = "pnlFilter";
-            this.pnlFilter.Size = new System.Drawing.Size(1090, 50);
-            this.pnlFilter.TabIndex = 0;
+            this.tlpFilter.BackColor = System.Drawing.Color.White;
+            this.tlpFilter.ColumnCount = 5;
+            this.tlpFilter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
+            this.tlpFilter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
+            this.tlpFilter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
+            this.tlpFilter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpFilter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
+            this.tlpFilter.Controls.Add(this.btnLoc, 4, 0);
+            this.tlpFilter.Controls.Add(this.dtTuNgay, 0, 0);
+            this.tlpFilter.Controls.Add(this.dtDenNgay, 1, 0);
+            this.tlpFilter.Controls.Add(this.cboThoiGian, 2, 0);
+            this.tlpFilter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpFilter.Location = new System.Drawing.Point(5, 5);
+            this.tlpFilter.Margin = new System.Windows.Forms.Padding(5);
+            this.tlpFilter.Name = "tlpFilter";
+            this.tlpFilter.Padding = new System.Windows.Forms.Padding(10, 5, 10, 5);
+            this.tlpFilter.RowCount = 1;
+            this.tlpFilter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpFilter.Size = new System.Drawing.Size(1090, 50);
+            this.tlpFilter.TabIndex = 0;
             // 
             // btnLoc
             // 
-            this.btnLoc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLoc.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnLoc.AutoSize = true;
             this.btnLoc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
             this.btnLoc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLoc.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
             this.btnLoc.ForeColor = System.Drawing.Color.White;
-            this.btnLoc.Location = new System.Drawing.Point(961, 8);
+            this.btnLoc.Location = new System.Drawing.Point(947, 8);
             this.btnLoc.Name = "btnLoc";
-            this.btnLoc.Size = new System.Drawing.Size(119, 33);
-            this.btnLoc.TabIndex = 0;
+            this.btnLoc.Size = new System.Drawing.Size(130, 33);
+            this.btnLoc.TabIndex = 3;
             this.btnLoc.Text = "LỌC DỮ LIỆU";
             this.btnLoc.UseVisualStyleBackColor = false;
             this.btnLoc.Click += new System.EventHandler(this.btnLoc_Click);
             // 
-            // cboCaLamViec
+            // dtTuNgay
             // 
-            this.cboCaLamViec.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.cboCaLamViec.FormattingEnabled = true;
-            this.cboCaLamViec.Location = new System.Drawing.Point(560, 11);
-            this.cboCaLamViec.Name = "cboCaLamViec";
-            this.cboCaLamViec.Size = new System.Drawing.Size(140, 31);
-            this.cboCaLamViec.TabIndex = 1;
-            this.cboCaLamViec.Text = "Ca làm việc ";
-            // 
-            // cboThuNgan
-            // 
-            this.cboThuNgan.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.cboThuNgan.FormattingEnabled = true;
-            this.cboThuNgan.Location = new System.Drawing.Point(390, 11);
-            this.cboThuNgan.Name = "cboThuNgan";
-            this.cboThuNgan.Size = new System.Drawing.Size(150, 31);
-            this.cboThuNgan.TabIndex = 2;
-            this.cboThuNgan.Text = "Nhân viên";
+            this.dtTuNgay.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.dtTuNgay.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.dtTuNgay.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtTuNgay.Location = new System.Drawing.Point(13, 10);
+            this.dtTuNgay.Name = "dtTuNgay";
+            this.dtTuNgay.Size = new System.Drawing.Size(140, 30);
+            this.dtTuNgay.TabIndex = 1;
             // 
             // dtDenNgay
             // 
+            this.dtDenNgay.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.dtDenNgay.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.dtDenNgay.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtDenNgay.Location = new System.Drawing.Point(200, 11);
+            this.dtDenNgay.Location = new System.Drawing.Point(173, 10);
             this.dtDenNgay.Name = "dtDenNgay";
-            this.dtDenNgay.Size = new System.Drawing.Size(170, 30);
-            this.dtDenNgay.TabIndex = 3;
+            this.dtDenNgay.Size = new System.Drawing.Size(140, 30);
+            this.dtDenNgay.TabIndex = 2;
             // 
-            // dtTuNgay
+            // cboThoiGian
             // 
-            this.dtTuNgay.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.dtTuNgay.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtTuNgay.Location = new System.Drawing.Point(15, 11);
-            this.dtTuNgay.Name = "dtTuNgay";
-            this.dtTuNgay.Size = new System.Drawing.Size(170, 30);
-            this.dtTuNgay.TabIndex = 4;
+            this.cboThoiGian.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cboThoiGian.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboThoiGian.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.cboThoiGian.FormattingEnabled = true;
+            this.cboThoiGian.Items.AddRange(new object[] {
+            "Tùy chỉnh",
+            "Theo tuần",
+            "Theo tháng",
+            "Theo năm"});
+            this.cboThoiGian.Location = new System.Drawing.Point(333, 9);
+            this.cboThoiGian.Name = "cboThoiGian";
+            this.cboThoiGian.Size = new System.Drawing.Size(140, 31);
+            this.cboThoiGian.TabIndex = 0;
+            this.cboThoiGian.SelectedIndexChanged += new System.EventHandler(this.cboThoiGian_SelectedIndexChanged);
             // 
             // tlpKPI
             // 
@@ -337,52 +326,68 @@
             this.tlpMiddle.Name = "tlpMiddle";
             this.tlpMiddle.RowCount = 1;
             this.tlpMiddle.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpMiddle.Size = new System.Drawing.Size(1094, 210);
+            this.tlpMiddle.Size = new System.Drawing.Size(1094, 584);
             this.tlpMiddle.TabIndex = 2;
             // 
             // chartDoanhThu
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chartDoanhThu.ChartAreas.Add(chartArea4);
+            chartArea1.Name = "ChartArea1";
+            this.chartDoanhThu.ChartAreas.Add(chartArea1);
             this.chartDoanhThu.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend4.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Top;
-            legend4.Name = "Legend1";
-            this.chartDoanhThu.Legends.Add(legend4);
+            legend1.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Top;
+            legend1.Name = "Legend1";
+            this.chartDoanhThu.Legends.Add(legend1);
             this.chartDoanhThu.Location = new System.Drawing.Point(5, 5);
             this.chartDoanhThu.Margin = new System.Windows.Forms.Padding(5);
             this.chartDoanhThu.Name = "chartDoanhThu";
-            this.chartDoanhThu.Size = new System.Drawing.Size(701, 200);
+            this.chartDoanhThu.Size = new System.Drawing.Size(701, 574);
             this.chartDoanhThu.TabIndex = 0;
             // 
             // pnlTopProduct
             // 
             this.pnlTopProduct.BackColor = System.Drawing.Color.White;
             this.pnlTopProduct.Controls.Add(this.btnCTTopSp);
-            this.pnlTopProduct.Controls.Add(this.lbTopProduct);
+            this.pnlTopProduct.Controls.Add(this.dgvTopProduct);
             this.pnlTopProduct.Controls.Add(this.lblTitleTop);
             this.pnlTopProduct.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlTopProduct.Location = new System.Drawing.Point(716, 5);
             this.pnlTopProduct.Margin = new System.Windows.Forms.Padding(5);
             this.pnlTopProduct.Name = "pnlTopProduct";
-            this.pnlTopProduct.Size = new System.Drawing.Size(373, 200);
+            this.pnlTopProduct.Size = new System.Drawing.Size(373, 574);
             this.pnlTopProduct.TabIndex = 1;
             // 
-            // lbTopProduct
+            // btnCTTopSp
             // 
-            this.lbTopProduct.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lbTopProduct.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbTopProduct.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lbTopProduct.FormattingEnabled = true;
-            this.lbTopProduct.ItemHeight = 23;
-            this.lbTopProduct.Items.AddRange(new object[] {
-            "1. Thùng bia Heineken - 15,000,000 VNĐ",
-            "2. Sữa bột Ensure - 12,300,000 VNĐ",
-            "3. Dầu ăn Tường An - 8,500,000 VNĐ",
-            "4. Gạo ST25 - 6,200,000 VNĐ"});
-            this.lbTopProduct.Location = new System.Drawing.Point(0, 35);
-            this.lbTopProduct.Name = "lbTopProduct";
-            this.lbTopProduct.Size = new System.Drawing.Size(373, 165);
-            this.lbTopProduct.TabIndex = 1;
+            this.btnCTTopSp.AutoSize = true;
+            this.btnCTTopSp.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnCTTopSp.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCTTopSp.Location = new System.Drawing.Point(0, 544);
+            this.btnCTTopSp.Name = "btnCTTopSp";
+            this.btnCTTopSp.Size = new System.Drawing.Size(373, 30);
+            this.btnCTTopSp.TabIndex = 3;
+            this.btnCTTopSp.Text = "Xem chi tiết >>";
+            this.btnCTTopSp.UseVisualStyleBackColor = true;
+            this.btnCTTopSp.Click += new System.EventHandler(this.btnCTTopSp_Click);
+            // 
+            // dgvTopProduct
+            // 
+            this.dgvTopProduct.AllowUserToAddRows = false;
+            this.dgvTopProduct.AllowUserToDeleteRows = false;
+            this.dgvTopProduct.AllowUserToResizeColumns = false;
+            this.dgvTopProduct.AllowUserToResizeRows = false;
+            this.dgvTopProduct.ColumnHeadersHeight = 29;
+            this.dgvTopProduct.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvTopProduct.Location = new System.Drawing.Point(0, 35);
+            this.dgvTopProduct.Name = "dgvTopProduct";
+            this.dgvTopProduct.ReadOnly = true;
+            this.dgvTopProduct.RowHeadersVisible = false;
+            this.dgvTopProduct.RowHeadersWidth = 51;
+            this.dgvTopProduct.RowTemplate.Height = 35;
+            this.dgvTopProduct.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.dgvTopProduct.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvTopProduct.Size = new System.Drawing.Size(373, 539);
+            this.dgvTopProduct.TabIndex = 1;
+            this.dgvTopProduct.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvTopProduct_MouseDown);
             // 
             // lblTitleTop
             // 
@@ -395,163 +400,29 @@
             this.lblTitleTop.Text = "🏆 TOP SẢN PHẨM BÁN CHẠY";
             this.lblTitleTop.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // tlpRisks
+            // pnlBottom
             // 
-            this.tlpRisks.ColumnCount = 2;
-            this.tlpRisks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpRisks.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpRisks.Controls.Add(this.pnlRisk1, 0, 0);
-            this.tlpRisks.Controls.Add(this.pnlRisk2, 1, 0);
-            this.tlpRisks.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpRisks.Location = new System.Drawing.Point(3, 379);
-            this.tlpRisks.Name = "tlpRisks";
-            this.tlpRisks.RowCount = 1;
-            this.tlpRisks.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpRisks.Size = new System.Drawing.Size(1094, 104);
-            this.tlpRisks.TabIndex = 3;
+            this.pnlBottom.Controls.Add(this.btnXuatData);
+            this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlBottom.Location = new System.Drawing.Point(3, 753);
+            this.pnlBottom.Name = "pnlBottom";
+            this.pnlBottom.Size = new System.Drawing.Size(1094, 44);
+            this.pnlBottom.TabIndex = 3;
             // 
-            // pnlRisk1
+            // btnXuatData
             // 
-            this.pnlRisk1.BackColor = System.Drawing.Color.White;
-            this.pnlRisk1.Controls.Add(this.txtHangHoaRisk);
-            this.pnlRisk1.Controls.Add(this.lblRisk1Title);
-            this.pnlRisk1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlRisk1.Location = new System.Drawing.Point(5, 5);
-            this.pnlRisk1.Margin = new System.Windows.Forms.Padding(5);
-            this.pnlRisk1.Name = "pnlRisk1";
-            this.pnlRisk1.Size = new System.Drawing.Size(537, 94);
-            this.pnlRisk1.TabIndex = 0;
-            // 
-            // txtHangHoaRisk
-            // 
-            this.txtHangHoaRisk.BackColor = System.Drawing.Color.White;
-            this.txtHangHoaRisk.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtHangHoaRisk.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtHangHoaRisk.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.txtHangHoaRisk.ForeColor = System.Drawing.Color.DimGray;
-            this.txtHangHoaRisk.Location = new System.Drawing.Point(0, 30);
-            this.txtHangHoaRisk.Multiline = true;
-            this.txtHangHoaRisk.Name = "txtHangHoaRisk";
-            this.txtHangHoaRisk.ReadOnly = true;
-            this.txtHangHoaRisk.Size = new System.Drawing.Size(537, 64);
-            this.txtHangHoaRisk.TabIndex = 0;
-            this.txtHangHoaRisk.Text = "⚠️ 15 Sản phẩm chạm mức tồn tối thiểu cần nhập kho.\r\n⏰ 8 Mặt hàng sắp hết hạn sử " +
-    "dụng trong tuần này.";
-            // 
-            // lblRisk1Title
-            // 
-            this.lblRisk1Title.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblRisk1Title.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.lblRisk1Title.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(57)))), ((int)(((byte)(43)))));
-            this.lblRisk1Title.Location = new System.Drawing.Point(0, 0);
-            this.lblRisk1Title.Name = "lblRisk1Title";
-            this.lblRisk1Title.Size = new System.Drawing.Size(537, 30);
-            this.lblRisk1Title.TabIndex = 1;
-            this.lblRisk1Title.Text = "🔔 CẢNH BÁO KHO HÀNG";
-            this.lblRisk1Title.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // pnlRisk2
-            // 
-            this.pnlRisk2.BackColor = System.Drawing.Color.White;
-            this.pnlRisk2.Controls.Add(this.txtGiaoDichRisk);
-            this.pnlRisk2.Controls.Add(this.lblRisk2Title);
-            this.pnlRisk2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlRisk2.Location = new System.Drawing.Point(552, 5);
-            this.pnlRisk2.Margin = new System.Windows.Forms.Padding(5);
-            this.pnlRisk2.Name = "pnlRisk2";
-            this.pnlRisk2.Size = new System.Drawing.Size(537, 94);
-            this.pnlRisk2.TabIndex = 1;
-            // 
-            // txtGiaoDichRisk
-            // 
-            this.txtGiaoDichRisk.BackColor = System.Drawing.Color.White;
-            this.txtGiaoDichRisk.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtGiaoDichRisk.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtGiaoDichRisk.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.txtGiaoDichRisk.ForeColor = System.Drawing.Color.DimGray;
-            this.txtGiaoDichRisk.Location = new System.Drawing.Point(0, 30);
-            this.txtGiaoDichRisk.Multiline = true;
-            this.txtGiaoDichRisk.Name = "txtGiaoDichRisk";
-            this.txtGiaoDichRisk.ReadOnly = true;
-            this.txtGiaoDichRisk.Size = new System.Drawing.Size(537, 64);
-            this.txtGiaoDichRisk.TabIndex = 0;
-            this.txtGiaoDichRisk.Text = "❌ 5 Hóa đơn yêu cầu hoàn trả/hủy đơn (Tổng: 3,500,000đ).\r\n🎫 Phát hiện 12 giao dị" +
-    "ch áp dụng Voucher trùng lặp.";
-            // 
-            // lblRisk2Title
-            // 
-            this.lblRisk2Title.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblRisk2Title.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.lblRisk2Title.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(57)))), ((int)(((byte)(43)))));
-            this.lblRisk2Title.Location = new System.Drawing.Point(0, 0);
-            this.lblRisk2Title.Name = "lblRisk2Title";
-            this.lblRisk2Title.Size = new System.Drawing.Size(537, 30);
-            this.lblRisk2Title.TabIndex = 1;
-            this.lblRisk2Title.Text = "🚨 CẢNH BÁO VẬN HÀNH & GIAO DỊCH";
-            this.lblRisk2Title.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // dgvGiaoDich
-            // 
-            this.dgvGiaoDich.AllowUserToAddRows = false;
-            this.dgvGiaoDich.AllowUserToDeleteRows = false;
-            this.dgvGiaoDich.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvGiaoDich.BackgroundColor = System.Drawing.Color.White;
-            this.dgvGiaoDich.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvGiaoDich.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvGiaoDich.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvGiaoDich.Location = new System.Drawing.Point(5, 491);
-            this.dgvGiaoDich.Margin = new System.Windows.Forms.Padding(5, 5, 5, 0);
-            this.dgvGiaoDich.Name = "dgvGiaoDich";
-            this.dgvGiaoDich.ReadOnly = true;
-            this.dgvGiaoDich.RowHeadersVisible = false;
-            this.dgvGiaoDich.RowHeadersWidth = 51;
-            this.dgvGiaoDich.RowTemplate.Height = 24;
-            this.dgvGiaoDich.Size = new System.Drawing.Size(1090, 259);
-            this.dgvGiaoDich.TabIndex = 4;
-            // 
-            // pnlFooter
-            // 
-            this.pnlFooter.Controls.Add(this.btnExportPDF);
-            this.pnlFooter.Controls.Add(this.btnExportExcel);
-            this.pnlFooter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlFooter.Location = new System.Drawing.Point(3, 753);
-            this.pnlFooter.Name = "pnlFooter";
-            this.pnlFooter.Size = new System.Drawing.Size(1094, 44);
-            this.pnlFooter.TabIndex = 5;
-            // 
-            // btnExportPDF
-            // 
-            this.btnExportPDF.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExportPDF.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnExportPDF.Location = new System.Drawing.Point(917, 9);
-            this.btnExportPDF.Name = "btnExportPDF";
-            this.btnExportPDF.Size = new System.Drawing.Size(169, 32);
-            this.btnExportPDF.TabIndex = 0;
-            this.btnExportPDF.Text = "⬇ Xuất Báo Cáo PDF";
-            this.btnExportPDF.UseVisualStyleBackColor = true;
-            // 
-            // btnExportExcel
-            // 
-            this.btnExportExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExportExcel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnExportExcel.Location = new System.Drawing.Point(734, 9);
-            this.btnExportExcel.Name = "btnExportExcel";
-            this.btnExportExcel.Size = new System.Drawing.Size(177, 32);
-            this.btnExportExcel.TabIndex = 1;
-            this.btnExportExcel.Text = "⬇ Xuất Excel Báo Cáo";
-            this.btnExportExcel.UseVisualStyleBackColor = true;
-            // 
-            // btnCTTopSp
-            // 
-            this.btnCTTopSp.AutoSize = true;
-            this.btnCTTopSp.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnCTTopSp.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCTTopSp.Location = new System.Drawing.Point(0, 170);
-            this.btnCTTopSp.Name = "btnCTTopSp";
-            this.btnCTTopSp.Size = new System.Drawing.Size(373, 30);
-            this.btnCTTopSp.TabIndex = 3;
-            this.btnCTTopSp.Text = "Xem chi tiết >>";
-            this.btnCTTopSp.UseVisualStyleBackColor = true;
+            this.btnXuatData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnXuatData.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(174)))), ((int)(((byte)(96)))));
+            this.btnXuatData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnXuatData.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+            this.btnXuatData.ForeColor = System.Drawing.Color.White;
+            this.btnXuatData.Location = new System.Drawing.Point(925, 5);
+            this.btnXuatData.Name = "btnXuatData";
+            this.btnXuatData.Size = new System.Drawing.Size(160, 32);
+            this.btnXuatData.TabIndex = 4;
+            this.btnXuatData.Text = "⬇ XUẤT DỮ LIỆU";
+            this.btnXuatData.UseVisualStyleBackColor = false;
+            this.btnXuatData.Click += new System.EventHandler(this.btnXuatData_Click);
             // 
             // ucThongKe
             // 
@@ -562,8 +433,8 @@
             this.Name = "ucThongKe";
             this.Size = new System.Drawing.Size(1100, 800);
             this.tlpMain.ResumeLayout(false);
-            this.pnlFilter.ResumeLayout(false);
-            this.pnlFilter.PerformLayout();
+            this.tlpFilter.ResumeLayout(false);
+            this.tlpFilter.PerformLayout();
             this.tlpKPI.ResumeLayout(false);
             this.pnlKPI1.ResumeLayout(false);
             this.pnlKPI1.PerformLayout();
@@ -577,13 +448,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.chartDoanhThu)).EndInit();
             this.pnlTopProduct.ResumeLayout(false);
             this.pnlTopProduct.PerformLayout();
-            this.tlpRisks.ResumeLayout(false);
-            this.pnlRisk1.ResumeLayout(false);
-            this.pnlRisk1.PerformLayout();
-            this.pnlRisk2.ResumeLayout(false);
-            this.pnlRisk2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvGiaoDich)).EndInit();
-            this.pnlFooter.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTopProduct)).EndInit();
+            this.pnlBottom.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -591,12 +457,11 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tlpMain;
-        private System.Windows.Forms.Panel pnlFilter;
-        private System.Windows.Forms.Button btnLoc;
-        private System.Windows.Forms.ComboBox cboCaLamViec;
-        private System.Windows.Forms.ComboBox cboThuNgan;
-        private System.Windows.Forms.DateTimePicker dtDenNgay;
+        private System.Windows.Forms.TableLayoutPanel tlpFilter;
+        private System.Windows.Forms.ComboBox cboThoiGian;
         private System.Windows.Forms.DateTimePicker dtTuNgay;
+        private System.Windows.Forms.DateTimePicker dtDenNgay;
+        private System.Windows.Forms.Button btnLoc;
         private System.Windows.Forms.TableLayoutPanel tlpKPI;
         private System.Windows.Forms.Panel pnlKPI1;
         private System.Windows.Forms.Label lblDoanhThu;
@@ -613,19 +478,10 @@
         private System.Windows.Forms.TableLayoutPanel tlpMiddle;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartDoanhThu;
         private System.Windows.Forms.Panel pnlTopProduct;
-        private System.Windows.Forms.ListBox lbTopProduct;
         private System.Windows.Forms.Label lblTitleTop;
-        private System.Windows.Forms.TableLayoutPanel tlpRisks;
-        private System.Windows.Forms.Panel pnlRisk1;
-        private System.Windows.Forms.TextBox txtHangHoaRisk;
-        private System.Windows.Forms.Label lblRisk1Title;
-        private System.Windows.Forms.Panel pnlRisk2;
-        private System.Windows.Forms.TextBox txtGiaoDichRisk;
-        private System.Windows.Forms.Label lblRisk2Title;
-        private System.Windows.Forms.DataGridView dgvGiaoDich;
-        private System.Windows.Forms.Panel pnlFooter;
-        private System.Windows.Forms.Button btnExportPDF;
-        private System.Windows.Forms.Button btnExportExcel;
         private System.Windows.Forms.Button btnCTTopSp;
+        private System.Windows.Forms.Panel pnlBottom;
+        private System.Windows.Forms.Button btnXuatData;
+        private System.Windows.Forms.DataGridView dgvTopProduct;
     }
 }

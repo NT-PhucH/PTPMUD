@@ -22,6 +22,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
         {
             InitializeComponent();
             LoadSettings();
+            panelPreviewScroll.Resize += PanelPreviewScroll_Resize;
         }
 
         private void LoadSettings()
@@ -151,6 +152,20 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
 
             var ppd = new PrintPreviewDialog { Document = pd, Width = 450, Height = 800, Text = "In thử hóa đơn từ Cài Đặt" };
             ppd.ShowDialog();
+        }
+        private void PanelPreviewScroll_Resize(object sender, EventArgs e)
+        {
+            // Tính toán khoảng trống dư thừa và chia đôi để ra tọa độ X nằm giữa màn hình
+            int xPosition = (panelPreviewScroll.ClientSize.Width - panelPreview.Width) / 2;
+
+            // Nếu cửa sổ bị thu quá nhỏ, ép tọa độ X về 0 để không bị lẹm mất mép trái tờ hóa đơn
+            if (xPosition < 0)
+            {
+                xPosition = 0;
+            }
+
+            // Chỉ cập nhật lề trái (Left), giữ nguyên lề trên (Top) để không làm hỏng thanh cuộn dọc
+            panelPreview.Left = xPosition;
         }
 
         private void label1_Click(object sender, EventArgs e) { }

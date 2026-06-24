@@ -133,6 +133,12 @@
     <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Home\subpanelKho\ucNhapHang.Designer.cs">
       <DependentUpon>ucNhapHang.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Home\ucQLSP.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Home\ucQLSP.Designer.cs">
+      <DependentUpon>ucQLSP.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Home\ucSettings.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -246,6 +252,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\Home\subpanelKho\ucNhapHang.resx">
       <DependentUpon>ucNhapHang.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\Home\ucQLSP.resx">
+      <DependentUpon>ucQLSP.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\Home\ucSettings.resx">
       <DependentUpon>ucSettings.cs</DependentUpon>

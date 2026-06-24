@@ -123,6 +123,9 @@ namespace QLST
             {
                 ucThongKe thongKe = new ucThongKe { Dock = DockStyle.Fill };
                 panelContent.Controls.Add(thongKe);
+                /*frmThongKe frmKH = new frmThongKe { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
+                panelContent.Controls.Add(frmKH);
+                frmKH.Show();*/
             }
             else if (clickedButton == btnSettings)
             {
@@ -137,9 +140,11 @@ namespace QLST
             }
             else if (clickedButton == btnQLSP)
             {
-                frmQuanLySanPham frmSP = new frmQuanLySanPham { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
+                /*frmQuanLySanPham frmSP = new frmQuanLySanPham { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
                 panelContent.Controls.Add(frmSP);
-                frmSP.Show();
+                frmSP.Show();*/
+                ucQLSP settings = new ucQLSP { Dock = DockStyle.Fill };
+                panelContent.Controls.Add(settings);
             }
             else if (clickedButton == btnQLNCC)
             {
