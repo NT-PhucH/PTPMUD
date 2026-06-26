@@ -281,17 +281,20 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
             int vatPct = _cfg?.VAT ?? 0;
             long tongSau = (long)(_tongTienChua * (1 + vatPct / 100.0));
 
-            if (long.TryParse(txtKhachDua.Text.Replace(",", "").Replace(".", "").Trim(), out long khachDua))
-            {
-                long thua = khachDua - tongSau;
-                lblTienThua.Text = thua >= 0 ? $"{thua:N0} đ" : "Chưa đủ tiền!";
-                lblTienThua.ForeColor = thua >= 0 ? Color.FromArgb(34, 139, 34) : Color.Red;
-                
-                // CẬP NHẬT VÀO KHAY DỮ LIỆU
-                _hdData.TienKhachDua = khachDua;
-                _hdData.TienThua = Math.Max(0, thua);
-                CapNhatHoaDon();
-            }
+            // Mặc định khách đưa 0đ nếu xóa trắng textbox
+            long.TryParse(txtKhachDua.Text.Replace(",", "").Replace(".", "").Trim(), out long khachDua);
+
+            // Tính tiền thừa (sẽ ra số âm nếu khachDua < tongSau)
+            long thua = khachDua - tongSau;
+
+            // Luôn hiển thị kết quả, đổi màu đỏ nếu thiếu tiền
+            lblTienThua.Text = $"{thua:N0} đ";
+            lblTienThua.ForeColor = thua >= 0 ? Color.FromArgb(34, 139, 34) : Color.Red;
+
+            // Cập nhật khay dữ liệu
+            _hdData.TienKhachDua = khachDua;
+            _hdData.TienThua = thua >= 0 ? thua : 0; // Tùy bạn muốn DTO lưu 0 hay âm nếu khách đưa thiếu
+            CapNhatHoaDon();
         }
 
         // ── ĐƯA KHAY DỮ LIỆU XUỐNG UCHOADON VÀ VẼ LẠI ─────────────────────────
@@ -308,16 +311,20 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
             long tongSau = (long)(_tongTienChua * (1 + vatPct / 100.0));
             bool laChuyenKhoan = !paymentSelectorBar1.IsCashSelected;
 
+            // VẤN ĐỀ 3: Khai báo biến kd ở ngoài để dùng chung, tránh gọi Parse nhiều lần
+            long kd = 0;
+
             if (!laChuyenKhoan)
             {
-                if (!long.TryParse(txtKhachDua.Text.Replace(",", "").Replace(".", "").Trim(), out long kd) || kd < tongSau)
+                long.TryParse(txtKhachDua.Text.Replace(",", "").Replace(".", "").Trim(), out kd);
+                if (kd < tongSau)
                 {
                     MessageBox.Show("Số tiền khách đưa chưa đủ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
             }
 
-            // Build chi tiết hóa đơn đẩy xuống Database
+            // 1. Build chi tiết hóa đơn đẩy xuống Database
             var dsChiTiet = new List<QLST.DTO__Type_OTP_.ThuNganOTP.ThanhToan_DTO>();
             foreach (var dong in _danhSachSP)
             {
@@ -330,31 +337,37 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
                 });
             }
 
-            long tienKhachDua = laChuyenKhoan
-                ? tongSau 
-                : long.Parse(txtKhachDua.Text.Replace(",", "").Replace(".", "").Trim());
+            // VẤN ĐỀ 3 (tiếp): Dùng trực tiếp biến kd đã ép kiểu thành công ở trên
+            long tienKhachDua = laChuyenKhoan ? tongSau : kd;
             long tienThua = laChuyenKhoan ? 0 : tienKhachDua - tongSau;
             string phuong = laChuyenKhoan ? "Chuyển Khoản" : "Tiền Mặt";
 
-            int nhanVienID = 1;
-            var nv = SessionManager.NhanVienDangNhap;
-            if (nv != null)
-            {
-                int.TryParse(nv.MaNV, out nhanVienID);
-            }
+            // Cập nhật lại khay dữ liệu HoaDonIn_DTO để lúc in ra giấy được chính xác số tiền cuối cùng
+            _hdData.TienKhachDua = tienKhachDua;
+            _hdData.TienThua = tienThua;
+            _hdData.PhuongThucTT = phuong;
+            CapNhatHoaDon();
+
+            // VẤN ĐỀ 5: Lấy trực tiếp NhanVienID (kiểu int) theo đúng cấu trúc DB
+            int nhanVienID = SessionManager.NhanVienDangNhap?.NhanVienID ?? 0;
 
             if (nhanVienID <= 0)
             {
-                MessageBox.Show("Không xác định được nhân viên đang đăng nhập (NhanVienID = 0).", "Lỗi dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Không xác định được nhân viên đang đăng nhập (NhanVienID không hợp lệ).", "Lỗi dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             int? khID = null;
             if (_khachHang != null) khID = _khachHang.KhachHangID;
 
-            int diemCong = khID.HasValue ? (int)(tongSau / 10000) : 0;
+            // VẤN ĐỀ 4: Lấy hệ số quy đổi điểm từ bảng ThamSoHeThong (thông qua _cfg)
+            // Giả sử cứ 10.000đ thì cộng DiemPer10K điểm
+            int heSoDiem = _cfg?.DiemPer10K ?? 1; // Mặc định là 1 nếu cấu hình chưa load được
+            int diemCong = khID.HasValue ? (int)((tongSau / 10000) * heSoDiem) : 0;
+
+            // 2. Gọi BLL lưu xuống Database
             var bll = new QLST.BLL__Bat_ngoai_le_.ThanhToan_BLL();
-            
+
             // LẤY MÃ HÓA ĐƠN TỪ KHAY DỮ LIỆU
             bool ok = bll.XuLyThanhToan(
                 _hdData.MaHoaDon, nhanVienID, khID, diemCong, tongSau, phuong,
@@ -366,12 +379,15 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
                 return;
             }
 
+            // 3. Hoàn tất & Tùy chọn in
             string noidung = laChuyenKhoan
                 ? "Thanh toán chuyển khoản thành công!\n\nBạn có muốn in hóa đơn không?"
                 : $"Thanh toán thành công!\nTiền thừa: {tienThua:N0} đ\n\nBạn có muốn in hóa đơn không?";
 
             if (MessageBox.Show(noidung, "Thành công", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+            {
                 _ucHD.InHoaDon();
+            }
 
             DialogResult = DialogResult.OK;
             Close();

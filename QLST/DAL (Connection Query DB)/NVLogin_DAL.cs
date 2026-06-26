@@ -16,34 +16,39 @@ namespace QLST.DAL__Connection_Query_DB_
         {
             QLNV_DTO nv = null;
 
-            string query = "SELECT MaNV, TenNV, Username, Password, Role, SoDienThoai, CaLamViec, TrangThai " +
+            // SẠN 1: Bổ sung NhanVienID vào đầu câu SELECT
+            string query = "SELECT NhanVienID, MaNV, TenNV, Username, Password, Role, SoDienThoai, CaLamViec, TrangThai " +
                            "FROM NhanVien " +
                            "WHERE Username = @Username AND Password = @Password";
+
+            // Sửa Code Smell: Thêm dấu @ vào tên parameter
             SqlParameter[] parameters = new SqlParameter[] {
-                new SqlParameter ("username", username),
-                new SqlParameter ("password", password)
+                new SqlParameter ("@Username", username),
+                new SqlParameter ("@Password", password)
             };
 
             DataTable data = DataProvider.Instance.ExecuteQuery(query, parameters);
 
-            if (data != null && data.Rows.Count > 0) { 
+            if (data != null && data.Rows.Count > 0)
+            {
                 DataRow row = data.Rows[0];
 
                 nv = new QLNV_DTO()
                 {
+                    // SẠN 1: Map NhanVienID (kiểu int) để hệ thống nhận diện đúng khóa chính
+                    NhanVienID = Convert.ToInt32(row["NhanVienID"]),
+
                     MaNV = row["MaNV"].ToString(),
                     TenNV = row["TenNV"].ToString(),
                     Username = row["Username"].ToString(),
                     Password = row["Password"].ToString(),
                     Role = Convert.ToInt32(row["Role"]),
 
-                    // Xử lý các trường có thể null dưới DB (DBNull.Value)
                     SoDienThoai = row["SoDienThoai"] != DBNull.Value ? row["SoDienThoai"].ToString() : null,
                     CaLamViec = row["CaLamViec"] != DBNull.Value ? row["CaLamViec"].ToString() : null,
                     TrangThai = row["TrangThai"] != DBNull.Value ? Convert.ToBoolean(row["TrangThai"]) : false,
                 };
             }
-            // Trả về DTO (nếu sai tài khoản/mật khẩu thì data.Rows.Count = 0, nv sẽ bằng null)
             return nv;
         }
     }

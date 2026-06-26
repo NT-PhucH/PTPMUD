@@ -33,7 +33,8 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
 
         public frmQuanLySanPham()
         {
-            InitializeComponent();
+            InitializeComponent(); // Gọi cái này trước để lừa Designer
+            BuildUI();             // Gọi code vẽ UI xịn của mình sau
             LoadLoai();
             LoadData();
         }
@@ -41,7 +42,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
         // ══════════════════════════════════════════════════════════════════════
         // KHỞI TẠO GIAO DIỆN
         // ══════════════════════════════════════════════════════════════════════
-        private void InitializeComponent()
+        private void BuildUI()
         {
             this.Text = "Quản lý sản phẩm";
             this.Size = new Size(1180, 700);
@@ -156,12 +157,24 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             btnLamMoi.Click += (s, e) => ClearForm(); panelRight.Controls.Add(btnLamMoi);
 
             this.Controls.AddRange(new Control[] { panelTop, panelLeft, panelRight });
-            this.Resize += (s, e) => {
+            this.Resize += (s, e) =>
+            {
                 panelLeft.Height = this.ClientSize.Height - 55;
                 panelRight.Left = 735;
                 panelRight.Width = this.ClientSize.Width - 735;
                 panelRight.Height = this.ClientSize.Height - 55;
             };
+        }
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // frmQuanLySanPham
+            // 
+            this.ClientSize = new System.Drawing.Size(1091, 511);
+            this.Name = "frmQuanLySanPham";
+            this.ResumeLayout(false);
+
         }
 
         // ══════════════════════════════════════════════════════════════════════

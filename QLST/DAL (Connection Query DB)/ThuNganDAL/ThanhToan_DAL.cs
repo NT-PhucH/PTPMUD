@@ -40,14 +40,30 @@ namespace QLST.DAL__Connection_Query_DB_
                             hoaDonID = (int)cmdHD.ExecuteScalar();
                         }
 
-                        // (Phần 2: INSERT ChiTietHoaDon VÀ UPDATE SanPham GIỮ NGUYÊN NHƯ CŨ)
+                        // (Phần 2: INSERT ChiTietHoaDon VÀ UPDATE SanPham)
                         string sqlChiTiet = @"INSERT INTO ChiTietHoaDon (HoaDonID, SanPhamID, SoLuongMua, DonGiaBan, ThanhTien) VALUES (@HoaDonID, @SanPhamID, @SoLuongMua, @DonGiaBan, @ThanhTien)";
                         string sqlTruKho = @"UPDATE SanPham SET TonKhoTong = ISNULL(TonKhoTong, 0) - @SoLuongMua WHERE SanPhamID = @SanPhamID";
 
                         foreach (var item in dsChiTiet)
                         {
-                            using (SqlCommand cmdCT = new SqlCommand(sqlChiTiet, conn, trans)) { /* code cũ của bạn */ }
-                            using (SqlCommand cmdKho = new SqlCommand(sqlTruKho, conn, trans)) { /* code cũ của bạn */ }
+                            // Thêm chi tiết hóa đơn
+                            using (SqlCommand cmdCT = new SqlCommand(sqlChiTiet, conn, trans))
+                            {
+                                cmdCT.Parameters.AddWithValue("@HoaDonID", hoaDonID);
+                                cmdCT.Parameters.AddWithValue("@SanPhamID", item.SanPhamID);
+                                cmdCT.Parameters.AddWithValue("@SoLuongMua", item.SoLuongMua);
+                                cmdCT.Parameters.AddWithValue("@DonGiaBan", item.DonGiaBan);
+                                cmdCT.Parameters.AddWithValue("@ThanhTien", item.ThanhTien);
+                                cmdCT.ExecuteNonQuery();
+                            }
+
+                            // Trừ tồn kho
+                            using (SqlCommand cmdKho = new SqlCommand(sqlTruKho, conn, trans))
+                            {
+                                cmdKho.Parameters.AddWithValue("@SoLuongMua", item.SoLuongMua);
+                                cmdKho.Parameters.AddWithValue("@SanPhamID", item.SanPhamID);
+                                cmdKho.ExecuteNonQuery();
+                            }
                         }
 
                         // 3. TÍCH ĐIỂM CHO KHÁCH HÀNG (Nếu có chọn khách)

@@ -1,6 +1,6 @@
 ﻿// ===================================================
 // File: Kho_DAL.cs
-// Đặt vào: DAL (Connection Query DB) > QuanLyDAL
+// Đặt vào: DAL > QuanLyDAL
 // ===================================================
 using QLST.DAL__Connection_Query_DB_.Query_DB;
 using QLST.DTO__Type_OTP_.QuanLyDTO;
@@ -13,10 +13,7 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
 {
     public class Kho_DAL
     {
-        // ════════════════════════════════════════════════════════════════════
-        // PHIẾU NHẬP
-        // ════════════════════════════════════════════════════════════════════
-
+        // ── PHIẾU NHẬP ────────────────────────────────────────────────────
         public List<PhieuNhap_DTO> GetAllPhieuNhap()
         {
             var list = new List<PhieuNhap_DTO>();
@@ -28,8 +25,7 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
                 LEFT JOIN NhanVien   nv  ON pn.NhanVienID   = nv.NhanVienID
                 ORDER BY pn.NgayLap DESC";
             DataTable dt = DataProvider.Instance.ExecuteQuery(sql);
-            foreach (DataRow row in dt.Rows)
-                list.Add(MapPhieuNhap(row));
+            foreach (DataRow row in dt.Rows) list.Add(MapPhieuNhap(row));
             return list;
         }
 
@@ -48,8 +44,7 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
                 new SqlParameter("@From", from.Date),
                 new SqlParameter("@To",   to.Date)
             });
-            foreach (DataRow row in dt.Rows)
-                list.Add(MapPhieuNhap(row));
+            foreach (DataRow row in dt.Rows) list.Add(MapPhieuNhap(row));
             return list;
         }
 
@@ -83,8 +78,7 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
             return list;
         }
 
-        // Tạo phiếu nhập + cập nhật tồn kho (transaction)
-        public bool TaoPhieuNhap(PhieuNhap_DTO phieu, List<ChiTietPhieuNhap_DTO> chiTiet)
+        public void TaoPhieuNhap(PhieuNhap_DTO phieu, List<ChiTietPhieuNhap_DTO> chiTiet)
         {
             using (SqlConnection conn = new SqlConnection(DB_Connection.GetConnectionString()))
             {
@@ -92,7 +86,6 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
                 SqlTransaction trans = conn.BeginTransaction();
                 try
                 {
-                    // 1. Insert PhieuNhap
                     string sqlPN = @"
                         INSERT INTO PhieuNhap (MaPN, NhaCungCapID, NhanVienID, NgayLap, TongTienThanhToan)
                         VALUES (@MaPN, @NccID, @NvID, GETDATE(), @Tong);
@@ -106,7 +99,6 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
                     });
                     int newID = Convert.ToInt32(cmdPN.ExecuteScalar());
 
-                    // 2. Insert từng ChiTiet + cập nhật TonKhoTong
                     foreach (var ct in chiTiet)
                     {
                         string sqlCT = @"
@@ -125,7 +117,6 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
                         });
                         cmdCT.ExecuteNonQuery();
 
-                        // Cộng tồn kho
                         string sqlTon = "UPDATE SanPham SET TonKhoTong = TonKhoTong + @SL WHERE SanPhamID = @SP";
                         SqlCommand cmdTon = new SqlCommand(sqlTon, conn, trans);
                         cmdTon.Parameters.AddRange(new SqlParameter[] {
@@ -134,22 +125,13 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
                         });
                         cmdTon.ExecuteNonQuery();
                     }
-
                     trans.Commit();
-                    return true;
                 }
-                catch
-                {
-                    trans.Rollback();
-                    return false;
-                }
+                catch { trans.Rollback(); throw; }
             }
         }
 
-        // ════════════════════════════════════════════════════════════════════
-        // PHIẾU XUẤT
-        // ════════════════════════════════════════════════════════════════════
-
+        // ── PHIẾU XUẤT ────────────────────────────────────────────────────
         public List<PhieuXuat_DTO> GetAllPhieuXuat()
         {
             var list = new List<PhieuXuat_DTO>();
@@ -201,8 +183,7 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
             return list;
         }
 
-        // Tạo phiếu xuất + trừ tồn kho (transaction)
-        public (bool ok, string msg) TaoPhieuXuat(PhieuXuat_DTO phieu, List<ChiTietPhieuXuat_DTO> chiTiet)
+        public void TaoPhieuXuat(PhieuXuat_DTO phieu, List<ChiTietPhieuXuat_DTO> chiTiet)
         {
             using (SqlConnection conn = new SqlConnection(DB_Connection.GetConnectionString()))
             {
@@ -210,7 +191,6 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
                 SqlTransaction trans = conn.BeginTransaction();
                 try
                 {
-                    // Kiểm tra tồn kho trước
                     foreach (var ct in chiTiet)
                     {
                         string sqlCheck = "SELECT TonKhoTong FROM SanPham WHERE SanPhamID = @SP";
@@ -218,13 +198,9 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
                         cmdCheck.Parameters.Add(new SqlParameter("@SP", ct.SanPhamID));
                         int ton = Convert.ToInt32(cmdCheck.ExecuteScalar());
                         if (ct.SoLuongXuat > ton)
-                        {
-                            trans.Rollback();
-                            return (false, $"Sản phẩm '{ct.TenSP}' chỉ còn {ton} trong kho!");
-                        }
+                            throw new Exception($"Sản phẩm '{ct.TenSP}' chỉ còn {ton} trong kho!");
                     }
 
-                    // Insert PhieuXuat
                     string sqlPX = @"
                         INSERT INTO PhieuXuat (MaPX, NhanVienID, NgayXuat, LyDo, GhiChu)
                         VALUES (@MaPX, @NvID, GETDATE(), @LyDo, @GhiChu);
@@ -238,7 +214,6 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
                     });
                     int newID = Convert.ToInt32(cmdPX.ExecuteScalar());
 
-                    // Insert chi tiết + trừ tồn
                     foreach (var ct in chiTiet)
                     {
                         string sqlCT = @"
@@ -253,7 +228,6 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
                         });
                         cmdCT.ExecuteNonQuery();
 
-                        // Trừ tồn kho
                         string sqlTon = "UPDATE SanPham SET TonKhoTong = TonKhoTong - @SL WHERE SanPhamID = @SP";
                         SqlCommand cmdTon = new SqlCommand(sqlTon, conn, trans);
                         cmdTon.Parameters.AddRange(new SqlParameter[] {
@@ -262,23 +236,13 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
                         });
                         cmdTon.ExecuteNonQuery();
                     }
-
                     trans.Commit();
-                    return (true, "Xuất kho thành công!");
                 }
-                catch (Exception ex)
-                {
-                    trans.Rollback();
-                    return (false, "Lỗi: " + ex.Message);
-                }
+                catch { trans.Rollback(); throw; }
             }
         }
 
-        // ════════════════════════════════════════════════════════════════════
-        // CẢNH BÁO KHO
-        // ════════════════════════════════════════════════════════════════════
-
-        // Hàng sắp hết tồn (mặc định <= 10)
+        // ── CẢNH BÁO KHO ──────────────────────────────────────────────────
         public List<CanhBaoKho_DTO> GetHangSapHet(int nguong = 10)
         {
             var list = new List<CanhBaoKho_DTO>();
@@ -287,7 +251,7 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
                        lsp.TenLoai, NULL AS HSD
                 FROM SanPham sp
                 LEFT JOIN LoaiSanPham lsp ON sp.LoaiSanPhamID = lsp.LoaiSanPhamID
-                WHERE sp.TonKhoTong <= @Nguong
+                WHERE sp.TonKhoTong <= @Nguong AND sp.TrangThai = 1
                 ORDER BY sp.TonKhoTong ASC";
             DataTable dt = DataProvider.Instance.ExecuteQuery(sql, new SqlParameter[] {
                 new SqlParameter("@Nguong", nguong)
@@ -305,7 +269,6 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
             return list;
         }
 
-        // Hàng sắp hết hạn (trong vòng 30 ngày tới)
         public List<CanhBaoKho_DTO> GetHangSapHetHan(int soNgay = 30)
         {
             var list = new List<CanhBaoKho_DTO>();
@@ -338,24 +301,20 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
             return list;
         }
 
-        // Sinh mã phiếu tự động
         public string SinhMaPhieuNhap()
         {
-            object result = DataProvider.Instance.ExecuteScalar(
-                "SELECT COUNT(*) FROM PhieuNhap");
-            int count = Convert.ToInt32(result) + 1;
-            return $"PN{DateTime.Now:yyyyMMdd}{count:D4}";
+            object res = DataProvider.Instance.ExecuteScalar("SELECT MAX(PhieuNhapID) FROM PhieuNhap");
+            int max = res == DBNull.Value ? 0 : Convert.ToInt32(res);
+            return $"PN{DateTime.Now:yyyyMMdd}{(max + 1):D4}";
         }
 
         public string SinhMaPhieuXuat()
         {
-            object result = DataProvider.Instance.ExecuteScalar(
-                "SELECT COUNT(*) FROM PhieuXuat");
-            int count = Convert.ToInt32(result) + 1;
-            return $"PX{DateTime.Now:yyyyMMdd}{count:D4}";
+            object res = DataProvider.Instance.ExecuteScalar("SELECT MAX(PhieuXuatID) FROM PhieuXuat");
+            int max = res == DBNull.Value ? 0 : Convert.ToInt32(res);
+            return $"PX{DateTime.Now:yyyyMMdd}{(max + 1):D4}";
         }
 
-        // ── HELPER ────────────────────────────────────────────────────────────
         private PhieuNhap_DTO MapPhieuNhap(DataRow row) => new PhieuNhap_DTO
         {
             PhieuNhapID = Convert.ToInt32(row["PhieuNhapID"]),

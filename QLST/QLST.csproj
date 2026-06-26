@@ -68,6 +68,7 @@
     <Compile Include="BLL %28Bat ngoai le%29\QuanLyBLL\ThongKeHome_BLL.cs" />
     <Compile Include="BLL %28Bat ngoai le%29\QuanLyBLL\ThongKe_BLL.cs" />
     <Compile Include="BLL %28Bat ngoai le%29\ThuNganBLL\ThanhToan_BLL.cs" />
+    <Compile Include="BLL %28Bat ngoai le%29\ThuNganBLL\ThuNgan_BLL.cs" />
     <Compile Include="BLL %28Bat ngoai le%29\ThuNganBLL\TrungBaySP_BLL.cs" />
     <Compile Include="BLL %28Bat ngoai le%29\NVLogin_BLL.cs" />
     <Compile Include="DAL %28Connection Query DB%29\QuanLyDAL\Setting_DAL.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="DAL %28Connection Query DB%29\QuanLyDAL\ThongKe_DAL.cs" />
     <Compile Include="DAL %28Connection Query DB%29\ThuNganDAL\ThanhToan_DAL.cs" />
     <Compile Include="DAL %28Connection Query DB%29\QuanLyDAL\ThongKeHome_DAL.cs" />
+    <Compile Include="DAL %28Connection Query DB%29\ThuNganDAL\ThuNgan_DAL.cs" />
     <Compile Include="DAL %28Connection Query DB%29\ThuNganDAL\TrungBaySP_DAL.cs" />
     <Compile Include="DAL %28Connection Query DB%29\NVLogin_DAL.cs" />
     <Compile Include="DAL %28Connection Query DB%29\Core\DataProvider.cs" />
@@ -96,7 +98,14 @@
     <Compile Include="DTO %28Type OTP%29\QuanLyDTO\Setting_DTO.cs" />
     <Compile Include="DTO %28Type OTP%29\ThuNganDTO\HoaDonIn_DTO.cs" />
     <Compile Include="DTO %28Type OTP%29\ThuNganDTO\ThanhToan_DTO.cs" />
+    <Compile Include="DTO %28Type OTP%29\ThuNganDTO\ThuNgan_DTO.cs" />
     <Compile Include="DTO %28Type OTP%29\ThuNganDTO\TrungBaySP_DTO.cs" />
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\frmQuanLyKho.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\frmQuanLyKho.Designer.cs">
+      <DependentUpon>frmQuanLyKho.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI %28Giao dien%29\QuanLyGUI\frmQuanLyDonHang.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,9 +113,6 @@
       <DependentUpon>frmQuanLyDonHang.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI %28Giao dien%29\QuanLyGUI\frmQuanLyKhachHang.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\frmQuanLyKho.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI %28Giao dien%29\QuanLyGUI\frmQuanLyNCC.cs">
@@ -237,9 +243,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\frmQuanLyDonHang.resx">
       <DependentUpon>frmQuanLyDonHang.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\frmQuanLyKho.resx">
-      <DependentUpon>frmQuanLyKho.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\frmQuanLyNCC.resx">
       <DependentUpon>frmQuanLyNCC.cs</DependentUpon>

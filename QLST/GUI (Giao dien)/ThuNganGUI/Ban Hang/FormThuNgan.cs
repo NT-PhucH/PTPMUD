@@ -5,8 +5,6 @@ using QLST.GUI__Giao_dien_;
 using QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -18,24 +16,22 @@ namespace QLST
     {
         #region 1. HẰNG SỐ & BIẾN TOÀN CỤC
 
-        // Cấu hình phân trang sản phẩm
         private int currentPage = 1;
         private readonly int pageSize = 18; // 3 cột x 6 hàng
         private int totalPages = 1;
-        private List<TrungBaySP_DTO> dsspToanBo = new List<TrungBaySP_DTO>();
 
-        // Cấu hình giao diện lưới sản phẩm
+        // Đã thay thế sang DTO chuẩn mới
+        private List<ThuNganSP_DTO> dsspToanBo = new List<ThuNganSP_DTO>();
+
         private readonly int SO_COT = 3;
         private readonly int SO_HANG = 6;
         private readonly int KHOANG_CACH = 10;
+        private Dictionary<string, int> dictTonKho = new Dictionary<string, int>();
 
-        // Thành phần UI động cho Dropdown Thông báo (Hóa đơn tạm)
         private Panel pnlDropdownThongBao;
         private FlowLayoutPanel flpDanhSachThongBao;
-        private object formHoaDon;
         private readonly List<HoaDonTam> danhSachHoaDonTam = new List<HoaDonTam>();
 
-        // Lớp cấu trúc dữ liệu lưu trữ hóa đơn tạm thời
         public class HoaDonTam
         {
             public string MaHoaDon { get; set; }
@@ -59,29 +55,25 @@ namespace QLST
             this.SizeChanged += FormThuNgan_SizeChanged;
             this.Load += FormThuNgan_Load;
 
+            // BỔ SUNG: Sự kiện lọc dữ liệu gợi ý realtime mỗi khi gõ chữ
+            this.txtTimKiem.TextChanged += txtTimKiem_TextChanged;
+            this.txtTimKiem.KeyDown += txtTimKiem_KeyDown;
+
             chuyenTrang1.BamNutTrai += ChuyenTrang1_BamNutTrai;
             chuyenTrang1.BamNutPhai += ChuyenTrang1_BamNutPhai;
         }
 
         private void FormThuNgan_Load(object sender, EventArgs e)
         {
-            // 1. Giữ nguyên các hàm nạp dữ liệu cũ của bạn
             LoadDuLieuBanDau();
             KhoiTaoGiaoDienThongBao();
 
-            // 2. XÓA BỎ đoạn code tạo nút Đăng xuất bằng tay trước đó (vì Designer đã có sẵn nút "đăngXuấtToolStripMenuItem")
-            // Bạn chỉ cần gán sự kiện Click trực tiếp cho nút đã thiết kế ngoài giao diện:
             đăngXuấtToolStripMenuItem.Click -= MenuDangXuat_Click;
             đăngXuấtToolStripMenuItem.Click += MenuDangXuat_Click;
-
-            // 3. Nếu bạn muốn viết logic cho nút "Tích điểm" khi ấn vào, hãy gán luôn tại đây:
-            // tíchĐiểmToolStripMenuItem.Click += (s, ev) => { MessageBox.Show("Chức năng tích điểm"); };
         }
-
 
         private void FormThuNgan_SizeChanged(object sender, EventArgs e)
         {
-            // Tránh chia cho 0 hoặc tính toán khi chưa có dữ liệu sản phẩm
             if (dsspToanBo != null && dsspToanBo.Count > 0)
             {
                 HienThiDanhSachSanPham();
@@ -90,7 +82,7 @@ namespace QLST
 
         #endregion
 
-        #region 3. LOGIC XỬ LÝ HÓA ĐƠN TẠM (DROPDOWN THÔNG BÁO)
+        #region 3. LOGIC XỬ LÝ HÓA ĐƠN TẠM
 
         private void KhoiTaoGiaoDienThongBao()
         {
@@ -128,9 +120,7 @@ namespace QLST
             this.Controls.Add(pnlDropdownThongBao);
             pnlDropdownThongBao.BringToFront();
 
-            // Cấu hình nút chuông thông báo (pictureBox3)
             pictureBox3.Cursor = Cursors.Hand;
-            
         }
 
         private void CapNhatGiaoDienThongBao()
@@ -193,11 +183,9 @@ namespace QLST
                 pnlItem.Controls.Add(lblTitle);
                 pnlItem.Controls.Add(lblTime);
 
-                // Hiệu ứng Hover chuột
                 pnlItem.MouseEnter += (s, e) => pnlItem.BackColor = Color.FromArgb(60, 60, 60);
                 pnlItem.MouseLeave += (s, e) => pnlItem.BackColor = Color.Transparent;
 
-                // Sự kiện click khôi phục hóa đơn
                 pnlItem.Click += (s, e) => KhoiPhucHoaDon(hd);
                 foreach (Control c in pnlItem.Controls)
                 {
@@ -214,7 +202,6 @@ namespace QLST
         {
             if (!pnlDropdownThongBao.Visible)
             {
-                // Định vị hộp thông báo hiển thị ngay dưới nút chuông
                 Point locationOnForm = pictureBox3.FindForm().PointToClient(pictureBox3.Parent.PointToScreen(pictureBox3.Location));
                 pnlDropdownThongBao.Location = new Point(locationOnForm.X - pnlDropdownThongBao.Width + pictureBox3.Width, locationOnForm.Y + pictureBox3.Height + 5);
 
@@ -277,18 +264,36 @@ namespace QLST
 
             danhSachHoaDonTam.Remove(hd);
             pnlDropdownThongBao.Visible = false;
-            TinhTongDonHang(); // Tính toán lại tiền ngay khi khôi phục đơn
+            TinhTongDonHang();
         }
+
         private void btnThanhToan_Click(object sender, EventArgs e)
         {
             if (flowLayoutPanel1.Controls.Count == 0)
             {
-                MessageBox.Show("Không có sản phẩm nào để thanh toán!",
-                    "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Không có sản phẩm nào để thanh toán!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // ── 1. Build danh sách ChiTietHoaDonIn_DTO từ giỏ hàng ────────────────────────
+            // --- CHỐT CHẶN BẮT LỖI TRƯỚC KHI MỞ FORM THANH TOÁN ---
+            foreach (Control ctrl in flowLayoutPanel1.Controls)
+            {
+                if (ctrl is KhungMonHang card)
+                {
+                    if (card.SoLuong <= 0)
+                    {
+                        MessageBox.Show($"Sản phẩm '{card.TenSP}' đang có số lượng không hợp lệ ({card.SoLuong}).\nVui lòng nhập số lớn hơn 0!", "Lỗi số lượng", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return; // Khóa luồng, cấm mở giao diện thanh toán
+                    }
+
+                    if (dictTonKho.ContainsKey(card.MaSP) && card.SoLuong > dictTonKho[card.MaSP])
+                    {
+                        MessageBox.Show($"Không thể thanh toán!\nSản phẩm '{card.TenSP}' vượt quá tồn kho.\n(Tồn thực tế: {dictTonKho[card.MaSP]} - Số lượng đang nhập: {card.SoLuong}).", "Thiếu hàng", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return; // Khóa luồng
+                    }
+                }
+            }
+
             var danhSachSP = new List<ChiTietHoaDonIn_DTO>();
             long tongTienChua = 0;
 
@@ -301,7 +306,7 @@ namespace QLST
                     danhSachSP.Add(new ChiTietHoaDonIn_DTO
                     {
                         MaVach = card.MaSP,
-                        TenSP = card.TenSP,       // ← nếu KhungMonHang có property TenSP
+                        TenSP = card.TenSP,
                         SoLuong = card.SoLuong,
                         DonGia = donGia,
                         ThanhTien = thanhTien,
@@ -311,36 +316,30 @@ namespace QLST
                 }
             }
 
-            // ── 2. Mở frmThanhToan mới ────────────────────────────────────────────
             var formThanhToan = new frmThanhToan(danhSachSP, tongTienChua);
             formThanhToan.StartPosition = FormStartPosition.CenterParent;
             DialogResult ketQua = formThanhToan.ShowDialog();
 
-            // ── 3. Xử lý kết quả ─────────────────────────────────────────────────
             if (ketQua == DialogResult.Retry)
             {
                 LuuTamHoaDonHienTai();
             }
             else if (ketQua == DialogResult.OK)
             {
-                // TODO: Gọi ThanhToan_BLL lưu DB khi bạn kia làm xong
                 flowLayoutPanel1.Controls.Clear();
                 TinhTongDonHang();
                 LoadDuLieuBanDau();
-                MessageBox.Show("Thanh toán thành công!", "Thông báo",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
         #endregion
 
-        #region 4. LOGIC GIỎ HÀNG (BÊN TRÁI MÀN HÌNH)
+        #region 4. LOGIC GIỎ HÀNG
 
         public void TinhTongDonHang()
         {
             int tongSanPham = flowLayoutPanel1.Controls.Count;
             int tongSoLuong = 0;
             decimal tongTienHang = 0;
-            decimal giamGia = 0;
 
             foreach (Control ctrl in flowLayoutPanel1.Controls)
             {
@@ -351,17 +350,25 @@ namespace QLST
                 }
             }
 
-            decimal thanhTien = tongTienHang - giamGia;
-
-            // Cập nhật thông tin lên giao diện dựa theo ID các control label
             label6.Text = tongSanPham.ToString();
             label7.Text = tongSoLuong.ToString();
-            label8.Text = giamGia.ToString("N0");
-            label9.Text = thanhTien.ToString("N0");
+            label8.Text = "0";
+            label9.Text = tongTienHang.ToString("N0");
         }
 
         private void KhungMonHang_DuLieuThayDoi(object sender, EventArgs e)
         {
+            if (sender is KhungMonHang card)
+            {
+                if (card.SoLuong <= 0)
+                {
+                    MessageBox.Show($"Số lượng của '{card.TenSP}' phải lớn hơn 0!", "Lỗi nhập liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else if (dictTonKho.ContainsKey(card.MaSP) && card.SoLuong > dictTonKho[card.MaSP])
+                {
+                    MessageBox.Show($"Bạn vừa nhập {card.SoLuong} cái.\nNhưng '{card.TenSP}' chỉ còn {dictTonKho[card.MaSP]} cái trong kho!", "Lỗi tồn kho", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
             TinhTongDonHang();
         }
 
@@ -376,32 +383,46 @@ namespace QLST
         }
 
 
-        private void ThemMonHangVaoDanhSach(string maSP, string tenSP, decimal donGia, int sanPhamID)
+        private void ThemMonHangVaoDanhSach(string maSP, string tenSP, decimal donGia, int sanPhamID, int tonKhoTong)
         {
-            // Nếu sản phẩm đã tồn tại, tăng số lượng lên 1
+            // BẮT LỖI 1: Kho hết sạch hàng thì cấm thêm
+            if (tonKhoTong <= 0)
+            {
+                MessageBox.Show($"Sản phẩm '{tenSP}' đã hết hàng trong kho!", "Hết hàng", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Ghi chép tồn kho vào từ điển để kiểm tra lúc gõ tay
+            if (!dictTonKho.ContainsKey(maSP))
+            {
+                dictTonKho.Add(maSP, tonKhoTong);
+            }
+
             foreach (Control ctrl in flowLayoutPanel1.Controls)
             {
                 if (ctrl is KhungMonHang card && card.MaSP == maSP)
                 {
+                    // BẮT LỖI 2: Nếu cộng thêm 1 mà vượt tồn kho thì chặn lại
+                    if (card.SoLuong >= tonKhoTong)
+                    {
+                        MessageBox.Show($"Sản phẩm '{tenSP}' chỉ còn tối đa {tonKhoTong} cái trong kho!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                     card.TangSoLuong();
                     return;
                 }
             }
 
-            // Tạo thẻ món hàng mới nếu chưa có trong giỏ
             KhungMonHang cardMoi = new KhungMonHang();
             cardMoi.DuLieuThayDoi += KhungMonHang_DuLieuThayDoi;
             cardMoi.CapNhatThongTin(maSP, tenSP, donGia);
 
-
             cardMoi.SanPhamID = sanPhamID;
-
             cardMoi.Width = flowLayoutPanel1.ClientSize.Width - cardMoi.Margin.Left - cardMoi.Margin.Right - 5;
 
             flowLayoutPanel1.Controls.Add(cardMoi);
-            flowLayoutPanel1.Controls.SetChildIndex(cardMoi, 0); // Đẩy món mới quét lên trên cùng
+            flowLayoutPanel1.Controls.SetChildIndex(cardMoi, 0);
 
-            // Đánh lại số thứ tự (STT) cho các mặt hàng
             int sttMoi = flowLayoutPanel1.Controls.Count;
             foreach (Control ctrl in flowLayoutPanel1.Controls)
             {
@@ -414,29 +435,54 @@ namespace QLST
 
             TinhTongDonHang();
         }
+        // TÍNH NĂNG GỢI Ý: Tìm kiếm ngay khi gõ
+        private void txtTimKiem_TextChanged(object sender, EventArgs e)
+        {
+            string keyword = txtTimKiem.Text.Trim();
+            if (string.IsNullOrEmpty(keyword))
+            {
+                LoadDuLieuBanDau(); // Xóa trắng thì trả lại toàn bộ SP
+                return;
+            }
 
+            ThuNgan_BLL thuNganBLL = new ThuNgan_BLL();
+            dsspToanBo = thuNganBLL.TimKiemSanPham(keyword);
+
+            totalPages = (int)Math.Ceiling((double)dsspToanBo.Count / pageSize);
+            if (totalPages == 0) totalPages = 1;
+            currentPage = 1;
+            HienThiDanhSachSanPham();
+        }
+
+        // TÍNH NĂNG QUÉT MÃ: Chỉ bắt Enter nếu khớp mã vạch thì đẩy luôn vào giỏ
         private void txtTimKiem_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
                 string maCanTim = txtTimKiem.Text.Trim();
-                if (!string.IsNullOrEmpty(maCanTim))
+                if (string.IsNullOrEmpty(maCanTim)) return;
+
+                var spQuetChuan = dsspToanBo.Find(x => x.MaVach == maCanTim);
+                if (spQuetChuan != null)
                 {
+                    ThemMonHangVaoDanhSach(spQuetChuan.MaVach, spQuetChuan.TenSP, spQuetChuan.GiaBanHienTai, spQuetChuan.SanPhamID, spQuetChuan.TonKhoTong);
                     txtTimKiem.Clear();
+                }
+                else
+                {
+                    MessageBox.Show("Không tìm thấy mã vạch này!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
 
-        
-
         #endregion
 
-        #region 5. LOGIC HIỂN THỊ & PHÂN TRANG SẢN PHẨM (BÊN PHẢI MÀN HÌNH)
+        #region 5. LOGIC HIỂN THỊ & PHÂN TRANG SẢN PHẨM
 
         private void LoadDuLieuBanDau()
         {
-            TrungBaySP_BLL spBLL = new TrungBaySP_BLL();
-            dsspToanBo = spBLL.GetSanPham();
+            ThuNgan_BLL spBLL = new ThuNgan_BLL();
+            dsspToanBo = spBLL.LayDanhSachTrungBay(); // Form chỉ việc gọi BLL cung cấp dữ liệu
 
             totalPages = (int)Math.Ceiling((double)dsspToanBo.Count / pageSize);
             if (totalPages == 0) totalPages = 1;
@@ -449,7 +495,6 @@ namespace QLST
         {
             flowLayoutPanel2.SuspendLayout();
 
-            // Giải phóng ảnh cũ của các Card trước khi clear để tránh rò rỉ bộ nhớ (Memory Leak)
             foreach (Control ctrl in flowLayoutPanel2.Controls)
             {
                 if (ctrl is ProductCard card && card.ProductImage != null)
@@ -462,15 +507,14 @@ namespace QLST
             int chieuRongThe = (flowLayoutPanel2.ClientSize.Width - (KHOANG_CACH * (SO_COT + 1))) / SO_COT;
             int chieuCaoThe = (flowLayoutPanel2.ClientSize.Height - (KHOANG_CACH * (SO_HANG + 1))) / SO_HANG;
 
-            // Thuật toán lấy sản phẩm phân trang dựa theo LINQ Skip - Take
             var danhSachTrangHienTai = dsspToanBo.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
 
-            foreach (TrungBaySP_DTO sp in danhSachTrangHienTai)
+            foreach (ThuNganSP_DTO sp in danhSachTrangHienTai)
             {
                 ProductCard card = new ProductCard
                 {
-                    ProductName = sp.TenSanPham,
-                    ProductPrice = sp.DonGia.ToString("N0"),
+                    ProductName = sp.TenSP,
+                    ProductPrice = sp.GiaBanHienTai.ToString("N0"),
                     Width = chieuRongThe,
                     Height = chieuCaoThe,
                     Margin = new Padding(KHOANG_CACH / 2)
@@ -504,23 +548,26 @@ namespace QLST
                 HienThiDanhSachSanPham();
             }
         }
+
         private void Card_OnSelectProduct(object sender, EventArgs e)
         {
             if (sender is ProductCard clickedCard)
             {
-                TrungBaySP_DTO spThucTe = clickedCard.Tag as TrungBaySP_DTO;
+                ThuNganSP_DTO spThucTe = clickedCard.Tag as ThuNganSP_DTO;
                 if (spThucTe != null)
                 {
                     ThemMonHangVaoDanhSach(
-                        spThucTe.MaSanPham,
-                        spThucTe.TenSanPham,
-                        spThucTe.DonGia,
-                        spThucTe.SanPhamID  // Truyền cái khóa chính vào đây
+                        spThucTe.MaVach,
+                        spThucTe.TenSP,
+                        spThucTe.GiaBanHienTai,
+                        spThucTe.SanPhamID,
+                        spThucTe.TonKhoTong
                     );
                 }
             }
         }
 
+        // Logic load ảnh thuần túy của giao diện, đã loại bỏ block catch thừa
         private void LoadProductImage(string imageNameFromDatabase, ProductCard productCard)
         {
             string imageFolder = Path.Combine(Application.StartupPath, "Images");
@@ -531,17 +578,9 @@ namespace QLST
 
             if (pathToLoad != null)
             {
-                try
+                using (FileStream fs = new FileStream(pathToLoad, FileMode.Open, FileAccess.Read))
                 {
-                    // Tối ưu đọc file qua MemoryStream để không bị lock (khóa) file ảnh gốc ngoài ổ đĩa
-                    using (FileStream fs = new FileStream(pathToLoad, FileMode.Open, FileAccess.Read))
-                    {
-                        productCard.ProductImage = Image.FromStream(fs);
-                    }
-                }
-                catch
-                {
-                    productCard.ProductImage = null;
+                    productCard.ProductImage = Image.FromStream(fs);
                 }
             }
             else
@@ -554,28 +593,20 @@ namespace QLST
 
         #region 6. CÁC SỰ KIỆN KHÁC
 
-        private void panelAccount_MouseEnter(object sender, EventArgs e)
-        {
-            //cmsAccount.Show(panelAccount, new Point(0, panelAccount.Height));
-        }
         private void MenuDangXuat_Click(object sender, EventArgs e)
         {
             DialogResult dr = MessageBox.Show("Bạn có chắc chắn muốn đăng xuất không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (dr == DialogResult.Yes)
             {
-                // 1. Chạy một luồng ứng dụng mới độc lập bắt đầu từ Form Đăng nhập
-                // Thay "FormDangNhap" bằng đúng tên Class Form đăng nhập của dự án của bạn
                 System.Threading.Thread t = new System.Threading.Thread(() => Application.Run(new FormLogin()));
                 t.SetApartmentState(System.Threading.ApartmentState.STA);
                 t.Start();
 
-                // 2. Đóng và hủy hoàn toàn Form hiện tại cùng tất cả tài nguyên đi kèm
                 this.Close();
             }
         }
 
         #endregion
-
     }
 }
