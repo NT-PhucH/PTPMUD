@@ -145,6 +145,12 @@
     <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Home\ucQLSP.Designer.cs">
       <DependentUpon>ucQLSP.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Home\ucQuanLyKhachHang.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Home\ucQuanLyKhachHang.Designer.cs">
+      <DependentUpon>ucQuanLyKhachHang.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Home\ucSettings.cs">
       <SubType>UserControl</SubType>
     </Compile>

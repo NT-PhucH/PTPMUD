@@ -43,6 +43,26 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
                     nudHetHang.Value = _ts.NguongHetHang;
                     nudHetHan.Value = _ts.NguongHetHan;
                     txtFooter.Text = _ts.FooterHoaDon;
+
+                    // Gán dữ liệu VietQR từ DB lên ComboBox/TextBox
+                    string nganHang = _ts.NganHang;
+
+                    if (string.IsNullOrWhiteSpace(nganHang) ||
+                        !cbNganHang.Items.Contains(nganHang))
+                    {
+                        cbNganHang.SelectedIndex = 0; // Vietcombank
+                    }
+                    else
+                    {
+                        cbNganHang.SelectedItem = nganHang;
+                    }
+                    txtSoTaiKhoan.Text = _ts.SoTaiKhoan;
+                    txtTenTaiKhoan.Text = _ts.TenTaiKhoan;
+                }
+                else
+                {
+                    // Đề phòng lỗi NullReferenceException
+                    _ts = new Setting_DTO();
                 }
                 panelPreview?.Invalidate(); // Báo hiệu vẽ lại Preview
             }
@@ -51,6 +71,13 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
 
         private void BtnLuu_Click(object sender, EventArgs e)
         {
+            // VALIDATION BƯỚC 1: Ngăn lưu thông tin trống
+            if (string.IsNullOrWhiteSpace(txtTenCH.Text))
+            {
+                MessageBox.Show("Tên cửa hàng không được để trống!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             if (_ts == null) _ts = new Setting_DTO();
 
             // Lấy dữ liệu từ UI ném vào DTO
@@ -65,11 +92,29 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             _ts.NguongHetHan = (int)nudHetHan.Value;
             _ts.FooterHoaDon = txtFooter.Text;
 
-            // Đẩy xuống BLL xử lý
-            var (ok, msg) = _bll.CapNhat(_ts);
+            // Lấy dữ liệu VietQR ném vào DTO
+            _ts.NganHang = cbNganHang.SelectedItem?.ToString() ?? "Vietcombank";
+            _ts.SoTaiKhoan = txtSoTaiKhoan.Text.Trim();
+            _ts.TenTaiKhoan = txtTenTaiKhoan.Text.Trim();
 
-            panelPreview?.Invalidate();
-            MessageBox.Show(msg, "Thông báo", MessageBoxButtons.OK, ok ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
+            // Khóa nút lưu trong quá trình chờ để chống Click đúp 2 lần (lỗi memory/DB leak)
+            btnLuu.Enabled = false;
+
+            try
+            {
+                // Đẩy xuống BLL xử lý
+                var (ok, msg) = _bll.CapNhat(_ts);
+                panelPreview?.Invalidate();
+                MessageBox.Show(msg, "Thông báo", MessageBoxButtons.OK, ok ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ngoại lệ khi lưu dữ liệu: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                btnLuu.Enabled = true; // Lưu xong thì mở khóa
+            }
         }
 
         private void BtnReset_Click(object sender, EventArgs e) => LoadSettings();
@@ -153,18 +198,11 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             var ppd = new PrintPreviewDialog { Document = pd, Width = 450, Height = 800, Text = "In thử hóa đơn từ Cài Đặt" };
             ppd.ShowDialog();
         }
+
         private void PanelPreviewScroll_Resize(object sender, EventArgs e)
         {
-            // Tính toán khoảng trống dư thừa và chia đôi để ra tọa độ X nằm giữa màn hình
             int xPosition = (panelPreviewScroll.ClientSize.Width - panelPreview.Width) / 2;
-
-            // Nếu cửa sổ bị thu quá nhỏ, ép tọa độ X về 0 để không bị lẹm mất mép trái tờ hóa đơn
-            if (xPosition < 0)
-            {
-                xPosition = 0;
-            }
-
-            // Chỉ cập nhật lề trái (Left), giữ nguyên lề trên (Top) để không làm hỏng thanh cuộn dọc
+            if (xPosition < 0) xPosition = 0;
             panelPreview.Left = xPosition;
         }
 

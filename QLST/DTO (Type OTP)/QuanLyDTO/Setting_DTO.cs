@@ -14,5 +14,9 @@ namespace QLST.DTO__Type_OTP_
         public int NguongHetHang { get; set; }
         public int NguongHetHan { get; set; }
         public string FooterHoaDon { get; set; }
+
+        public string NganHang { get; set; } // Lưu mã BIN hoặc Tên viết tắt (VD: vcb, mbbank)
+        public string SoTaiKhoan { get; set; }
+        public string TenTaiKhoan { get; set; }
     }
 }

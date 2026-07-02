@@ -1,6 +1,5 @@
 ﻿// ===================================================
 // File: Setting_BLL.cs
-// Đặt vào: BLL > CoreBLL (hoặc QuanLyBLL)
 // ===================================================
 using QLST.DAL__Connection_Query_DB_.Core;
 using QLST.DTO__Type_OTP_;
@@ -10,8 +9,6 @@ namespace QLST.BLL__Bat_ngoai_le_.Core
     public class Setting_BLL
     {
         private readonly Setting_DAL _dal = new Setting_DAL();
-
-        // Dùng Static Cache ở đây để lưu cấu hình dùng chung cho toàn App
         private static Setting_DTO _cache;
 
         public Setting_DTO GetCauHinh()
@@ -24,6 +21,15 @@ namespace QLST.BLL__Bat_ngoai_le_.Core
         {
             if (string.IsNullOrWhiteSpace(ts.TenCuaHang))
                 return (false, "Tên cửa hàng không được để trống!");
+
+            // BỔ SUNG: Kiểm tra dữ liệu cấu hình VietQR hợp lệ
+            if (!string.IsNullOrWhiteSpace(ts.SoTaiKhoan))
+            {
+                if (string.IsNullOrWhiteSpace(ts.NganHang))
+                    return (false, "Vui lòng chọn ngân hàng khi đã nhập số tài khoản!");
+                if (string.IsNullOrWhiteSpace(ts.TenTaiKhoan))
+                    return (false, "Vui lòng nhập Tên tài khoản để hiển thị mã QR chính xác!");
+            }
 
             bool ok = _dal.Update(ts);
 

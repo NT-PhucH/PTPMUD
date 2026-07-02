@@ -1,5 +1,4 @@
-﻿
-using QLST.DAL__Connection_Query_DB_.Query_DB;
+﻿using QLST.DAL__Connection_Query_DB_.Query_DB;
 using QLST.DTO__Type_OTP_;
 using System;
 using System.Data;
@@ -9,7 +8,6 @@ namespace QLST.DAL__Connection_Query_DB_.Core
 {
     public class Setting_DAL
     {
-        
         public Setting_DTO Get()
         {
             DataTable dt = DataProvider.Instance.ExecuteQuery(
@@ -21,6 +19,7 @@ namespace QLST.DAL__Connection_Query_DB_.Core
 
         public bool Update(Setting_DTO ts)
         {
+            // Bổ sung 3 cột VietQR vào câu lệnh UPDATE
             string sql = @"
                 UPDATE ThamSoHeThong SET
                     TenCuaHang    = @TenCH,
@@ -32,9 +31,13 @@ namespace QLST.DAL__Connection_Query_DB_.Core
                     DiemPer10K    = @Diem,
                     NguongHetHang = @NguongHang,
                     NguongHetHan  = @NguongHan,
-                    FooterHoaDon  = @Footer
+                    FooterHoaDon  = @Footer,
+                    NganHang      = @NganHang,
+                    SoTaiKhoan    = @SoTaiKhoan,
+                    TenTaiKhoan   = @TenTaiKhoan
                 WHERE ID = @ID";
 
+            // Bổ sung thêm Parameter cho 3 trường mới
             int rows = DataProvider.Instance.ExecuteNonQuery(sql, new SqlParameter[] {
                 new SqlParameter("@TenCH",      ts.TenCuaHang),
                 new SqlParameter("@DC",         ts.DiaChi        ?? ""),
@@ -46,11 +49,15 @@ namespace QLST.DAL__Connection_Query_DB_.Core
                 new SqlParameter("@NguongHang", ts.NguongHetHang),
                 new SqlParameter("@NguongHan",  ts.NguongHetHan),
                 new SqlParameter("@Footer",     ts.FooterHoaDon  ?? ""),
+                new SqlParameter("@NganHang",   ts.NganHang      ?? ""),
+                new SqlParameter("@SoTaiKhoan", ts.SoTaiKhoan    ?? ""),
+                new SqlParameter("@TenTaiKhoan",ts.TenTaiKhoan   ?? ""),
                 new SqlParameter("@ID",         ts.ID)
             });
             return rows > 0;
         }
 
+        // Bổ sung đọc dữ liệu 3 cột mới từ DataTable
         private Setting_DTO MapRow(DataRow row) => new Setting_DTO
         {
             ID = Convert.ToInt32(row["ID"]),
@@ -63,7 +70,10 @@ namespace QLST.DAL__Connection_Query_DB_.Core
             DiemPer10K = Convert.ToInt32(row["DiemPer10K"]),
             NguongHetHang = Convert.ToInt32(row["NguongHetHang"]),
             NguongHetHan = Convert.ToInt32(row["NguongHetHan"]),
-            FooterHoaDon = row["FooterHoaDon"] == DBNull.Value ? "" : row["FooterHoaDon"].ToString()
+            FooterHoaDon = row["FooterHoaDon"] == DBNull.Value ? "" : row["FooterHoaDon"].ToString(),
+            NganHang = row.Table.Columns.Contains("NganHang") && row["NganHang"] != DBNull.Value ? row["NganHang"].ToString() : "",
+            SoTaiKhoan = row.Table.Columns.Contains("SoTaiKhoan") && row["SoTaiKhoan"] != DBNull.Value ? row["SoTaiKhoan"].ToString() : "",
+            TenTaiKhoan = row.Table.Columns.Contains("TenTaiKhoan") && row["TenTaiKhoan"] != DBNull.Value ? row["TenTaiKhoan"].ToString() : ""
         };
     }
 }

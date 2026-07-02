@@ -115,9 +115,9 @@ namespace QLST
             }
             else if (clickedButton == btnTichDiem)
             {
-                frmQuanLyKhachHang frmKH = new frmQuanLyKhachHang { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
-                panelContent.Controls.Add(frmKH);
-                frmKH.Show();
+                ucQuanLyKhachHang qlkh = new ucQuanLyKhachHang { Dock = DockStyle.Fill };
+                panelContent.Controls.Add(qlkh);
+                qlkh.Show();
             }
             else if (clickedButton == btnThongKe)
             {

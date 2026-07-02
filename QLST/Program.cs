@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QLST.GUI__Giao_dien_.QuanLyGUI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,7 +18,6 @@ namespace QLST
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new FormMain());
-
         }
     }
 }

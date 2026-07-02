@@ -1,8 +1,8 @@
 ﻿// ===================================================
-// File: frmSettings.cs  (viết lại hoàn toàn)
+// File: frmSettings.cs (Phiên bản Chuẩn 3-Tier + VietQR)
 // Đặt vào: GUI (Giao dien) > QuanLyGUI
 // ===================================================
-using QLST.DAL__Connection_Query_DB_.Core;
+using QLST.BLL__Bat_ngoai_le_.Core; // Bổ sung thư viện gọi BLL
 using QLST.DTO__Type_OTP_;
 using System;
 using System.Collections.Generic;
@@ -14,24 +14,23 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
 {
     public class frmSettings : Form
     {
-        private readonly Setting_DAL _dal = new Setting_DAL();
+        // 1. CHỈ KHỞI TẠO BLL, KHÔNG KHỞI TẠO DAL TẠI ĐÂY
+        private readonly Setting_BLL _bll = new Setting_BLL();
         private Setting_DTO _ts;
 
         // Controls Tab 1
         private TextBox txtTenCH, txtDiaChi, txtSDT, txtHotlineShip, txtEmail;
-        // Controls Tab 2
+
+        // Controls Tab 2 (Thêm 3 Control cho VietQR)
         private NumericUpDown nudVAT, nudDiem, nudHetHang, nudHetHan;
+        private ComboBox cbNganHang;
+        private TextBox txtSoTaiKhoan, txtTenTaiKhoan;
+
         // Controls Tab 3
         private TextBox txtFooter;
         private Panel panelPreview;
 
-        // Static cache để các form khác đọc được
-        private static Setting_DTO _cache;
-        public static Setting_DTO LayCauHinh()
-        {
-            if (_cache == null) _cache = new Setting_DAL().Get();
-            return _cache;
-        }
+        // Ghi chú: Đã xóa _cache tĩnh tại form vì Setting_BLL đã tự động quản lý
 
         public frmSettings()
         {
@@ -45,29 +44,17 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
         private void BuildUI()
         {
             Text = "Cài đặt hệ thống";
-            Size = new Size(950, 650);
+            Size = new Size(950, 700); // Tăng chút chiều cao để chứa VietQR
             StartPosition = FormStartPosition.CenterScreen;
             Font = new Font("Segoe UI", 9.5f);
             BackColor = Color.FromArgb(245, 247, 250);
 
             // Header
             var header = new Panel { Dock = DockStyle.Top, Height = 50, BackColor = Color.FromArgb(30, 40, 60) };
-            header.Controls.Add(new Label
-            {
-                Text = "⚙️  CÀI ĐẶT HỆ THỐNG",
-                ForeColor = Color.White,
-                Font = new Font("Segoe UI", 13f, FontStyle.Bold),
-                Location = new Point(15, 13),
-                AutoSize = true
-            });
+            header.Controls.Add(new Label { Text = "⚙️  CÀI ĐẶT HỆ THỐNG", ForeColor = Color.White, Font = new Font("Segoe UI", 13f, FontStyle.Bold), Location = new Point(15, 13), AutoSize = true });
 
             // Tab
-            var tab = new TabControl
-            {
-                Dock = DockStyle.Fill,
-                Font = new Font("Segoe UI", 10f, FontStyle.Bold),
-                Padding = new Point(14, 6)
-            };
+            var tab = new TabControl { Dock = DockStyle.Fill, Font = new Font("Segoe UI", 10f, FontStyle.Bold), Padding = new Point(14, 6) };
             tab.TabPages.Add(BuildTabCuaHang());
             tab.TabPages.Add(BuildTabTaiChinh());
             tab.TabPages.Add(BuildTabHoaDon());
@@ -76,8 +63,10 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             var pBot = new Panel { Dock = DockStyle.Bottom, Height = 55, BackColor = Color.White };
             var btnLuu = MakeBtn("💾 Lưu cài đặt", 15, 11, 155, Color.FromArgb(34, 139, 34));
             btnLuu.Click += BtnLuu_Click;
+
             var btnReset = MakeBtn("🔄 Tải lại", 180, 11, 100, Color.FromArgb(100, 100, 100));
             btnReset.Click += (s, e) => LoadSettings();
+
             pBot.Controls.AddRange(new Control[] { btnLuu, btnReset });
 
             Controls.Add(tab);
@@ -85,7 +74,6 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             Controls.Add(header);
         }
 
-        // ── Tab 1: Cửa hàng ───────────────────────────────────────────────────
         private TabPage BuildTabCuaHang()
         {
             var tab = new TabPage("  🏪 Cửa hàng  ");
@@ -116,7 +104,6 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             return tab;
         }
 
-        // ── Tab 2: Tài chính & Kho ────────────────────────────────────────────
         private TabPage BuildTabTaiChinh()
         {
             var tab = new TabPage("  💰 Tài chính & Kho  ");
@@ -156,22 +143,35 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             tab.Controls.Add(nudHetHan);
             tab.Controls.Add(MakeLabel("ngày", 325, y + 3));
 
+            // ====== BỔ SUNG GIAO DIỆN VIETQR ======
+            y += 55;
+            tab.Controls.Add(MakeBold("Thông tin nhận chuyển khoản (VietQR)", 20, y));
+            y += 38;
+
+            tab.Controls.Add(MakeLabel("Ngân hàng:", 20, y));
+            cbNganHang = new ComboBox { Location = new Point(120, y), Width = 150, DropDownStyle = ComboBoxStyle.DropDownList, Font = new Font("Segoe UI", 9.5f) };
+            cbNganHang.Items.AddRange(new string[] { "Vietcombank", "MBBank", "Techcombank", "TPBank" });
+            tab.Controls.Add(cbNganHang);
+
+            tab.Controls.Add(MakeLabel("Số TK:", 280, y));
+            txtSoTaiKhoan = MakeTxt(330, y - 2, 180);
+            tab.Controls.Add(txtSoTaiKhoan);
+
+            tab.Controls.Add(MakeLabel("Tên TK:", 530, y));
+            txtTenTaiKhoan = MakeTxt(590, y - 2, 200);
+            tab.Controls.Add(txtTenTaiKhoan);
+            // ======================================
+
             // Ghi chú liên kết
             y += 60;
-            var pNote = new Panel
-            {
-                Location = new Point(20, y),
-                Width = 870,
-                Height = 85,
-                BackColor = Color.FromArgb(235, 245, 255),
-                BorderStyle = BorderStyle.FixedSingle
-            };
+            var pNote = new Panel { Location = new Point(20, y), Width = 870, Height = 85, BackColor = Color.FromArgb(235, 245, 255), BorderStyle = BorderStyle.FixedSingle };
             pNote.Controls.Add(new Label
             {
                 Text = "ℹ️  Các tham số này được sử dụng bởi:\n" +
                        "• VAT (%)          →  FormThuNgan  khi tính tổng tiền hóa đơn\n" +
                        "• Điểm / 10.000đ  →  frmQuanLyKhachHang  khi hiển thị lịch sử tích điểm\n" +
-                       "• Ngưỡng hết hàng / hết hạn  →  frmQuanLyKho tab ⚠️ Cảnh báo",
+                       "• Ngưỡng hết hàng / hết hạn  →  frmQuanLyKho tab ⚠️ Cảnh báo\n" +
+                       "• VietQR  →  FormThuNgan tự động tạo mã quét",
                 Location = new Point(10, 8),
                 AutoSize = true,
                 Font = new Font("Segoe UI", 8.5f),
@@ -182,33 +182,18 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             return tab;
         }
 
-        // ── Tab 3: In hóa đơn ─────────────────────────────────────────────────
         private TabPage BuildTabHoaDon()
         {
             var tab = new TabPage("  🖨️ Hóa đơn  ");
             tab.BackColor = Color.FromArgb(245, 247, 250);
 
-            // Panel trái: nhập footer
-            var pLeft = new Panel
-            {
-                Location = new Point(5, 5),
-                Width = 370,
-                BackColor = Color.White,
-                Padding = new Padding(15)
-            };
+            var pLeft = new Panel { Location = new Point(5, 5), Width = 370, BackColor = Color.White, Padding = new Padding(15) };
             pLeft.Height = 535;
             int y = 15;
             pLeft.Controls.Add(MakeBold("Nội dung chân hóa đơn:", 15, y));
+
             y += 30;
-            txtFooter = new TextBox
-            {
-                Location = new Point(15, y),
-                Width = 330,
-                Height = 230,
-                Multiline = true,
-                ScrollBars = ScrollBars.Vertical,
-                Font = new Font("Courier New", 8.5f)
-            };
+            txtFooter = new TextBox { Location = new Point(15, y), Width = 330, Height = 230, Multiline = true, ScrollBars = ScrollBars.Vertical, Font = new Font("Courier New", 8.5f) };
             pLeft.Controls.Add(txtFooter);
 
             y += 245;
@@ -222,48 +207,15 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             pLeft.Controls.Add(btnIn);
 
             y += 48;
-            pLeft.Controls.Add(new Label
-            {
-                Text = "* Khổ giấy: 80mm (K80)\n* Font in nhiệt: Courier New 8pt",
-                Location = new Point(15, y),
-                AutoSize = true,
-                ForeColor = Color.Gray,
-                Font = new Font("Segoe UI", 8f, FontStyle.Italic)
-            });
+            pLeft.Controls.Add(new Label { Text = "* Khổ giấy: 80mm (K80)\n* Font in nhiệt: Courier New 8pt", Location = new Point(15, y), AutoSize = true, ForeColor = Color.Gray, Font = new Font("Segoe UI", 8f, FontStyle.Italic) });
 
-            // Panel phải: preview cuộn được
-            var pRight = new Panel
-            {
-                Location = new Point(385, 5),
-                BackColor = Color.FromArgb(180, 180, 180)
-            };
+            var pRight = new Panel { Location = new Point(385, 5), BackColor = Color.FromArgb(180, 180, 180) };
             pRight.Width = 530; pRight.Height = 535;
 
-            // Label ruler 80mm
-            pRight.Controls.Add(new Label
-            {
-                Text = "|←————————— 80mm ————————→|",
-                Location = new Point(5, 510),
-                AutoSize = true,
-                ForeColor = Color.DimGray,
-                Font = new Font("Courier New", 7.5f)
-            });
+            pRight.Controls.Add(new Label { Text = "|←————————— 80mm ————————→|", Location = new Point(5, 510), AutoSize = true, ForeColor = Color.DimGray, Font = new Font("Courier New", 7.5f) });
 
-            var scroll = new Panel
-            {
-                Location = new Point(10, 8),
-                Width = 320,
-                Height = 498,
-                AutoScroll = true,
-                BackColor = Color.FromArgb(180, 180, 180)
-            };
-
-            panelPreview = new Panel
-            {
-                Width = 302,    // 80mm @ 96dpi
-                Height = 750,
-                BackColor = Color.White
-            };
+            var scroll = new Panel { Location = new Point(10, 8), Width = 320, Height = 498, AutoScroll = true, BackColor = Color.FromArgb(180, 180, 180) };
+            panelPreview = new Panel { Width = 302, Height = 750, BackColor = Color.White };
             panelPreview.Paint += PanelPreview_Paint;
             scroll.Controls.Add(panelPreview);
             pRight.Controls.Add(scroll);
@@ -279,7 +231,65 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
         }
 
         // ══════════════════════════════════════════════════════════════════════
-        // PREVIEW HÓA ĐƠN 80MM
+        // LOAD / LƯU QUA BLL
+        // ══════════════════════════════════════════════════════════════════════
+        private void LoadSettings()
+        {
+            try
+            {
+                // 2. Tải cấu hình thông qua BLL để có cache chung toàn phần mềm
+                _ts = _bll.GetCauHinh();
+
+                txtTenCH.Text = _ts.TenCuaHang;
+                txtDiaChi.Text = _ts.DiaChi;
+                txtSDT.Text = _ts.SoDienThoai;
+                txtHotlineShip.Text = _ts.HotlineShip;
+                txtEmail.Text = _ts.Email;
+
+                nudVAT.Value = _ts.VAT;
+                nudDiem.Value = _ts.DiemPer10K;
+                nudHetHang.Value = _ts.NguongHetHang;
+                nudHetHan.Value = _ts.NguongHetHan;
+                txtFooter.Text = _ts.FooterHoaDon;
+
+                // Load dữ liệu VietQR
+                cbNganHang.Text = string.IsNullOrEmpty(_ts.NganHang) ? "Vietcombank" : _ts.NganHang;
+                txtSoTaiKhoan.Text = _ts.SoTaiKhoan;
+                txtTenTaiKhoan.Text = _ts.TenTaiKhoan;
+
+                panelPreview?.Invalidate();
+            }
+            catch (Exception ex) { MessageBox.Show("Lỗi tải cài đặt: " + ex.Message); }
+        }
+
+        private void BtnLuu_Click(object sender, EventArgs e)
+        {
+            // Gán giá trị vào đối tượng
+            _ts.TenCuaHang = txtTenCH.Text.Trim();
+            _ts.DiaChi = txtDiaChi.Text.Trim();
+            _ts.SoDienThoai = txtSDT.Text.Trim();
+            _ts.HotlineShip = txtHotlineShip.Text.Trim();
+            _ts.Email = txtEmail.Text.Trim();
+            _ts.VAT = (int)nudVAT.Value;
+            _ts.DiemPer10K = (int)nudDiem.Value;
+            _ts.NguongHetHang = (int)nudHetHang.Value;
+            _ts.NguongHetHan = (int)nudHetHan.Value;
+            _ts.FooterHoaDon = txtFooter.Text;
+
+            // Gán dữ liệu VietQR
+            _ts.NganHang = cbNganHang.Text;
+            _ts.SoTaiKhoan = txtSoTaiKhoan.Text.Trim();
+            _ts.TenTaiKhoan = txtTenTaiKhoan.Text.Trim();
+
+            // 3. Đẩy toàn bộ kiểm tra và thao tác cho tầng BLL
+            var (ok, msg) = _bll.CapNhat(_ts);
+
+            panelPreview?.Invalidate();
+            MessageBox.Show(msg, "Thông báo", MessageBoxButtons.OK, ok ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
+        }
+
+        // ══════════════════════════════════════════════════════════════════════
+        // PREVIEW HÓA ĐƠN 80MM & IN THỬ (GIỮ NGUYÊN)
         // ══════════════════════════════════════════════════════════════════════
         private void PanelPreview_Paint(object sender, PaintEventArgs e)
         {
@@ -295,24 +305,9 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             int px = 5;
             int py = 8;
 
-            void Ctr(string t, Font f)
-            {
-                var s = g.MeasureString(t, f);
-                g.DrawString(t, f, Brushes.Black, px + (pw - s.Width) / 2, py);
-                py += (int)s.Height + 1;
-            }
-            void Lft(string t, Font f)
-            {
-                g.DrawString(t, f, Brushes.Black, px, py);
-                py += (int)g.MeasureString("A", f).Height + 2;
-            }
-            void Rgt(string left, string right, Font f)
-            {
-                g.DrawString(left, f, Brushes.Black, px, py);
-                var rs = g.MeasureString(right, f);
-                g.DrawString(right, f, Brushes.Black, px + pw - rs.Width, py);
-                py += (int)g.MeasureString("A", f).Height + 2;
-            }
+            void Ctr(string t, Font f) { var s = g.MeasureString(t, f); g.DrawString(t, f, Brushes.Black, px + (pw - s.Width) / 2, py); py += (int)s.Height + 1; }
+            void Lft(string t, Font f) { g.DrawString(t, f, Brushes.Black, px, py); py += (int)g.MeasureString("A", f).Height + 2; }
+            void Rgt(string left, string right, Font f) { g.DrawString(left, f, Brushes.Black, px, py); var rs = g.MeasureString(right, f); g.DrawString(right, f, Brushes.Black, px + pw - rs.Width, py); py += (int)g.MeasureString("A", f).Height + 2; }
             void Eq() { Lft(new string('=', 40), fNormal); }
             void Dsh() { Lft(new string('-', 40), fNormal); }
 
@@ -323,46 +318,32 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             string vat = nudVAT?.Value.ToString() ?? "0";
             string footer = txtFooter?.Text ?? "";
 
-            // ── Header ────────────────────────────────────────────────────────
             Ctr(tenCH.ToUpper(), fTitle);
             Ctr("HÓA ĐƠN BÁN HÀNG", fBold);
             Eq();
             Lft($"Ngày: {DateTime.Now:dd/MM/yyyy HH:mm} - Số HĐ: HD------", fNormal);
-            foreach (var l in WrapText($"Đ/c: {diaChi}", fNormal, g, pw))
-            { g.DrawString(l, fNormal, Brushes.Black, px, py); py += 13; }
+            foreach (var l in WrapText($"Đ/c: {diaChi}", fNormal, g, pw)) { g.DrawString(l, fNormal, Brushes.Black, px, py); py += 13; }
             if (!string.IsNullOrEmpty(hotShip)) Lft($"Hotline ship hàng: {hotShip}", fNormal);
             Lft("Thu Ngân: [Tên thu ngân]", fNormal);
             Ctr("********BẢN CHÍNH********", fBold);
             Eq();
 
-            // ── Bảng SP ───────────────────────────────────────────────────────
             Lft("Tên Hàng               SL  Đơn giá T.Tiền", fBold);
             Dsh();
             Lft("SP000001 - Mì tôm xào khô Goreng", fNormal);
             Lft("vị đặc biệt 85g T40 - (gói)", fNormal);
             Rgt("", "5  5,556  27,778", fNormal);
-            Dsh();
-            Lft("083651 - Xúc xích TT Ponnie vị heo", fNormal);
-            Lft("20 gói*5 cây*19gr T20 - (GOI)", fNormal);
-            Rgt("", "1  9,259   9,259", fNormal);
             Eq();
 
-            // ── Tổng tiền ─────────────────────────────────────────────────────
-            Rgt("Tổng số lượng:", "6", fNormal);
-            if (vat != "0") Rgt($"VAT {vat}%:", "2,963", fNormal);
-            Rgt("Tổng tiền (Đã bao gồm VAT):", "40,000", fBold);
-            Rgt("Tiền khách trả:", "40,000", fNormal);
-            Rgt("Tiền trả lại KH (VND):", "460,000", fNormal);
-            Rgt("+ Tiền mặt", "500,000", fNormal);
+            Rgt("Tổng số lượng:", "5", fNormal);
+            if (vat != "0") Rgt($"VAT {vat}%:", "2,222", fNormal);
+            Rgt("Tổng tiền (Đã bao gồm VAT):", "30,000", fBold);
             Eq();
 
-            // ── Khách hàng ────────────────────────────────────────────────────
             Lft("Tên khách: Khách lẻ", fNormal);
-            Lft("Mã KH:", fNormal);
             Lft("Tổng điểm tích lũy: 0", fNormal);
             Dsh();
 
-            // ── Footer ────────────────────────────────────────────────────────
             py += 4;
             foreach (var line in footer.Split('\n'))
             {
@@ -375,14 +356,10 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
                     py += 12;
                 }
             }
-
             py += 10;
             panelPreview.Height = Math.Max(py + 20, 600);
         }
 
-        // ══════════════════════════════════════════════════════════════════════
-        // IN THỬ (PrintPreview)
-        // ══════════════════════════════════════════════════════════════════════
         private void BtnInThu_Click(object sender, EventArgs e)
         {
             var pd = new PrintDocument();
@@ -395,21 +372,13 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
                 var fB = new Font("Courier New", 8f, FontStyle.Bold);
                 var fN = new Font("Courier New", 7.5f);
                 var fS = new Font("Courier New", 7f, FontStyle.Italic);
+
                 int lx = pe.MarginBounds.Left;
                 int ly = pe.MarginBounds.Top;
                 int lw = pe.MarginBounds.Width;
 
-                void C(string t, Font f)
-                {
-                    var sz = g.MeasureString(t, f);
-                    g.DrawString(t, f, Brushes.Black, lx + (lw - sz.Width) / 2, ly);
-                    ly += (int)sz.Height + 1;
-                }
-                void L(string t, Font f)
-                {
-                    g.DrawString(t, f, Brushes.Black, lx, ly);
-                    ly += (int)g.MeasureString("A", f).Height + 1;
-                }
+                void C(string t, Font f) { var sz = g.MeasureString(t, f); g.DrawString(t, f, Brushes.Black, lx + (lw - sz.Width) / 2, ly); ly += (int)sz.Height + 1; }
+                void L(string t, Font f) { g.DrawString(t, f, Brushes.Black, lx, ly); ly += (int)g.MeasureString("A", f).Height + 1; }
                 void Eq2() { L(new string('=', 42), fN); }
 
                 C((_ts?.TenCuaHang ?? "").ToUpper(), fT);
@@ -422,60 +391,11 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
                 Eq2();
                 L("(Đây là bản in thử - nội dung SP sẽ do FormThuNgan điền)", fN);
                 Eq2();
-                foreach (var line in (txtFooter.Text ?? "").Split('\n'))
-                    C(line.Trim(), fS);
+                foreach (var line in (txtFooter.Text ?? "").Split('\n')) C(line.Trim(), fS);
             };
 
             var ppd = new PrintPreviewDialog { Document = pd, Width = 420, Height = 750 };
             ppd.ShowDialog();
-        }
-
-        // ══════════════════════════════════════════════════════════════════════
-        // LOAD / LƯU
-        // ══════════════════════════════════════════════════════════════════════
-        private void LoadSettings()
-        {
-            try
-            {
-                _ts = _dal.Get();
-                txtTenCH.Text = _ts.TenCuaHang;
-                txtDiaChi.Text = _ts.DiaChi;
-                txtSDT.Text = _ts.SoDienThoai;
-                txtHotlineShip.Text = _ts.HotlineShip;
-                txtEmail.Text = _ts.Email;
-                nudVAT.Value = _ts.VAT;
-                nudDiem.Value = _ts.DiemPer10K;
-                nudHetHang.Value = _ts.NguongHetHang;
-                nudHetHan.Value = _ts.NguongHetHan;
-                txtFooter.Text = _ts.FooterHoaDon;
-                panelPreview?.Invalidate();
-            }
-            catch (Exception ex) { MessageBox.Show("Lỗi tải cài đặt: " + ex.Message); }
-        }
-
-        private void BtnLuu_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(txtTenCH.Text))
-            { MessageBox.Show("Tên cửa hàng không được để trống!"); return; }
-
-            _ts.TenCuaHang = txtTenCH.Text.Trim();
-            _ts.DiaChi = txtDiaChi.Text.Trim();
-            _ts.SoDienThoai = txtSDT.Text.Trim();
-            _ts.HotlineShip = txtHotlineShip.Text.Trim();
-            _ts.Email = txtEmail.Text.Trim();
-            _ts.VAT = (int)nudVAT.Value;
-            _ts.DiemPer10K = (int)nudDiem.Value;
-            _ts.NguongHetHang = (int)nudHetHang.Value;
-            _ts.NguongHetHan = (int)nudHetHan.Value;
-            _ts.FooterHoaDon = txtFooter.Text;
-
-            bool ok = _dal.Update(_ts);
-            if (ok) _cache = _ts; // cập nhật cache tĩnh
-
-            panelPreview?.Invalidate();
-            MessageBox.Show(ok ? "✅ Lưu thành công!" : "⚠️ Lưu thất bại!",
-                "Thông báo", MessageBoxButtons.OK,
-                ok ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
         }
 
         // ── Helpers ───────────────────────────────────────────────────────────
@@ -494,50 +414,32 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             return result;
         }
 
-        private Label MakeLabel(string t, int x, int y) =>
-            new Label { Text = t, Location = new Point(x, y), AutoSize = true };
-        private Label MakeBold(string t, int x, int y) =>
-            new Label
-            {
-                Text = t,
-                Location = new Point(x, y),
-                AutoSize = true,
-                Font = new Font("Segoe UI", 10f, FontStyle.Bold),
-                ForeColor = Color.FromArgb(30, 40, 60)
-            };
-        private Label MakeNote(string t, int x, int y) =>
-            new Label
-            {
-                Text = t,
-                Location = new Point(x, y),
-                AutoSize = true,
-                ForeColor = Color.Gray,
-                Font = new Font("Segoe UI", 8.5f, FontStyle.Italic)
-            };
-        private TextBox MakeTxt(int x, int y, int w) =>
-            new TextBox { Location = new Point(x, y), Width = w };
-        private NumericUpDown MakeNud(int x, int y, int min, int max, int val) =>
-            new NumericUpDown
-            {
-                Location = new Point(x, y),
-                Width = 70,
-                Minimum = min,
-                Maximum = max,
-                Value = val,
-                Font = new Font("Segoe UI", 10f, FontStyle.Bold)
-            };
-        private Button MakeBtn(string t, int x, int y, int w, Color c) =>
-            new Button
-            {
-                Text = t,
-                Location = new Point(x, y),
-                Width = w,
-                Height = 34,
-                BackColor = c,
-                ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat,
-                Font = new Font("Segoe UI", 9.5f, FontStyle.Bold),
-                Cursor = Cursors.Hand
-            };
+        private Label MakeLabel(string t, int x, int y) => new Label { Text = t, Location = new Point(x, y), AutoSize = true };
+        private Label MakeBold(string t, int x, int y) => new Label { Text = t, Location = new Point(x, y), AutoSize = true, Font = new Font("Segoe UI", 10f, FontStyle.Bold), ForeColor = Color.FromArgb(30, 40, 60) };
+        private Label MakeNote(string t, int x, int y) => new Label { Text = t, Location = new Point(x, y), AutoSize = true, ForeColor = Color.Gray, Font = new Font("Segoe UI", 8.5f, FontStyle.Italic) };
+        private TextBox MakeTxt(int x, int y, int w) => new TextBox { Location = new Point(x, y), Width = w };
+
+        private NumericUpDown MakeNud(int x, int y, int min, int max, int val) => new NumericUpDown
+        {
+            Location = new Point(x, y),
+            Width = 70,
+            Minimum = min,
+            Maximum = max,
+            Value = val,
+            Font = new Font("Segoe UI", 10f, FontStyle.Bold)
+        };
+
+        private Button MakeBtn(string t, int x, int y, int w, Color c) => new Button
+        {
+            Text = t,
+            Location = new Point(x, y),
+            Width = w,
+            Height = 34,
+            BackColor = c,
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat,
+            Font = new Font("Segoe UI", 9.5f, FontStyle.Bold),
+            Cursor = Cursors.Hand
+        };
     }
 }

@@ -21,7 +21,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
         private TextBox txtTimKiem, txtSDT, txtTenKH;
         private Label lblTongKH, lblTongDiem, lblDiemHienTai;
         private NumericUpDown nudDiem;
-        private Button btnThem, btnSua, btnXoa, btnCapNhatDiem, btnLamMoi;
+        private Button btnSua, btnLamMoi;
         private Panel panelStats;
 
         public frmQuanLyKhachHang()
@@ -110,13 +110,9 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             txtTenKH = MakeTextBox(15, y + 22, 390); pRight.Controls.Add(txtTenKH);
 
             y += 60;
-            btnThem = MakeBtn("➕ THÊM", 15, y, 120, Color.FromArgb(34, 139, 34));
             btnSua = MakeBtn("✏ SỬA", 145, y, 120, Color.FromArgb(30, 100, 200));
-            btnXoa = MakeBtn("🗑 XÓA", 275, y, 120, Color.FromArgb(200, 50, 50));
-            btnThem.Click += BtnThem_Click;
             btnSua.Click += BtnSua_Click;
-            btnXoa.Click += BtnXoa_Click;
-            pRight.Controls.AddRange(new Control[] { btnThem, btnSua, btnXoa });
+            pRight.Controls.AddRange(new Control[] { btnSua});
 
             y += 45;
             btnLamMoi = MakeBtn("🔄 Làm mới", 15, y, 390, Color.FromArgb(130, 130, 130));
@@ -140,9 +136,6 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             nudDiem = new NumericUpDown { Location = new Point(15, y + 22), Width = 140, Minimum = 0, Maximum = 999999, Font = new Font("Segoe UI", 11f) };
             pRight.Controls.Add(nudDiem);
 
-            btnCapNhatDiem = MakeBtn("💾 Cập nhật điểm", 165, y + 20, 200, Color.FromArgb(155, 89, 182));
-            btnCapNhatDiem.Click += BtnCapNhatDiem_Click;
-            pRight.Controls.Add(btnCapNhatDiem);
 
             y += 70;
             // Bảng quy đổi hạng
@@ -219,12 +212,6 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
                     string.Format("{0:N0} đ", ls.TongTien), $"+{ls.DiemCong}");
         }
 
-        private void BtnThem_Click(object sender, EventArgs e)
-        {
-            var (ok, msg) = _bll.Them(new KhachHang_DTO { SDT = txtSDT.Text.Trim(), TenKH = txtTenKH.Text.Trim() });
-            MessageBox.Show(msg, "Thông báo", MessageBoxButtons.OK, ok ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
-            if (ok) { ClearForm(); LoadData(); }
-        }
 
         private void BtnSua_Click(object sender, EventArgs e)
         {
@@ -234,22 +221,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             if (ok) { ClearForm(); LoadData(); }
         }
 
-        private void BtnXoa_Click(object sender, EventArgs e)
-        {
-            if (_selectedID <= 0) { MessageBox.Show("Vui lòng chọn khách hàng cần xóa!"); return; }
-            if (MessageBox.Show("Xóa khách hàng này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
-            var (ok, msg) = _bll.Xoa(_selectedID);
-            MessageBox.Show(msg, "Thông báo", MessageBoxButtons.OK, ok ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
-            if (ok) { ClearForm(); LoadData(); }
-        }
 
-        private void BtnCapNhatDiem_Click(object sender, EventArgs e)
-        {
-            if (_selectedID <= 0) { MessageBox.Show("Vui lòng chọn khách hàng trước!"); return; }
-            var (ok, msg) = _bll.CapNhatDiem(_selectedID, (int)nudDiem.Value);
-            MessageBox.Show(msg, "Thông báo", MessageBoxButtons.OK, ok ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
-            if (ok) { LoadData(); lblDiemHienTai.Text = $"Điểm hiện tại: {(int)nudDiem.Value:N0} điểm"; }
-        }
 
         private void ClearForm()
         {

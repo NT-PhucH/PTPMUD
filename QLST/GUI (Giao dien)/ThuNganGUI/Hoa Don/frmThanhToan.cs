@@ -97,21 +97,35 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
                 this.BeginInvoke(new Action(() => {
                     bool laChuyenKhoan = !paymentSelectorBar1.IsCashSelected;
 
-                    // CẬP NHẬT VÀO KHAY DỮ LIỆU
                     _hdData.PhuongThucTT = laChuyenKhoan ? "Chuyển Khoản" : "Tiền Mặt";
                     _hdData.AnTienThua = laChuyenKhoan;
 
                     panel14.Visible = !laChuyenKhoan;
-                    if (_picQR != null) _picQR.Visible = laChuyenKhoan;
+                    if (_picQR != null) _picQR.Visible = laChuyenKhoan; // Hiện/ẩn QR [11]
 
                     if (laChuyenKhoan)
                     {
                         int vatPct = _cfg?.VAT ?? 0;
                         long tongSau = (long)(_tongTienChua * (1 + vatPct / 100.0));
-                        
+
                         _hdData.TienKhachDua = tongSau;
                         _hdData.TienThua = 0;
                         CapNhatHoaDon();
+
+                        // ============== GỌI VIETQR API ==============
+                        if (!string.IsNullOrEmpty(_cfg?.SoTaiKhoan))
+                        {
+                            // Hàm ánh xạ tên Ngân Hàng sang Tên Viết Tắt (để gọi VietQR)
+                            string bankCode = LayMaNganHangVietQR(_cfg.NganHang);
+
+                            // Cấu trúc: https://img.vietqr.io/image/{bankCode}-{STK}-compact2.png?amount={SOTIEN}&addInfo={NOIDUNG}&accountName={TENTK}
+                            // Dùng mã hóa đơn làm nội dung chuyển khoản để dễ đối soát
+                            string qrUrl = $"https://img.vietqr.io/image/{bankCode}-{_cfg.SoTaiKhoan}-compact2.png?amount={tongSau}&addInfo={_hdData.MaHoaDon}&accountName={Uri.EscapeDataString(_cfg.TenTaiKhoan ?? "")}";
+
+                            // Dùng LoadAsync để không làm đơ phần mềm khi tải ảnh
+                            _picQR.LoadAsync(qrUrl);
+                        }
+                        // ============================================
                     }
                     else
                     {
@@ -121,6 +135,18 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
             };
         }
 
+        private string LayMaNganHangVietQR(string tenNganHang)
+        {
+            // Dựa theo danh sách ComboBox bạn giới hạn ở frmSettings
+            switch (tenNganHang)
+            {
+                case "Vietcombank": return "vcb";
+                case "MBBank": return "mbbank";
+                case "Techcombank": return "tcb";
+                case "TPBank": return "tpb";
+                default: return "vcb";
+            }
+        }
         // ── Tính và hiển thị tổng tiền ban đầu ───────────────────────────────
         private void TinhVaHienThi()
         {

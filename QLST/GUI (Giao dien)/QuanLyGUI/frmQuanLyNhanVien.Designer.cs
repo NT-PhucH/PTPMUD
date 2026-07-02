@@ -427,7 +427,6 @@
         private System.Windows.Forms.TextBox txtSDT;
         private System.Windows.Forms.Label lblCaLam;
         private System.Windows.Forms.ComboBox cboCaLam;
-        private System.Windows.Forms.CheckBox chkTrangThai;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Panel pnlRight;

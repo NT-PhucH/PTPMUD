@@ -108,30 +108,6 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
             return rows > 0;
         }
 
-        // ── XÓA ──────────────────────────────────────────────────────────────
-        public bool Delete(int id)
-        {
-            object count = DataProvider.Instance.ExecuteScalar(
-                "SELECT COUNT(*) FROM HoaDon WHERE KhachHangID = @ID",
-                new SqlParameter[] { new SqlParameter("@ID", id) });
-            if (Convert.ToInt32(count) > 0) return false;
-            int rows = DataProvider.Instance.ExecuteNonQuery(
-                "DELETE FROM KhachHang WHERE KhachHangID = @ID",
-                new SqlParameter[] { new SqlParameter("@ID", id) });
-            return rows > 0;
-        }
-
-        // ── CỘNG / TRỪ ĐIỂM THỦ CÔNG ────────────────────────────────────────
-        public bool CapNhatDiem(int khachHangID, int diemMoi)
-        {
-            int rows = DataProvider.Instance.ExecuteNonQuery(
-                "UPDATE KhachHang SET DiemTichLuy = @Diem WHERE KhachHangID = @ID",
-                new SqlParameter[] {
-                    new SqlParameter("@Diem", diemMoi),
-                    new SqlParameter("@ID",   khachHangID)
-                });
-            return rows > 0;
-        }
 
         // ── KIỂM TRA SĐT TRÙNG ───────────────────────────────────────────────
         public bool IsSDTExists(string sdt, int excludeID = 0)
