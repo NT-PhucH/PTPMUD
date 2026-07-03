@@ -205,5 +205,10 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.txtCashier.Clear();
             LoadData();
         }
+
+        private void roundedButton1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

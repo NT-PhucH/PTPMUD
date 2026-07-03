@@ -14,7 +14,7 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
         {
             var list = new List<QLNV_DTO>();
             string sql = @"
-                SELECT NhanVienID, MaNV, TenNV, Username, Password, Role, SoDienThoai, CaLamViec, TrangThai 
+                SELECT NhanVienID, MaNV, TenNV, Username, Role, SoDienThoai, CaLamViec, TrangThai 
                 FROM NhanVien 
                 WHERE (MaNV LIKE '%' + @kw + '%' OR TenNV LIKE N'%' + @kw + '%' OR SoDienThoai LIKE '%' + @kw + '%')";
 
@@ -108,7 +108,6 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
             MaNV = row["MaNV"].ToString(),
             TenNV = row["TenNV"].ToString(),
             Username = row["Username"].ToString(),
-            Password = row["Password"].ToString(),
             Role = Convert.ToInt32(row["Role"]),
             TrangThai = Convert.ToBoolean(row["TrangThai"]),
             SoDienThoai = row["SoDienThoai"]?.ToString(),

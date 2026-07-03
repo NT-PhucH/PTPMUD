@@ -12,41 +12,37 @@ namespace QLST.DAL__Connection_Query_DB_
 {
     public class NVLogin_DAL
     {
-        public QLNV_DTO GetNhanVienByLogin(string username, string password)
+        public QLNV_DTO GetNhanVienByUsername(string username)
         {
             QLNV_DTO nv = null;
 
-            // SẠN 1: Bổ sung NhanVienID vào đầu câu SELECT
+            // 2. Sửa câu lệnh SQL: BỎ "AND Password = @Password" ở mệnh đề WHERE
             string query = "SELECT NhanVienID, MaNV, TenNV, Username, Password, Role, SoDienThoai, CaLamViec, TrangThai " +
                            "FROM NhanVien " +
-                           "WHERE Username = @Username AND Password = @Password";
+                           "WHERE Username = @Username";
 
-            // Sửa Code Smell: Thêm dấu @ vào tên parameter
+            // 3. Sửa Parameter: Chỉ truyền @Username
             SqlParameter[] parameters = new SqlParameter[] {
-                new SqlParameter ("@Username", username),
-                new SqlParameter ("@Password", password)
+                new SqlParameter ("@Username", username)
             };
 
-            DataTable data = DataProvider.Instance.ExecuteQuery(query, parameters);
+            DataTable data = DataProvider.Instance.ExecuteQuery(query, parameters); //[cite: 4]
 
-            if (data != null && data.Rows.Count > 0)
+            if (data != null && data.Rows.Count > 0) //[cite: 4]
             {
-                DataRow row = data.Rows[0];
+                DataRow row = data.Rows[0]; //[cite: 4]
 
-                nv = new QLNV_DTO()
+                nv = new QLNV_DTO() //[cite: 4]
                 {
-                    // SẠN 1: Map NhanVienID (kiểu int) để hệ thống nhận diện đúng khóa chính
-                    NhanVienID = Convert.ToInt32(row["NhanVienID"]),
-
-                    MaNV = row["MaNV"].ToString(),
-                    TenNV = row["TenNV"].ToString(),
-                    Username = row["Username"].ToString(),
-                    Password = row["Password"].ToString(),
-                    Role = Convert.ToInt32(row["Role"]),
-
-                    SoDienThoai = row["SoDienThoai"] != DBNull.Value ? row["SoDienThoai"].ToString() : null,
-                    CaLamViec = row["CaLamViec"] != DBNull.Value ? row["CaLamViec"].ToString() : null,
-                    TrangThai = row["TrangThai"] != DBNull.Value ? Convert.ToBoolean(row["TrangThai"]) : false,
+                    NhanVienID = Convert.ToInt32(row["NhanVienID"]), //[cite: 4]
+                    MaNV = row["MaNV"].ToString(), //[cite: 4]
+                    TenNV = row["TenNV"].ToString(), //[cite: 4]
+                    Username = row["Username"].ToString(), //[cite: 4]
+                    Password = row["Password"].ToString(), // Chứa chuỗi Hash đọc từ DB[cite: 4]
+                    Role = Convert.ToInt32(row["Role"]), //[cite: 4]
+                    SoDienThoai = row["SoDienThoai"] != DBNull.Value ? row["SoDienThoai"].ToString() : null, //[cite: 4]
+                    CaLamViec = row["CaLamViec"] != DBNull.Value ? row["CaLamViec"].ToString() : null, //[cite: 4]
+                    TrangThai = row["TrangThai"] != DBNull.Value ? Convert.ToBoolean(row["TrangThai"]) : false, //[cite: 4]
                 };
             }
             return nv;

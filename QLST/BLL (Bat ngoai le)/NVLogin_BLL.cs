@@ -14,34 +14,53 @@ namespace QLST.BLL__Bat_ngoai_le_
 
         public QLNV_DTO Login(string username, string password, out string message)
         {
-            message = string.Empty;
-            // Kiểm tra đầu vào
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            message = string.Empty; //[cite: 3]
+
+            // 1. Kiểm tra đầu vào rỗng
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password)) //[cite: 3]
             {
-                message = "Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu.";
-                return null;
+                message = "Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu."; //[cite: 3]
+                return null; //[cite: 3]
             }
+
             try
             {
-                QLNV_DTO nv = nhanVienDAL.GetNhanVienByLogin(username, password);
+                // 2. Lấy thông tin user từ DB CHỈ DỰA VÀO USERNAME
+                QLNV_DTO nv = nhanVienDAL.GetNhanVienByUsername(username);
+
+                // 3. Kiểm tra User có tồn tại không
                 if (nv == null)
+                {
+                    message = "Tên đăng nhập hoặc mật khẩu không đúng."; // Giữ nguyên thông báo chung chung để bảo mật[cite: 3]
+                    return null;
+                }
+
+                // ==========================================
+                // 4. KIỂM TRA MẬT KHẨU BẰNG BCRYPT
+                // So sánh 'password' (text thường) với 'nv.Password' (chuỗi băm từ DB)
+                // ==========================================
+                bool isPasswordValid = BCrypt.Net.BCrypt.Verify(password, nv.Password);
+
+                if (!isPasswordValid)
                 {
                     message = "Tên đăng nhập hoặc mật khẩu không đúng.";
                     return null;
                 }
-                if (!nv.TrangThai)
+
+                // 5. Kiểm tra trạng thái tài khoản
+                if (!nv.TrangThai) //[cite: 3]
                 {
-                    message = "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ quản trị viên.";
-                    return null;
+                    message = "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ quản trị viên."; //[cite: 3]
+                    return null; //[cite: 3]
                 }
+
                 // Đăng nhập thành công
-                return nv;
+                return nv; //[cite: 3]
             }
-            catch (Exception ex)
+            catch (Exception ex) //[cite: 3]
             {
-                // Log lỗi nếu cần thiết
-                message = "Lỗi chi tiết: " + ex.Message;
-                return null;
+                message = "Lỗi chi tiết: " + ex.Message; //[cite: 3]
+                return null; //[cite: 3]
             }
         }
     }

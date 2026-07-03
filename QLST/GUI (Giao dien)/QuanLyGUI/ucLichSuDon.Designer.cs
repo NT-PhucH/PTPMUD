@@ -188,7 +188,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             "Tiền mặt",
             "Thẻ",
             "Chuyển khoản"});
-            this.cboPaymentMethod.Location = new System.Drawing.Point(638, 35);
+            this.cboPaymentMethod.Location = new System.Drawing.Point(638, 33);
             this.cboPaymentMethod.Margin = new System.Windows.Forms.Padding(0, 0, 15, 0);
             this.cboPaymentMethod.Name = "cboPaymentMethod";
             this.cboPaymentMethod.Size = new System.Drawing.Size(305, 28);
@@ -247,6 +247,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.roundedButton1.TabIndex = 10;
             this.roundedButton1.Text = "Lọc";
             this.roundedButton1.UseVisualStyleBackColor = false;
+            this.roundedButton1.Click += new System.EventHandler(this.roundedButton1_Click);
             // 
             // lblFilterTitle
             // 

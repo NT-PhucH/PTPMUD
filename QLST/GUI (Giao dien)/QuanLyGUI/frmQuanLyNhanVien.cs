@@ -186,7 +186,6 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI.QL_User
             txtMaNV.Text = nv.MaNV; // Khi bấm vào Sửa, load Mã NV thật lên
             txtTenNV.Text = nv.TenNV;
             txtUser.Text = nv.Username;
-            txtPass.Text = nv.Password;
             cboRole.SelectedIndex = nv.Role > 0 ? nv.Role - 1 : -1;
             txtSDT.Text = nv.SoDienThoai;
             cboCaLam.Text = nv.CaLamViec;
