@@ -11,7 +11,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using QLST.DTO__Type_OTP_.QuanLyDTO; // Thêm DTO quản lý để lấy LoaiSanPham_DTO
+using QLST.DTO__Type_OTP_.QuanLyDTO;
 
 namespace QLST
 {
@@ -36,7 +36,14 @@ namespace QLST
         private ucThongBaoDonTam ucThongBao;
         private readonly List<HoaDonTam_DTO> danhSachHoaDonTam = new List<HoaDonTam_DTO>();
 
-        private bool isInitializingComboBox = true; // Cờ kiểm soát lỗi Load Form
+        private bool isInitializingComboBox = true;
+
+        // Giữ nguyên đường dẫn hệ thống
+        private readonly string _productImagesPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\Resources", "Anh_SP");
+
+        // Cache cấu hình VAT và Timer cho kỹ thuật Debounce
+        private decimal _phanTramVAT = 0;
+        private Timer _searchTimer = new Timer { Interval = 300 };
 
         #endregion
 
@@ -54,7 +61,6 @@ namespace QLST
             this.SizeChanged += FormThuNgan_SizeChanged;
             this.Load += FormThuNgan_Load;
 
-            // Đăng ký sự kiện tìm kiếm & lọc
             this.txtTimKiem.TextChanged += txtTimKiem_TextChanged;
 
             if (this.cboLoaiSanPham != null)
@@ -68,6 +74,16 @@ namespace QLST
 
         private void FormThuNgan_Load(object sender, EventArgs e)
         {
+            // Cache phần trăm VAT từ đầu
+            var setting = _settingBLL.GetCauHinh();
+            if (setting != null)
+            {
+                _phanTramVAT = (decimal)setting.VAT / 100m;
+            }
+
+            // Gắn sự kiện cho Timer tìm kiếm
+            _searchTimer.Tick += SearchTimer_Tick;
+
             LoadDanhSachLoaiSanPham();
             LoadDuLieuBanDau();
             KhoiTaoGiaoDienThongBao();
@@ -149,6 +165,13 @@ namespace QLST
             {
                 if (ctrl is KhungMonHang card)
                 {
+                    // Ngăn lỗi chia cho 0
+                    if (card.SoLuong <= 0)
+                    {
+                        MessageBox.Show($"Sản phẩm '{card.TenSP}' có số lượng không hợp lệ. Vui lòng kiểm tra lại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
                     hd.DanhSachChiTiet.Add(new ChiTietHoaDonIn_DTO
                     {
                         MaVach = card.MaSP,
@@ -161,8 +184,7 @@ namespace QLST
                 }
             }
 
-            foreach (Control ctrl in flowLayoutPanel1.Controls) { ctrl.Dispose(); }
-            flowLayoutPanel1.Controls.Clear();
+            ClearGioHang();
 
             danhSachHoaDonTam.Add(hd);
             MessageBox.Show($"Đã lưu tạm đơn hàng: {hd.MaHoaDon}", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -187,8 +209,7 @@ namespace QLST
                 }
                 else
                 {
-                    foreach (Control ctrl in flowLayoutPanel1.Controls) { ctrl.Dispose(); }
-                    flowLayoutPanel1.Controls.Clear();
+                    ClearGioHang();
                 }
             }
 
@@ -206,15 +227,7 @@ namespace QLST
                 flowLayoutPanel1.Controls.SetChildIndex(cardMoi, 0);
             }
 
-            int sttMoi = flowLayoutPanel1.Controls.Count;
-            foreach (Control ctrl in flowLayoutPanel1.Controls)
-            {
-                if (ctrl is KhungMonHang c)
-                {
-                    c.GanSTT(sttMoi);
-                    sttMoi--;
-                }
-            }
+            CapNhatSTT();
 
             danhSachHoaDonTam.Remove(hd);
             ucThongBao.Visible = false;
@@ -249,13 +262,6 @@ namespace QLST
 
             var danhSachSP = new List<ChiTietHoaDonIn_DTO>();
             long tongTienChua = 0;
-            decimal phanTramVAT = 0;
-
-            var setting = _settingBLL.GetCauHinh();
-            if (setting != null)
-            {
-                phanTramVAT = (decimal)setting.VAT / 100m;
-            }
 
             foreach (Control ctrl in flowLayoutPanel1.Controls)
             {
@@ -276,8 +282,6 @@ namespace QLST
                 }
             }
 
-            long tongTienSauVAT = (long)(tongTienChua + (tongTienChua * phanTramVAT));
-
             var formThanhToan = new frmThanhToan(danhSachSP, tongTienChua);
             formThanhToan.StartPosition = FormStartPosition.CenterParent;
             DialogResult ketQua = formThanhToan.ShowDialog();
@@ -288,11 +292,10 @@ namespace QLST
             }
             else if (ketQua == DialogResult.OK)
             {
-                foreach (Control ctrl in flowLayoutPanel1.Controls) { ctrl.Dispose(); }
-                flowLayoutPanel1.Controls.Clear();
+                ClearGioHang();
+                dictTonKho.Clear(); // Refresh cache tồn kho sau khi đã thanh toán thành công
                 TinhTongDonHang();
 
-                // Khôi phục bộ lọc về mặc định
                 txtTimKiem.Clear();
                 if (cboLoaiSanPham != null) cboLoaiSanPham.SelectedIndex = 0;
                 LoadDuLieuBanDau();
@@ -302,18 +305,35 @@ namespace QLST
 
         #region 4. LOGIC GIỎ HÀNG
 
+        // Hàm hỗ trợ dọn dẹp giỏ hàng
+        private void ClearGioHang()
+        {
+            foreach (Control ctrl in flowLayoutPanel1.Controls)
+            {
+                ctrl.Dispose();
+            }
+            flowLayoutPanel1.Controls.Clear();
+        }
+
+        // Hàm hỗ trợ cập nhật lại STT cho các khung món hàng
+        private void CapNhatSTT()
+        {
+            int sttMoi = flowLayoutPanel1.Controls.Count;
+            foreach (Control ctrl in flowLayoutPanel1.Controls)
+            {
+                if (ctrl is KhungMonHang c)
+                {
+                    c.GanSTT(sttMoi);
+                    sttMoi--;
+                }
+            }
+        }
+
         public void TinhTongDonHang()
         {
             int tongSanPham = flowLayoutPanel1.Controls.Count;
             int tongSoLuong = 0;
             decimal tongTienHang = 0;
-            decimal phanTramVAT = 0;
-
-            var setting = _settingBLL.GetCauHinh();
-            if (setting != null)
-            {
-                phanTramVAT = (decimal)setting.VAT / 100m;
-            }
 
             foreach (Control ctrl in flowLayoutPanel1.Controls)
             {
@@ -324,7 +344,8 @@ namespace QLST
                 }
             }
 
-            decimal tienVAT = tongTienHang * phanTramVAT;
+            // Dùng _phanTramVAT đã cache
+            decimal tienVAT = tongTienHang * _phanTramVAT;
             decimal tongThanhTien = tongTienHang + tienVAT;
 
             lblTongSanPham.Text = tongSanPham.ToString();
@@ -397,16 +418,7 @@ namespace QLST
             flowLayoutPanel1.Controls.Add(cardMoi);
             flowLayoutPanel1.Controls.SetChildIndex(cardMoi, 0);
 
-            int sttMoi = flowLayoutPanel1.Controls.Count;
-            foreach (Control ctrl in flowLayoutPanel1.Controls)
-            {
-                if (ctrl is KhungMonHang c)
-                {
-                    c.GanSTT(sttMoi);
-                    sttMoi--;
-                }
-            }
-
+            CapNhatSTT();
             TinhTongDonHang();
         }
 
@@ -416,7 +428,6 @@ namespace QLST
             string keyword = txtTimKiem.Text.Trim();
             int maLoai = 0;
 
-            // Xử lý giá trị từ combobox nếu combobox đã được khởi tạo
             if (this.cboLoaiSanPham != null && this.cboLoaiSanPham.SelectedValue != null)
             {
                 if (int.TryParse(this.cboLoaiSanPham.SelectedValue.ToString(), out int parsedID))
@@ -435,31 +446,31 @@ namespace QLST
 
         private void KhoiTaoAutoComplete()
         {
-            // 1. Khởi tạo danh sách chứa các chuỗi gợi ý
             AutoCompleteStringCollection dataGoiY = new AutoCompleteStringCollection();
 
-            // 2. Lấy toàn bộ danh sách sản phẩm
-            // Sử dụng keyword "" và maLoai 0 để BLL trả về TẤT CẢ sản phẩm
             var danhSachTatCaSP = _thuNganBLL.TimKiemSanPhamKemLoai("", 0);
 
-            // 3. Đưa tên sản phẩm vào danh sách gợi ý
             foreach (var sp in danhSachTatCaSP)
             {
-                // Chỉ thêm tên sản phẩm để hiển thị gợi ý
                 dataGoiY.Add(sp.TenSP);
             }
 
-            // 4. Cấu hình cho txtTimKiem
-            // - Suggest: Xổ xuống danh sách giống Google
-            // - SuggestAppend: Vừa xổ xuống vừa tự điền phần còn lại của chữ vào TextBox
             txtTimKiem.AutoCompleteMode = AutoCompleteMode.Suggest;
             txtTimKiem.AutoCompleteSource = AutoCompleteSource.CustomSource;
             txtTimKiem.AutoCompleteCustomSource = dataGoiY;
         }
 
+        private void SearchTimer_Tick(object sender, EventArgs e)
+        {
+            _searchTimer.Stop();
+            ThucHienLocSanPham();
+        }
+
         private void txtTimKiem_TextChanged(object sender, EventArgs e)
         {
-            ThucHienLocSanPham();
+            // Reset timer (Debounce)
+            _searchTimer.Stop();
+            _searchTimer.Start();
         }
 
         private void cboLoaiSanPham_SelectedIndexChanged(object sender, EventArgs e)
@@ -467,7 +478,6 @@ namespace QLST
             if (isInitializingComboBox) return;
             ThucHienLocSanPham();
         }
-
 
         #endregion
 
@@ -488,11 +498,13 @@ namespace QLST
         {
             flowLayoutPanel2.SuspendLayout();
 
+            // Xử lý Memory Leak: Dispose hoàn toàn ProductCard
             foreach (Control ctrl in flowLayoutPanel2.Controls)
             {
-                if (ctrl is ProductCard card && card.ProductImage != null)
+                if (ctrl is ProductCard card)
                 {
-                    card.ProductImage.Dispose();
+                    if (card.ProductImage != null) card.ProductImage.Dispose();
+                    card.Dispose();
                 }
             }
             flowLayoutPanel2.Controls.Clear();
@@ -560,22 +572,31 @@ namespace QLST
             }
         }
 
-
+        // --- HÀM TẢI ẢNH AN TOÀN TỪ ucQLSP ---
+        private Image LoadImageNoLock(string path)
+        {
+            if (string.IsNullOrEmpty(path) || !File.Exists(path)) return null;
+            using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+            {
+                using (var img = Image.FromStream(fs))
+                {
+                    return new Bitmap(img);
+                }
+            }
+        }
 
         private void LoadProductImage(string imageNameFromDatabase, ProductCard productCard)
         {
-            string imageFolder = Path.Combine(Application.StartupPath, "Images");
-            string fullImagePath = Path.Combine(imageFolder, imageNameFromDatabase ?? "");
-            string defaultImagePath = Path.Combine(imageFolder, "NoImage.png");
+            string fullImagePath = string.IsNullOrEmpty(imageNameFromDatabase) ? string.Empty : Path.Combine(_productImagesPath, imageNameFromDatabase);
+            string defaultImagePath = Path.Combine(_productImagesPath, "NoImage.png");
 
-            string pathToLoad = File.Exists(fullImagePath) ? fullImagePath : (File.Exists(defaultImagePath) ? defaultImagePath : null);
-
-            if (pathToLoad != null)
+            if (File.Exists(fullImagePath))
             {
-                using (FileStream fs = new FileStream(pathToLoad, FileMode.Open, FileAccess.Read))
-                {
-                    productCard.ProductImage = Image.FromStream(fs);
-                }
+                productCard.ProductImage = LoadImageNoLock(fullImagePath);
+            }
+            else if (File.Exists(defaultImagePath))
+            {
+                productCard.ProductImage = LoadImageNoLock(defaultImagePath);
             }
             else
             {
@@ -587,6 +608,7 @@ namespace QLST
 
         #region 6. CÁC SỰ KIỆN KHÁC
 
+        // Giữ nguyên thiết lập luồng theo yêu cầu
         private void MenuDangXuat_Click(object sender, EventArgs e)
         {
             DialogResult dr = MessageBox.Show("Bạn có chắc chắn muốn đăng xuất không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
