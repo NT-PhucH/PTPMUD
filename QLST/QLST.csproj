@@ -134,11 +134,29 @@
     <Compile Include="GUI %28Giao dien%29\QuanLyGUI\frmThongKe.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucCanhBao.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucCanhBao.Designer.cs">
+      <DependentUpon>ucCanhBao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucLichSu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucLichSu.Designer.cs">
+      <DependentUpon>ucLichSu.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucNhapHang.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucNhapHang.Designer.cs">
       <DependentUpon>ucNhapHang.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucXuatKho.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucXuatKho.Designer.cs">
+      <DependentUpon>ucXuatKho.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI %28Giao dien%29\QuanLyGUI\ucLichSuDon.cs">
       <SubType>UserControl</SubType>

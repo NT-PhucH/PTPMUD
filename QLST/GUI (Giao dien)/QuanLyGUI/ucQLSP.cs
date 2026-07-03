@@ -35,13 +35,8 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             cboTrangThai.SelectedIndexChanged += (s, e) => LoadData();
             btnThemLoai.Click += BtnThemLoai_Click;
             btnChonAnh.Click += BtnChonAnh_Click;
-            btnThem.Click += BtnThem_Click;
             btnSua.Click += BtnSua_Click;
             btnTrangThai.Click += BtnTrangThai_Click;
-            picThem.Click += (s, e) => {
-                ClearForm();
-                txtMaVach.Focus();
-            };
             flpSanPham.Resize += (s, e) => UpdateCardMargins();
         }
 
@@ -256,7 +251,6 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             lblTongGiaTri.Text = $"Giá trị tồn\n{(sp.GiaBanHienTai * sp.TonKhoTong):N0} đ";
 
             // --- THIẾT KẾ MỚI KHI ĐÃ CHỌN SẢN PHẨM ---
-            btnThem.Visible = false;
 
             // Hiển thị nút SỬA ở nửa bên trái
             btnSua.Visible = true;
@@ -347,9 +341,6 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             btnSua.Visible = false;
             btnTrangThai.Visible = false;
 
-            btnThem.Visible = true;
-            btnThem.Location = new Point(18, 540); // Đặt tại tọa độ X ban đầu
-            btnThem.Size = new Size(315, 35);
         }
 
         private Image BlurImage(Image image)

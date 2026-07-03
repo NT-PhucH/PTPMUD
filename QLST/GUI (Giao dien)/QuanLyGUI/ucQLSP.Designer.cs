@@ -17,7 +17,6 @@
 
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucQLSP));
             this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
             this.pnlTop = new System.Windows.Forms.Panel();
             this.lblStatus = new System.Windows.Forms.Label();
@@ -31,7 +30,6 @@
             this.pnlRight = new System.Windows.Forms.Panel();
             this.btnTrangThai = new System.Windows.Forms.Button();
             this.btnSua = new System.Windows.Forms.Button();
-            this.btnThem = new System.Windows.Forms.Button();
             this.btnThemLoai = new System.Windows.Forms.Button();
             this.cboLoai = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -47,13 +45,11 @@
             this.lblTongGiaTri = new System.Windows.Forms.Label();
             this.lblTongTonKho = new System.Windows.Forms.Label();
             this.lblTitleRight = new System.Windows.Forms.Label();
-            this.picThem = new System.Windows.Forms.PictureBox();
             this.tlpMain.SuspendLayout();
             this.pnlTop.SuspendLayout();
             this.pnlRight.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picAnh)).BeginInit();
             this.pnlThongTin.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picThem)).BeginInit();
             this.SuspendLayout();
             // 
             // tlpMain
@@ -185,10 +181,8 @@
             // 
             this.pnlRight.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(248)))));
             this.pnlRight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlRight.Controls.Add(this.picThem);
             this.pnlRight.Controls.Add(this.btnTrangThai);
             this.pnlRight.Controls.Add(this.btnSua);
-            this.pnlRight.Controls.Add(this.btnThem);
             this.pnlRight.Controls.Add(this.btnThemLoai);
             this.pnlRight.Controls.Add(this.cboLoai);
             this.pnlRight.Controls.Add(this.label4);
@@ -234,19 +228,6 @@
             this.btnSua.TabIndex = 14;
             this.btnSua.Text = "✏ SỬA";
             this.btnSua.UseVisualStyleBackColor = false;
-            // 
-            // btnThem
-            // 
-            this.btnThem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(174)))), ((int)(((byte)(96)))));
-            this.btnThem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnThem.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
-            this.btnThem.ForeColor = System.Drawing.Color.White;
-            this.btnThem.Location = new System.Drawing.Point(18, 540);
-            this.btnThem.Name = "btnThem";
-            this.btnThem.Size = new System.Drawing.Size(80, 35);
-            this.btnThem.TabIndex = 13;
-            this.btnThem.Text = "➕ THÊM";
-            this.btnThem.UseVisualStyleBackColor = false;
             // 
             // btnThemLoai
             // 
@@ -390,16 +371,6 @@
             this.lblTitleRight.TabIndex = 0;
             this.lblTitleRight.Text = "THÔNG TIN SẢN PHẨM";
             // 
-            // picThem
-            // 
-            this.picThem.Image = ((System.Drawing.Image)(resources.GetObject("picThem.Image")));
-            this.picThem.Location = new System.Drawing.Point(292, 609);
-            this.picThem.Name = "picThem";
-            this.picThem.Size = new System.Drawing.Size(32, 32);
-            this.picThem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.picThem.TabIndex = 16;
-            this.picThem.TabStop = false;
-            // 
             // ucQLSP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
@@ -415,7 +386,6 @@
             this.pnlRight.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picAnh)).EndInit();
             this.pnlThongTin.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picThem)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -446,11 +416,9 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cboLoai;
         private System.Windows.Forms.Button btnThemLoai;
-        private System.Windows.Forms.Button btnThem;
         private System.Windows.Forms.Button btnSua;
         private System.Windows.Forms.Button btnTrangThai;
         private System.Windows.Forms.ComboBox cboTrangThai;
         private System.Windows.Forms.Label lblStatus;
-        private System.Windows.Forms.PictureBox picThem;
     }
 }

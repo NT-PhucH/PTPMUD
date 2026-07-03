@@ -79,34 +79,70 @@ namespace QLST
             Button clickedButton = sender as Button;
             if (clickedButton == null) return;
 
-            // Bước 1: Đổi màu nút
+            // --- 1. XỬ LÝ RIÊNG CHO NÚT KHO ---
+            if (clickedButton == btnKho)
+            {
+                // Đảo trạng thái đóng/mở của panel submenu
+                panelKhoSubMenu.Visible = !panelKhoSubMenu.Visible;
+                btnKho.Invalidate();
+
+                ResetButtonColor();
+                btnKho.BackColor = Color.FromArgb(33, 157, 212);
+                btnKho.ForeColor = Color.Gainsboro;
+
+                if (panelKhoSubMenu.Visible)
+                {
+                    // Kiểm tra xem UC hiện tại trên màn hình có thuộc nhóm Kho không
+                    bool isCurrentlyInKho = panelContent.Controls.Count > 0 &&
+                        (panelContent.Controls[0] is ucNhapHang ||
+                         panelContent.Controls[0] is ucXuatKho ||
+                         panelContent.Controls[0] is ucLichSu ||
+                         panelContent.Controls[0] is ucCanhBao);
+
+                    if (!isCurrentlyInKho)
+                    {
+                        // Nếu đang ở tab khác (User, Home,...) chuyển sang Kho -> Mặc định load Tab Nhập Hàng
+                        MenuButton_Click(btnNhapHang, e);
+                    }
+                    else
+                    {
+                        // Nếu đang ở sẵn trong Kho, chỉ mở panel ra và tô lại màu cho tab đang đứng
+                        var currentControl = panelContent.Controls[0];
+                        if (currentControl is ucNhapHang) { btnNhapHang.BackColor = Color.FromArgb(43, 43, 66); btnNhapHang.ForeColor = Color.FromArgb(33, 157, 212); }
+                        else if (currentControl is ucXuatKho) { btnXuatKho.BackColor = Color.FromArgb(43, 43, 66); btnXuatKho.ForeColor = Color.FromArgb(33, 157, 212); }
+                        else if (currentControl is ucLichSu) { btnLichSu.BackColor = Color.FromArgb(43, 43, 66); btnLichSu.ForeColor = Color.FromArgb(33, 157, 212); }
+                        else if (currentControl is ucCanhBao) { btnCanhBao.BackColor = Color.FromArgb(43, 43, 66); btnCanhBao.ForeColor = Color.FromArgb(33, 157, 212); }
+                    }
+                }
+                // Lệnh return này rất quan trọng để dừng hàm, ngăn chặn lệnh panelContent.Controls.Clear() chạy
+                // Giúp giữ nguyên UserControl hiện tại khi chỉ đóng/mở nút Kho
+                return;
+            }
+
+            // --- 2. XỬ LÝ CHO CÁC NÚT CÒN LẠI ---
             ResetButtonColor();
 
-            // Nếu click vào nút con của Kho, giữ lại màu cho cả nút cha (btnKho)
             if (panelKhoSubMenu.Controls.Contains(clickedButton))
             {
                 btnKho.BackColor = Color.FromArgb(33, 157, 212);
                 btnKho.ForeColor = Color.Gainsboro;
 
-                // Nút con được chọn sẽ có màu highlight khác biệt một chút (hoặc giống tùy bạn)
                 clickedButton.BackColor = Color.FromArgb(43, 43, 66);
                 clickedButton.ForeColor = Color.FromArgb(33, 157, 212);
             }
             else
             {
-                // Nếu click các nút khác thì highlight nút đó như bình thường
                 clickedButton.BackColor = Color.FromArgb(33, 157, 212);
                 clickedButton.ForeColor = Color.Gainsboro;
+
+                // Tự động thu gọn menu Kho nếu bấm sang một Menu chính khác
+                panelKhoSubMenu.Visible = false;
             }
 
-            // Bước 2: Hiển thị UserControl / Form tương ứng
-            // Bước 2: Hiển thị UserControl / Form tương ứng
+            // Hiển thị UserControl / Form tương ứng
             panelContent.Controls.Clear();
 
-            if (clickedButton == btnHome)
-            {
-                panelContent.Controls.Add(_ucHome);
-            }
+            if (clickedButton == btnHome) { panelContent.Controls.Add(_ucHome); }
             else if (clickedButton == btnUser)
             {
                 frmQuanLyNhanVien frmNV = new frmQuanLyNhanVien { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
@@ -123,9 +159,6 @@ namespace QLST
             {
                 ucThongKe thongKe = new ucThongKe { Dock = DockStyle.Fill };
                 panelContent.Controls.Add(thongKe);
-                /*frmThongKe frmKH = new frmThongKe { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
-                panelContent.Controls.Add(frmKH);
-                frmKH.Show();*/
             }
             else if (clickedButton == btnSettings)
             {
@@ -134,17 +167,11 @@ namespace QLST
             }
             else if (clickedButton == btnLSHD)
             {
-                /*frmQuanLyDonHang frmHD = new frmQuanLyDonHang { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
-                panelContent.Controls.Add(frmHD);
-                frmHD.Show();*/
                 ucLichSuDon lichSuDon = new ucLichSuDon { Dock = DockStyle.Fill };
                 panelContent.Controls.Add(lichSuDon);
             }
             else if (clickedButton == btnQLSP)
             {
-                /*frmQuanLySanPham frmSP = new frmQuanLySanPham { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
-                panelContent.Controls.Add(frmSP);
-                frmSP.Show();*/
                 ucQLSP settings = new ucQLSP { Dock = DockStyle.Fill };
                 panelContent.Controls.Add(settings);
             }
@@ -154,33 +181,17 @@ namespace QLST
                 panelContent.Controls.Add(frmNCC);
                 frmNCC.Show();
             }
-            else if (clickedButton == btnKho)
-            {
-                frmQuanLyKho frmKHo = new frmQuanLyKho { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
-                panelContent.Controls.Add(frmKHo);
-                frmKHo.Show();
-
-                panelKhoSubMenu.Visible = !panelKhoSubMenu.Visible;
-                btnKho.Invalidate();
-                ResetButtonColor();
-                btnKho.BackColor = Color.FromArgb(33, 157, 212);
-                btnKho.ForeColor = Color.Gainsboro;
-            }
             else if (clickedButton == btnShopping)
             {
                 FormThuNgan frmThuNgan = new FormThuNgan { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
                 panelContent.Controls.Add(frmThuNgan);
                 frmThuNgan.Show();
             }
-            // --- THÊM LOGIC CHO CÁC NÚT CON CỦA KHO Ở ĐÂY ---
-            else if (clickedButton == btnNhapHang)
-            {
-                // Logic cho nút Nhập Hàng
-            }
-            else if (clickedButton == btnXuatKho)
-            {
-                // Logic cho nút Xuất Kho
-            }
+            // Các nút con của Kho
+            else if (clickedButton == btnNhapHang) { panelContent.Controls.Add(new ucNhapHang { Dock = DockStyle.Fill }); }
+            else if (clickedButton == btnXuatKho) { panelContent.Controls.Add(new ucXuatKho { Dock = DockStyle.Fill }); }
+            else if (clickedButton == btnLichSu) { panelContent.Controls.Add(new ucLichSu { Dock = DockStyle.Fill }); }
+            else if (clickedButton == btnCanhBao) { panelContent.Controls.Add(new ucCanhBao { Dock = DockStyle.Fill }); }
         }
         private void btnLogOut_Click(object sender, EventArgs e)
         {
