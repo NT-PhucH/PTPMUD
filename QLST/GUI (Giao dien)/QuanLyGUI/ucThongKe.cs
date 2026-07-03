@@ -282,49 +282,56 @@ namespace QLST
         {
             using (var workbook = new XLWorkbook())
             {
-                var worksheet = workbook.Worksheets.Add("Báo Cáo Thống Kê");
+                // =========================================================================
+                // SHEET 1: BÁO CÁO TỔNG QUAN VÀ TOP SẢN PHẨM
+                // =========================================================================
+                var wsSP = workbook.Worksheets.Add("Top Sản Phẩm");
+
+                // Ghi rõ thời gian theo format: Từ ngày dd tháng MM năm yyyy
+                string thoiGianBaoCao = $"Thời gian: Từ ngày {dtTuNgay.Value:dd} tháng {dtTuNgay.Value:MM} năm {dtTuNgay.Value:yyyy} " +
+                                        $"đến ngày {dtDenNgay.Value:dd} tháng {dtDenNgay.Value:MM} năm {dtDenNgay.Value:yyyy}";
 
                 // 1. TẠO TIÊU ĐỀ & THỜI GIAN
-                worksheet.Cell(1, 1).Value = "BÁO CÁO THỐNG KÊ TỔNG QUAN VÀ SẢN PHẨM";
-                var titleRange = worksheet.Range(1, 1, 1, 7);
+                wsSP.Cell(1, 1).Value = "BÁO CÁO THỐNG KÊ TỔNG QUAN VÀ SẢN PHẨM";
+                var titleRange = wsSP.Range(1, 1, 1, 7);
                 titleRange.Merge();
                 titleRange.Style.Font.Bold = true;
                 titleRange.Style.Font.FontSize = 15;
                 titleRange.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                 titleRange.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
-                worksheet.Row(1).Height = 25;
+                wsSP.Row(1).Height = 25;
 
-                worksheet.Cell(2, 1).Value = $"Thời gian: {dtTuNgay.Value.ToString("dd/MM/yyyy")} - {dtDenNgay.Value.ToString("dd/MM/yyyy")}";
-                worksheet.Range(2, 1, 2, 7).Merge().Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                worksheet.Range(2, 1, 2, 7).Style.Font.Italic = true;
+                wsSP.Cell(2, 1).Value = thoiGianBaoCao;
+                wsSP.Range(2, 1, 2, 7).Merge().Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                wsSP.Range(2, 1, 2, 7).Style.Font.Italic = true;
 
                 // 2. XUẤT CÁC CHỈ SỐ KPI TỔNG QUAN
-                worksheet.Cell(4, 2).Value = "Doanh Thu:";
-                worksheet.Cell(4, 2).Style.Font.Bold = true;
-                worksheet.Cell(4, 3).Value = lblDoanhThu.Text;
-                worksheet.Cell(4, 3).Style.Font.FontColor = XLColor.Green;
+                wsSP.Cell(4, 2).Value = "Doanh Thu:";
+                wsSP.Cell(4, 2).Style.Font.Bold = true;
+                wsSP.Cell(4, 3).Value = lblDoanhThu.Text;
+                wsSP.Cell(4, 3).Style.Font.FontColor = XLColor.Green;
 
-                worksheet.Cell(4, 5).Value = "Tổng Hóa Đơn:";
-                worksheet.Cell(4, 5).Style.Font.Bold = true;
-                worksheet.Cell(4, 6).Value = lblTongDonHang.Text;
-                worksheet.Cell(4, 6).Style.Font.FontColor = XLColor.Blue;
+                wsSP.Cell(4, 5).Value = "Tổng Hóa Đơn:";
+                wsSP.Cell(4, 5).Style.Font.Bold = true;
+                wsSP.Cell(4, 6).Value = lblTongDonHang.Text;
+                wsSP.Cell(4, 6).Style.Font.FontColor = XLColor.Blue;
 
-                worksheet.Cell(5, 2).Value = "Lợi Nhuận Gộp:";
-                worksheet.Cell(5, 2).Style.Font.Bold = true;
-                worksheet.Cell(5, 3).Value = lblLoiNhuan.Text;
-                worksheet.Cell(5, 3).Style.Font.FontColor = XLColor.DarkOrange;
+                wsSP.Cell(5, 2).Value = "Lợi Nhuận Gộp:";
+                wsSP.Cell(5, 2).Style.Font.Bold = true;
+                wsSP.Cell(5, 3).Value = lblLoiNhuan.Text;
+                wsSP.Cell(5, 3).Style.Font.FontColor = XLColor.DarkOrange;
 
-                worksheet.Cell(5, 5).Value = "Trung Bình/Đơn:";
-                worksheet.Cell(5, 5).Style.Font.Bold = true;
-                worksheet.Cell(5, 6).Value = lblGiaTriTrungBinh.Text;
-                worksheet.Cell(5, 6).Style.Font.FontColor = XLColor.Purple;
+                wsSP.Cell(5, 5).Value = "Trung Bình/Đơn:";
+                wsSP.Cell(5, 5).Style.Font.Bold = true;
+                wsSP.Cell(5, 6).Value = lblGiaTriTrungBinh.Text;
+                wsSP.Cell(5, 6).Style.Font.FontColor = XLColor.Purple;
 
                 // 3. TẠO HEADER CHO BẢNG SẢN PHẨM
                 int headerRow = 8;
                 string[] headers = { "STT", "Mã SP", "Tên Sản Phẩm", "Phân Loại", "Số Lượng Bán", "Doanh Thu (VNĐ)", "Lợi Nhuận (VNĐ)" };
                 for (int i = 0; i < headers.Length; i++)
                 {
-                    var cell = worksheet.Cell(headerRow, i + 1);
+                    var cell = wsSP.Cell(headerRow, i + 1);
                     cell.Value = headers[i];
                     cell.Style.Font.Bold = true;
                     cell.Style.Fill.BackgroundColor = XLColor.LightGray;
@@ -332,42 +339,108 @@ namespace QLST
                     cell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                 }
 
-                // 4. ĐỔ DỮ LIỆU TỪ LIST
+                // 4. ĐỔ DỮ LIỆU TỪ LIST TOP SẢN PHẨM
                 int currentRow = headerRow + 1;
                 int stt = 1;
                 foreach (var item in _fullTopProducts)
                 {
-                    worksheet.Cell(currentRow, 1).Value = stt++;
-                    worksheet.Cell(currentRow, 2).Value = item.SanPhamID;
-                    worksheet.Cell(currentRow, 3).Value = item.TenSP;
-                    worksheet.Cell(currentRow, 4).Value = item.TenLoai;
-                    worksheet.Cell(currentRow, 5).Value = item.SoLuongBan;
-                    worksheet.Cell(currentRow, 6).Value = item.DoanhThu;
-                    worksheet.Cell(currentRow, 7).Value = item.LoiNhuan;
+                    wsSP.Cell(currentRow, 1).Value = stt++;
+                    wsSP.Cell(currentRow, 2).Value = item.SanPhamID;
+                    wsSP.Cell(currentRow, 3).Value = item.TenSP;
+                    wsSP.Cell(currentRow, 4).Value = item.TenLoai;
+                    wsSP.Cell(currentRow, 5).Value = item.SoLuongBan;
+                    wsSP.Cell(currentRow, 6).Value = item.DoanhThu;
+                    wsSP.Cell(currentRow, 7).Value = item.LoiNhuan;
 
-                    worksheet.Range(currentRow, 1, currentRow, 7).Style.Border.InsideBorder = XLBorderStyleValues.Thin;
-                    worksheet.Range(currentRow, 1, currentRow, 7).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                    wsSP.Range(currentRow, 1, currentRow, 7).Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+                    wsSP.Range(currentRow, 1, currentRow, 7).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
                     currentRow++;
                 }
+                wsSP.Column(5).Style.NumberFormat.Format = "#,##0";
+                wsSP.Column(6).Style.NumberFormat.Format = "#,##0";
+                wsSP.Column(7).Style.NumberFormat.Format = "#,##0";
+                wsSP.Columns().AdjustToContents();
 
-                // 5. ĐỊNH DẠNG SỐ & ĐỘ RỘNG CỘT
-                worksheet.Column(5).Style.NumberFormat.Format = "#,##0";
-                worksheet.Column(6).Style.NumberFormat.Format = "#,##0";
-                worksheet.Column(7).Style.NumberFormat.Format = "#,##0";
-                worksheet.Columns().AdjustToContents(); // AutoFit
+                // =========================================================================
+                // SHEET 2: CHI TIẾT DOANH THU
+                // =========================================================================
+                var wsDT = workbook.Worksheets.Add("Doanh Thu");
 
-                // Lưu file
+                var dsDoanhThu = _bll.GetDoanhThuTheoNgay(dtTuNgay.Value.Date, dtDenNgay.Value.Date);
+
+                wsDT.Cell(1, 1).Value = "THỐNG KÊ CHI TIẾT DOANH THU THEO NGÀY";
+                var titleDTRange = wsDT.Range(1, 1, 1, 4);
+                titleDTRange.Merge();
+                titleDTRange.Style.Font.Bold = true;
+                titleDTRange.Style.Font.FontSize = 15;
+                titleDTRange.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                titleDTRange.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+                wsDT.Row(1).Height = 25;
+
+                wsDT.Cell(2, 1).Value = thoiGianBaoCao;
+                wsDT.Range(2, 1, 2, 4).Merge().Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                wsDT.Range(2, 1, 2, 4).Style.Font.Italic = true;
+
+                int headerDTRow = 4;
+                string[] headersDT = { "STT", "Ngày", "Số Hóa Đơn", "Doanh Thu (VNĐ)" };
+                for (int i = 0; i < headersDT.Length; i++)
+                {
+                    var cell = wsDT.Cell(headerDTRow, i + 1);
+                    cell.Value = headersDT[i];
+                    cell.Style.Font.Bold = true;
+                    cell.Style.Fill.BackgroundColor = XLColor.LightGray;
+                    cell.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                    cell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                }
+
+                int currentDTRow = headerDTRow + 1;
+                int sttDT = 1;
+                long sumHoaDon = 0;
+                long sumDoanhThu = 0;
+
+                foreach (var item in dsDoanhThu)
+                {
+                    wsDT.Cell(currentDTRow, 1).Value = sttDT++;
+                    wsDT.Cell(currentDTRow, 2).Value = item.Ngay;
+                    wsDT.Cell(currentDTRow, 3).Value = item.SoHoaDon;
+                    wsDT.Cell(currentDTRow, 4).Value = item.DoanhThu;
+
+                    wsDT.Range(currentDTRow, 1, currentDTRow, 4).Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+                    wsDT.Range(currentDTRow, 1, currentDTRow, 4).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+
+                    sumHoaDon += item.SoHoaDon;
+                    sumDoanhThu += item.DoanhThu;
+                    currentDTRow++;
+                }
+
+                // Dòng tổng cộng
+                wsDT.Cell(currentDTRow, 1).Value = "TỔNG CỘNG";
+                wsDT.Range(currentDTRow, 1, currentDTRow, 2).Merge().Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                wsDT.Range(currentDTRow, 1, currentDTRow, 2).Style.Font.Bold = true;
+
+                wsDT.Cell(currentDTRow, 3).Value = sumHoaDon;
+                wsDT.Cell(currentDTRow, 3).Style.Font.Bold = true;
+
+                wsDT.Cell(currentDTRow, 4).Value = sumDoanhThu;
+                wsDT.Cell(currentDTRow, 4).Style.Font.Bold = true;
+
+                wsDT.Range(currentDTRow, 1, currentDTRow, 4).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+
+                wsDT.Column(3).Style.NumberFormat.Format = "#,##0";
+                wsDT.Column(4).Style.NumberFormat.Format = "#,##0";
+                wsDT.Columns().AdjustToContents();
+
                 workbook.SaveAs(filePath);
             }
         }
 
         private void XuatPDF(string filePath)
         {
-            // Khai báo Font Arial hỗ trợ tiếng Việt cho iTextSharp
             string fontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
             BaseFont bf = BaseFont.CreateFont(fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 
             iTextSharp.text.Font fontTitle = new iTextSharp.text.Font(bf, 16, iTextSharp.text.Font.BOLD);
+            iTextSharp.text.Font fontSubtitle = new iTextSharp.text.Font(bf, 14, iTextSharp.text.Font.BOLD);
             iTextSharp.text.Font fontItalic = new iTextSharp.text.Font(bf, 10, iTextSharp.text.Font.ITALIC);
             iTextSharp.text.Font fontHeader = new iTextSharp.text.Font(bf, 11, iTextSharp.text.Font.BOLD);
             iTextSharp.text.Font fontNormal = new iTextSharp.text.Font(bf, 10, iTextSharp.text.Font.NORMAL);
@@ -379,7 +452,12 @@ namespace QLST
                 PdfWriter.GetInstance(pdfDoc, stream);
                 pdfDoc.Open();
 
-                // 1. IN TIÊU ĐỀ & THỜI GIAN
+                string thoiGianBaoCao = $"Thời gian: Từ ngày {dtTuNgay.Value:dd} tháng {dtTuNgay.Value:MM} năm {dtTuNgay.Value:yyyy} " +
+                                        $"đến ngày {dtDenNgay.Value:dd} tháng {dtDenNgay.Value:MM} năm {dtDenNgay.Value:yyyy}";
+
+                // =========================================================================
+                // PHẦN 1: BÁO CÁO TỔNG QUAN & TOP SẢN PHẨM (TRANG 1)
+                // =========================================================================
                 Paragraph title = new Paragraph("BÁO CÁO THỐNG KÊ TỔNG QUAN VÀ SẢN PHẨM", fontTitle)
                 {
                     Alignment = Element.ALIGN_CENTER,
@@ -387,26 +465,24 @@ namespace QLST
                 };
                 pdfDoc.Add(title);
 
-                Paragraph dateRange = new Paragraph($"Thời gian: {dtTuNgay.Value.ToString("dd/MM/yyyy")} - {dtDenNgay.Value.ToString("dd/MM/yyyy")}", fontItalic)
+                Paragraph dateRange = new Paragraph(thoiGianBaoCao, fontItalic)
                 {
                     Alignment = Element.ALIGN_CENTER,
                     SpacingAfter = 20f
                 };
                 pdfDoc.Add(dateRange);
 
-                // 2. IN CÁC CHỈ SỐ KPI (Dùng table ẩn viền để layout đẹp)
-                PdfPTable kpiTable = new PdfPTable(2); // 2 cột
+                // IN CÁC CHỈ SỐ KPI
+                PdfPTable kpiTable = new PdfPTable(2);
                 kpiTable.WidthPercentage = 90;
                 kpiTable.DefaultCell.Border = iTextSharp.text.Rectangle.NO_BORDER;
                 kpiTable.SpacingAfter = 20f;
 
-                // Dòng KPI 1
                 PdfPCell cellDT = new PdfPCell(new Phrase("Doanh Thu: " + lblDoanhThu.Text, fontKPI)) { Border = 0, PaddingBottom = 10f };
                 PdfPCell cellHD = new PdfPCell(new Phrase("Tổng Hóa Đơn: " + lblTongDonHang.Text, fontKPI)) { Border = 0, PaddingBottom = 10f };
                 kpiTable.AddCell(cellDT);
                 kpiTable.AddCell(cellHD);
 
-                // Dòng KPI 2
                 PdfPCell cellLN = new PdfPCell(new Phrase("Lợi Nhuận Gộp: " + lblLoiNhuan.Text, fontKPI)) { Border = 0 };
                 PdfPCell cellTB = new PdfPCell(new Phrase("Trung Bình/Đơn: " + lblGiaTriTrungBinh.Text, fontKPI)) { Border = 0 };
                 kpiTable.AddCell(cellLN);
@@ -414,15 +490,15 @@ namespace QLST
 
                 pdfDoc.Add(kpiTable);
 
-                // 3. IN BẢNG TOP SẢN PHẨM (6 cột như cũ)
-                PdfPTable table = new PdfPTable(6);
-                table.WidthPercentage = 100;
-                float[] widths = new float[] { 5f, 35f, 15f, 10f, 17.5f, 17.5f };
-                table.SetWidths(widths);
+                // IN BẢNG TOP SẢN PHẨM 
+                PdfPTable tableSP = new PdfPTable(6);
+                tableSP.WidthPercentage = 100;
+                float[] widthsSP = new float[] { 5f, 35f, 15f, 10f, 17.5f, 17.5f };
+                tableSP.SetWidths(widthsSP);
+                tableSP.SpacingAfter = 30f;
 
-                // Header bảng
-                string[] headers = { "STT", "Tên Sản Phẩm", "Phân Loại", "Đã bán", "Doanh Thu (VNĐ)", "Lợi Nhuận (VNĐ)" };
-                foreach (string header in headers)
+                string[] headersSP = { "STT", "Tên Sản Phẩm", "Phân Loại", "Đã bán", "Doanh Thu (VNĐ)", "Lợi Nhuận (VNĐ)" };
+                foreach (string header in headersSP)
                 {
                     PdfPCell cell = new PdfPCell(new Phrase(header, fontHeader))
                     {
@@ -431,22 +507,89 @@ namespace QLST
                         BackgroundColor = new BaseColor(230, 230, 230),
                         Padding = 6f
                     };
-                    table.AddCell(cell);
+                    tableSP.AddCell(cell);
                 }
 
-                // Đổ dữ liệu
                 int stt = 1;
                 foreach (var item in _fullTopProducts)
                 {
-                    table.AddCell(new PdfPCell(new Phrase(stt++.ToString(), fontNormal)) { HorizontalAlignment = Element.ALIGN_CENTER, Padding = 5f });
-                    table.AddCell(new PdfPCell(new Phrase(item.TenSP, fontNormal)) { Padding = 5f });
-                    table.AddCell(new PdfPCell(new Phrase(item.TenLoai, fontNormal)) { Padding = 5f });
-                    table.AddCell(new PdfPCell(new Phrase(item.SoLuongBan.ToString("N0"), fontNormal)) { HorizontalAlignment = Element.ALIGN_RIGHT, Padding = 5f });
-                    table.AddCell(new PdfPCell(new Phrase(item.DoanhThu.ToString("N0"), fontNormal)) { HorizontalAlignment = Element.ALIGN_RIGHT, Padding = 5f });
-                    table.AddCell(new PdfPCell(new Phrase(item.LoiNhuan.ToString("N0"), fontNormal)) { HorizontalAlignment = Element.ALIGN_RIGHT, Padding = 5f });
+                    tableSP.AddCell(new PdfPCell(new Phrase(stt++.ToString(), fontNormal)) { HorizontalAlignment = Element.ALIGN_CENTER, Padding = 5f });
+                    tableSP.AddCell(new PdfPCell(new Phrase(item.TenSP, fontNormal)) { Padding = 5f });
+                    tableSP.AddCell(new PdfPCell(new Phrase(item.TenLoai, fontNormal)) { Padding = 5f });
+                    tableSP.AddCell(new PdfPCell(new Phrase(item.SoLuongBan.ToString("N0"), fontNormal)) { HorizontalAlignment = Element.ALIGN_RIGHT, Padding = 5f });
+                    tableSP.AddCell(new PdfPCell(new Phrase(item.DoanhThu.ToString("N0"), fontNormal)) { HorizontalAlignment = Element.ALIGN_RIGHT, Padding = 5f });
+                    tableSP.AddCell(new PdfPCell(new Phrase(item.LoiNhuan.ToString("N0"), fontNormal)) { HorizontalAlignment = Element.ALIGN_RIGHT, Padding = 5f });
+                }
+                pdfDoc.Add(tableSP);
+
+                // =========================================================================
+                // PHẦN 2: CHI TIẾT DOANH THU THEO NGÀY (SANG TRANG MỚI TÁCH BIỆT)
+                // =========================================================================
+                pdfDoc.NewPage(); // Lệnh này giúp ngắt trang sang trang tiếp theo
+
+                Paragraph titleDT = new Paragraph("CHI TIẾT DOANH THU THEO NGÀY", fontSubtitle)
+                {
+                    Alignment = Element.ALIGN_CENTER,
+                    SpacingAfter = 15f
+                };
+                pdfDoc.Add(titleDT);
+
+                Paragraph dateRangeDT = new Paragraph(thoiGianBaoCao, fontItalic)
+                {
+                    Alignment = Element.ALIGN_CENTER,
+                    SpacingAfter = 20f
+                };
+                pdfDoc.Add(dateRangeDT); // Thêm lại dòng thời gian cho trang 2 đỡ trống
+
+                var dsDoanhThu = _bll.GetDoanhThuTheoNgay(dtTuNgay.Value.Date, dtDenNgay.Value.Date);
+
+                PdfPTable tableDT = new PdfPTable(4);
+                tableDT.WidthPercentage = 80;
+                tableDT.HorizontalAlignment = Element.ALIGN_CENTER;
+                float[] widthsDT = new float[] { 10f, 30f, 20f, 40f };
+                tableDT.SetWidths(widthsDT);
+
+                string[] headersDT = { "STT", "Ngày", "Số Hóa Đơn", "Doanh Thu (VNĐ)" };
+                foreach (string header in headersDT)
+                {
+                    PdfPCell cell = new PdfPCell(new Phrase(header, fontHeader))
+                    {
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        BackgroundColor = new BaseColor(230, 230, 230),
+                        Padding = 6f
+                    };
+                    tableDT.AddCell(cell);
                 }
 
-                pdfDoc.Add(table);
+                int sttDT = 1;
+                long sumHD = 0;
+                long sumDT = 0;
+
+                foreach (var item in dsDoanhThu)
+                {
+                    tableDT.AddCell(new PdfPCell(new Phrase(sttDT++.ToString(), fontNormal)) { HorizontalAlignment = Element.ALIGN_CENTER, Padding = 5f });
+                    tableDT.AddCell(new PdfPCell(new Phrase(item.Ngay, fontNormal)) { HorizontalAlignment = Element.ALIGN_CENTER, Padding = 5f });
+                    tableDT.AddCell(new PdfPCell(new Phrase(item.SoHoaDon.ToString("N0"), fontNormal)) { HorizontalAlignment = Element.ALIGN_CENTER, Padding = 5f });
+                    tableDT.AddCell(new PdfPCell(new Phrase(item.DoanhThu.ToString("N0"), fontNormal)) { HorizontalAlignment = Element.ALIGN_RIGHT, Padding = 5f });
+
+                    sumHD += item.SoHoaDon;
+                    sumDT += item.DoanhThu;
+                }
+
+                // Dòng tổng cộng cuối bảng PDF
+                PdfPCell cellTong = new PdfPCell(new Phrase("TỔNG CỘNG", fontHeader))
+                {
+                    Colspan = 2,
+                    HorizontalAlignment = Element.ALIGN_CENTER,
+                    Padding = 6f,
+                    BackgroundColor = new BaseColor(245, 245, 245)
+                };
+                tableDT.AddCell(cellTong);
+                tableDT.AddCell(new PdfPCell(new Phrase(sumHD.ToString("N0"), fontHeader)) { HorizontalAlignment = Element.ALIGN_CENTER, Padding = 6f, BackgroundColor = new BaseColor(245, 245, 245) });
+                tableDT.AddCell(new PdfPCell(new Phrase(sumDT.ToString("N0"), fontHeader)) { HorizontalAlignment = Element.ALIGN_RIGHT, Padding = 6f, BackgroundColor = new BaseColor(245, 245, 245) });
+
+                pdfDoc.Add(tableDT);
                 pdfDoc.Close();
             }
         }
