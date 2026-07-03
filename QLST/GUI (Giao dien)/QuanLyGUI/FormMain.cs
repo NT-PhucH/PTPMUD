@@ -20,6 +20,19 @@ namespace QLST
         private ucHome _ucHome;
         private ucQuanLyNhanVien _ucUser;
 
+        // Thêm mới các biến cho các tab khác
+        private ucTichDiem _ucTichDiem;
+        private ucThongKe _ucThongKe;
+        private ucSettings _ucSettings;
+        private ucLichSuDon _ucLichSuDon;
+        private ucQLSP _ucQLSP;
+        private frmQuanLyNCC _frmNCC;
+        private FormThuNgan _frmThuNgan;
+        private ucNhapHang _ucNhapHang;
+        private ucXuatKho _ucXuatKho;
+        private ucLichSu _ucLichSu;
+        private ucCanhBao _ucCanhBao;
+
         // 1. Tạo biến để hứng dữ liệu người dùng đang đăng nhập
         private QLNV_DTO _nhanVienHienTai;
 
@@ -141,58 +154,78 @@ namespace QLST
             // Hiển thị UserControl / Form tương ứng
             panelContent.Controls.Clear();
 
-            if (clickedButton == btnHome) { panelContent.Controls.Add(_ucHome); }
+            if (clickedButton == btnHome)
+            {
+                panelContent.Controls.Add(_ucHome); // Vẫn dùng bình thường [2]
+            }
             else if (clickedButton == btnUser)
             {
-                ucQuanLyNhanVien qlnv = new ucQuanLyNhanVien { Dock = DockStyle.Fill };
-                panelContent.Controls.Add(qlnv);
-                qlnv.Show();
+                // Dùng biến cache _ucUser thay vì gọi new
+                if (_ucUser == null) _ucUser = new ucQuanLyNhanVien { Dock = DockStyle.Fill };
+                panelContent.Controls.Add(_ucUser);
+                _ucUser.Show();
             }
             else if (clickedButton == btnTichDiem)
             {
-                ucTichDiem tichDiem = new ucTichDiem { Dock = DockStyle.Fill };
-                panelContent.Controls.Add(tichDiem);
-                tichDiem.Show();
+                if (_ucTichDiem == null) _ucTichDiem = new ucTichDiem { Dock = DockStyle.Fill };
+                panelContent.Controls.Add(_ucTichDiem);
+                _ucTichDiem.Show();
             }
             else if (clickedButton == btnThongKe)
             {
-                ucThongKe thongKe = new ucThongKe { Dock = DockStyle.Fill };
-                panelContent.Controls.Add(thongKe);
+                if (_ucThongKe == null) _ucThongKe = new ucThongKe { Dock = DockStyle.Fill };
+                panelContent.Controls.Add(_ucThongKe);
             }
             else if (clickedButton == btnSettings)
             {
-                ucSettings settings = new ucSettings { Dock = DockStyle.Fill };
-                panelContent.Controls.Add(settings);
-                settings.Show();
+                if (_ucSettings == null) _ucSettings = new ucSettings { Dock = DockStyle.Fill };
+                panelContent.Controls.Add(_ucSettings);
+                _ucSettings.Show();
             }
             else if (clickedButton == btnLSHD)
             {
-                ucLichSuDon lichSuDon = new ucLichSuDon { Dock = DockStyle.Fill };
-                panelContent.Controls.Add(lichSuDon);
-                lichSuDon.Show();
+                if (_ucLichSuDon == null) _ucLichSuDon = new ucLichSuDon { Dock = DockStyle.Fill };
+                panelContent.Controls.Add(_ucLichSuDon);
+                _ucLichSuDon.Show();
             }
             else if (clickedButton == btnQLSP)
             {
-                ucQLSP settings = new ucQLSP { Dock = DockStyle.Fill };
-                panelContent.Controls.Add(settings);
+                if (_ucQLSP == null) _ucQLSP = new ucQLSP { Dock = DockStyle.Fill };
+                panelContent.Controls.Add(_ucQLSP);
             }
             else if (clickedButton == btnQLNCC)
             {
-                frmQuanLyNCC frmNCC = new frmQuanLyNCC { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
-                panelContent.Controls.Add(frmNCC);
-                frmNCC.Show();
+                if (_frmNCC == null) _frmNCC = new frmQuanLyNCC { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
+                panelContent.Controls.Add(_frmNCC);
+                _frmNCC.Show();
             }
             else if (clickedButton == btnShopping)
             {
-                FormThuNgan frmThuNgan = new FormThuNgan { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
-                panelContent.Controls.Add(frmThuNgan);
-                frmThuNgan.Show();
+                if (_frmThuNgan == null) _frmThuNgan = new FormThuNgan { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
+                panelContent.Controls.Add(_frmThuNgan);
+                _frmThuNgan.Show();
             }
             // Các nút con của Kho
-            else if (clickedButton == btnNhapHang) { panelContent.Controls.Add(new ucNhapHang { Dock = DockStyle.Fill }); }
-            else if (clickedButton == btnXuatKho) { panelContent.Controls.Add(new ucXuatKho { Dock = DockStyle.Fill }); }
-            else if (clickedButton == btnLichSu) { panelContent.Controls.Add(new ucLichSu { Dock = DockStyle.Fill }); }
-            else if (clickedButton == btnCanhBao) { panelContent.Controls.Add(new ucCanhBao { Dock = DockStyle.Fill }); }
+            else if (clickedButton == btnNhapHang)
+            {
+                if (_ucNhapHang == null) _ucNhapHang = new ucNhapHang { Dock = DockStyle.Fill };
+                panelContent.Controls.Add(_ucNhapHang);
+            }
+            else if (clickedButton == btnXuatKho)
+            {
+                if (_ucXuatKho == null) _ucXuatKho = new ucXuatKho { Dock = DockStyle.Fill };
+                panelContent.Controls.Add(_ucXuatKho);
+            }
+            else if (clickedButton == btnLichSu)
+            {
+                if (_ucLichSu == null) _ucLichSu = new ucLichSu { Dock = DockStyle.Fill };
+                panelContent.Controls.Add(_ucLichSu);
+            }
+            else if (clickedButton == btnCanhBao)
+            {
+                if (_ucCanhBao == null) _ucCanhBao = new ucCanhBao { Dock = DockStyle.Fill };
+                panelContent.Controls.Add(_ucCanhBao);
+            }
         }
         private void btnLogOut_Click(object sender, EventArgs e)
         {
