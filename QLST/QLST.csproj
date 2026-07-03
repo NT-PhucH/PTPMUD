@@ -434,7 +434,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GUI %28Giao dien%29\QuanLyGUI\QL_User\" />
-    <Folder Include="Resources\anh_sanpham\" />
+    <Folder Include="Resources\Anh_SP\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\arrow_up.png" />

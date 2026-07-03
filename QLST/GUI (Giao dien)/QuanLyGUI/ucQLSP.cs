@@ -14,18 +14,18 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
     public partial class ucQLSP : UserControl
     {
         private readonly SanPham_BLL _bll = new SanPham_BLL();
-        private readonly string _productImagesPath;
 
         private int _selectedID = -1;
         private string _selectedImagePath = string.Empty;
         private string _oldImagePath = string.Empty;
         private List<SanPham_DTO> _currentList = new List<SanPham_DTO>();
         private Panel _selectedCard = null;
+        private readonly string _productImagesPath;
 
         public ucQLSP()
         {
             InitializeComponent();
-            _productImagesPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\Resources", "Anh_SP"));
+            _productImagesPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\Resources", "Anh_SP");
             LoadLoai();
             LoadData();
             GhepSuKien();
@@ -38,11 +38,13 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             cboTrangThai.SelectedIndexChanged += (s, e) => LoadData();
             btnThemLoai.Click += BtnThemLoai_Click;
             btnChonAnh.Click += BtnChonAnh_Click;
+
             btnSua.Click += BtnSua_Click;
             btnTrangThai.Click += BtnTrangThai_Click;
             flpSanPham.Resize += (s, e) => UpdateCardMargins();
         }
 
+        // ── HÀM TẢI ẢNH AN TOÀN VÀ KHÔNG BỊ RÒ RỈ BỘ NHỚ ──────────────────────────
         private Image LoadImageNoLock(string path)
         {
             if (string.IsNullOrEmpty(path) || !File.Exists(path)) return null;
@@ -50,7 +52,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             {
                 using (var img = Image.FromStream(fs))
                 {
-                    return new Bitmap(img);
+                    return new Bitmap(img); // Clone hẳn sang bộ nhớ mới để giải phóng file gốc
                 }
             }
         }
@@ -164,7 +166,6 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
 
         private void RenderCards()
         {
-            if (_currentList == null) return;
             foreach (var sp in _currentList)
             {
                 flpSanPham.Controls.Add(CreateProductCard(sp));
@@ -183,10 +184,10 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             card.Paint += (s, e) =>
             {
                 ControlPaint.DrawBorder(e.Graphics, card.ClientRectangle,
-                card == _selectedCard ? Color.DodgerBlue : Color.LightGray, card == _selectedCard ? 2 : 1, ButtonBorderStyle.Solid,
-                card == _selectedCard ? Color.DodgerBlue : Color.LightGray, card == _selectedCard ? 2 : 1, ButtonBorderStyle.Solid,
-                card == _selectedCard ? Color.DodgerBlue : Color.LightGray, card == _selectedCard ? 2 : 1, ButtonBorderStyle.Solid,
-                card == _selectedCard ? Color.DodgerBlue : Color.LightGray, card == _selectedCard ? 2 : 1, ButtonBorderStyle.Solid);
+                    card == _selectedCard ? Color.DodgerBlue : Color.LightGray, card == _selectedCard ? 2 : 1, ButtonBorderStyle.Solid,
+                    card == _selectedCard ? Color.DodgerBlue : Color.LightGray, card == _selectedCard ? 2 : 1, ButtonBorderStyle.Solid,
+                    card == _selectedCard ? Color.DodgerBlue : Color.LightGray, card == _selectedCard ? 2 : 1, ButtonBorderStyle.Solid,
+                    card == _selectedCard ? Color.DodgerBlue : Color.LightGray, card == _selectedCard ? 2 : 1, ButtonBorderStyle.Solid);
             };
 
             PictureBox pic = new PictureBox
@@ -246,6 +247,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
                 if (pic.Image != null)
                 {
                     Image oldImg = pic.Image;
+                    // Đổi tên từ BlurImage thành SetImageOpacity cho đúng nghiệp vụ
                     pic.Image = SetImageOpacity(oldImg, 0.3f);
                     oldImg.Dispose();
                 }
@@ -266,6 +268,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             return card;
         }
 
+        // TÁCH NHỎ HÀM SELECT CARD THÀNH CÁC HÀM RIÊNG BIỆT
         private void SelectCard(Panel card, SanPham_DTO sp)
         {
             UpdateCardSelectionUI(card);
@@ -337,6 +340,21 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
                 if (picAnh.Image != null) picAnh.Image.Dispose();
                 picAnh.Image = null;
             }
+            // CẬP NHẬT: Thay đổi nhãn thành số lượng tồn và giá trị của riêng sản phẩm được chọn
+            lblTongTonKho.Text = $"Tồn kho SP\n{sp.TonKhoTong}";
+            lblTongGiaTri.Text = $"Giá trị tồn\n{(sp.GiaBanHienTai * sp.TonKhoTong):N0} đ";
+
+            // --- THIẾT KẾ MỚI KHI ĐÃ CHỌN SẢN PHẨM ---
+
+            // Hiển thị nút SỬA ở nửa bên trái
+            btnSua.Visible = true;
+            btnSua.Location = new Point(18, 540);
+            btnSua.Size = new Size(150, 35);
+
+            // Hiển thị nút NGỪNG BÁN ở nửa bên phải (cách nút sửa một khoảng 15px)
+            btnTrangThai.Visible = true;
+            btnTrangThai.Location = new Point(183, 540); // 18 + 150 + 15 = 183
+            btnTrangThai.Size = new Size(150, 35);
         }
 
         private void BtnThem_Click(object sender, EventArgs e)
@@ -360,6 +378,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             if (sp == null) return;
             sp.SanPhamID = _selectedID;
 
+            // TRUYỀN THÊM _oldImagePath VÀO HÀM BLL
             var (ok, msg) = _bll.SuaSanPham(sp, _oldImagePath);
 
             if (!ok) MessageBox.Show(msg, "Lỗi cập nhật", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -396,6 +415,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
 
         private SanPham_DTO BuildDTO()
         {
+            // Cải thiện format giá tiền theo culture, hoặc thử lùi lại bằng replace nếu culture parse thất bại.
             if (!int.TryParse(txtGia.Text.Trim(), NumberStyles.Number, CultureInfo.CurrentCulture, out int gia))
             {
                 if (!int.TryParse(txtGia.Text.Trim().Replace(",", "").Replace(".", ""), out gia))
