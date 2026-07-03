@@ -29,12 +29,33 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
             return list;
         }
 
-        // 2. THÊM MỚI NHÂN VIÊN
+        // 2. THÊM MỚI NHÂN VIÊN (TỰ SINH MÃ BẰNG C#)
         public bool Insert(QLNV_DTO nv)
         {
+            // 1. Lấy ID lớn nhất và tự sinh MaNV mới (Logic từ GenerateMaNV đưa vào đây)
+            object res = DataProvider.Instance.ExecuteScalar("SELECT MAX(NhanVienID) FROM NhanVien");
+            int maxId = (res == DBNull.Value || res == null) ? 0 : Convert.ToInt32(res);
+            string newMaNV = $"NV{(maxId + 1):D3}"; // Format thành NV001, NV002...
+
+            // 2. Câu lệnh INSERT
             string sql = @"INSERT INTO NhanVien (MaNV, TenNV, Username, Password, Role, SoDienThoai, CaLamViec, TrangThai) 
-                           VALUES (@MaNV, @TenNV, @User, @Pass, @Role, @SDT, @Ca, @TrangThai)";
-            return DataProvider.Instance.ExecuteNonQuery(sql, CreateParameters(nv).ToArray()) > 0;
+                   VALUES (@MaNV, @TenNV, @User, @Pass, @Role, @SDT, @Ca, @TrangThai)";
+
+            // 3. Tạo tham số và gán mã NV tự sinh vào
+            var p = CreateParameters(nv);
+
+            // Tìm và cập nhật lại tham số @MaNV trong danh sách (hoặc add mới nếu hàm CreateParameters chưa add)
+            var maNVParam = p.Find(x => x.ParameterName == "@MaNV");
+            if (maNVParam != null)
+            {
+                maNVParam.Value = newMaNV;
+            }
+            else
+            {
+                p.Add(new SqlParameter("@MaNV", newMaNV));
+            }
+
+            return DataProvider.Instance.ExecuteNonQuery(sql, p.ToArray()) > 0;
         }
 
         // 3. CẬP NHẬT NHÂN VIÊN (Đã bỏ MaNV khỏi lệnh Update)
@@ -50,13 +71,6 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
             return DataProvider.Instance.ExecuteNonQuery(sql, p.ToArray()) > 0;
         }
 
-        // 4. KIỂM TRA TRÙNG MÃ (Chỉ dùng khi Thêm mới)
-        public bool IsMaNVExist(string maNV)
-        {
-            string sql = "SELECT COUNT(*) FROM NhanVien WHERE MaNV = @Ma";
-            object res = DataProvider.Instance.ExecuteScalar(sql, new SqlParameter[] { new SqlParameter("@Ma", maNV) });
-            return Convert.ToInt32(res) > 0;
-        }
 
         // 5. KIỂM TRA TRÙNG TÀI KHOẢN (Dùng cho cả Thêm và Sửa)
         public bool IsUsernameExist(string user, int excludeID = 0)
@@ -68,13 +82,6 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
             return Convert.ToInt32(res) > 0;
         }
 
-        // 6. TỰ ĐỘNG TẠO MÃ (Dùng MAX ID thay vì COUNT)
-        public string GenerateMaNV()
-        {
-            object res = DataProvider.Instance.ExecuteScalar("SELECT MAX(NhanVienID) FROM NhanVien");
-            int maxId = res == DBNull.Value ? 0 : Convert.ToInt32(res);
-            return $"NV{(maxId + 1):D3}";
-        }
 
         // 7. BẬT TẮT TRẠNG THÁI
         public bool ToggleTrangThai(int id)

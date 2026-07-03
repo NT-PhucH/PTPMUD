@@ -4,22 +4,18 @@ using System.Drawing;
 using System.Data;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using QLST.BLL__Bat_ngoai_le_.QuanLyBLL;
+using QLST.DTO__Type_OTP_.QuanLyDTO;
 
 namespace QLST
 {
-
     public partial class ucThongKe : UserControl
     {
-        // Thêm class tạm này ở trong hoặc ngoài class ucThongKe đều được
-        public class TopProductItem
-        {
-            public string Ten { get; set; }
-            public string SoLuong { get; set; }
-            public string DoanhThu { get; set; }
-        }
+        // 1. Khai báo tầng BLL để lấy dữ liệu thật
+        private readonly ThongKe_BLL _bll = new ThongKe_BLL();
 
-        // Biến toàn cục lưu toàn bộ dữ liệu để xuất file Word
-        private List<TopProductItem> _fullTopProducts = new List<TopProductItem>();
+        // 2. Đổi List tạm thành List DTO thật để lưu dữ liệu xuất file Word
+        private List<ThongKeSanPham_DTO> _fullTopProducts = new List<ThongKeSanPham_DTO>();
         private bool _isFirstLoad = true;
 
         public ucThongKe()
@@ -38,10 +34,8 @@ namespace QLST
         private void UcThongKe_Load(object sender, EventArgs e)
         {
             KhoiTaoBieuDoMacDinh();
-            SetupBieuDoTopSanPham(); // Cấu hình cột và viền cho bảng Top SP
-            NapDuLieuDashboard();
-            cboThoiGian.SelectedIndex = 0; // Mặc định chọn "Tùy chọn"
-
+            SetupBieuDoTopSanPham();
+            cboThoiGian.SelectedIndex = 0; // Mặc định chọn "Tùy chọn" -> Sẽ tự trigger NapDuLieuDashboard() qua sự kiện cboThoiGian_SelectedIndexChanged
         }
 
         private void UcThongKe_VisibleChanged(object sender, EventArgs e)
@@ -50,6 +44,7 @@ namespace QLST
             {
                 NapDuLieuDashboard();
             }
+            _isFirstLoad = false;
         }
 
         private void KhoiTaoBieuDoMacDinh()
@@ -67,22 +62,15 @@ namespace QLST
                 MarkerSize = 8
             };
 
-            Series seriesLN = new Series("Lợi nhuận gộp")
-            {
-                ChartType = SeriesChartType.Spline,
-                BorderWidth = 3,
-                Color = Color.FromArgb(243, 156, 18),
-                MarkerStyle = MarkerStyle.Circle,
-                MarkerSize = 8
-            };
-
+            // Đã ẩn series Lợi nhuận trên biểu đồ vì cần query phức tạp theo ngày, 
+            // hiện tại BLL chỉ hỗ trợ tính Doanh Thu theo ngày trên chart.
             chartDoanhThu.Series.Add(seriesDT);
-            chartDoanhThu.Series.Add(seriesLN);
         }
 
         private void SetupBieuDoTopSanPham()
         {
             // Thiết lập các cột cho DataGridView Top Sản Phẩm
+            dgvTopProduct.Columns.Clear();
             dgvTopProduct.Columns.Add("colSTT", "STT");
             dgvTopProduct.Columns["colSTT"].Width = 40;
             dgvTopProduct.Columns["colSTT"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -101,91 +89,97 @@ namespace QLST
             dgvTopProduct.Columns["colDoanhThu"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             dgvTopProduct.Columns["colDoanhThu"].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
 
-            // Xóa toàn bộ viền lưới để giao diện phẳng và đẹp mắt
             dgvTopProduct.BorderStyle = BorderStyle.None;
             dgvTopProduct.CellBorderStyle = DataGridViewCellBorderStyle.None;
             dgvTopProduct.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dgvTopProduct.BackgroundColor = Color.White;
-
-            // Custom màu sắc Header và các dòng được chọn
             dgvTopProduct.EnableHeadersVisualStyles = false;
             dgvTopProduct.ColumnHeadersDefaultCellStyle.BackColor = Color.White;
             dgvTopProduct.ColumnHeadersDefaultCellStyle.ForeColor = Color.Gray;
             dgvTopProduct.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 9f, FontStyle.Bold);
-
-            // Xóa màu bôi xanh rực rỡ, đổi sang nền xám nhạt nhẹ nhàng khi click
             dgvTopProduct.DefaultCellStyle.SelectionBackColor = Color.FromArgb(245, 247, 250);
             dgvTopProduct.DefaultCellStyle.SelectionForeColor = Color.Black;
 
             foreach (DataGridViewColumn col in dgvTopProduct.Columns)
-            {
                 col.SortMode = DataGridViewColumnSortMode.NotSortable;
-            }
 
-            // Hủy bỏ trạng thái bôi xanh ngay khi người dùng click vào bất kỳ dòng/ô nào
             dgvTopProduct.SelectionChanged += (s, e) => dgvTopProduct.ClearSelection();
         }
 
         private void NapDuLieuDashboard()
         {
-            lblDoanhThu.Text = "345,600,000 VNĐ";
-            lblLoiNhuan.Text = "120,500,000 VNĐ";
-            lblTongDonHang.Text = "1,250 hóa đơn";
-            lblGiaTriTrungBinh.Text = "276,480 VNĐ";
+            DateTime from = dtTuNgay.Value.Date;
+            DateTime to = dtDenNgay.Value.Date;
 
+            // 1. NẠP DỮ LIỆU TỪ BLL
+            var dsDoanhThu = _bll.GetDoanhThuTheoNgay(from, to);
+            // Lấy top 20 sản phẩm để hiển thị lưới, lấy 10000 để tính tổng lợi nhuận toàn cục
+            _fullTopProducts = _bll.GetTopSanPham(from, to, 20);
+            var dsAllSpForProfit = _bll.GetTopSanPham(from, to, 10000);
+
+            // 2. TÍNH TOÁN CÁC THẺ KPI TRÊN CÙNG
+            long tongDoanhThu = 0;
+            int tongDonHang = 0;
+            long tongLoiNhuan = 0;
+
+            foreach (var item in dsDoanhThu)
+            {
+                tongDoanhThu += item.DoanhThu;
+                tongDonHang += item.SoHoaDon;
+            }
+
+            foreach (var sp in dsAllSpForProfit)
+            {
+                tongLoiNhuan += sp.LoiNhuan;
+            }
+
+            long tbDonHang = tongDonHang > 0 ? tongDoanhThu / tongDonHang : 0;
+
+            lblDoanhThu.Text = $"{tongDoanhThu:N0} VNĐ";
+            lblLoiNhuan.Text = $"{tongLoiNhuan:N0} VNĐ";
+            lblTongDonHang.Text = $"{tongDonHang:N0} Hóa đơn";
+            lblGiaTriTrungBinh.Text = $"{tbDonHang:N0} VNĐ";
+
+            // 3. VẼ LẠI BIỂU ĐỒ CHART THỰC TẾ
             chartDoanhThu.Series["Doanh thu"].Points.Clear();
-            chartDoanhThu.Series["Lợi nhuận gộp"].Points.Clear();
-
-            string[] days = { "T2", "T3", "T4", "T5", "T6", "T7", "CN" };
-            decimal[] dtValues = { 45M, 55M, 48M, 65M, 70M, 85M, 92M };
-            decimal[] lnValues = { 15M, 18M, 16M, 22M, 24M, 30M, 33M };
-
-            for (int i = 0; i < days.Length; i++)
+            foreach (var item in dsDoanhThu)
             {
-                chartDoanhThu.Series["Doanh thu"].Points.AddXY(days[i], dtValues[i]);
-                chartDoanhThu.Series["Lợi nhuận gộp"].Points.AddXY(days[i], lnValues[i]);
+                // Ngay của DTO hiện trả về dạng "dd/MM"
+                chartDoanhThu.Series["Doanh thu"].Points.AddXY(item.Ngay, item.DoanhThu);
             }
 
-            // Nạp dữ liệu giả vào bảng Top Sản Phẩm Bán Chạy
-            // 1. Tạo danh sách dữ liệu ĐẦY ĐỦ (Giả lập lấy từ Database)
-            _fullTopProducts.Clear();
-            for (int i = 1; i <= 20; i++) // Giả sử có 20 sản phẩm
-            {
-                _fullTopProducts.Add(new TopProductItem { Ten = "Sản phẩm thứ " + i, SoLuong = (300 - i * 5).ToString(), DoanhThu = (15000000 - i * 100000).ToString("N0") + "đ" });
-            }
-
-            // 2. Logic giới hạn hiển thị trên DataGridView
+            // 4. ĐỔ DỮ LIỆU THỰC VÀO GRID TOP SẢN PHẨM (Giữ nguyên logic giới hạn 12 dòng hiển thị đẹp)
             dgvTopProduct.Rows.Clear();
-            int limit = 12; // Tổng số dòng tối đa cho phép hiển thị để không bị tràn khung
+            int limit = 12;
 
             if (_fullTopProducts.Count > limit)
             {
-                // Lấy 9 sản phẩm đầu tiên
+                // Lấy 9 sản phẩm đầu
                 for (int i = 0; i < 9; i++)
                 {
-                    var item = _fullTopProducts[i];
-                    dgvTopProduct.Rows.Add((i + 1).ToString(), item.Ten, item.SoLuong, item.DoanhThu);
+                    var sp = _fullTopProducts[i];
+                    dgvTopProduct.Rows.Add((i + 1).ToString(), sp.TenSP, sp.SoLuongBan.ToString("N0"), string.Format("{0:N0} đ", sp.DoanhThu));
                 }
 
-                // Dòng chứa dấu ba chấm (...)
+                // Dòng ba chấm
                 int idx = dgvTopProduct.Rows.Add("...", "...", "...", "...");
                 dgvTopProduct.Rows[idx].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 dgvTopProduct.Rows[idx].DefaultCellStyle.ForeColor = Color.Gray;
 
-                // Lấy 3 sản phẩm cuối cùng
+                // Lấy 3 sản phẩm cuối
                 for (int i = _fullTopProducts.Count - 3; i < _fullTopProducts.Count; i++)
                 {
-                    var item = _fullTopProducts[i];
-                    dgvTopProduct.Rows.Add((i + 1).ToString(), item.Ten, item.SoLuong, item.DoanhThu);
+                    var sp = _fullTopProducts[i];
+                    dgvTopProduct.Rows.Add((i + 1).ToString(), sp.TenSP, sp.SoLuongBan.ToString("N0"), string.Format("{0:N0} đ", sp.DoanhThu));
                 }
             }
             else
             {
-                // Nếu ít hơn giới hạn thì hiển thị bình thường
+                // Ít hơn limit thì hiển thị hết
                 for (int i = 0; i < _fullTopProducts.Count; i++)
                 {
-                    var item = _fullTopProducts[i];
-                    dgvTopProduct.Rows.Add((i + 1).ToString(), item.Ten, item.SoLuong, item.DoanhThu);
+                    var sp = _fullTopProducts[i];
+                    dgvTopProduct.Rows.Add((i + 1).ToString(), sp.TenSP, sp.SoLuongBan.ToString("N0"), string.Format("{0:N0} đ", sp.DoanhThu));
                 }
             }
         }
@@ -193,32 +187,37 @@ namespace QLST
         private void cboThoiGian_SelectedIndexChanged(object sender, EventArgs e)
         {
             DateTime today = DateTime.Today;
-
             switch (cboThoiGian.SelectedIndex)
             {
                 case 0:
+                    break; // Tùy chỉnh (Không tự đổi ngày)
+                case 1: // Tuần này
                     int offset = today.DayOfWeek - DayOfWeek.Monday;
                     if (offset < 0) offset += 7;
                     dtTuNgay.Value = today.AddDays(-offset);
                     dtDenNgay.Value = today;
                     break;
-                case 1:
+                case 2: // Tháng này
                     dtTuNgay.Value = new DateTime(today.Year, today.Month, 1);
                     dtDenNgay.Value = today;
                     break;
-                case 2:
+                case 3: // Năm nay
                     dtTuNgay.Value = new DateTime(today.Year, 1, 1);
                     dtDenNgay.Value = today;
                     break;
-                case 3:
-                    break;
             }
+            // Gọi lọc dữ liệu luôn khi chọn Combo
+            NapDuLieuDashboard();
         }
 
         private void btnLoc_Click(object sender, EventArgs e)
         {
             NapDuLieuDashboard();
         }
+
+        // =========================================================================
+        // PHẦN XUẤT FILE GIỮ NGUYÊN (Chỉ map lại Data thật cho Word)
+        // =========================================================================
 
         private void btnXuatData_Click(object sender, EventArgs e)
         {
@@ -250,29 +249,6 @@ namespace QLST
             }
         }
 
-        private void Panel_Resize(object sender, EventArgs e)
-        {
-            Panel panel = (Panel)sender;
-            int radius = 12;
-            System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
-            path.AddArc(0, 0, radius, radius, 180, 90);
-            path.AddArc(panel.Width - radius - 1, 0, radius, radius, 270, 90);
-            path.AddArc(panel.Width - radius - 1, panel.Height - radius - 1, radius, radius, 0, 90);
-            path.AddArc(0, panel.Height - radius - 1, radius, radius, 90, 90);
-            path.CloseAllFigures();
-            panel.Region = new Region(path);
-        }
-
-        // Bỏ bôi xanh khi nhấp chuột ra ngoài bảng
-        private void dgvTopProduct_MouseDown(object sender, MouseEventArgs e)
-        {
-            DataGridView dgv = (DataGridView)sender;
-            DataGridView.HitTestInfo hit = dgv.HitTest(e.X, e.Y);
-            if (hit.Type == DataGridViewHitTestType.None) dgv.ClearSelection();
-        }
-
-        
-
         private void btnCTTopSp_Click(object sender, EventArgs e)
         {
             if (_fullTopProducts == null || _fullTopProducts.Count == 0)
@@ -291,28 +267,25 @@ namespace QLST
                 {
                     try
                     {
-                        // Dùng StringBuilder tạo cấu trúc bảng để Word tự convert
                         System.Text.StringBuilder html = new System.Text.StringBuilder();
                         html.Append("<html><head><meta charset='utf-8'></head><body>");
                         html.Append("<h2 style='text-align:center; font-family: Arial;'>CHI TIẾT TOP SẢN PHẨM BÁN CHẠY</h2>");
                         html.Append("<p style='text-align:center; font-family: Arial;'>Ngày xuất: " + DateTime.Now.ToString("dd/MM/yyyy HH:mm") + "</p>");
 
                         html.Append("<table border='1' style='width:100%; border-collapse:collapse; font-family: Arial;'>");
-                        html.Append("<tr style='background-color:#f2f2f2;'><th>STT</th><th>Tên Sản Phẩm</th><th>Số Lượng Bán</th><th>Doanh Thu</th></tr>");
+                        html.Append("<tr style='background-color:#f2f2f2;'><th>STT</th><th>Tên Sản Phẩm</th><th>Số Lượng Bán</th><th>Doanh Thu</th><th>Lợi Nhuận</th></tr>");
 
-                        // Lặp qua toàn bộ danh sách (chứ không phải danh sách đã bị cắt trên Grid)
                         int stt = 1;
-                        foreach (var item in _fullTopProducts)
+                        foreach (var item in _fullTopProducts) // Dùng list thật
                         {
                             html.Append($"<tr><td style='text-align:center;'>{stt++}</td>");
-                            html.Append($"<td>{item.Ten}</td>");
-                            html.Append($"<td style='text-align:center;'>{item.SoLuong}</td>");
-                            html.Append($"<td style='text-align:right;'>{item.DoanhThu}</td></tr>");
+                            html.Append($"<td>{item.TenSP}</td>");
+                            html.Append($"<td style='text-align:center;'>{item.SoLuongBan:N0}</td>");
+                            html.Append($"<td style='text-align:right;'>{item.DoanhThu:N0} đ</td>");
+                            html.Append($"<td style='text-align:right;'>{item.LoiNhuan:N0} đ</td></tr>");
                         }
 
                         html.Append("</table></body></html>");
-
-                        // Ghi ra file
                         System.IO.File.WriteAllText(sfd.FileName, html.ToString());
                         MessageBox.Show("Đã xuất file Word thành công!\n" + sfd.FileName, "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -324,6 +297,24 @@ namespace QLST
             }
         }
 
-        
+        private void Panel_Resize(object sender, EventArgs e)
+        {
+            Panel panel = (Panel)sender;
+            int radius = 12;
+            System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
+            path.AddArc(0, 0, radius, radius, 180, 90);
+            path.AddArc(panel.Width - radius - 1, 0, radius, radius, 270, 90);
+            path.AddArc(panel.Width - radius - 1, panel.Height - radius - 1, radius, radius, 0, 90);
+            path.AddArc(0, panel.Height - radius - 1, radius, radius, 90, 90);
+            path.CloseAllFigures();
+            panel.Region = new Region(path);
+        }
+
+        private void dgvTopProduct_MouseDown(object sender, MouseEventArgs e)
+        {
+            DataGridView dgv = (DataGridView)sender;
+            DataGridView.HitTestInfo hit = dgv.HitTest(e.X, e.Y);
+            if (hit.Type == DataGridViewHitTestType.None) dgv.ClearSelection();
+        }
     }
 }

@@ -31,6 +31,13 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI.QL_User
 
         private void CustomInitUI()
         {
+            // --- THAY ĐỔI: Tắt nút tạo mã và khóa ô nhập Mã NV ---
+            btnAuto.Visible = false;      // Ẩn nút "Tạo Mã" vì mã sinh tự động khi bấm Lưu
+            txtMaNV.ReadOnly = true;      // Không cho người dùng gõ tay vào ô Mã NV
+            txtMaNV.BackColor = Color.WhiteSmoke;
+            txtMaNV.Text = "(Tự động sinh)"; // Gợi ý mặc định
+            // -----------------------------------------------------
+
             // Cấu hình các cột cơ bản
             dgvNV.Columns.Add("Ma", "Mã NV");
             dgvNV.Columns.Add("Ten", "Họ Tên");
@@ -90,7 +97,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI.QL_User
 
         private void btnAuto_Click(object sender, EventArgs e)
         {
-            txtMaNV.Text = _bll.SinhMaTuDong();
+            // Đã ẩn nút này đi rồi nên để trống hàm, hoặc có thể xóa event này trong Designer nếu muốn triệt để.
         }
 
         private void chkShowPass_CheckedChanged(object sender, EventArgs e)
@@ -116,14 +123,14 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI.QL_User
             var nv = new QLNV_DTO
             {
                 NhanVienID = _selectedID,
-                MaNV = txtMaNV.Text.Trim(),
+                MaNV = txtMaNV.Text.Trim(), // Khi thêm mới, dù biến này chứa "(Tự động sinh)" thì tầng DAL cũng sẽ đè mã mới lên.
                 TenNV = txtTenNV.Text.Trim(),
                 Username = txtUser.Text.Trim(),
                 Password = txtPass.Text,
                 Role = cboRole.SelectedIndex + 1,
                 SoDienThoai = txtSDT.Text.Trim(),
                 CaLamViec = cboCaLam.Text,
-                TrangThai = trangThaiLuu // Thay thế chkTrangThai.Checked cũ
+                TrangThai = trangThaiLuu
             };
 
             var (ok, msg) = _bll.Save(nv, _selectedID == 0);
@@ -139,7 +146,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI.QL_User
         private void btnClear_Click(object sender, EventArgs e)
         {
             _selectedID = 0;
-            txtMaNV.Clear();
+            txtMaNV.Text = "(Tự động sinh)"; // Đổi lại thành gợi ý
             txtTenNV.Clear();
             txtUser.Clear();
             txtPass.Clear();
@@ -176,7 +183,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI.QL_User
 
             // Nếu click vào các cột khác thì Map data lên Form để Sửa (như cũ)
             _selectedID = nv.NhanVienID;
-            txtMaNV.Text = nv.MaNV;
+            txtMaNV.Text = nv.MaNV; // Khi bấm vào Sửa, load Mã NV thật lên
             txtTenNV.Text = nv.TenNV;
             txtUser.Text = nv.Username;
             txtPass.Text = nv.Password;

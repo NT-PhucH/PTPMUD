@@ -54,17 +54,22 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
             return list;
         }
 
-        // ── THÊM (TỰ SINH MÃ BẰNG SQL) ───────────────────────────────────────
+        // ── THÊM (TỰ SINH MÃ BẰNG C#) ───────────────────────────────────────
         public bool Insert(NhaCungCap_DTO ncc)
         {
+            // 1. Lấy ID lớn nhất và tự sinh mã mới
+            object res = DataProvider.Instance.ExecuteScalar("SELECT MAX(NhaCungCapID) FROM NhaCungCap");
+            int maxId = (res == DBNull.Value || res == null) ? 0 : Convert.ToInt32(res);
+            string newMaNCC = $"NCC{(maxId + 1):D4}"; // Format thành NCC0001, NCC0002...
+
+            // 2. Câu lệnh INSERT đã được đơn giản hoá
             string sql = @"
-                DECLARE @NextID INT = ISNULL((SELECT MAX(NhaCungCapID) FROM NhaCungCap), 0) + 1;
-                DECLARE @NewMaNCC VARCHAR(20) = 'NCC' + RIGHT('0000' + CAST(@NextID AS VARCHAR(4)), 4);
-
                 INSERT INTO NhaCungCap (MaNCC, TenNCC, SoDienThoai, DiaChi)
-                VALUES (@NewMaNCC, @Ten, @SDT, @DC)";
+                VALUES (@MaNCC, @Ten, @SDT, @DC)";
 
-            int rows = DataProvider.Instance.ExecuteNonQuery(sql, new SqlParameter[] {
+                    // 3. Thực thi query
+                    int rows = DataProvider.Instance.ExecuteNonQuery(sql, new SqlParameter[] {
+                new SqlParameter("@MaNCC", newMaNCC),
                 new SqlParameter("@Ten", ncc.TenNCC),
                 new SqlParameter("@SDT", (object)ncc.SoDienThoai ?? DBNull.Value),
                 new SqlParameter("@DC",  (object)ncc.DiaChi      ?? DBNull.Value)

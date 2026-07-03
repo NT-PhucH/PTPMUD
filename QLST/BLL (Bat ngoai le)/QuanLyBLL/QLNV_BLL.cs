@@ -11,22 +11,18 @@ namespace QLST.BLL__Bat_ngoai_le_.QuanLyBLL
         public List<QLNV_DTO> Search(string keyword, int roleFilter, bool showInactive)
             => _dal.Search(keyword, roleFilter, showInactive);
 
-        public string SinhMaTuDong() => _dal.GenerateMaNV();
+        // ĐÃ XÓA hàm SinhMaTuDong() vì DAL tự động sinh mã khi Insert
 
         public (bool ok, string msg) Save(QLNV_DTO nv, bool isAdd)
         {
-            // 1. Kiểm tra rỗng
+            // 1. Kiểm tra rỗng (Không cần kiểm tra MaNV vì nó tự sinh)
             if (string.IsNullOrWhiteSpace(nv.TenNV) || string.IsNullOrWhiteSpace(nv.Username) || string.IsNullOrWhiteSpace(nv.Password))
                 return (false, "Vui lòng nhập đầy đủ: Tên, Username và Password!");
 
             if (nv.Role <= 0) return (false, "Vui lòng chọn Vai trò (Role) cho nhân viên!");
 
-            // 2. Phân tách báo lỗi trùng lặp rõ ràng
-            if (isAdd)
-            {
-                if (string.IsNullOrWhiteSpace(nv.MaNV)) return (false, "Không xác định được Mã nhân viên!");
-                if (_dal.IsMaNVExist(nv.MaNV)) return (false, "Mã Nhân viên này đã tồn tại!");
-            }
+            // 2. Kiểm tra trùng lặp
+            // ĐÃ XÓA kiểm tra IsMaNVExist vì mã sinh tự động theo ID tăng dần sẽ không bao giờ trùng.
 
             if (_dal.IsUsernameExist(nv.Username, isAdd ? 0 : nv.NhanVienID))
                 return (false, "Tên đăng nhập (Username) này đã có người sử dụng. Vui lòng chọn tên khác!");
