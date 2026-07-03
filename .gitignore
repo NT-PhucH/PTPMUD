@@ -1,7 +1,22 @@
+# === Thư mục Build của Project cụ thể ===
 QLST/bin/
 QLST/obj/
-.vs/
+
+# === Thư mục Build chung (Khuyên dùng) ===
+# Bắt toàn bộ bin/ và obj/ của mọi project trong Solution
+[Bb]in/
+[Oo]bj/
 [Dd]ebug/
 [Rr]elease/
+
+# === Thư mục và file tạm của Visual Studio ===
+.vs/
 *.user
 *.suo
+*.userosscache
+*.sln.docstates
+
+# === BỔ SUNG: Cấu hình cho NuGet Packages ===
+# Không push các file thư viện .dll nặng lên GitHub
+packages/
+*.nupkg
