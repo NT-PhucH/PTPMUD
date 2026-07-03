@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using QLST.DAL__Connection_Query_DB_;
+﻿using QLST.DAL__Connection_Query_DB_;
 using QLST.DTO__Type_OTP_;
+using QLST.DTO__Type_OTP_.QuanLyDTO;
+using System;
+using System.Collections.Generic;
 
 namespace QLST.BLL__Bat_ngoai_le_
 {
@@ -22,19 +23,43 @@ namespace QLST.BLL__Bat_ngoai_le_
             }
         }
 
-        public List<ThuNganSP_DTO> TimKiemSanPham(string keyword)
+
+        public List<LoaiSanPham_DTO> LayDanhSachLoaiSanPham()
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(keyword))
+                var list = dal.LayDanhSachLoaiSanPham();
+
+                // Chèn mục "Tất cả" với ID = 0 vào đầu danh sách
+                list.Insert(0, new LoaiSanPham_DTO
                 {
-                    return dal.LayDanhSachSanPham();
-                }
-                return dal.TimKiemSanPham(keyword.Trim());
+                    LoaiSanPhamID = 0,
+                    TenLoai = "--- Tất cả sản phẩm ---",
+                    TrangThai = true
+                });
+
+                return list;
             }
             catch (Exception)
             {
-                // Bắt lỗi ngầm để bảo vệ Form UI
+                return new List<LoaiSanPham_DTO>();
+            }
+        }
+
+        public List<ThuNganSP_DTO> TimKiemSanPhamKemLoai(string keyword, int loaiSanPhamID)
+        {
+            try
+            {
+                // Tối ưu hóa: Nếu không có từ khóa và đang chọn "Tất cả" (ID = 0)
+                if (string.IsNullOrWhiteSpace(keyword) && loaiSanPhamID <= 0)
+                {
+                    return dal.LayDanhSachSanPham();
+                }
+
+                return dal.TimKiemSanPhamKemLoai(keyword, loaiSanPhamID);
+            }
+            catch (Exception)
+            {
                 return new List<ThuNganSP_DTO>();
             }
         }

@@ -11,6 +11,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using QLST.DTO__Type_OTP_.QuanLyDTO; // Thêm DTO quản lý để lấy LoaiSanPham_DTO
 
 namespace QLST
 {
@@ -35,6 +36,8 @@ namespace QLST
         private ucThongBaoDonTam ucThongBao;
         private readonly List<HoaDonTam_DTO> danhSachHoaDonTam = new List<HoaDonTam_DTO>();
 
+        private bool isInitializingComboBox = true; // Cờ kiểm soát lỗi Load Form
+
         #endregion
 
         #region 2. KHỞI TẠO FORM & SỰ KIỆN HỆ THỐNG
@@ -50,16 +53,25 @@ namespace QLST
             this.flowLayoutPanel1.SizeChanged += flowLayoutPanel1_SizeChanged;
             this.SizeChanged += FormThuNgan_SizeChanged;
             this.Load += FormThuNgan_Load;
+
+            // Đăng ký sự kiện tìm kiếm & lọc
             this.txtTimKiem.TextChanged += txtTimKiem_TextChanged;
-            this.txtTimKiem.KeyDown += txtTimKiem_KeyDown;
+
+            if (this.cboLoaiSanPham != null)
+            {
+                this.cboLoaiSanPham.SelectedIndexChanged += cboLoaiSanPham_SelectedIndexChanged;
+            }
+
             chuyenTrang1.BamNutTrai += ChuyenTrang1_BamNutTrai;
             chuyenTrang1.BamNutPhai += ChuyenTrang1_BamNutPhai;
         }
 
         private void FormThuNgan_Load(object sender, EventArgs e)
         {
+            LoadDanhSachLoaiSanPham();
             LoadDuLieuBanDau();
             KhoiTaoGiaoDienThongBao();
+            KhoiTaoAutoComplete();
 
             đăngXuấtToolStripMenuItem.Click -= MenuDangXuat_Click;
             đăngXuấtToolStripMenuItem.Click += MenuDangXuat_Click;
@@ -71,6 +83,19 @@ namespace QLST
             {
                 HienThiDanhSachSanPham();
             }
+        }
+
+        private void LoadDanhSachLoaiSanPham()
+        {
+            if (this.cboLoaiSanPham == null) return;
+
+            isInitializingComboBox = true;
+            var danhSachLoai = _thuNganBLL.LayDanhSachLoaiSanPham();
+
+            cboLoaiSanPham.DataSource = danhSachLoai;
+            cboLoaiSanPham.DisplayMember = "TenLoai";
+            cboLoaiSanPham.ValueMember = "LoaiSanPhamID";
+            isInitializingComboBox = false;
         }
 
         #endregion
@@ -266,6 +291,10 @@ namespace QLST
                 foreach (Control ctrl in flowLayoutPanel1.Controls) { ctrl.Dispose(); }
                 flowLayoutPanel1.Controls.Clear();
                 TinhTongDonHang();
+
+                // Khôi phục bộ lọc về mặc định
+                txtTimKiem.Clear();
+                if (cboLoaiSanPham != null) cboLoaiSanPham.SelectedIndex = 0;
                 LoadDuLieuBanDau();
             }
         }
@@ -381,17 +410,22 @@ namespace QLST
             TinhTongDonHang();
         }
 
-        private void txtTimKiem_TextChanged(object sender, EventArgs e)
+        // --- XỬ LÝ LỌC SẢN PHẨM ---
+        private void ThucHienLocSanPham()
         {
             string keyword = txtTimKiem.Text.Trim();
-            if (string.IsNullOrEmpty(keyword))
+            int maLoai = 0;
+
+            // Xử lý giá trị từ combobox nếu combobox đã được khởi tạo
+            if (this.cboLoaiSanPham != null && this.cboLoaiSanPham.SelectedValue != null)
             {
-                LoadDuLieuBanDau();
-                return;
+                if (int.TryParse(this.cboLoaiSanPham.SelectedValue.ToString(), out int parsedID))
+                {
+                    maLoai = parsedID;
+                }
             }
 
-            ThuNgan_BLL thuNganBLL = new ThuNgan_BLL();
-            dsspToanBo = thuNganBLL.TimKiemSanPham(keyword);
+            dsspToanBo = _thuNganBLL.TimKiemSanPhamKemLoai(keyword, maLoai);
 
             totalPages = (int)Math.Ceiling((double)dsspToanBo.Count / pageSize);
             if (totalPages == 0) totalPages = 1;
@@ -399,25 +433,41 @@ namespace QLST
             HienThiDanhSachSanPham();
         }
 
-        private void txtTimKiem_KeyDown(object sender, KeyEventArgs e)
+        private void KhoiTaoAutoComplete()
         {
-            if (e.KeyCode == Keys.Enter)
-            {
-                string maCanTim = txtTimKiem.Text.Trim();
-                if (string.IsNullOrEmpty(maCanTim)) return;
+            // 1. Khởi tạo danh sách chứa các chuỗi gợi ý
+            AutoCompleteStringCollection dataGoiY = new AutoCompleteStringCollection();
 
-                var spQuetChuan = dsspToanBo.Find(x => x.MaVach == maCanTim);
-                if (spQuetChuan != null)
-                {
-                    ThemMonHangVaoDanhSach(spQuetChuan.MaVach, spQuetChuan.TenSP, spQuetChuan.GiaBanHienTai, spQuetChuan.SanPhamID, spQuetChuan.TonKhoTong);
-                    txtTimKiem.Clear();
-                }
-                else
-                {
-                    MessageBox.Show("Không tìm thấy mã vạch này!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+            // 2. Lấy toàn bộ danh sách sản phẩm
+            // Sử dụng keyword "" và maLoai 0 để BLL trả về TẤT CẢ sản phẩm
+            var danhSachTatCaSP = _thuNganBLL.TimKiemSanPhamKemLoai("", 0);
+
+            // 3. Đưa tên sản phẩm vào danh sách gợi ý
+            foreach (var sp in danhSachTatCaSP)
+            {
+                // Chỉ thêm tên sản phẩm để hiển thị gợi ý
+                dataGoiY.Add(sp.TenSP);
             }
+
+            // 4. Cấu hình cho txtTimKiem
+            // - Suggest: Xổ xuống danh sách giống Google
+            // - SuggestAppend: Vừa xổ xuống vừa tự điền phần còn lại của chữ vào TextBox
+            txtTimKiem.AutoCompleteMode = AutoCompleteMode.Suggest;
+            txtTimKiem.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            txtTimKiem.AutoCompleteCustomSource = dataGoiY;
         }
+
+        private void txtTimKiem_TextChanged(object sender, EventArgs e)
+        {
+            ThucHienLocSanPham();
+        }
+
+        private void cboLoaiSanPham_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (isInitializingComboBox) return;
+            ThucHienLocSanPham();
+        }
+
 
         #endregion
 
@@ -425,8 +475,7 @@ namespace QLST
 
         private void LoadDuLieuBanDau()
         {
-            ThuNgan_BLL spBLL = new ThuNgan_BLL();
-            dsspToanBo = spBLL.LayDanhSachTrungBay();
+            dsspToanBo = _thuNganBLL.LayDanhSachTrungBay();
 
             totalPages = (int)Math.Ceiling((double)dsspToanBo.Count / pageSize);
             if (totalPages == 0) totalPages = 1;
@@ -510,6 +559,8 @@ namespace QLST
                 }
             }
         }
+
+
 
         private void LoadProductImage(string imageNameFromDatabase, ProductCard productCard)
         {
