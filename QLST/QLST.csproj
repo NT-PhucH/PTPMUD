@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL %28Bat ngoai le%29\QuanLyBLL\ImageService.cs" />
     <Compile Include="BLL %28Bat ngoai le%29\QuanLyBLL\KhachHang_BLL.cs" />
     <Compile Include="BLL %28Bat ngoai le%29\QuanLyBLL\Kho_BLL.cs" />
     <Compile Include="BLL %28Bat ngoai le%29\QuanLyBLL\NhaCungCap_BLL.cs" />

@@ -1,10 +1,5 @@
-﻿// ===================================================
-// File: SanPham_BLL.cs
-// Đặt vào: BLL (Bat ngoai le) > QuanLyBLL
-// ===================================================
-using QLST.DAL__Connection_Query_DB_.QuanLyDAL;
+﻿using QLST.DAL__Connection_Query_DB_.QuanLyDAL;
 using QLST.DTO__Type_OTP_.QuanLyDTO;
-using System;
 using System.Collections.Generic;
 
 namespace QLST.BLL__Bat_ngoai_le_.QuanLyBLL
@@ -12,6 +7,7 @@ namespace QLST.BLL__Bat_ngoai_le_.QuanLyBLL
     public class SanPham_BLL
     {
         private readonly SanPham_DAL _dal = new SanPham_DAL();
+        private readonly ImageService _imageService = new ImageService();
 
         public List<SanPham_DTO> GetAll() => _dal.GetAll();
 
@@ -37,23 +33,17 @@ namespace QLST.BLL__Bat_ngoai_le_.QuanLyBLL
             if (sp.LoaiSanPhamID <= 0) return (false, "Vui lòng chọn loại sản phẩm!");
             if (_dal.IsMaVachExists(sp.MaVach)) return (false, "Mã vạch đã tồn tại!");
 
+            var processResult = _imageService.ProcessImage(sp.HinhAnh, sp.MaVach);
+            if (!string.IsNullOrEmpty(processResult.errorMessage))
+            {
+                return (false, processResult.errorMessage);
+            }
+            sp.HinhAnh = processResult.fileName;
+
             bool result = _dal.Insert(sp);
             return result ? (true, "Thêm sản phẩm thành công!") : (false, "Thêm thất bại, thử lại!");
         }
 
-        public (bool ok, string msg) SuaSanPham(SanPham_DTO sp)
-        {
-            if (sp.SanPhamID <= 0) return (false, "Không xác định được ID sản phẩm!");
-            if (string.IsNullOrWhiteSpace(sp.TenSP)) return (false, "Vui lòng nhập tên sản phẩm!");
-            if (sp.GiaBanHienTai <= 0) return (false, "Giá bán phải lớn hơn 0!");
-            if (sp.LoaiSanPhamID <= 0) return (false, "Vui lòng chọn loại sản phẩm!");
-
-
-            bool result = _dal.Update(sp);
-            return result ? (true, "Cập nhật thành công!") : (false, "Cập nhật thất bại, thử lại!");
-        }
-
-        // ── THAY ĐỔI TRẠNG THÁI (XÓA MỀM) ────────────────────────────────────
         public (bool ok, string msg) ThayDoiTrangThai(int sanPhamID)
         {
             if (sanPhamID <= 0) return (false, "Không xác định được ID sản phẩm!");
@@ -67,6 +57,34 @@ namespace QLST.BLL__Bat_ngoai_le_.QuanLyBLL
             if (string.IsNullOrWhiteSpace(tenLoai)) return (false, "Vui lòng nhập tên loại!");
             bool result = _dal.InsertLoai(tenLoai.Trim());
             return result ? (true, "Đã thêm loại!") : (false, "Thêm loại thất bại!");
+        }
+
+        public (bool ok, string msg) SuaSanPham(SanPham_DTO sp, string oldImageName = "")
+        {
+            if (sp.SanPhamID <= 0) return (false, "Không xác định được ID sản phẩm!");
+            if (string.IsNullOrWhiteSpace(sp.TenSP)) return (false, "Vui lòng nhập tên sản phẩm!");
+            if (sp.GiaBanHienTai <= 0) return (false, "Giá bán phải lớn hơn 0!");
+            if (sp.LoaiSanPhamID <= 0) return (false, "Vui lòng chọn loại sản phẩm!");
+
+            var processResult = _imageService.ProcessImage(sp.HinhAnh, sp.MaVach);
+            if (!string.IsNullOrEmpty(processResult.errorMessage))
+            {
+                return (false, processResult.errorMessage);
+            }
+            sp.HinhAnh = processResult.fileName;
+
+            bool result = _dal.Update(sp);
+
+            if (result)
+            {
+                if (!string.IsNullOrEmpty(oldImageName) && sp.HinhAnh != oldImageName)
+                {
+                    _imageService.DeleteOldImage(oldImageName);
+                }
+                return (true, "Cập nhật thành công!");
+            }
+
+            return (false, "Cập nhật thất bại, thử lại!");
         }
     }
 }
