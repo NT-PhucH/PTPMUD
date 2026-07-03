@@ -4,11 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace QLST.GUI__Giao_dien_.QuanLyGUI
 {
     public partial class ucNhapHang : UserControl
     {
+        // Giữ nguyên 100% kết nối DB lúc đầu của bạn
         private readonly Kho_BLL _bll = new Kho_BLL();
         private readonly SanPham_BLL _spBll = new SanPham_BLL();
         private readonly NhaCungCap_BLL _nccBll = new NhaCungCap_BLL();
@@ -18,7 +20,19 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
         {
             InitializeComponent();
             WireEvents();
-            LoadComboData();
+
+            // Đăng ký sự kiện Load thay vì gọi DB trực tiếp ở đây
+            this.Load += UcNhapHang_Load;
+        }
+
+        private void UcNhapHang_Load(object sender, EventArgs e)
+        {
+            // Safeguard: Chỉ kết nối DB khi ứng dụng thực sự chạy (Runtime)
+            // Ngăn Visual Studio tự động gọi DB khi đang xem tab [Design]
+            if (!this.DesignMode && LicenseManager.UsageMode == LicenseUsageMode.Runtime)
+            {
+                LoadComboData();
+            }
         }
 
         private void WireEvents()
