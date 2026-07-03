@@ -171,12 +171,6 @@
     <Compile Include="GUI %28Giao dien%29\QuanLyGUI\ucQLSP.Designer.cs">
       <DependentUpon>ucQLSP.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\ucQuanLyKhachHang.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\ucQuanLyKhachHang.Designer.cs">
-      <DependentUpon>ucQuanLyKhachHang.cs</DependentUpon>
-    </Compile>
     <Compile Include="GUI %28Giao dien%29\QuanLyGUI\ucSettings.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -192,11 +186,11 @@
     <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Kho\ucKho.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\User.cs">
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\ucQuanLyNhanVien.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\User.Designer.cs">
-      <DependentUpon>User.cs</DependentUpon>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\ucQuanLyNhanVien.Designer.cs">
+      <DependentUpon>ucQuanLyNhanVien.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI %28Giao dien%29\Login\FormLogin.cs">
       <SubType>Form</SubType>
@@ -209,6 +203,12 @@
     </Compile>
     <Compile Include="GUI %28Giao dien%29\QuanLyGUI\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\ucTichDiem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\ucTichDiem.Designer.cs">
+      <DependentUpon>ucTichDiem.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Ban Hang\ToggleButton.cs">
       <SubType>Component</SubType>
@@ -306,11 +306,14 @@
     <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\ucThongKe.resx">
       <DependentUpon>ucThongKe.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\ucTichDiem.resx">
+      <DependentUpon>ucTichDiem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI %28Giao dien%29\ThuNganGUI\Hoa Don\frmThanhToan.resx">
       <DependentUpon>frmThanhToan.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\User.resx">
-      <DependentUpon>User.cs</DependentUpon>
+    <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\ucQuanLyNhanVien.resx">
+      <DependentUpon>ucQuanLyNhanVien.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI %28Giao dien%29\Login\FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>

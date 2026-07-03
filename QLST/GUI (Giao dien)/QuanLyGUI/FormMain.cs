@@ -1,6 +1,5 @@
 ﻿using QLST.DTO__Type_OTP_;
 using QLST.GUI__Giao_dien_;
-using QLST.GUI__Giao_dien_.Home;
 using QLST.GUI__Giao_dien_.QuanLyGUI;
 using QLST.GUI__Giao_dien_.QuanLyGUI.QL_User;
 using System;
@@ -19,7 +18,7 @@ namespace QLST
     {
         // Tạo các biến vùng chứa để lưu trữ giao diện (Cache)
         private ucHome _ucHome;
-        private User _ucUser;
+        private ucQuanLyNhanVien _ucUser;
 
         // 1. Tạo biến để hứng dữ liệu người dùng đang đăng nhập
         private QLNV_DTO _nhanVienHienTai;
@@ -41,7 +40,7 @@ namespace QLST
         {
             // Khởi tạo sẵn các UserControl ngay khi load Form
             _ucHome = new ucHome { Dock = DockStyle.Fill };
-            _ucUser = new User { Dock = DockStyle.Fill };
+            _ucUser = new ucQuanLyNhanVien { Dock = DockStyle.Fill };
 
             // Tự động kích hoạt tab Home đầu tiên
             MenuButton_Click(btnHome, e);
@@ -145,15 +144,15 @@ namespace QLST
             if (clickedButton == btnHome) { panelContent.Controls.Add(_ucHome); }
             else if (clickedButton == btnUser)
             {
-                frmQuanLyNhanVien frmNV = new frmQuanLyNhanVien { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
-                panelContent.Controls.Add(frmNV);
-                frmNV.Show();
+                ucQuanLyNhanVien qlnv = new ucQuanLyNhanVien { Dock = DockStyle.Fill };
+                panelContent.Controls.Add(qlnv);
+                qlnv.Show();
             }
             else if (clickedButton == btnTichDiem)
             {
-                ucQuanLyKhachHang qlkh = new ucQuanLyKhachHang { Dock = DockStyle.Fill };
-                panelContent.Controls.Add(qlkh);
-                qlkh.Show();
+                ucTichDiem tichDiem = new ucTichDiem { Dock = DockStyle.Fill };
+                panelContent.Controls.Add(tichDiem);
+                tichDiem.Show();
             }
             else if (clickedButton == btnThongKe)
             {
