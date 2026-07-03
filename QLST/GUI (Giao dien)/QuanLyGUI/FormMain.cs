@@ -134,9 +134,11 @@ namespace QLST
             }
             else if (clickedButton == btnLSHD)
             {
-                frmQuanLyDonHang frmHD = new frmQuanLyDonHang { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
+                /*frmQuanLyDonHang frmHD = new frmQuanLyDonHang { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
                 panelContent.Controls.Add(frmHD);
-                frmHD.Show();
+                frmHD.Show();*/
+                ucLichSuDon lichSuDon = new ucLichSuDon { Dock = DockStyle.Fill };
+                panelContent.Controls.Add(lichSuDon);
             }
             else if (clickedButton == btnQLSP)
             {

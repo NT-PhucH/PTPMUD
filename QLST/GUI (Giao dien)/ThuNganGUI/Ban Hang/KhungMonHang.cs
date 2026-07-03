@@ -20,7 +20,18 @@ namespace QLST.GUI__Giao_dien_
         public event EventHandler DuLieuThayDoi;
 
         // Thêm 2 thuộc tính để FormThuNgan có thể lấy số liệu
-        public int SoLuong => int.TryParse(txtSoLuong.Text, out int sl) ? sl : 0;
+        public int SoLuong
+        {
+            get
+            {
+                return int.TryParse(txtSoLuong.Text, out int sl) ? sl : 0;
+            }
+            set
+            {
+                txtSoLuong.Text = value.ToString();
+                TinhThanhTien(); // Tính lại tiền ngay khi được gán số lượng mới
+            }
+        }
         public decimal ThanhTien => donGiaGoc * SoLuong;
 
         public KhungMonHang()

@@ -97,6 +97,7 @@
     <Compile Include="DTO %28Type OTP%29\QuanLyDTO\QLNV_DTO.cs" />
     <Compile Include="DTO %28Type OTP%29\QuanLyDTO\Setting_DTO.cs" />
     <Compile Include="DTO %28Type OTP%29\ThuNganDTO\HoaDonIn_DTO.cs" />
+    <Compile Include="DTO %28Type OTP%29\ThuNganDTO\HoaDonTam_DTO.cs" />
     <Compile Include="DTO %28Type OTP%29\ThuNganDTO\ThanhToan_DTO.cs" />
     <Compile Include="DTO %28Type OTP%29\ThuNganDTO\ThuNgan_DTO.cs" />
     <Compile Include="DTO %28Type OTP%29\ThuNganDTO\TrungBaySP_DTO.cs" />
@@ -138,6 +139,12 @@
     </Compile>
     <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Home\subpanelKho\ucNhapHang.Designer.cs">
       <DependentUpon>ucNhapHang.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Home\ucLichSuDon.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Home\ucLichSuDon.Designer.cs">
+      <DependentUpon>ucLichSuDon.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Home\ucQLSP.cs">
       <SubType>UserControl</SubType>
@@ -186,6 +193,12 @@
     </Compile>
     <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Ban Hang\ToggleButton.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Ban Hang\ucThongBaoDonTam.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Ban Hang\ucThongBaoDonTam.Designer.cs">
+      <DependentUpon>ucThongBaoDonTam.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Hoa Don\frmThanhToan.cs">
       <SubType>Form</SubType>
@@ -261,6 +274,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\Home\subpanelKho\ucNhapHang.resx">
       <DependentUpon>ucNhapHang.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\Home\ucLichSuDon.resx">
+      <DependentUpon>ucLichSuDon.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\Home\ucQLSP.resx">
       <DependentUpon>ucQLSP.cs</DependentUpon>

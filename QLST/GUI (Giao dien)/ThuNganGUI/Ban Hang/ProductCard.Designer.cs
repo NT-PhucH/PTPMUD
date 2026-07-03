@@ -75,7 +75,6 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.tlpSP_Click);
-            this.pictureBox1.DoubleClick += new System.EventHandler(this.tlpSP_DoubleClick);
             // 
             // tableLayoutPanel2
             // 
@@ -102,7 +101,6 @@
             this.lblProductName.Text = "label1";
             this.lblProductName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblProductName.Click += new System.EventHandler(this.tlpSP_Click);
-            this.lblProductName.DoubleClick += new System.EventHandler(this.tlpSP_DoubleClick);
             // 
             // lblProductPrice
             // 
@@ -116,7 +114,6 @@
             this.lblProductPrice.Text = "label2";
             this.lblProductPrice.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblProductPrice.Click += new System.EventHandler(this.tlpSP_Click);
-            this.lblProductPrice.DoubleClick += new System.EventHandler(this.tlpSP_DoubleClick);
             // 
             // ProductCard
             // 
@@ -128,7 +125,6 @@
             this.Padding = new System.Windows.Forms.Padding(2);
             this.Size = new System.Drawing.Size(200, 150);
             this.Click += new System.EventHandler(this.tlpSP_Click);
-            this.DoubleClick += new System.EventHandler(this.tlpSP_DoubleClick);
             this.tlpSP.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);

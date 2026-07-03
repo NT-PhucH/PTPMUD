@@ -1,8 +1,10 @@
 ﻿using QLST.BLL__Bat_ngoai_le_;
+using QLST.BLL__Bat_ngoai_le_.Core;
 using QLST.DTO__Type_OTP_;
 using QLST.DTO__Type_OTP_.ThuNganOTP;
 using QLST.GUI__Giao_dien_;
 using QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don;
+using QLST.GUI__Giao_dien_.ThuNganGUI.Ban_Hang;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -14,13 +16,15 @@ namespace QLST
 {
     public partial class FormThuNgan : Form
     {
+        private readonly ThuNgan_BLL _thuNganBLL = new ThuNgan_BLL();
+        private readonly Setting_BLL _settingBLL = new Setting_BLL();
+
         #region 1. HẰNG SỐ & BIẾN TOÀN CỤC
 
         private int currentPage = 1;
-        private readonly int pageSize = 18; // 3 cột x 6 hàng
+        private readonly int pageSize = 18;
         private int totalPages = 1;
 
-        // Đã thay thế sang DTO chuẩn mới
         private List<ThuNganSP_DTO> dsspToanBo = new List<ThuNganSP_DTO>();
 
         private readonly int SO_COT = 3;
@@ -28,16 +32,8 @@ namespace QLST
         private readonly int KHOANG_CACH = 10;
         private Dictionary<string, int> dictTonKho = new Dictionary<string, int>();
 
-        private Panel pnlDropdownThongBao;
-        private FlowLayoutPanel flpDanhSachThongBao;
-        private readonly List<HoaDonTam> danhSachHoaDonTam = new List<HoaDonTam>();
-
-        public class HoaDonTam
-        {
-            public string MaHoaDon { get; set; }
-            public DateTime ThoiGianLuu { get; set; }
-            public List<Control> DanhSachKhungMonHang { get; set; } = new List<Control>();
-        }
+        private ucThongBaoDonTam ucThongBao;
+        private readonly List<HoaDonTam_DTO> danhSachHoaDonTam = new List<HoaDonTam_DTO>();
 
         #endregion
 
@@ -54,11 +50,8 @@ namespace QLST
             this.flowLayoutPanel1.SizeChanged += flowLayoutPanel1_SizeChanged;
             this.SizeChanged += FormThuNgan_SizeChanged;
             this.Load += FormThuNgan_Load;
-
-            // BỔ SUNG: Sự kiện lọc dữ liệu gợi ý realtime mỗi khi gõ chữ
             this.txtTimKiem.TextChanged += txtTimKiem_TextChanged;
             this.txtTimKiem.KeyDown += txtTimKiem_KeyDown;
-
             chuyenTrang1.BamNutTrai += ChuyenTrang1_BamNutTrai;
             chuyenTrang1.BamNutPhai += ChuyenTrang1_BamNutPhai;
         }
@@ -86,132 +79,30 @@ namespace QLST
 
         private void KhoiTaoGiaoDienThongBao()
         {
-            pnlDropdownThongBao = new Panel
+            ucThongBao = new ucThongBaoDonTam
             {
-                Size = new Size(350, 400),
-                BackColor = Color.FromArgb(40, 40, 40),
-                Visible = false,
-                BorderStyle = BorderStyle.FixedSingle
+                Visible = false
             };
-
-            Label lblHeader = new Label
-            {
-                Text = "Hóa đơn chờ thanh toán",
-                Font = new Font("Segoe UI", 12F, FontStyle.Bold),
-                ForeColor = Color.White,
-                Dock = DockStyle.Top,
-                Height = 40,
-                TextAlign = ContentAlignment.MiddleLeft,
-                Padding = new Padding(10, 0, 0, 0)
-            };
-            pnlDropdownThongBao.Controls.Add(lblHeader);
-
-            flpDanhSachThongBao = new FlowLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                AutoScroll = true,
-                FlowDirection = FlowDirection.TopDown,
-                WrapContents = false,
-                BackColor = Color.FromArgb(40, 40, 40)
-            };
-            pnlDropdownThongBao.Controls.Add(flpDanhSachThongBao);
-            flpDanhSachThongBao.BringToFront();
-
-            this.Controls.Add(pnlDropdownThongBao);
-            pnlDropdownThongBao.BringToFront();
-
+            ucThongBao.OnKhoiPhucHoaDon += UcThongBao_OnKhoiPhucHoaDon;
+            this.Controls.Add(ucThongBao);
+            ucThongBao.BringToFront();
             pictureBox3.Cursor = Cursors.Hand;
-        }
-
-        private void CapNhatGiaoDienThongBao()
-        {
-            flpDanhSachThongBao.SuspendLayout();
-            flpDanhSachThongBao.Controls.Clear();
-
-            if (danhSachHoaDonTam.Count == 0)
-            {
-                Label lblEmpty = new Label
-                {
-                    Text = "Không có đơn hàng chờ.",
-                    ForeColor = Color.LightGray,
-                    AutoSize = true,
-                    Margin = new Padding(10)
-                };
-                flpDanhSachThongBao.Controls.Add(lblEmpty);
-                flpDanhSachThongBao.ResumeLayout();
-                return;
-            }
-
-            foreach (var hd in danhSachHoaDonTam.OrderByDescending(x => x.ThoiGianLuu))
-            {
-                Panel pnlItem = new Panel
-                {
-                    Width = flpDanhSachThongBao.Width - 25,
-                    Height = 70,
-                    Margin = new Padding(5),
-                    Cursor = Cursors.Hand,
-                    Tag = hd
-                };
-
-                PictureBox picIcon = new PictureBox
-                {
-                    Image = global::QLST.Properties.Resources.shopping_cart__1_,
-                    SizeMode = PictureBoxSizeMode.Zoom,
-                    Size = new Size(40, 40),
-                    Location = new Point(10, 15)
-                };
-
-                Label lblTitle = new Label
-                {
-                    Text = $"Đơn hàng tạm: {hd.MaHoaDon}",
-                    Font = new Font("Segoe UI", 10F, FontStyle.Bold),
-                    ForeColor = Color.White,
-                    Location = new Point(60, 10),
-                    AutoSize = true
-                };
-
-                Label lblTime = new Label
-                {
-                    Text = $"Đã lưu lúc {hd.ThoiGianLuu:HH:mm:ss} - {hd.DanhSachKhungMonHang.Count} SP",
-                    Font = new Font("Segoe UI", 8.5F),
-                    ForeColor = Color.Gray,
-                    Location = new Point(60, 35),
-                    AutoSize = true
-                };
-
-                pnlItem.Controls.Add(picIcon);
-                pnlItem.Controls.Add(lblTitle);
-                pnlItem.Controls.Add(lblTime);
-
-                pnlItem.MouseEnter += (s, e) => pnlItem.BackColor = Color.FromArgb(60, 60, 60);
-                pnlItem.MouseLeave += (s, e) => pnlItem.BackColor = Color.Transparent;
-
-                pnlItem.Click += (s, e) => KhoiPhucHoaDon(hd);
-                foreach (Control c in pnlItem.Controls)
-                {
-                    c.Click += (s, e) => KhoiPhucHoaDon(hd);
-                }
-
-                flpDanhSachThongBao.Controls.Add(pnlItem);
-            }
-
-            flpDanhSachThongBao.ResumeLayout();
         }
 
         private void PictureBox3_Click(object sender, EventArgs e)
         {
-            if (!pnlDropdownThongBao.Visible)
+            if (!ucThongBao.Visible)
             {
                 Point locationOnForm = pictureBox3.FindForm().PointToClient(pictureBox3.Parent.PointToScreen(pictureBox3.Location));
-                pnlDropdownThongBao.Location = new Point(locationOnForm.X - pnlDropdownThongBao.Width + pictureBox3.Width, locationOnForm.Y + pictureBox3.Height + 5);
+                ucThongBao.Location = new Point(locationOnForm.X - ucThongBao.Width + pictureBox3.Width, locationOnForm.Y + pictureBox3.Height + 5);
 
-                CapNhatGiaoDienThongBao();
-                pnlDropdownThongBao.Visible = true;
-                pnlDropdownThongBao.BringToFront();
+                ucThongBao.CapNhatGiaoDien(danhSachHoaDonTam);
+                ucThongBao.Visible = true;
+                ucThongBao.BringToFront();
             }
             else
             {
-                pnlDropdownThongBao.Visible = false;
+                ucThongBao.Visible = false;
             }
         }
 
@@ -223,7 +114,7 @@ namespace QLST
                 return;
             }
 
-            HoaDonTam hd = new HoaDonTam
+            HoaDonTam_DTO hd = new HoaDonTam_DTO
             {
                 MaHoaDon = "HD_" + DateTime.Now.ToString("HHmmss"),
                 ThoiGianLuu = DateTime.Now
@@ -231,16 +122,34 @@ namespace QLST
 
             foreach (Control ctrl in flowLayoutPanel1.Controls)
             {
-                hd.DanhSachKhungMonHang.Add(ctrl);
+                if (ctrl is KhungMonHang card)
+                {
+                    hd.DanhSachChiTiet.Add(new ChiTietHoaDonIn_DTO
+                    {
+                        MaVach = card.MaSP,
+                        TenSP = card.TenSP,
+                        SoLuong = card.SoLuong,
+                        SanPhamID = card.SanPhamID,
+                        DonGia = (long)(card.ThanhTien / card.SoLuong),
+                        ThanhTien = (long)card.ThanhTien
+                    });
+                }
             }
 
+            foreach (Control ctrl in flowLayoutPanel1.Controls) { ctrl.Dispose(); }
             flowLayoutPanel1.Controls.Clear();
-            danhSachHoaDonTam.Add(hd);
 
+            danhSachHoaDonTam.Add(hd);
             MessageBox.Show($"Đã lưu tạm đơn hàng: {hd.MaHoaDon}", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            TinhTongDonHang();
         }
 
-        private void KhoiPhucHoaDon(HoaDonTam hd)
+        private void UcThongBao_OnKhoiPhucHoaDon(object sender, HoaDonTam_DTO hd)
+        {
+            KhoiPhucHoaDon(hd);
+        }
+
+        private void KhoiPhucHoaDon(HoaDonTam_DTO hd)
         {
             if (flowLayoutPanel1.Controls.Count > 0)
             {
@@ -253,17 +162,37 @@ namespace QLST
                 }
                 else
                 {
+                    foreach (Control ctrl in flowLayoutPanel1.Controls) { ctrl.Dispose(); }
                     flowLayoutPanel1.Controls.Clear();
                 }
             }
 
-            foreach (Control ctrl in hd.DanhSachKhungMonHang)
+            foreach (var item in hd.DanhSachChiTiet)
             {
-                flowLayoutPanel1.Controls.Add(ctrl);
+                KhungMonHang cardMoi = new KhungMonHang();
+                cardMoi.DuLieuThayDoi += KhungMonHang_DuLieuThayDoi;
+                cardMoi.CapNhatThongTin(item.MaVach, item.TenSP, item.DonGia);
+
+                cardMoi.SanPhamID = item.SanPhamID;
+                cardMoi.SoLuong = item.SoLuong;
+
+                cardMoi.Width = flowLayoutPanel1.ClientSize.Width - cardMoi.Margin.Left - cardMoi.Margin.Right - 5;
+                flowLayoutPanel1.Controls.Add(cardMoi);
+                flowLayoutPanel1.Controls.SetChildIndex(cardMoi, 0);
+            }
+
+            int sttMoi = flowLayoutPanel1.Controls.Count;
+            foreach (Control ctrl in flowLayoutPanel1.Controls)
+            {
+                if (ctrl is KhungMonHang c)
+                {
+                    c.GanSTT(sttMoi);
+                    sttMoi--;
+                }
             }
 
             danhSachHoaDonTam.Remove(hd);
-            pnlDropdownThongBao.Visible = false;
+            ucThongBao.Visible = false;
             TinhTongDonHang();
         }
 
@@ -275,7 +204,6 @@ namespace QLST
                 return;
             }
 
-            // --- CHỐT CHẶN BẮT LỖI TRƯỚC KHI MỞ FORM THANH TOÁN ---
             foreach (Control ctrl in flowLayoutPanel1.Controls)
             {
                 if (ctrl is KhungMonHang card)
@@ -283,19 +211,26 @@ namespace QLST
                     if (card.SoLuong <= 0)
                     {
                         MessageBox.Show($"Sản phẩm '{card.TenSP}' đang có số lượng không hợp lệ ({card.SoLuong}).\nVui lòng nhập số lớn hơn 0!", "Lỗi số lượng", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return; // Khóa luồng, cấm mở giao diện thanh toán
+                        return;
                     }
 
                     if (dictTonKho.ContainsKey(card.MaSP) && card.SoLuong > dictTonKho[card.MaSP])
                     {
                         MessageBox.Show($"Không thể thanh toán!\nSản phẩm '{card.TenSP}' vượt quá tồn kho.\n(Tồn thực tế: {dictTonKho[card.MaSP]} - Số lượng đang nhập: {card.SoLuong}).", "Thiếu hàng", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return; // Khóa luồng
+                        return;
                     }
                 }
             }
 
             var danhSachSP = new List<ChiTietHoaDonIn_DTO>();
             long tongTienChua = 0;
+            decimal phanTramVAT = 0;
+
+            var setting = _settingBLL.GetCauHinh();
+            if (setting != null)
+            {
+                phanTramVAT = (decimal)setting.VAT / 100m;
+            }
 
             foreach (Control ctrl in flowLayoutPanel1.Controls)
             {
@@ -316,6 +251,8 @@ namespace QLST
                 }
             }
 
+            long tongTienSauVAT = (long)(tongTienChua + (tongTienChua * phanTramVAT));
+
             var formThanhToan = new frmThanhToan(danhSachSP, tongTienChua);
             formThanhToan.StartPosition = FormStartPosition.CenterParent;
             DialogResult ketQua = formThanhToan.ShowDialog();
@@ -326,6 +263,7 @@ namespace QLST
             }
             else if (ketQua == DialogResult.OK)
             {
+                foreach (Control ctrl in flowLayoutPanel1.Controls) { ctrl.Dispose(); }
                 flowLayoutPanel1.Controls.Clear();
                 TinhTongDonHang();
                 LoadDuLieuBanDau();
@@ -340,6 +278,13 @@ namespace QLST
             int tongSanPham = flowLayoutPanel1.Controls.Count;
             int tongSoLuong = 0;
             decimal tongTienHang = 0;
+            decimal phanTramVAT = 0;
+
+            var setting = _settingBLL.GetCauHinh();
+            if (setting != null)
+            {
+                phanTramVAT = (decimal)setting.VAT / 100m;
+            }
 
             foreach (Control ctrl in flowLayoutPanel1.Controls)
             {
@@ -350,10 +295,13 @@ namespace QLST
                 }
             }
 
-            label6.Text = tongSanPham.ToString();
-            label7.Text = tongSoLuong.ToString();
-            label8.Text = "0";
-            label9.Text = tongTienHang.ToString("N0");
+            decimal tienVAT = tongTienHang * phanTramVAT;
+            decimal tongThanhTien = tongTienHang + tienVAT;
+
+            lblTongSanPham.Text = tongSanPham.ToString();
+            lblTongSoLuong.Text = tongSoLuong.ToString();
+            lblVAT.Text = tienVAT.ToString("N0");
+            lblTongThanhTien.Text = tongThanhTien.ToString("N0");
         }
 
         private void KhungMonHang_DuLieuThayDoi(object sender, EventArgs e)
@@ -385,14 +333,12 @@ namespace QLST
 
         private void ThemMonHangVaoDanhSach(string maSP, string tenSP, decimal donGia, int sanPhamID, int tonKhoTong)
         {
-            // BẮT LỖI 1: Kho hết sạch hàng thì cấm thêm
             if (tonKhoTong <= 0)
             {
                 MessageBox.Show($"Sản phẩm '{tenSP}' đã hết hàng trong kho!", "Hết hàng", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Ghi chép tồn kho vào từ điển để kiểm tra lúc gõ tay
             if (!dictTonKho.ContainsKey(maSP))
             {
                 dictTonKho.Add(maSP, tonKhoTong);
@@ -402,7 +348,6 @@ namespace QLST
             {
                 if (ctrl is KhungMonHang card && card.MaSP == maSP)
                 {
-                    // BẮT LỖI 2: Nếu cộng thêm 1 mà vượt tồn kho thì chặn lại
                     if (card.SoLuong >= tonKhoTong)
                     {
                         MessageBox.Show($"Sản phẩm '{tenSP}' chỉ còn tối đa {tonKhoTong} cái trong kho!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -435,13 +380,13 @@ namespace QLST
 
             TinhTongDonHang();
         }
-        // TÍNH NĂNG GỢI Ý: Tìm kiếm ngay khi gõ
+
         private void txtTimKiem_TextChanged(object sender, EventArgs e)
         {
             string keyword = txtTimKiem.Text.Trim();
             if (string.IsNullOrEmpty(keyword))
             {
-                LoadDuLieuBanDau(); // Xóa trắng thì trả lại toàn bộ SP
+                LoadDuLieuBanDau();
                 return;
             }
 
@@ -454,7 +399,6 @@ namespace QLST
             HienThiDanhSachSanPham();
         }
 
-        // TÍNH NĂNG QUÉT MÃ: Chỉ bắt Enter nếu khớp mã vạch thì đẩy luôn vào giỏ
         private void txtTimKiem_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -482,7 +426,7 @@ namespace QLST
         private void LoadDuLieuBanDau()
         {
             ThuNgan_BLL spBLL = new ThuNgan_BLL();
-            dsspToanBo = spBLL.LayDanhSachTrungBay(); // Form chỉ việc gọi BLL cung cấp dữ liệu
+            dsspToanBo = spBLL.LayDanhSachTrungBay();
 
             totalPages = (int)Math.Ceiling((double)dsspToanBo.Count / pageSize);
             if (totalPages == 0) totalPages = 1;
@@ -567,7 +511,6 @@ namespace QLST
             }
         }
 
-        // Logic load ảnh thuần túy của giao diện, đã loại bỏ block catch thừa
         private void LoadProductImage(string imageNameFromDatabase, ProductCard productCard)
         {
             string imageFolder = Path.Combine(Application.StartupPath, "Images");
