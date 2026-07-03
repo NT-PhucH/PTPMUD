@@ -153,6 +153,18 @@
     <Compile Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucNhapHang.Designer.cs">
       <DependentUpon>ucNhapHang.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucThemNCC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucThemNCC.Designer.cs">
+      <DependentUpon>ucThemNCC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucThemSP.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucThemSP.Designer.cs">
+      <DependentUpon>ucThemSP.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucXuatKho.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -293,6 +305,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucNhapHang.resx">
       <DependentUpon>ucNhapHang.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucThemSP.resx">
+      <DependentUpon>ucThemSP.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\ucLichSuDon.resx">
       <DependentUpon>ucLichSuDon.cs</DependentUpon>

@@ -64,21 +64,65 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
 
         private void BtnThemNCC_Click(object sender, EventArgs e)
         {
-            using (var frm = new frmQuanLyNCC())
+            // 1. Khởi tạo UserControl của bạn
+            ucThemNCC ucThem = new ucThemNCC();
+            ucThem.Dock = DockStyle.Fill; // Cho tự động lấp đầy cửa sổ
+
+            // 2. Tạo một Form trống để "chứa" (host) UserControl này
+            using (Form popup = new Form())
             {
-                frm.ShowDialog();
-                cboNCC.DataSource = _nccBll.GetAll();
-                if (cboNCC.Items.Count > 0) cboNCC.SelectedIndex = cboNCC.Items.Count - 1;
+                popup.Text = "Thêm Nhà Cung Cấp Mới";
+                // Kích thước form nên nhỉnh hơn UserControl một chút để bù trừ viền cửa sổ
+                popup.Size = new System.Drawing.Size(366, 480);
+                popup.StartPosition = FormStartPosition.CenterParent;
+                popup.FormBorderStyle = FormBorderStyle.FixedDialog; // Form cứng, không cho thu phóng
+                popup.MaximizeBox = false;
+                popup.MinimizeBox = false;
+
+                // 3. Nhét UserControl vào Form
+                popup.Controls.Add(ucThem);
+
+                // 4. Mở Form lên dưới dạng Dialog (Chờ người dùng đóng lại thì code mới chạy tiếp)
+                popup.ShowDialog();
+            } // Lệnh using sẽ tự động dọn dẹp Form khỏi bộ nhớ sau khi đóng
+
+            // 5. Ngay khi Form popup đóng, tiến hành load lại Combo và chọn item mới nhất
+            LoadComboData();
+            if (cboNCC.Items.Count > 0)
+            {
+                cboNCC.SelectedIndex = cboNCC.Items.Count - 1;
             }
         }
 
         private void BtnThemSP_Click(object sender, EventArgs e)
         {
-            using (var frm = new frmQuanLySanPham())
+            // 1. Khởi tạo UserControl của bạn
+            ucThemSP ucThem = new ucThemSP();
+            ucThem.Dock = DockStyle.Fill; // Cho tự động lấp đầy cửa sổ
+
+            // 2. Tạo một Form trống để "chứa" (host) UserControl này
+            using (Form popup = new Form())
             {
-                frm.ShowDialog();
-                RefreshComboSanPham();
-                if (cboSPNhap.Items.Count > 0) cboSPNhap.SelectedIndex = cboSPNhap.Items.Count - 1;
+                popup.Text = "Thêm Sản Phẩm Mới";
+                // Kích thước form nên nhỉnh hơn UserControl một chút để bù trừ viền cửa sổ
+                popup.Size = new System.Drawing.Size(366, 480);
+                popup.StartPosition = FormStartPosition.CenterParent;
+                popup.FormBorderStyle = FormBorderStyle.FixedDialog; // Form cứng, không cho thu phóng
+                popup.MaximizeBox = false;
+                popup.MinimizeBox = false;
+
+                // 3. Nhét UserControl vào Form
+                popup.Controls.Add(ucThem);
+
+                // 4. Mở Form lên dưới dạng Dialog (Chờ người dùng đóng lại thì code mới chạy tiếp)
+                popup.ShowDialog();
+            } // Lệnh using sẽ tự động dọn dẹp Form khỏi bộ nhớ sau khi đóng
+
+            // 5. Ngay khi Form popup đóng, tiến hành load lại Combo và chọn item mới nhất
+            LoadComboData();
+            if (cboNCC.Items.Count > 0)
+            {
+                cboNCC.SelectedIndex = cboNCC.Items.Count - 1;
             }
         }
 

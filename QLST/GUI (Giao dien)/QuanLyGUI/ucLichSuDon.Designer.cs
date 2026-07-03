@@ -37,12 +37,12 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.txtCustomer = new System.Windows.Forms.TextBox();
             this.lblCashier = new System.Windows.Forms.Label();
             this.txtCashier = new System.Windows.Forms.TextBox();
+            this.roundedButton1 = new QLST.RoundedButton();
             this.lblFilterTitle = new System.Windows.Forms.Label();
             this.dgvInvoices = new System.Windows.Forms.DataGridView();
             this.pnlDetail = new System.Windows.Forms.Panel();
             this.dgvDetails = new System.Windows.Forms.DataGridView();
             this.lblDetailTitle = new System.Windows.Forms.Label();
-            this.roundedButton1 = new QLST.RoundedButton();
             this.pnlHeader.SuspendLayout();
             this.pnlFilter.SuspendLayout();
             this.tlpFilter.SuspendLayout();
@@ -188,7 +188,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             "Tiền mặt",
             "Thẻ",
             "Chuyển khoản"});
-            this.cboPaymentMethod.Location = new System.Drawing.Point(638, 33);
+            this.cboPaymentMethod.Location = new System.Drawing.Point(638, 35);
             this.cboPaymentMethod.Margin = new System.Windows.Forms.Padding(0, 0, 15, 0);
             this.cboPaymentMethod.Name = "cboPaymentMethod";
             this.cboPaymentMethod.Size = new System.Drawing.Size(305, 28);
@@ -231,6 +231,22 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.txtCashier.Name = "txtCashier";
             this.txtCashier.Size = new System.Drawing.Size(304, 27);
             this.txtCashier.TabIndex = 9;
+            // 
+            // roundedButton1
+            // 
+            this.roundedButton1.BackColor = System.Drawing.Color.DodgerBlue;
+            this.roundedButton1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.roundedButton1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.roundedButton1.FlatAppearance.BorderSize = 0;
+            this.roundedButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.roundedButton1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.roundedButton1.ForeColor = System.Drawing.Color.White;
+            this.roundedButton1.Location = new System.Drawing.Point(641, 88);
+            this.roundedButton1.Name = "roundedButton1";
+            this.roundedButton1.Size = new System.Drawing.Size(314, 30);
+            this.roundedButton1.TabIndex = 10;
+            this.roundedButton1.Text = "Lọc";
+            this.roundedButton1.UseVisualStyleBackColor = false;
             // 
             // lblFilterTitle
             // 
@@ -324,22 +340,6 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.lblDetailTitle.Size = new System.Drawing.Size(958, 25);
             this.lblDetailTitle.TabIndex = 1;
             this.lblDetailTitle.Text = "Chi tiết đơn hàng";
-            // 
-            // roundedButton1
-            // 
-            this.roundedButton1.BackColor = System.Drawing.Color.DodgerBlue;
-            this.roundedButton1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.roundedButton1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.roundedButton1.FlatAppearance.BorderSize = 0;
-            this.roundedButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.roundedButton1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.roundedButton1.ForeColor = System.Drawing.Color.White;
-            this.roundedButton1.Location = new System.Drawing.Point(641, 88);
-            this.roundedButton1.Name = "roundedButton1";
-            this.roundedButton1.Size = new System.Drawing.Size(314, 30);
-            this.roundedButton1.TabIndex = 10;
-            this.roundedButton1.Text = "Lọc";
-            this.roundedButton1.UseVisualStyleBackColor = false;
             // 
             // ucLichSuDon
             // 

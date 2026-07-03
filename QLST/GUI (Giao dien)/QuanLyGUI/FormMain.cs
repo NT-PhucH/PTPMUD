@@ -163,11 +163,13 @@ namespace QLST
             {
                 ucSettings settings = new ucSettings { Dock = DockStyle.Fill };
                 panelContent.Controls.Add(settings);
+                settings.Show();
             }
             else if (clickedButton == btnLSHD)
             {
                 ucLichSuDon lichSuDon = new ucLichSuDon { Dock = DockStyle.Fill };
                 panelContent.Controls.Add(lichSuDon);
+                lichSuDon.Show();
             }
             else if (clickedButton == btnQLSP)
             {
