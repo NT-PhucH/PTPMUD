@@ -121,5 +121,20 @@ namespace QLST.DAL__Connection_Query_DB_.QuanLyDAL
             TongTienNhap = Convert.ToInt64(row["TongTienNhap"]),
             TrangThai = Convert.ToBoolean(row["TrangThai"])
         };
+
+        // ── KIỂM TRA TRẠNG THÁI GIAO DỊCH ─────────────────────────────────────────
+        public bool KiemTraTrangThaiGiaoDich(int nccId)
+        {
+            string sql = "SELECT TrangThai FROM NhaCungCap WHERE NhaCungCapID = @ID";
+            object result = DataProvider.Instance.ExecuteScalar(sql, new SqlParameter[] {
+                new SqlParameter("@ID", nccId) });
+
+            // Nếu có dữ liệu trả về và khác DBNull thì ép kiểu sang bool, ngược lại mặc định là false
+            if (result != null && result != DBNull.Value)
+            {
+                return Convert.ToBoolean(result);
+            }
+            return false;
+        }
     }
 }

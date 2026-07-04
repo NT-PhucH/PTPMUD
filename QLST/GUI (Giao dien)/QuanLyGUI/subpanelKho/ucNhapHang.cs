@@ -128,8 +128,25 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
 
         private void BtnThemVaoGioNhap_Click(object sender, EventArgs e)
         {
+            // 1. Kiểm tra ComboBox Nhà cung cấp trước tiên
+            if (cboNCC.SelectedItem == null)
+            {
+                MessageBox.Show("Vui lòng chọn nhà cung cấp trước khi thêm sản phẩm!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 2. Gọi BLL kiểm tra trạng thái giao dịch (Real-time DB check)
+            var ncc = (NhaCungCap_DTO)cboNCC.SelectedItem;
+            if (!_nccBll.KiemTraNhaCungCapKhaDung(ncc.NhaCungCapID))
+            {
+                MessageBox.Show($"Nhà cung cấp '{ncc.TenNCC}' hiện đã ngừng giao dịch.\nVui lòng chọn nhà cung cấp khác!", "Ngừng giao dịch", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
+
+            // 3. Các bước kiểm tra dữ liệu giỏ hàng như cũ
             if (cboSPNhap.SelectedItem == null) { MessageBox.Show("Vui lòng chọn sản phẩm!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
             if (!int.TryParse(txtSLNhap.Text.Trim(), out int sl) || sl <= 0) { MessageBox.Show("Số lượng nhập không hợp lệ!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
+
             string giaRaw = txtGiaNhap.Text.Trim().Replace(",", "").Replace(".", "").Replace(" ", "");
             if (!long.TryParse(giaRaw, out long gia) || gia <= 0) { MessageBox.Show("Giá nhập không hợp lệ!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
             if (chkHSD.Checked && chkNSX.Checked && dtpNSX.Value >= dtpHSD.Value) { MessageBox.Show("NSX phải trước HSD!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
@@ -139,8 +156,8 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
 
             if (existIdx >= 0)
             {
-                var ans = MessageBox.Show($"Sản phẩm '{sp.TenSP}' đã có.\nChọn Yes = Cộng dồn SL | Chọn No = Thêm dòng mới", "Trùng lặp", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-                if (ans == DialogResult.Cancel) return;
+                var ans = MessageBox.Show($"Sản phẩm '{sp.TenSP}' đã có.\nChọn Yes = Cộng dồn SL | Chọn No = Hủy thao tác", "Trùng lặp", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (ans == DialogResult.No) return;
                 if (ans == DialogResult.Yes) { _gioNhap[existIdx].SoLuongNhap += sl; RefreshGioNhap(); ResetFormNhap(); return; }
             }
 
@@ -218,5 +235,6 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             chkNSX.Checked = false;
             chkHSD.Checked = false;
         }
+
     }
 }

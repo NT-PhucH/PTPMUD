@@ -1,7 +1,10 @@
 ﻿
 using QLST.DAL__Connection_Query_DB_.QuanLyDAL;
+using QLST.DAL__Connection_Query_DB_.Query_DB;
 using QLST.DTO__Type_OTP_.QuanLyDTO;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace QLST.BLL__Bat_ngoai_le_.QuanLyBLL
 {
@@ -52,6 +55,14 @@ namespace QLST.BLL__Bat_ngoai_le_.QuanLyBLL
             return _dal.ToggleTrangThai(id)
                 ? (true, "Đã thay đổi trạng thái nhà cung cấp!")
                 : (false, "Lỗi hệ thống: Không thể thay đổi trạng thái!");
+        }
+
+
+        // ── KIỂM TRA NHÀ CUNG CẤP CÒN GIAO DỊCH KHÔNG ─────────
+        public bool KiemTraNhaCungCapKhaDung(int nccId)
+        {
+            if (nccId <= 0) return false;
+            return _dal.KiemTraTrangThaiGiaoDich(nccId);
         }
     }
 }
