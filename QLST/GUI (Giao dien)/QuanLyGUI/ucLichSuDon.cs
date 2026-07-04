@@ -1,4 +1,5 @@
-﻿using QLST.BLL__Bat_ngoai_le_.QuanLyBLL;
+﻿// ucLichSuDon.cs
+using QLST.BLL__Bat_ngoai_le_.QuanLyBLL;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -92,7 +93,6 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             dgv.RowTemplate.Height = 28;
             dgv.GridColor = Color.FromArgb(240, 240, 244);
 
-            // Lấp đầy toàn bộ chiều ngang
             dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
@@ -146,11 +146,6 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
         private string GetPaymentMethodBadge(string method)
         {
             return method;
-        }
-
-        private void btnFilter_Click(object sender, EventArgs e)
-        {
-            LoadData();
         }
 
         private void dgvInvoices_SelectionChanged(object sender, EventArgs e)
@@ -208,7 +203,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
 
         private void roundedButton1_Click(object sender, EventArgs e)
         {
-
+            LoadData();
         }
     }
 }

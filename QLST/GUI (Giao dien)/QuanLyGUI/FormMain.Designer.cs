@@ -49,6 +49,8 @@
             this.panelLogo = new System.Windows.Forms.Panel();
             this.btnLogOut = new System.Windows.Forms.Button();
             this.panelContent = new System.Windows.Forms.Panel();
+            this.lblHeader = new System.Windows.Forms.Label();
+            this.panel1.SuspendLayout();
             this.panelMenu.SuspendLayout();
             this.panelKhoSubMenu.SuspendLayout();
             this.SuspendLayout();
@@ -56,6 +58,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
+            this.panel1.Controls.Add(this.lblHeader);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(224, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -425,6 +428,18 @@
             this.panelContent.Size = new System.Drawing.Size(893, 833);
             this.panelContent.TabIndex = 3;
             // 
+            // lblHeader
+            // 
+            this.lblHeader.AutoSize = true;
+            this.lblHeader.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHeader.ForeColor = System.Drawing.Color.White;
+            this.lblHeader.Location = new System.Drawing.Point(17, 18);
+            this.lblHeader.Name = "lblHeader";
+            this.lblHeader.Size = new System.Drawing.Size(117, 46);
+            this.lblHeader.TabIndex = 0;
+            this.lblHeader.Text = "label1";
+            this.lblHeader.Click += new System.EventHandler(this.label1_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -441,6 +456,8 @@
             this.Text = "QLST";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FormMain_Load);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.panelMenu.ResumeLayout(false);
             this.panelMenu.PerformLayout();
             this.panelKhoSubMenu.ResumeLayout(false);
@@ -469,5 +486,6 @@
         private System.Windows.Forms.Button btnNhapHang;
         private System.Windows.Forms.Button btnQLNCC;
         private System.Windows.Forms.Button btnQLSP;
+        private System.Windows.Forms.Label lblHeader;
     }
 }

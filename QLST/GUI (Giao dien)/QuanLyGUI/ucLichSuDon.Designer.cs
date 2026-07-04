@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿// ucLichSuDon.Designer.cs
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace QLST.GUI__Giao_dien_.QuanLyGUI
@@ -22,9 +23,9 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
             this.pnlHeader = new System.Windows.Forms.Panel();
             this.lblTitle = new System.Windows.Forms.Label();
-            this.lblSubtitle = new System.Windows.Forms.Label();
             this.pnlFilter = new System.Windows.Forms.Panel();
             this.tlpFilter = new System.Windows.Forms.TableLayoutPanel();
             this.lblFromDate = new System.Windows.Forms.Label();
@@ -38,29 +39,50 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.lblCashier = new System.Windows.Forms.Label();
             this.txtCashier = new System.Windows.Forms.TextBox();
             this.roundedButton1 = new QLST.RoundedButton();
-            this.lblFilterTitle = new System.Windows.Forms.Label();
+            this.tlpData = new System.Windows.Forms.TableLayoutPanel();
+            this.pnlInvoices = new System.Windows.Forms.Panel();
             this.dgvInvoices = new System.Windows.Forms.DataGridView();
+            this.lblInvoicesTitle = new System.Windows.Forms.Label();
             this.pnlDetail = new System.Windows.Forms.Panel();
             this.dgvDetails = new System.Windows.Forms.DataGridView();
             this.lblDetailTitle = new System.Windows.Forms.Label();
+            this.tlpMain.SuspendLayout();
             this.pnlHeader.SuspendLayout();
             this.pnlFilter.SuspendLayout();
             this.tlpFilter.SuspendLayout();
+            this.tlpData.SuspendLayout();
+            this.pnlInvoices.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvInvoices)).BeginInit();
             this.pnlDetail.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetails)).BeginInit();
             this.SuspendLayout();
             // 
+            // tlpMain
+            // 
+            this.tlpMain.ColumnCount = 1;
+            this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpMain.Controls.Add(this.pnlHeader, 0, 0);
+            this.tlpMain.Controls.Add(this.pnlFilter, 0, 1);
+            this.tlpMain.Controls.Add(this.tlpData, 0, 2);
+            this.tlpMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpMain.Location = new System.Drawing.Point(0, 0);
+            this.tlpMain.Name = "tlpMain";
+            this.tlpMain.RowCount = 3;
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpMain.Size = new System.Drawing.Size(1000, 700);
+            this.tlpMain.TabIndex = 0;
+            // 
             // pnlHeader
             // 
             this.pnlHeader.BackColor = System.Drawing.Color.White;
             this.pnlHeader.Controls.Add(this.lblTitle);
-            this.pnlHeader.Controls.Add(this.lblSubtitle);
-            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
+            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlHeader.Location = new System.Drawing.Point(3, 3);
             this.pnlHeader.Name = "pnlHeader";
             this.pnlHeader.Padding = new System.Windows.Forms.Padding(20);
-            this.pnlHeader.Size = new System.Drawing.Size(1000, 76);
+            this.pnlHeader.Size = new System.Drawing.Size(994, 74);
             this.pnlHeader.TabIndex = 3;
             // 
             // lblTitle
@@ -68,70 +90,58 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(60)))));
-            this.lblTitle.Location = new System.Drawing.Point(3, 0);
+            this.lblTitle.Location = new System.Drawing.Point(20, 0);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(271, 46);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Lịch sử hóa đơn";
-            // 
-            // lblSubtitle
-            // 
-            this.lblSubtitle.AutoSize = true;
-            this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(130)))), ((int)(((byte)(150)))));
-            this.lblSubtitle.Location = new System.Drawing.Point(22, 46);
-            this.lblSubtitle.Name = "lblSubtitle";
-            this.lblSubtitle.Size = new System.Drawing.Size(375, 23);
-            this.lblSubtitle.TabIndex = 1;
-            this.lblSubtitle.Text = "Quản lý và theo dõi tất cả các đơn hàng đã bán";
             // 
             // pnlFilter
             // 
             this.pnlFilter.BackColor = System.Drawing.Color.White;
             this.pnlFilter.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlFilter.Controls.Add(this.tlpFilter);
-            this.pnlFilter.Controls.Add(this.lblFilterTitle);
-            this.pnlFilter.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlFilter.Location = new System.Drawing.Point(0, 76);
+            this.pnlFilter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlFilter.Location = new System.Drawing.Point(3, 83);
             this.pnlFilter.Name = "pnlFilter";
-            this.pnlFilter.Padding = new System.Windows.Forms.Padding(20);
-            this.pnlFilter.Size = new System.Drawing.Size(1000, 198);
+            this.pnlFilter.Padding = new System.Windows.Forms.Padding(10);
+            this.pnlFilter.Size = new System.Drawing.Size(994, 94);
             this.pnlFilter.TabIndex = 2;
             // 
             // tlpFilter
             // 
-            this.tlpFilter.ColumnCount = 3;
-            this.tlpFilter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
-            this.tlpFilter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
-            this.tlpFilter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
+            this.tlpFilter.ColumnCount = 6;
+            this.tlpFilter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tlpFilter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tlpFilter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tlpFilter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tlpFilter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tlpFilter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tlpFilter.Controls.Add(this.lblFromDate, 0, 0);
             this.tlpFilter.Controls.Add(this.dtpFromDate, 0, 1);
             this.tlpFilter.Controls.Add(this.lblToDate, 1, 0);
             this.tlpFilter.Controls.Add(this.dtpToDate, 1, 1);
             this.tlpFilter.Controls.Add(this.lblPaymentMethod, 2, 0);
             this.tlpFilter.Controls.Add(this.cboPaymentMethod, 2, 1);
-            this.tlpFilter.Controls.Add(this.lblCustomer, 0, 2);
-            this.tlpFilter.Controls.Add(this.txtCustomer, 0, 3);
-            this.tlpFilter.Controls.Add(this.lblCashier, 1, 2);
-            this.tlpFilter.Controls.Add(this.txtCashier, 1, 3);
-            this.tlpFilter.Controls.Add(this.roundedButton1, 2, 3);
+            this.tlpFilter.Controls.Add(this.lblCustomer, 3, 0);
+            this.tlpFilter.Controls.Add(this.txtCustomer, 3, 1);
+            this.tlpFilter.Controls.Add(this.lblCashier, 4, 0);
+            this.tlpFilter.Controls.Add(this.txtCashier, 4, 1);
+            this.tlpFilter.Controls.Add(this.roundedButton1, 5, 1);
             this.tlpFilter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpFilter.Location = new System.Drawing.Point(20, 55);
+            this.tlpFilter.Location = new System.Drawing.Point(10, 10);
             this.tlpFilter.Name = "tlpFilter";
-            this.tlpFilter.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.tlpFilter.RowCount = 4;
-            this.tlpFilter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpFilter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tlpFilter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpFilter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tlpFilter.Size = new System.Drawing.Size(958, 121);
+            this.tlpFilter.RowCount = 2;
+            this.tlpFilter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tlpFilter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpFilter.Size = new System.Drawing.Size(972, 72);
             this.tlpFilter.TabIndex = 0;
             // 
             // lblFromDate
             // 
             this.lblFromDate.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblFromDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(110)))), ((int)(((byte)(120)))));
-            this.lblFromDate.Location = new System.Drawing.Point(3, 10);
+            this.lblFromDate.Location = new System.Drawing.Point(3, 0);
             this.lblFromDate.Name = "lblFromDate";
             this.lblFromDate.Size = new System.Drawing.Size(100, 20);
             this.lblFromDate.TabIndex = 0;
@@ -139,20 +149,19 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             // 
             // dtpFromDate
             // 
-            this.dtpFromDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.dtpFromDate.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dtpFromDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFromDate.Location = new System.Drawing.Point(0, 34);
-            this.dtpFromDate.Margin = new System.Windows.Forms.Padding(0, 0, 15, 0);
+            this.dtpFromDate.Location = new System.Drawing.Point(3, 28);
+            this.dtpFromDate.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
             this.dtpFromDate.Name = "dtpFromDate";
-            this.dtpFromDate.Size = new System.Drawing.Size(304, 27);
+            this.dtpFromDate.Size = new System.Drawing.Size(148, 27);
             this.dtpFromDate.TabIndex = 1;
-            this.dtpFromDate.Value = new System.DateTime(2026, 6, 21, 0, 0, 0, 0);
             // 
             // lblToDate
             // 
             this.lblToDate.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblToDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(110)))), ((int)(((byte)(120)))));
-            this.lblToDate.Location = new System.Drawing.Point(322, 10);
+            this.lblToDate.Location = new System.Drawing.Point(164, 0);
             this.lblToDate.Name = "lblToDate";
             this.lblToDate.Size = new System.Drawing.Size(100, 20);
             this.lblToDate.TabIndex = 2;
@@ -160,64 +169,63 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             // 
             // dtpToDate
             // 
-            this.dtpToDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.dtpToDate.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dtpToDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpToDate.Location = new System.Drawing.Point(319, 34);
-            this.dtpToDate.Margin = new System.Windows.Forms.Padding(0, 0, 15, 0);
+            this.dtpToDate.Location = new System.Drawing.Point(164, 28);
+            this.dtpToDate.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
             this.dtpToDate.Name = "dtpToDate";
-            this.dtpToDate.Size = new System.Drawing.Size(304, 27);
+            this.dtpToDate.Size = new System.Drawing.Size(148, 27);
             this.dtpToDate.TabIndex = 3;
-            this.dtpToDate.Value = new System.DateTime(2026, 6, 28, 0, 0, 0, 0);
             // 
             // lblPaymentMethod
             // 
             this.lblPaymentMethod.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblPaymentMethod.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(110)))), ((int)(((byte)(120)))));
-            this.lblPaymentMethod.Location = new System.Drawing.Point(641, 10);
+            this.lblPaymentMethod.Location = new System.Drawing.Point(325, 0);
             this.lblPaymentMethod.Name = "lblPaymentMethod";
-            this.lblPaymentMethod.Size = new System.Drawing.Size(100, 20);
+            this.lblPaymentMethod.Size = new System.Drawing.Size(155, 20);
             this.lblPaymentMethod.TabIndex = 4;
-            this.lblPaymentMethod.Text = "Phương thức thanh toán";
+            this.lblPaymentMethod.Text = "P.Thức thanh toán";
             // 
             // cboPaymentMethod
             // 
-            this.cboPaymentMethod.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboPaymentMethod.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboPaymentMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboPaymentMethod.Items.AddRange(new object[] {
             "Tất cả",
             "Tiền mặt",
             "Thẻ",
             "Chuyển khoản"});
-            this.cboPaymentMethod.Location = new System.Drawing.Point(638, 33);
-            this.cboPaymentMethod.Margin = new System.Windows.Forms.Padding(0, 0, 15, 0);
+            this.cboPaymentMethod.Location = new System.Drawing.Point(325, 28);
+            this.cboPaymentMethod.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
             this.cboPaymentMethod.Name = "cboPaymentMethod";
-            this.cboPaymentMethod.Size = new System.Drawing.Size(305, 28);
+            this.cboPaymentMethod.Size = new System.Drawing.Size(148, 28);
             this.cboPaymentMethod.TabIndex = 5;
             // 
             // lblCustomer
             // 
             this.lblCustomer.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblCustomer.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(110)))), ((int)(((byte)(120)))));
-            this.lblCustomer.Location = new System.Drawing.Point(3, 65);
+            this.lblCustomer.Location = new System.Drawing.Point(486, 0);
             this.lblCustomer.Name = "lblCustomer";
             this.lblCustomer.Size = new System.Drawing.Size(100, 20);
             this.lblCustomer.TabIndex = 6;
-            this.lblCustomer.Text = "Tìm khách hàng";
+            this.lblCustomer.Text = "Khách hàng";
             // 
             // txtCustomer
             // 
-            this.txtCustomer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtCustomer.Location = new System.Drawing.Point(0, 89);
-            this.txtCustomer.Margin = new System.Windows.Forms.Padding(0, 0, 15, 0);
+            this.txtCustomer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtCustomer.Location = new System.Drawing.Point(486, 28);
+            this.txtCustomer.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
             this.txtCustomer.Name = "txtCustomer";
-            this.txtCustomer.Size = new System.Drawing.Size(304, 27);
+            this.txtCustomer.Size = new System.Drawing.Size(148, 27);
             this.txtCustomer.TabIndex = 7;
             // 
             // lblCashier
             // 
             this.lblCashier.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblCashier.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(110)))), ((int)(((byte)(120)))));
-            this.lblCashier.Location = new System.Drawing.Point(322, 65);
+            this.lblCashier.Location = new System.Drawing.Point(647, 0);
             this.lblCashier.Name = "lblCashier";
             this.lblCashier.Size = new System.Drawing.Size(100, 20);
             this.lblCashier.TabIndex = 8;
@@ -225,40 +233,57 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             // 
             // txtCashier
             // 
-            this.txtCashier.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtCashier.Location = new System.Drawing.Point(319, 89);
-            this.txtCashier.Margin = new System.Windows.Forms.Padding(0, 0, 15, 0);
+            this.txtCashier.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtCashier.Location = new System.Drawing.Point(647, 28);
+            this.txtCashier.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
             this.txtCashier.Name = "txtCashier";
-            this.txtCashier.Size = new System.Drawing.Size(304, 27);
+            this.txtCashier.Size = new System.Drawing.Size(148, 27);
             this.txtCashier.TabIndex = 9;
             // 
             // roundedButton1
             // 
+            this.roundedButton1.AutoSize = true;
             this.roundedButton1.BackColor = System.Drawing.Color.DodgerBlue;
             this.roundedButton1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.roundedButton1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.roundedButton1.FlatAppearance.BorderSize = 0;
             this.roundedButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.roundedButton1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.roundedButton1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.roundedButton1.ForeColor = System.Drawing.Color.White;
-            this.roundedButton1.Location = new System.Drawing.Point(641, 88);
+            this.roundedButton1.Location = new System.Drawing.Point(808, 28);
             this.roundedButton1.Name = "roundedButton1";
-            this.roundedButton1.Size = new System.Drawing.Size(314, 30);
+            this.roundedButton1.Size = new System.Drawing.Size(161, 41);
             this.roundedButton1.TabIndex = 10;
-            this.roundedButton1.Text = "Lọc";
+            this.roundedButton1.Text = "Lọc dữ liệu";
             this.roundedButton1.UseVisualStyleBackColor = false;
             this.roundedButton1.Click += new System.EventHandler(this.roundedButton1_Click);
             // 
-            // lblFilterTitle
+            // tlpData
             // 
-            this.lblFilterTitle.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblFilterTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.lblFilterTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(60)))));
-            this.lblFilterTitle.Location = new System.Drawing.Point(20, 20);
-            this.lblFilterTitle.Name = "lblFilterTitle";
-            this.lblFilterTitle.Size = new System.Drawing.Size(958, 35);
-            this.lblFilterTitle.TabIndex = 1;
-            this.lblFilterTitle.Text = "Bộ lọc";
+            this.tlpData.ColumnCount = 2;
+            this.tlpData.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65F));
+            this.tlpData.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
+            this.tlpData.Controls.Add(this.pnlInvoices, 0, 0);
+            this.tlpData.Controls.Add(this.pnlDetail, 1, 0);
+            this.tlpData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpData.Location = new System.Drawing.Point(3, 183);
+            this.tlpData.Name = "tlpData";
+            this.tlpData.RowCount = 1;
+            this.tlpData.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpData.Size = new System.Drawing.Size(994, 514);
+            this.tlpData.TabIndex = 3;
+            // 
+            // pnlInvoices
+            // 
+            this.pnlInvoices.BackColor = System.Drawing.Color.White;
+            this.pnlInvoices.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlInvoices.Controls.Add(this.dgvInvoices);
+            this.pnlInvoices.Controls.Add(this.lblInvoicesTitle);
+            this.pnlInvoices.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlInvoices.Location = new System.Drawing.Point(3, 3);
+            this.pnlInvoices.Name = "pnlInvoices";
+            this.pnlInvoices.Padding = new System.Windows.Forms.Padding(10);
+            this.pnlInvoices.Size = new System.Drawing.Size(640, 508);
+            this.pnlInvoices.TabIndex = 0;
             // 
             // dgvInvoices
             // 
@@ -277,18 +302,29 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvInvoices.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvInvoices.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvInvoices.Dock = System.Windows.Forms.DockStyle.Top;
+            this.dgvInvoices.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvInvoices.EnableHeadersVisualStyles = false;
-            this.dgvInvoices.Location = new System.Drawing.Point(0, 274);
+            this.dgvInvoices.Location = new System.Drawing.Point(10, 45);
             this.dgvInvoices.MultiSelect = false;
             this.dgvInvoices.Name = "dgvInvoices";
             this.dgvInvoices.ReadOnly = true;
             this.dgvInvoices.RowHeadersVisible = false;
             this.dgvInvoices.RowHeadersWidth = 51;
             this.dgvInvoices.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvInvoices.Size = new System.Drawing.Size(1000, 207);
+            this.dgvInvoices.Size = new System.Drawing.Size(618, 451);
             this.dgvInvoices.TabIndex = 1;
             this.dgvInvoices.SelectionChanged += new System.EventHandler(this.dgvInvoices_SelectionChanged);
+            // 
+            // lblInvoicesTitle
+            // 
+            this.lblInvoicesTitle.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblInvoicesTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.lblInvoicesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(60)))));
+            this.lblInvoicesTitle.Location = new System.Drawing.Point(10, 10);
+            this.lblInvoicesTitle.Name = "lblInvoicesTitle";
+            this.lblInvoicesTitle.Size = new System.Drawing.Size(618, 35);
+            this.lblInvoicesTitle.TabIndex = 2;
+            this.lblInvoicesTitle.Text = "Danh sách hóa đơn";
             // 
             // pnlDetail
             // 
@@ -297,11 +333,11 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.pnlDetail.Controls.Add(this.dgvDetails);
             this.pnlDetail.Controls.Add(this.lblDetailTitle);
             this.pnlDetail.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlDetail.Location = new System.Drawing.Point(0, 481);
+            this.pnlDetail.Location = new System.Drawing.Point(649, 3);
             this.pnlDetail.Name = "pnlDetail";
-            this.pnlDetail.Padding = new System.Windows.Forms.Padding(20);
-            this.pnlDetail.Size = new System.Drawing.Size(1000, 219);
-            this.pnlDetail.TabIndex = 0;
+            this.pnlDetail.Padding = new System.Windows.Forms.Padding(10);
+            this.pnlDetail.Size = new System.Drawing.Size(342, 508);
+            this.pnlDetail.TabIndex = 1;
             // 
             // dgvDetails
             // 
@@ -322,23 +358,23 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.dgvDetails.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDetails.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvDetails.EnableHeadersVisualStyles = false;
-            this.dgvDetails.Location = new System.Drawing.Point(20, 45);
+            this.dgvDetails.Location = new System.Drawing.Point(10, 45);
             this.dgvDetails.MultiSelect = false;
             this.dgvDetails.Name = "dgvDetails";
             this.dgvDetails.ReadOnly = true;
             this.dgvDetails.RowHeadersVisible = false;
             this.dgvDetails.RowHeadersWidth = 51;
-            this.dgvDetails.Size = new System.Drawing.Size(958, 152);
+            this.dgvDetails.Size = new System.Drawing.Size(320, 451);
             this.dgvDetails.TabIndex = 0;
             // 
             // lblDetailTitle
             // 
             this.lblDetailTitle.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblDetailTitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.lblDetailTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.lblDetailTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(60)))));
-            this.lblDetailTitle.Location = new System.Drawing.Point(20, 20);
+            this.lblDetailTitle.Location = new System.Drawing.Point(10, 10);
             this.lblDetailTitle.Name = "lblDetailTitle";
-            this.lblDetailTitle.Size = new System.Drawing.Size(958, 25);
+            this.lblDetailTitle.Size = new System.Drawing.Size(320, 35);
             this.lblDetailTitle.TabIndex = 1;
             this.lblDetailTitle.Text = "Chi tiết đơn hàng";
             // 
@@ -347,18 +383,18 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(252)))));
-            this.Controls.Add(this.pnlDetail);
-            this.Controls.Add(this.dgvInvoices);
-            this.Controls.Add(this.pnlFilter);
-            this.Controls.Add(this.pnlHeader);
+            this.Controls.Add(this.tlpMain);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Name = "ucLichSuDon";
             this.Size = new System.Drawing.Size(1000, 700);
+            this.tlpMain.ResumeLayout(false);
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
             this.pnlFilter.ResumeLayout(false);
             this.tlpFilter.ResumeLayout(false);
             this.tlpFilter.PerformLayout();
+            this.tlpData.ResumeLayout(false);
+            this.pnlInvoices.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvInvoices)).EndInit();
             this.pnlDetail.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetails)).EndInit();
@@ -366,12 +402,11 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
 
         }
 
+        private System.Windows.Forms.TableLayoutPanel tlpMain;
         private System.Windows.Forms.Panel pnlHeader;
         private System.Windows.Forms.Label lblTitle;
-        private System.Windows.Forms.Label lblSubtitle;
 
         private System.Windows.Forms.Panel pnlFilter;
-        private System.Windows.Forms.Label lblFilterTitle;
         private System.Windows.Forms.TableLayoutPanel tlpFilter;
         private System.Windows.Forms.Label lblFromDate;
         private System.Windows.Forms.DateTimePicker dtpFromDate;
@@ -383,11 +418,15 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
         private System.Windows.Forms.TextBox txtCustomer;
         private System.Windows.Forms.Label lblCashier;
         private System.Windows.Forms.TextBox txtCashier;
+        private RoundedButton roundedButton1;
 
+        private System.Windows.Forms.TableLayoutPanel tlpData;
+        private System.Windows.Forms.Panel pnlInvoices;
+        private System.Windows.Forms.Label lblInvoicesTitle;
         private System.Windows.Forms.DataGridView dgvInvoices;
+
         private System.Windows.Forms.Panel pnlDetail;
         private System.Windows.Forms.Label lblDetailTitle;
         private System.Windows.Forms.DataGridView dgvDetails;
-        private RoundedButton roundedButton1;
     }
 }

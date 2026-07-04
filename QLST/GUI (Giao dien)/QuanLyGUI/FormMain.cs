@@ -195,9 +195,12 @@ namespace QLST
             }
             else if (clickedButton == btnQLNCC)
             {
-                if (_frmNCC == null) _frmNCC = new frmQuanLyNCC { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
-                panelContent.Controls.Add(_frmNCC);
-                _frmNCC.Show();
+                /* if (_frmNCC == null) _frmNCC = new frmQuanLyNCC { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
+                 panelContent.Controls.Add(_frmNCC);
+                 _frmNCC.Show();*/
+                ucQuanLyNCC quanLyNCC = new ucQuanLyNCC { Dock = DockStyle.Fill };
+                panelContent.Controls.Add(quanLyNCC);
+                quanLyNCC.Show();
             }
             else if (clickedButton == btnShopping)
             {
@@ -258,6 +261,11 @@ namespace QLST
                 // Vẽ mũi tên lên mặt nút
                 e.Graphics.DrawImage(arrow, x, y, arrow.Width, arrow.Height);
             }
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
 
         // Xóa bỏ các hàm Paint trống nếu không dùng để code gọn gàng hơn
