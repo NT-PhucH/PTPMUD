@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblHeader = new System.Windows.Forms.Label();
             this.panelMenu = new System.Windows.Forms.Panel();
             this.btnQLSP = new System.Windows.Forms.Button();
             this.btnLSHD = new System.Windows.Forms.Button();
@@ -49,7 +50,6 @@
             this.panelLogo = new System.Windows.Forms.Panel();
             this.btnLogOut = new System.Windows.Forms.Button();
             this.panelContent = new System.Windows.Forms.Panel();
-            this.lblHeader = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panelMenu.SuspendLayout();
             this.panelKhoSubMenu.SuspendLayout();
@@ -65,6 +65,18 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(893, 80);
             this.panel1.TabIndex = 1;
+            // 
+            // lblHeader
+            // 
+            this.lblHeader.AutoSize = true;
+            this.lblHeader.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHeader.ForeColor = System.Drawing.Color.White;
+            this.lblHeader.Location = new System.Drawing.Point(17, 18);
+            this.lblHeader.Name = "lblHeader";
+            this.lblHeader.Size = new System.Drawing.Size(113, 45);
+            this.lblHeader.TabIndex = 0;
+            this.lblHeader.Text = "label1";
+            this.lblHeader.Click += new System.EventHandler(this.label1_Click);
             // 
             // panelMenu
             // 
@@ -126,7 +138,7 @@
             this.btnLSHD.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
             this.btnLSHD.Size = new System.Drawing.Size(224, 60);
             this.btnLSHD.TabIndex = 28;
-            this.btnLSHD.Text = "        Lịch sử đơn hàng";
+            this.btnLSHD.Text = "        Lịch sử đơn";
             this.btnLSHD.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnLSHD.UseVisualStyleBackColor = false;
             this.btnLSHD.Click += new System.EventHandler(this.MenuButton_Click);
@@ -427,18 +439,6 @@
             this.panelContent.Name = "panelContent";
             this.panelContent.Size = new System.Drawing.Size(893, 833);
             this.panelContent.TabIndex = 3;
-            // 
-            // lblHeader
-            // 
-            this.lblHeader.AutoSize = true;
-            this.lblHeader.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeader.ForeColor = System.Drawing.Color.White;
-            this.lblHeader.Location = new System.Drawing.Point(17, 18);
-            this.lblHeader.Name = "lblHeader";
-            this.lblHeader.Size = new System.Drawing.Size(117, 46);
-            this.lblHeader.TabIndex = 0;
-            this.lblHeader.Text = "label1";
-            this.lblHeader.Click += new System.EventHandler(this.label1_Click);
             // 
             // FormMain
             // 

@@ -437,11 +437,17 @@
     <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\frmThongKe.resx">
       <DependentUpon>frmThongKe.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucLichSu.resx">
+      <DependentUpon>ucLichSu.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucNhapHang.resx">
       <DependentUpon>ucNhapHang.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucThemSP.resx">
       <DependentUpon>ucThemSP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucXuatKho.resx">
+      <DependentUpon>ucXuatKho.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\ucLichSuDon.resx">
       <DependentUpon>ucLichSuDon.cs</DependentUpon>

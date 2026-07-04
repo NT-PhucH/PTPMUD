@@ -105,7 +105,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             {
                 popup.Text = "Thêm Sản Phẩm Mới";
                 // Kích thước form nên nhỉnh hơn UserControl một chút để bù trừ viền cửa sổ
-                popup.Size = new System.Drawing.Size(366, 480);
+                popup.Size = new System.Drawing.Size(366, 500);
                 popup.StartPosition = FormStartPosition.CenterParent;
                 popup.FormBorderStyle = FormBorderStyle.FixedDialog; // Form cứng, không cho thu phóng
                 popup.MaximizeBox = false;

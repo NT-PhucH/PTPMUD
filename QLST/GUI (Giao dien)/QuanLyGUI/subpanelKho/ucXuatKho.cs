@@ -2,6 +2,7 @@
 using QLST.DTO__Type_OTP_.QuanLyDTO;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -17,7 +18,18 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
         {
             InitializeComponent();
             WireEvents();
-            LoadComboData();
+
+            // Đăng ký sự kiện Load để gọi dữ liệu, tránh lỗi Design Time
+            this.Load += UcXuatKho_Load;
+        }
+
+        private void UcXuatKho_Load(object sender, EventArgs e)
+        {
+            // Safeguard: Chỉ kết nối DB khi ứng dụng thực sự chạy
+            if (!this.DesignMode && LicenseManager.UsageMode == LicenseUsageMode.Runtime)
+            {
+                LoadComboData();
+            }
         }
 
         private void WireEvents()
@@ -43,11 +55,32 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
 
         private void BtnThemSP_Click(object sender, EventArgs e)
         {
-            using (var frm = new frmQuanLySanPham())
+            // 1. Khởi tạo UserControl ucThemSP
+            ucThemSP ucThem = new ucThemSP();
+            ucThem.Dock = DockStyle.Fill;
+
+            // 2. Tạo một Form popup để chứa UserControl
+            using (Form popup = new Form())
             {
-                frm.ShowDialog();
-                RefreshComboSanPham();
-                if (cboSPXuat.Items.Count > 0) cboSPXuat.SelectedIndex = cboSPXuat.Items.Count - 1;
+                popup.Text = "Thêm Sản Phẩm Mới";
+                popup.Size = new System.Drawing.Size(366, 500);
+                popup.StartPosition = FormStartPosition.CenterParent;
+                popup.FormBorderStyle = FormBorderStyle.FixedDialog;
+                popup.MaximizeBox = false;
+                popup.MinimizeBox = false;
+
+                // 3. Đưa UserControl vào Form
+                popup.Controls.Add(ucThem);
+
+                // 4. Mở Form dưới dạng Dialog
+                popup.ShowDialog();
+            }
+
+            // 5. Load lại dữ liệu và chọn sản phẩm mới nhất
+            RefreshComboSanPham();
+            if (cboSPXuat.Items.Count > 0)
+            {
+                cboSPXuat.SelectedIndex = cboSPXuat.Items.Count - 1;
             }
         }
 
@@ -112,5 +145,6 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
                 dgvGioXuat.Rows.Add(ct.TenSP, ct.SoLuongXuat, ct.TonKhoHienTai, ct.GhiChu);
             }
         }
+
     }
 }

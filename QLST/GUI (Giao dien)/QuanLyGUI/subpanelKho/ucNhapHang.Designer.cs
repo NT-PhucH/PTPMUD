@@ -45,6 +45,7 @@
             this.colNSX = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colHSD = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblTitleRight = new System.Windows.Forms.Label();
+            this.pnlLine1 = new System.Windows.Forms.Panel();
             this.pnlNhapLeft.SuspendLayout();
             this.pRight.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGioNhap)).BeginInit();
@@ -55,6 +56,7 @@
             this.pnlNhapLeft.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.pnlNhapLeft.BackColor = System.Drawing.Color.White;
+            this.pnlNhapLeft.Controls.Add(this.pnlLine1);
             this.pnlNhapLeft.Controls.Add(this.btnLuuPhieuNhap);
             this.pnlNhapLeft.Controls.Add(this.lblTongTienNhap);
             this.pnlNhapLeft.Controls.Add(this.btnXoaDongNhap);
@@ -312,7 +314,7 @@
             this.colGia,
             this.colNSX,
             this.colHSD});
-            this.dgvGioNhap.Location = new System.Drawing.Point(16, 48);
+            this.dgvGioNhap.Location = new System.Drawing.Point(20, 44);
             this.dgvGioNhap.Name = "dgvGioNhap";
             this.dgvGioNhap.ReadOnly = true;
             this.dgvGioNhap.RowHeadersVisible = false;
@@ -368,6 +370,14 @@
             this.lblTitleRight.TabIndex = 1;
             this.lblTitleRight.Text = "Danh sách sản phẩm trong phiếu (Giỏ hàng)";
             // 
+            // pnlLine1
+            // 
+            this.pnlLine1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(225)))), ((int)(((byte)(235)))));
+            this.pnlLine1.Location = new System.Drawing.Point(16, 44);
+            this.pnlLine1.Name = "pnlLine1";
+            this.pnlLine1.Size = new System.Drawing.Size(328, 2);
+            this.pnlLine1.TabIndex = 19;
+            // 
             // ucNhapHang
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
@@ -417,5 +427,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colGia;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNSX;
         private System.Windows.Forms.DataGridViewTextBoxColumn colHSD;
+        private System.Windows.Forms.Panel pnlLine1;
     }
 }
