@@ -1,7 +1,6 @@
 ﻿using QLST.DTO__Type_OTP_;
 using QLST.GUI__Giao_dien_;
 using QLST.GUI__Giao_dien_.QuanLyGUI;
-using QLST.GUI__Giao_dien_.QuanLyGUI.QL_User;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,7 +25,6 @@ namespace QLST
         private ucSettings _ucSettings;
         private ucLichSuDon _ucLichSuDon;
         private ucQLSP _ucQLSP;
-        private frmQuanLyNCC _frmNCC;
         private FormThuNgan _frmThuNgan;
         private ucNhapHang _ucNhapHang;
         private ucXuatKho _ucXuatKho;
