@@ -230,40 +230,40 @@
     <Compile Include="DTO %28Type OTP%29\ThuNganDTO\ThanhToan_DTO.cs" />
     <Compile Include="DTO %28Type OTP%29\ThuNganDTO\ThuNgan_DTO.cs" />
     <Compile Include="DTO %28Type OTP%29\ThuNganDTO\TrungBaySP_DTO.cs" />
-    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucCanhBao.cs">
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Kho\ucCanhBao.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucCanhBao.Designer.cs">
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Kho\ucCanhBao.Designer.cs">
       <DependentUpon>ucCanhBao.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucLichSu.cs">
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Kho\ucLichSu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucLichSu.Designer.cs">
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Kho\ucLichSu.Designer.cs">
       <DependentUpon>ucLichSu.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucNhapHang.cs">
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Kho\ucNhapHang.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucNhapHang.Designer.cs">
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Kho\ucNhapHang.Designer.cs">
       <DependentUpon>ucNhapHang.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucThemNCC.cs">
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Kho\ucThemNCC.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucThemNCC.Designer.cs">
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Kho\ucThemNCC.Designer.cs">
       <DependentUpon>ucThemNCC.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucThemSP.cs">
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Kho\ucThemSP.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucThemSP.Designer.cs">
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Kho\ucThemSP.Designer.cs">
       <DependentUpon>ucThemSP.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucXuatKho.cs">
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Kho\ucXuatKho.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucXuatKho.Designer.cs">
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Kho\ucXuatKho.Designer.cs">
       <DependentUpon>ucXuatKho.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI %28Giao dien%29\QuanLyGUI\ucLichSuDon.cs">
@@ -295,9 +295,6 @@
     </Compile>
     <Compile Include="GUI %28Giao dien%29\QuanLyGUI\ucThongKe.Designer.cs">
       <DependentUpon>ucThongKe.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Kho\ucKho.cs">
-      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI %28Giao dien%29\QuanLyGUI\ucQuanLyNhanVien.cs">
       <SubType>UserControl</SubType>
@@ -383,25 +380,25 @@
     <Compile Include="Helpers\InHoaDonHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Home\ucHome.cs">
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\ucHome.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\Home\ucHome.Designer.cs">
+    <Compile Include="GUI %28Giao dien%29\QuanLyGUI\ucHome.Designer.cs">
       <DependentUpon>ucHome.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucLichSu.resx">
+    <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\Kho\ucLichSu.resx">
       <DependentUpon>ucLichSu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucNhapHang.resx">
+    <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\Kho\ucNhapHang.resx">
       <DependentUpon>ucNhapHang.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucThemSP.resx">
+    <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\Kho\ucThemSP.resx">
       <DependentUpon>ucThemSP.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\subpanelKho\ucXuatKho.resx">
+    <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\Kho\ucXuatKho.resx">
       <DependentUpon>ucXuatKho.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\ucLichSuDon.resx">
@@ -451,7 +448,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\Home\ucHome.resx">
+    <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\ucHome.resx">
       <DependentUpon>ucHome.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
@@ -546,7 +543,6 @@
     <None Include="Resources\user.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="GUI %28Giao dien%29\QuanLyGUI\QL_User\" />
     <Folder Include="Resources\Anh_SP\" />
   </ItemGroup>
   <ItemGroup>
