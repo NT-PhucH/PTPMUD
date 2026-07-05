@@ -615,10 +615,6 @@ namespace QLST
 
             if (dr == DialogResult.Yes)
             {
-                System.Threading.Thread t = new System.Threading.Thread(() => Application.Run(new FormLogin()));
-                t.SetApartmentState(System.Threading.ApartmentState.STA);
-                t.Start();
-
                 this.Close();
             }
         }

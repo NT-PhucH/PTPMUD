@@ -129,7 +129,6 @@
             this.pictureBox2.Size = new System.Drawing.Size(26, 28);
             this.pictureBox2.TabIndex = 0;
             this.pictureBox2.TabStop = false;
-            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
             // panel1
             // 
@@ -155,7 +154,6 @@
             this.lblDoanhThuHomNay.Size = new System.Drawing.Size(400, 20);
             this.lblDoanhThuHomNay.TabIndex = 5;
             this.lblDoanhThuHomNay.Text = "label2";
-            this.lblDoanhThuHomNay.Click += new System.EventHandler(this.lblDoanhThuHomNay_Click);
             // 
             // label1
             // 
@@ -186,7 +184,6 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(1123, 65);
             this.panel3.TabIndex = 1;
-            this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
             // 
             // label3
             // 
@@ -206,7 +203,6 @@
             this.pictureBox3.Size = new System.Drawing.Size(39, 37);
             this.pictureBox3.TabIndex = 0;
             this.pictureBox3.TabStop = false;
-            this.pictureBox3.Click += new System.EventHandler(this.pictureBox3_Click);
             // 
             // chartDoanhThu
             // 
@@ -227,7 +223,6 @@
             this.chartDoanhThu.Size = new System.Drawing.Size(1123, 300);
             this.chartDoanhThu.TabIndex = 2;
             this.chartDoanhThu.Text = "chart1";
-            this.chartDoanhThu.Click += new System.EventHandler(this.chartDoanhThu_Click);
             // 
             // panel4
             // 
@@ -249,7 +244,6 @@
             this.label4.Size = new System.Drawing.Size(221, 31);
             this.label4.TabIndex = 1;
             this.label4.Text = "Cảnh báo kho hàng";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // pictureBox4
             // 
@@ -363,7 +357,6 @@
             this.label6.Size = new System.Drawing.Size(159, 25);
             this.label6.TabIndex = 1;
             this.label6.Text = "Hàng sắp hết tồn";
-            this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // pictureBox6
             // 

@@ -29,7 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormThuNgan));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cboLoaiSanPham = new System.Windows.Forms.ComboBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.txtTimKiem = new System.Windows.Forms.TextBox();
@@ -58,7 +60,6 @@
             this.btnThanhToan = new System.Windows.Forms.Button();
             this.chuyenTrang1 = new QLST.GUI__Giao_dien_.Thu_Ngan.ChuyenTrang();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.cboLoaiSanPham = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -89,6 +90,15 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(876, 56);
             this.panel1.TabIndex = 0;
+            // 
+            // cboLoaiSanPham
+            // 
+            this.cboLoaiSanPham.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboLoaiSanPham.FormattingEnabled = true;
+            this.cboLoaiSanPham.Location = new System.Drawing.Point(660, 24);
+            this.cboLoaiSanPham.Name = "cboLoaiSanPham";
+            this.cboLoaiSanPham.Size = new System.Drawing.Size(210, 24);
+            this.cboLoaiSanPham.TabIndex = 6;
             // 
             // pictureBox4
             // 
@@ -421,15 +431,6 @@
             this.flowLayoutPanel2.Size = new System.Drawing.Size(335, 364);
             this.flowLayoutPanel2.TabIndex = 2;
             // 
-            // cboLoaiSanPham
-            // 
-            this.cboLoaiSanPham.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboLoaiSanPham.FormattingEnabled = true;
-            this.cboLoaiSanPham.Location = new System.Drawing.Point(660, 24);
-            this.cboLoaiSanPham.Name = "cboLoaiSanPham";
-            this.cboLoaiSanPham.Size = new System.Drawing.Size(210, 24);
-            this.cboLoaiSanPham.TabIndex = 6;
-            // 
             // FormThuNgan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -439,6 +440,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormThuNgan";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Thu Ngân";

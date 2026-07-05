@@ -2,15 +2,8 @@
 {
     partial class FormLogin
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,10 +15,6 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
@@ -51,6 +40,7 @@
             this.lblWelcomeBack = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.timerEmail = new System.Windows.Forms.Timer(this.components);
+            this.timerMatKhau = new System.Windows.Forms.Timer(this.components);
             this.panelTitleBar.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -198,8 +188,10 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(19, 3);
             this.panel3.Name = "panel3";
+            this.panel3.Padding = new System.Windows.Forms.Padding(0, 0, 35, 2);
             this.panel3.Size = new System.Drawing.Size(287, 62);
             this.panel3.TabIndex = 0;
+            this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.Panel_Paint);
             // 
             // picShowHide
             // 
@@ -216,6 +208,7 @@
             // lblMatKhau
             // 
             this.lblMatKhau.AutoSize = true;
+            this.lblMatKhau.BackColor = System.Drawing.Color.White;
             this.lblMatKhau.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.lblMatKhau.Location = new System.Drawing.Point(0, 0);
             this.lblMatKhau.Name = "lblMatKhau";
@@ -223,16 +216,19 @@
             this.lblMatKhau.TabIndex = 1;
             this.lblMatKhau.Text = "Mật khẩu";
             this.lblMatKhau.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblMatKhau.Click += new System.EventHandler(this.lblMatKhau_Click);
             // 
             // txtMatKhau
             // 
             this.txtMatKhau.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtMatKhau.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.txtMatKhau.Location = new System.Drawing.Point(0, 40);
+            this.txtMatKhau.Location = new System.Drawing.Point(0, 38);
             this.txtMatKhau.Name = "txtMatKhau";
-            this.txtMatKhau.Size = new System.Drawing.Size(287, 22);
+            this.txtMatKhau.Size = new System.Drawing.Size(252, 22);
             this.txtMatKhau.TabIndex = 0;
             this.txtMatKhau.UseSystemPasswordChar = true;
+            this.txtMatKhau.Enter += new System.EventHandler(this.TxtMatKhau_Enter);
+            this.txtMatKhau.Leave += new System.EventHandler(this.TxtMatKhau_Leave);
             // 
             // tableLayoutPanel2
             // 
@@ -256,12 +252,15 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(19, 3);
             this.panel2.Name = "panel2";
+            this.panel2.Padding = new System.Windows.Forms.Padding(0, 0, 0, 2);
             this.panel2.Size = new System.Drawing.Size(287, 62);
             this.panel2.TabIndex = 0;
+            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.Panel_Paint);
             // 
             // lblEmail
             // 
             this.lblEmail.AutoSize = true;
+            this.lblEmail.BackColor = System.Drawing.Color.White;
             this.lblEmail.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.lblEmail.Location = new System.Drawing.Point(0, 0);
             this.lblEmail.Name = "lblEmail";
@@ -269,16 +268,18 @@
             this.lblEmail.TabIndex = 1;
             this.lblEmail.Text = "Tên đăng nhập";
             this.lblEmail.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblEmail.Click += new System.EventHandler(this.TxtEmail_Enter);
+            this.lblEmail.Click += new System.EventHandler(this.lblEmail_Click);
             // 
             // txtEmail
             // 
             this.txtEmail.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtEmail.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.txtEmail.Location = new System.Drawing.Point(0, 40);
+            this.txtEmail.Location = new System.Drawing.Point(0, 38);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(287, 22);
             this.txtEmail.TabIndex = 0;
+            this.txtEmail.Enter += new System.EventHandler(this.TxtEmail_Enter);
+            this.txtEmail.Leave += new System.EventHandler(this.TxtEmail_Leave);
             // 
             // lblChuThich
             // 
@@ -315,6 +316,12 @@
             // timerEmail
             // 
             this.timerEmail.Interval = 10;
+            this.timerEmail.Tick += new System.EventHandler(this.TimerEmail_Tick);
+            // 
+            // timerMatKhau
+            // 
+            this.timerMatKhau.Interval = 10;
+            this.timerMatKhau.Tick += new System.EventHandler(this.TimerMatKhau_Tick);
             // 
             // FormLogin
             // 
@@ -328,11 +335,13 @@
             this.Controls.Add(this.panelTitleBar);
             this.Font = new System.Drawing.Font("Segoe UI", 9.75F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "FormLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormLogin";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormLogin_FormClosing);
+            this.Load += new System.EventHandler(this.FormLogin_Load);
             this.panelTitleBar.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
@@ -372,5 +381,6 @@
         private System.Windows.Forms.TextBox txtMatKhau;
         private System.Windows.Forms.PictureBox picShowHide;
         private RoundedButton btnLogIn;
+        private System.Windows.Forms.Timer timerMatKhau;
     }
 }

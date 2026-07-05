@@ -278,6 +278,8 @@
             // dgvNV
             // 
             this.dgvNV.AllowUserToAddRows = false;
+            this.dgvNV.AllowUserToResizeColumns = false;
+            this.dgvNV.AllowUserToResizeRows = false;
             this.dgvNV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvNV.BackgroundColor = System.Drawing.Color.White;
             this.dgvNV.BorderStyle = System.Windows.Forms.BorderStyle.None;
