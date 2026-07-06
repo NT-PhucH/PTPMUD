@@ -230,7 +230,6 @@ namespace QLST
             menu.Font = new System.Drawing.Font("Segoe UI", 10F);
 
             menu.Items.Add("📊 Xuất ra file Excel (.xlsx)", null, (s, ev) => ThucHienXuatFile("Excel"));
-            menu.Items.Add("📕 Xuất ra file PDF (.pdf)", null, (s, ev) => ThucHienXuatFile("PDF"));
 
             menu.Show(btnXuatData, new Point(0, -menu.PreferredSize.Height - 10));
         }

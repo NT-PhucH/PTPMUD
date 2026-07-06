@@ -407,6 +407,9 @@
     <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\ucQLSP.resx">
       <DependentUpon>ucQLSP.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\ucQuanLyNCC.resx">
+      <DependentUpon>ucQuanLyNCC.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\ucSettings.resx">
       <DependentUpon>ucSettings.cs</DependentUpon>
     </EmbeddedResource>

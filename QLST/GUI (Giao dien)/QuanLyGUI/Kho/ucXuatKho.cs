@@ -34,7 +34,6 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
 
         private void WireEvents()
         {
-            btnThemSPXuat.Click += BtnThemSP_Click;
             btnThemVaoGioXuat.Click += BtnThemVaoGioXuat_Click;
             btnXoaDongXuat.Click += BtnXoaDongXuat_Click;
             btnLuuPhieuXuat.Click += BtnLuuPhieuXuat_Click;

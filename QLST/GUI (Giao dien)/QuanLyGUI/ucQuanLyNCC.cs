@@ -2,6 +2,7 @@
 using QLST.DTO__Type_OTP_.QuanLyDTO;
 using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace QLST.GUI__Giao_dien_.QuanLyGUI
@@ -20,7 +21,9 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
 
         private void RegisterEvents()
         {
-            txtTimKiem.TextChanged += (s, e) => LoadData();
+            // Bỏ sự kiện TextChanged để chỉ lọc khi ấn nút
+            btnLoc.Click += (s, e) => LoadData();
+
             dgvNCC.SelectionChanged += DgvNCC_SelectionChanged;
             dgvNCC.CellClick += DgvNCC_CellClick;
             btnSua.Click += BtnSua_Click;
@@ -32,8 +35,15 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             dgvNCC.SelectionChanged -= DgvNCC_SelectionChanged;
             dgvNCC.Rows.Clear();
 
+            // 1. Lấy danh sách từ BLL
             var list = string.IsNullOrWhiteSpace(txtTimKiem.Text)
                 ? _bll.GetAll() : _bll.Search(txtTimKiem.Text);
+
+            // 2. Logic ẩn NCC đã ngừng giao dịch nếu không tích checkbox
+            if (!chkHienNgungGD.Checked)
+            {
+                list = list.Where(n => n.TrangThai == true).ToList();
+            }
 
             long tongTien = 0;
             foreach (var n in list)

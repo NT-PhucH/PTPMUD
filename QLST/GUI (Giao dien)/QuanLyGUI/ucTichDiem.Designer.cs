@@ -24,8 +24,6 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.pnlHeader = new System.Windows.Forms.Panel();
-            this.lblTitle = new System.Windows.Forms.Label();
             this.pSearch = new System.Windows.Forms.Panel();
             this.lblSearchIcon = new System.Windows.Forms.Label();
             this.txtTimKiem = new System.Windows.Forms.TextBox();
@@ -44,7 +42,6 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.txtSDT = new System.Windows.Forms.TextBox();
             this.lblSDT = new System.Windows.Forms.Label();
             this.lblThongTinKH = new System.Windows.Forms.Label();
-            this.pnlHeader.SuspendLayout();
             this.pSearch.SuspendLayout();
             this.tableLayoutPanelMain.SuspendLayout();
             this.pnlDanhSach.SuspendLayout();
@@ -54,33 +51,13 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.pnlInfo.SuspendLayout();
             this.SuspendLayout();
             // 
-            // pnlHeader
-            // 
-            this.pnlHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(60)))));
-            this.pnlHeader.Controls.Add(this.lblTitle);
-            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
-            this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(1150, 50);
-            this.pnlHeader.TabIndex = 0;
-            // 
-            // lblTitle
-            // 
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTitle.Location = new System.Drawing.Point(15, 13);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(467, 30);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "👥  QUẢN LÝ KHÁCH HÀNG && TÍCH ĐIỂM";
-            // 
             // pSearch
             // 
             this.pSearch.BackColor = System.Drawing.Color.White;
             this.pSearch.Controls.Add(this.lblSearchIcon);
             this.pSearch.Controls.Add(this.txtTimKiem);
             this.pSearch.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pSearch.Location = new System.Drawing.Point(0, 50);
+            this.pSearch.Location = new System.Drawing.Point(0, 0);
             this.pSearch.Name = "pSearch";
             this.pSearch.Padding = new System.Windows.Forms.Padding(10, 8, 10, 0);
             this.pSearch.Size = new System.Drawing.Size(1150, 44);
@@ -113,11 +90,11 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.tableLayoutPanelMain.Controls.Add(this.pnlHistory, 1, 0);
             this.tableLayoutPanelMain.Controls.Add(this.pnlInfo, 2, 0);
             this.tableLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelMain.Location = new System.Drawing.Point(0, 94);
+            this.tableLayoutPanelMain.Location = new System.Drawing.Point(0, 44);
             this.tableLayoutPanelMain.Name = "tableLayoutPanelMain";
             this.tableLayoutPanelMain.RowCount = 1;
             this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelMain.Size = new System.Drawing.Size(1150, 586);
+            this.tableLayoutPanelMain.Size = new System.Drawing.Size(1150, 636);
             this.tableLayoutPanelMain.TabIndex = 3;
             // 
             // pnlDanhSach
@@ -129,7 +106,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.pnlDanhSach.Location = new System.Drawing.Point(3, 3);
             this.pnlDanhSach.Name = "pnlDanhSach";
             this.pnlDanhSach.Padding = new System.Windows.Forms.Padding(10);
-            this.pnlDanhSach.Size = new System.Drawing.Size(511, 580);
+            this.pnlDanhSach.Size = new System.Drawing.Size(511, 630);
             this.pnlDanhSach.TabIndex = 0;
             // 
             // lblDanhSachKH
@@ -173,7 +150,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.dgvKH.RowHeadersWidth = 51;
             this.dgvKH.RowTemplate.Height = 28;
             this.dgvKH.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvKH.Size = new System.Drawing.Size(491, 520);
+            this.dgvKH.Size = new System.Drawing.Size(491, 570);
             this.dgvKH.TabIndex = 2;
             this.dgvKH.SelectionChanged += new System.EventHandler(this.dgvKH_SelectionChanged);
             // 
@@ -186,7 +163,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.pnlHistory.Location = new System.Drawing.Point(520, 3);
             this.pnlHistory.Name = "pnlHistory";
             this.pnlHistory.Padding = new System.Windows.Forms.Padding(10);
-            this.pnlHistory.Size = new System.Drawing.Size(339, 580);
+            this.pnlHistory.Size = new System.Drawing.Size(339, 630);
             this.pnlHistory.TabIndex = 1;
             // 
             // lblLichSu
@@ -229,7 +206,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.dgvLichSu.RowHeadersWidth = 51;
             this.dgvLichSu.RowTemplate.Height = 28;
             this.dgvLichSu.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvLichSu.Size = new System.Drawing.Size(319, 520);
+            this.dgvLichSu.Size = new System.Drawing.Size(319, 570);
             this.dgvLichSu.TabIndex = 2;
             // 
             // pnlInfo
@@ -246,7 +223,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.pnlInfo.Location = new System.Drawing.Point(865, 3);
             this.pnlInfo.Name = "pnlInfo";
             this.pnlInfo.Padding = new System.Windows.Forms.Padding(15);
-            this.pnlInfo.Size = new System.Drawing.Size(282, 580);
+            this.pnlInfo.Size = new System.Drawing.Size(282, 630);
             this.pnlInfo.TabIndex = 2;
             // 
             // btnLamMoi
@@ -331,11 +308,9 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.Controls.Add(this.tableLayoutPanelMain);
             this.Controls.Add(this.pSearch);
-            this.Controls.Add(this.pnlHeader);
             this.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.Name = "ucTichDiem";
             this.Size = new System.Drawing.Size(1150, 680);
-            this.pnlHeader.ResumeLayout(false);
             this.pSearch.ResumeLayout(false);
             this.pSearch.PerformLayout();
             this.tableLayoutPanelMain.ResumeLayout(false);
@@ -351,9 +326,6 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel pnlHeader;
-        private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Panel pSearch;
         private System.Windows.Forms.Label lblSearchIcon;
         private System.Windows.Forms.TextBox txtTimKiem;

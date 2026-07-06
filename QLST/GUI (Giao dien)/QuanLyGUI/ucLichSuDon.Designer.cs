@@ -24,8 +24,6 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
-            this.pnlHeader = new System.Windows.Forms.Panel();
-            this.lblTitle = new System.Windows.Forms.Label();
             this.pnlFilter = new System.Windows.Forms.Panel();
             this.tlpFilter = new System.Windows.Forms.TableLayoutPanel();
             this.lblFromDate = new System.Windows.Forms.Label();
@@ -47,7 +45,6 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.dgvDetails = new System.Windows.Forms.DataGridView();
             this.lblDetailTitle = new System.Windows.Forms.Label();
             this.tlpMain.SuspendLayout();
-            this.pnlHeader.SuspendLayout();
             this.pnlFilter.SuspendLayout();
             this.tlpFilter.SuspendLayout();
             this.tlpData.SuspendLayout();
@@ -61,40 +58,17 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             // 
             this.tlpMain.ColumnCount = 1;
             this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpMain.Controls.Add(this.pnlHeader, 0, 0);
-            this.tlpMain.Controls.Add(this.pnlFilter, 0, 1);
-            this.tlpMain.Controls.Add(this.tlpData, 0, 2);
+            this.tlpMain.Controls.Add(this.pnlFilter, 0, 0);
+            this.tlpMain.Controls.Add(this.tlpData, 0, 1);
             this.tlpMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpMain.Location = new System.Drawing.Point(0, 0);
             this.tlpMain.Name = "tlpMain";
-            this.tlpMain.RowCount = 3;
-            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tlpMain.RowCount = 2;
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlpMain.Size = new System.Drawing.Size(1000, 700);
             this.tlpMain.TabIndex = 0;
-            // 
-            // pnlHeader
-            // 
-            this.pnlHeader.BackColor = System.Drawing.Color.White;
-            this.pnlHeader.Controls.Add(this.lblTitle);
-            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlHeader.Location = new System.Drawing.Point(3, 3);
-            this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Padding = new System.Windows.Forms.Padding(20);
-            this.pnlHeader.Size = new System.Drawing.Size(994, 74);
-            this.pnlHeader.TabIndex = 3;
-            // 
-            // lblTitle
-            // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(60)))));
-            this.lblTitle.Location = new System.Drawing.Point(20, 0);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(271, 46);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "Lịch sử hóa đơn";
             // 
             // pnlFilter
             // 
@@ -102,7 +76,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.pnlFilter.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlFilter.Controls.Add(this.tlpFilter);
             this.pnlFilter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlFilter.Location = new System.Drawing.Point(3, 83);
+            this.pnlFilter.Location = new System.Drawing.Point(3, 3);
             this.pnlFilter.Name = "pnlFilter";
             this.pnlFilter.Padding = new System.Windows.Forms.Padding(10);
             this.pnlFilter.Size = new System.Drawing.Size(994, 94);
@@ -265,11 +239,11 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.tlpData.Controls.Add(this.pnlInvoices, 0, 0);
             this.tlpData.Controls.Add(this.pnlDetail, 1, 0);
             this.tlpData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpData.Location = new System.Drawing.Point(3, 183);
+            this.tlpData.Location = new System.Drawing.Point(3, 103);
             this.tlpData.Name = "tlpData";
             this.tlpData.RowCount = 1;
             this.tlpData.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpData.Size = new System.Drawing.Size(994, 514);
+            this.tlpData.Size = new System.Drawing.Size(994, 594);
             this.tlpData.TabIndex = 3;
             // 
             // pnlInvoices
@@ -282,7 +256,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.pnlInvoices.Location = new System.Drawing.Point(3, 3);
             this.pnlInvoices.Name = "pnlInvoices";
             this.pnlInvoices.Padding = new System.Windows.Forms.Padding(10);
-            this.pnlInvoices.Size = new System.Drawing.Size(640, 508);
+            this.pnlInvoices.Size = new System.Drawing.Size(640, 588);
             this.pnlInvoices.TabIndex = 0;
             // 
             // dgvInvoices
@@ -311,7 +285,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.dgvInvoices.RowHeadersVisible = false;
             this.dgvInvoices.RowHeadersWidth = 51;
             this.dgvInvoices.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvInvoices.Size = new System.Drawing.Size(618, 451);
+            this.dgvInvoices.Size = new System.Drawing.Size(618, 531);
             this.dgvInvoices.TabIndex = 1;
             this.dgvInvoices.SelectionChanged += new System.EventHandler(this.dgvInvoices_SelectionChanged);
             // 
@@ -336,7 +310,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.pnlDetail.Location = new System.Drawing.Point(649, 3);
             this.pnlDetail.Name = "pnlDetail";
             this.pnlDetail.Padding = new System.Windows.Forms.Padding(10);
-            this.pnlDetail.Size = new System.Drawing.Size(342, 508);
+            this.pnlDetail.Size = new System.Drawing.Size(342, 588);
             this.pnlDetail.TabIndex = 1;
             // 
             // dgvDetails
@@ -364,7 +338,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.dgvDetails.ReadOnly = true;
             this.dgvDetails.RowHeadersVisible = false;
             this.dgvDetails.RowHeadersWidth = 51;
-            this.dgvDetails.Size = new System.Drawing.Size(320, 451);
+            this.dgvDetails.Size = new System.Drawing.Size(320, 531);
             this.dgvDetails.TabIndex = 0;
             // 
             // lblDetailTitle
@@ -388,8 +362,6 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.Name = "ucLichSuDon";
             this.Size = new System.Drawing.Size(1000, 700);
             this.tlpMain.ResumeLayout(false);
-            this.pnlHeader.ResumeLayout(false);
-            this.pnlHeader.PerformLayout();
             this.pnlFilter.ResumeLayout(false);
             this.tlpFilter.ResumeLayout(false);
             this.tlpFilter.PerformLayout();
@@ -403,8 +375,6 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
         }
 
         private System.Windows.Forms.TableLayoutPanel tlpMain;
-        private System.Windows.Forms.Panel pnlHeader;
-        private System.Windows.Forms.Label lblTitle;
 
         private System.Windows.Forms.Panel pnlFilter;
         private System.Windows.Forms.TableLayoutPanel tlpFilter;

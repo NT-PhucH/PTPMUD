@@ -41,7 +41,6 @@
             this.tlpMiddle = new System.Windows.Forms.TableLayoutPanel();
             this.chartDoanhThu = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.pnlTopProduct = new System.Windows.Forms.Panel();
-            this.btnCTTopSp = new System.Windows.Forms.Button();
             this.dgvTopProduct = new System.Windows.Forms.DataGridView();
             this.lblTitleTop = new System.Windows.Forms.Label();
             this.pnlBottom = new System.Windows.Forms.Panel();
@@ -342,7 +341,6 @@
             // pnlTopProduct
             // 
             this.pnlTopProduct.BackColor = System.Drawing.Color.White;
-            this.pnlTopProduct.Controls.Add(this.btnCTTopSp);
             this.pnlTopProduct.Controls.Add(this.dgvTopProduct);
             this.pnlTopProduct.Controls.Add(this.lblTitleTop);
             this.pnlTopProduct.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -351,19 +349,6 @@
             this.pnlTopProduct.Name = "pnlTopProduct";
             this.pnlTopProduct.Size = new System.Drawing.Size(373, 574);
             this.pnlTopProduct.TabIndex = 1;
-            // 
-            // btnCTTopSp
-            // 
-            this.btnCTTopSp.AutoSize = true;
-            this.btnCTTopSp.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnCTTopSp.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCTTopSp.Location = new System.Drawing.Point(0, 544);
-            this.btnCTTopSp.Name = "btnCTTopSp";
-            this.btnCTTopSp.Size = new System.Drawing.Size(373, 30);
-            this.btnCTTopSp.TabIndex = 3;
-            this.btnCTTopSp.Text = "Xem chi tiết >>";
-            this.btnCTTopSp.UseVisualStyleBackColor = true;
-            this.btnCTTopSp.Click += new System.EventHandler(this.btnCTTopSp_Click);
             // 
             // dgvTopProduct
             // 
@@ -443,7 +428,6 @@
             this.tlpMiddle.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chartDoanhThu)).EndInit();
             this.pnlTopProduct.ResumeLayout(false);
-            this.pnlTopProduct.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTopProduct)).EndInit();
             this.pnlBottom.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -475,7 +459,6 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chartDoanhThu;
         private System.Windows.Forms.Panel pnlTopProduct;
         private System.Windows.Forms.Label lblTitleTop;
-        private System.Windows.Forms.Button btnCTTopSp;
         private System.Windows.Forms.Panel pnlBottom;
         private System.Windows.Forms.Button btnXuatData;
         private System.Windows.Forms.DataGridView dgvTopProduct;

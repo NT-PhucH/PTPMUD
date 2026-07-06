@@ -17,16 +17,16 @@
 
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.pnlHeader = new System.Windows.Forms.Panel();
-            this.lblTitle = new System.Windows.Forms.Label();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlSearch = new System.Windows.Forms.Panel();
-            this.lblTongTien = new System.Windows.Forms.Label();
-            this.lblTongNCC = new System.Windows.Forms.Label();
             this.txtTimKiem = new System.Windows.Forms.TextBox();
             this.lblSearch = new System.Windows.Forms.Label();
+            this.chkHienNgungGD = new System.Windows.Forms.CheckBox();
+            this.btnLoc = new System.Windows.Forms.Button();
+            this.lblTongTien = new System.Windows.Forms.Label();
+            this.lblTongNCC = new System.Windows.Forms.Label();
             this.pnlLeft = new System.Windows.Forms.Panel();
             this.dgvNCC = new System.Windows.Forms.DataGridView();
             this.colID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -50,56 +50,72 @@
             this.txtMaNCC = new System.Windows.Forms.TextBox();
             this.lblMaNCC = new System.Windows.Forms.Label();
             this.lblInfoTitle = new System.Windows.Forms.Label();
-            this.pnlHeader.SuspendLayout();
             this.pnlSearch.SuspendLayout();
             this.pnlLeft.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvNCC)).BeginInit();
             this.pnlRight.SuspendLayout();
             this.SuspendLayout();
             // 
-            // pnlHeader
-            // 
-            this.pnlHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(60)))));
-            this.pnlHeader.Controls.Add(this.lblTitle);
-            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
-            this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(1150, 50);
-            this.pnlHeader.TabIndex = 0;
-            // 
-            // lblTitle
-            // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTitle.Location = new System.Drawing.Point(15, 12);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(263, 25);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "🏭  QUẢN LÝ NHÀ CUNG CẤP";
-            // 
             // pnlSearch
             // 
             this.pnlSearch.BackColor = System.Drawing.Color.White;
-            this.pnlSearch.Controls.Add(this.lblTongTien);
-            this.pnlSearch.Controls.Add(this.lblTongNCC);
+            this.pnlSearch.Controls.Add(this.btnLoc);
+            this.pnlSearch.Controls.Add(this.chkHienNgungGD);
             this.pnlSearch.Controls.Add(this.txtTimKiem);
             this.pnlSearch.Controls.Add(this.lblSearch);
             this.pnlSearch.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlSearch.Location = new System.Drawing.Point(0, 50);
+            this.pnlSearch.Location = new System.Drawing.Point(0, 0);
             this.pnlSearch.Name = "pnlSearch";
             this.pnlSearch.Padding = new System.Windows.Forms.Padding(10, 8, 10, 0);
             this.pnlSearch.Size = new System.Drawing.Size(1150, 45);
             this.pnlSearch.TabIndex = 1;
+            // 
+            // lblSearch
+            // 
+            this.lblSearch.AutoSize = true;
+            this.lblSearch.Location = new System.Drawing.Point(10, 12);
+            this.lblSearch.Name = "lblSearch";
+            this.lblSearch.Size = new System.Drawing.Size(103, 21);
+            this.lblSearch.TabIndex = 0;
+            this.lblSearch.Text = "🔍 Tìm kiếm:";
+            // 
+            // txtTimKiem
+            // 
+            this.txtTimKiem.Location = new System.Drawing.Point(110, 9);
+            this.txtTimKiem.Name = "txtTimKiem";
+            this.txtTimKiem.Size = new System.Drawing.Size(220, 29);
+            this.txtTimKiem.TabIndex = 1;
+            // 
+            // chkHienNgungGD
+            // 
+            this.chkHienNgungGD.AutoSize = true;
+            this.chkHienNgungGD.Location = new System.Drawing.Point(350, 11);
+            this.chkHienNgungGD.Name = "chkHienNgungGD";
+            this.chkHienNgungGD.Size = new System.Drawing.Size(206, 25);
+            this.chkHienNgungGD.TabIndex = 2;
+            this.chkHienNgungGD.Text = "Hiện cả NCC ngừng GD";
+            this.chkHienNgungGD.UseVisualStyleBackColor = true;
+            // 
+            // btnLoc
+            // 
+            this.btnLoc.BackColor = System.Drawing.Color.Teal;
+            this.btnLoc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLoc.ForeColor = System.Drawing.Color.White;
+            this.btnLoc.Location = new System.Drawing.Point(580, 8);
+            this.btnLoc.Name = "btnLoc";
+            this.btnLoc.Size = new System.Drawing.Size(80, 30);
+            this.btnLoc.TabIndex = 3;
+            this.btnLoc.Text = "Lọc";
+            this.btnLoc.UseVisualStyleBackColor = false;
             // 
             // lblTongTien
             // 
             this.lblTongTien.AutoSize = true;
             this.lblTongTien.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
             this.lblTongTien.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(139)))), ((int)(((byte)(34)))));
-            this.lblTongTien.Location = new System.Drawing.Point(580, 12);
+            this.lblTongTien.Location = new System.Drawing.Point(326, 61);
             this.lblTongTien.Name = "lblTongTien";
-            this.lblTongTien.Size = new System.Drawing.Size(107, 17);
+            this.lblTongTien.Size = new System.Drawing.Size(130, 21);
             this.lblTongTien.TabIndex = 3;
             this.lblTongTien.Text = "Tổng tiền nhập:";
             // 
@@ -108,27 +124,11 @@
             this.lblTongNCC.AutoSize = true;
             this.lblTongNCC.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
             this.lblTongNCC.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(100)))), ((int)(((byte)(200)))));
-            this.lblTongNCC.Location = new System.Drawing.Point(430, 12);
+            this.lblTongNCC.Location = new System.Drawing.Point(50, 61);
             this.lblTongNCC.Name = "lblTongNCC";
-            this.lblTongNCC.Size = new System.Drawing.Size(73, 17);
+            this.lblTongNCC.Size = new System.Drawing.Size(90, 21);
             this.lblTongNCC.TabIndex = 2;
             this.lblTongNCC.Text = "Tổng NCC:";
-            // 
-            // txtTimKiem
-            // 
-            this.txtTimKiem.Location = new System.Drawing.Point(100, 9);
-            this.txtTimKiem.Name = "txtTimKiem";
-            this.txtTimKiem.Size = new System.Drawing.Size(300, 24);
-            this.txtTimKiem.TabIndex = 1;
-            // 
-            // lblSearch
-            // 
-            this.lblSearch.AutoSize = true;
-            this.lblSearch.Location = new System.Drawing.Point(10, 12);
-            this.lblSearch.Name = "lblSearch";
-            this.lblSearch.Size = new System.Drawing.Size(81, 17);
-            this.lblSearch.TabIndex = 0;
-            this.lblSearch.Text = "🔍 Tìm kiếm:";
             // 
             // pnlLeft
             // 
@@ -147,14 +147,14 @@
             this.dgvNCC.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvNCC.BackgroundColor = System.Drawing.Color.White;
             this.dgvNCC.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(60)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvNCC.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(60)))));
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvNCC.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.dgvNCC.ColumnHeadersHeight = 36;
             this.dgvNCC.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colID,
@@ -171,6 +171,7 @@
             this.dgvNCC.Name = "dgvNCC";
             this.dgvNCC.ReadOnly = true;
             this.dgvNCC.RowHeadersVisible = false;
+            this.dgvNCC.RowHeadersWidth = 51;
             this.dgvNCC.RowTemplate.Height = 35;
             this.dgvNCC.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvNCC.Size = new System.Drawing.Size(730, 565);
@@ -179,6 +180,7 @@
             // colID
             // 
             this.colID.HeaderText = "ID";
+            this.colID.MinimumWidth = 6;
             this.colID.Name = "colID";
             this.colID.ReadOnly = true;
             this.colID.Visible = false;
@@ -187,6 +189,7 @@
             // 
             this.colMa.FillWeight = 12F;
             this.colMa.HeaderText = "Mã NCC";
+            this.colMa.MinimumWidth = 6;
             this.colMa.Name = "colMa";
             this.colMa.ReadOnly = true;
             // 
@@ -194,6 +197,7 @@
             // 
             this.colTen.FillWeight = 25F;
             this.colTen.HeaderText = "Tên NCC";
+            this.colTen.MinimumWidth = 6;
             this.colTen.Name = "colTen";
             this.colTen.ReadOnly = true;
             // 
@@ -201,6 +205,7 @@
             // 
             this.colSDT.FillWeight = 13F;
             this.colSDT.HeaderText = "SĐT";
+            this.colSDT.MinimumWidth = 6;
             this.colSDT.Name = "colSDT";
             this.colSDT.ReadOnly = true;
             // 
@@ -208,24 +213,27 @@
             // 
             this.colDC.FillWeight = 20F;
             this.colDC.HeaderText = "Địa chỉ";
+            this.colDC.MinimumWidth = 6;
             this.colDC.Name = "colDC";
             this.colDC.ReadOnly = true;
             // 
             // colSoPN
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.colSoPN.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colSoPN.DefaultCellStyle = dataGridViewCellStyle8;
             this.colSoPN.FillWeight = 8F;
             this.colSoPN.HeaderText = "Số PN";
+            this.colSoPN.MinimumWidth = 6;
             this.colSoPN.Name = "colSoPN";
             this.colSoPN.ReadOnly = true;
             // 
             // colTong
             // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.colTong.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.colTong.DefaultCellStyle = dataGridViewCellStyle9;
             this.colTong.FillWeight = 15F;
             this.colTong.HeaderText = "Tổng tiền";
+            this.colTong.MinimumWidth = 6;
             this.colTong.Name = "colTong";
             this.colTong.ReadOnly = true;
             // 
@@ -234,6 +242,7 @@
             this.colTrangThai.FillWeight = 18F;
             this.colTrangThai.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.colTrangThai.HeaderText = "Trạng thái";
+            this.colTrangThai.MinimumWidth = 6;
             this.colTrangThai.Name = "colTrangThai";
             this.colTrangThai.ReadOnly = true;
             // 
@@ -302,7 +311,7 @@
             this.lblDiaChi.AutoSize = true;
             this.lblDiaChi.Location = new System.Drawing.Point(15, 270);
             this.lblDiaChi.Name = "lblDiaChi";
-            this.lblDiaChi.Size = new System.Drawing.Size(50, 17);
+            this.lblDiaChi.Size = new System.Drawing.Size(60, 21);
             this.lblDiaChi.TabIndex = 8;
             this.lblDiaChi.Text = "Địa chỉ:";
             // 
@@ -310,7 +319,7 @@
             // 
             this.txtSDT.Location = new System.Drawing.Point(15, 232);
             this.txtSDT.Name = "txtSDT";
-            this.txtSDT.Size = new System.Drawing.Size(340, 24);
+            this.txtSDT.Size = new System.Drawing.Size(340, 29);
             this.txtSDT.TabIndex = 7;
             // 
             // lblSDT
@@ -318,7 +327,7 @@
             this.lblSDT.AutoSize = true;
             this.lblSDT.Location = new System.Drawing.Point(15, 210);
             this.lblSDT.Name = "lblSDT";
-            this.lblSDT.Size = new System.Drawing.Size(88, 17);
+            this.lblSDT.Size = new System.Drawing.Size(104, 21);
             this.lblSDT.TabIndex = 6;
             this.lblSDT.Text = "Số điện thoại:";
             // 
@@ -326,7 +335,7 @@
             // 
             this.txtTenNCC.Location = new System.Drawing.Point(15, 172);
             this.txtTenNCC.Name = "txtTenNCC";
-            this.txtTenNCC.Size = new System.Drawing.Size(340, 24);
+            this.txtTenNCC.Size = new System.Drawing.Size(340, 29);
             this.txtTenNCC.TabIndex = 5;
             // 
             // lblTenNCC
@@ -334,7 +343,7 @@
             this.lblTenNCC.AutoSize = true;
             this.lblTenNCC.Location = new System.Drawing.Point(15, 150);
             this.lblTenNCC.Name = "lblTenNCC";
-            this.lblTenNCC.Size = new System.Drawing.Size(73, 17);
+            this.lblTenNCC.Size = new System.Drawing.Size(83, 21);
             this.lblTenNCC.TabIndex = 4;
             this.lblTenNCC.Text = "Tên NCC: *";
             // 
@@ -345,7 +354,7 @@
             this.lblGhiChuMa.ForeColor = System.Drawing.Color.Gray;
             this.lblGhiChuMa.Location = new System.Drawing.Point(15, 117);
             this.lblGhiChuMa.Name = "lblGhiChuMa";
-            this.lblGhiChuMa.Size = new System.Drawing.Size(189, 15);
+            this.lblGhiChuMa.Size = new System.Drawing.Size(238, 20);
             this.lblGhiChuMa.TabIndex = 3;
             this.lblGhiChuMa.Text = "* Cập nhật không thay đổi được mã";
             // 
@@ -355,7 +364,7 @@
             this.txtMaNCC.Location = new System.Drawing.Point(15, 90);
             this.txtMaNCC.Name = "txtMaNCC";
             this.txtMaNCC.ReadOnly = true;
-            this.txtMaNCC.Size = new System.Drawing.Size(340, 24);
+            this.txtMaNCC.Size = new System.Drawing.Size(340, 29);
             this.txtMaNCC.TabIndex = 2;
             // 
             // lblMaNCC
@@ -363,7 +372,7 @@
             this.lblMaNCC.AutoSize = true;
             this.lblMaNCC.Location = new System.Drawing.Point(15, 68);
             this.lblMaNCC.Name = "lblMaNCC";
-            this.lblMaNCC.Size = new System.Drawing.Size(59, 17);
+            this.lblMaNCC.Size = new System.Drawing.Size(71, 21);
             this.lblMaNCC.TabIndex = 1;
             this.lblMaNCC.Text = "Mã NCC:";
             // 
@@ -374,24 +383,23 @@
             this.lblInfoTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(60)))));
             this.lblInfoTitle.Location = new System.Drawing.Point(15, 15);
             this.lblInfoTitle.Name = "lblInfoTitle";
-            this.lblInfoTitle.Size = new System.Drawing.Size(187, 19);
+            this.lblInfoTitle.Size = new System.Drawing.Size(238, 23);
             this.lblInfoTitle.TabIndex = 0;
             this.lblInfoTitle.Text = "THÔNG TIN NHÀ CUNG CẤP";
             // 
             // ucQuanLyNCC
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
+            this.Controls.Add(this.lblTongTien);
             this.Controls.Add(this.pnlRight);
+            this.Controls.Add(this.lblTongNCC);
             this.Controls.Add(this.pnlLeft);
             this.Controls.Add(this.pnlSearch);
-            this.Controls.Add(this.pnlHeader);
             this.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.Name = "ucQuanLyNCC";
             this.Size = new System.Drawing.Size(1150, 660);
-            this.pnlHeader.ResumeLayout(false);
-            this.pnlHeader.PerformLayout();
             this.pnlSearch.ResumeLayout(false);
             this.pnlSearch.PerformLayout();
             this.pnlLeft.ResumeLayout(false);
@@ -399,18 +407,18 @@
             this.pnlRight.ResumeLayout(false);
             this.pnlRight.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel pnlHeader;
-        private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Panel pnlSearch;
         private System.Windows.Forms.Label lblTongTien;
         private System.Windows.Forms.Label lblTongNCC;
         private System.Windows.Forms.TextBox txtTimKiem;
         private System.Windows.Forms.Label lblSearch;
+        private System.Windows.Forms.CheckBox chkHienNgungGD;
+        private System.Windows.Forms.Button btnLoc;
         private System.Windows.Forms.Panel pnlLeft;
         private System.Windows.Forms.DataGridView dgvNCC;
         private System.Windows.Forms.Panel pnlRight;

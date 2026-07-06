@@ -17,8 +17,6 @@
 
         private void InitializeComponent()
         {
-            this.pnlHeader = new System.Windows.Forms.Panel();
-            this.lblTitle = new System.Windows.Forms.Label();
             this.pnlLeft = new System.Windows.Forms.Panel();
             this.lblMaNV = new System.Windows.Forms.Label();
             this.txtMaNV = new System.Windows.Forms.TextBox();
@@ -46,32 +44,11 @@
             this.cboLocRole = new System.Windows.Forms.ComboBox();
             this.chkLocNghiViec = new System.Windows.Forms.CheckBox();
             this.btnLoc = new System.Windows.Forms.Button();
-            this.pnlHeader.SuspendLayout();
             this.pnlLeft.SuspendLayout();
             this.pnlRight.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvNV)).BeginInit();
             this.pnlFilter.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // pnlHeader
-            // 
-            this.pnlHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(60)))));
-            this.pnlHeader.Controls.Add(this.lblTitle);
-            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
-            this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(1017, 50);
-            this.pnlHeader.TabIndex = 2;
-            // 
-            // lblTitle
-            // 
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTitle.Location = new System.Drawing.Point(13, 9);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(412, 32);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "👥 QUẢN LÝ NHÂN VIÊN (ADMIN)";
             // 
             // pnlLeft
             // 
@@ -94,10 +71,10 @@
             this.pnlLeft.Controls.Add(this.btnSave);
             this.pnlLeft.Controls.Add(this.btnClear);
             this.pnlLeft.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnlLeft.Location = new System.Drawing.Point(667, 50);
+            this.pnlLeft.Location = new System.Drawing.Point(667, 0);
             this.pnlLeft.Name = "pnlLeft";
             this.pnlLeft.Padding = new System.Windows.Forms.Padding(15);
-            this.pnlLeft.Size = new System.Drawing.Size(350, 550);
+            this.pnlLeft.Size = new System.Drawing.Size(350, 600);
             this.pnlLeft.TabIndex = 1;
             // 
             // lblMaNV
@@ -269,10 +246,10 @@
             this.pnlRight.Controls.Add(this.dgvNV);
             this.pnlRight.Controls.Add(this.pnlFilter);
             this.pnlRight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlRight.Location = new System.Drawing.Point(0, 50);
+            this.pnlRight.Location = new System.Drawing.Point(0, 0);
             this.pnlRight.Name = "pnlRight";
             this.pnlRight.Padding = new System.Windows.Forms.Padding(10);
-            this.pnlRight.Size = new System.Drawing.Size(667, 550);
+            this.pnlRight.Size = new System.Drawing.Size(667, 600);
             this.pnlRight.TabIndex = 0;
             // 
             // dgvNV
@@ -291,7 +268,7 @@
             this.dgvNV.RowHeadersVisible = false;
             this.dgvNV.RowHeadersWidth = 51;
             this.dgvNV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvNV.Size = new System.Drawing.Size(647, 470);
+            this.dgvNV.Size = new System.Drawing.Size(647, 520);
             this.dgvNV.TabIndex = 0;
             this.dgvNV.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvNV_CellClick);
             // 
@@ -376,11 +353,9 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
             this.Controls.Add(this.pnlRight);
             this.Controls.Add(this.pnlLeft);
-            this.Controls.Add(this.pnlHeader);
             this.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.Name = "ucQuanLyNhanVien";
             this.Size = new System.Drawing.Size(1017, 600);
-            this.pnlHeader.ResumeLayout(false);
             this.pnlLeft.ResumeLayout(false);
             this.pnlLeft.PerformLayout();
             this.pnlRight.ResumeLayout(false);
@@ -392,9 +367,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel pnlHeader;
-        private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Panel pnlLeft;
         private System.Windows.Forms.Label lblTenNV;
         private System.Windows.Forms.TextBox txtTenNV;

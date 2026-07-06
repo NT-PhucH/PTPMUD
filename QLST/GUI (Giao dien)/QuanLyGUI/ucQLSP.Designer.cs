@@ -25,7 +25,6 @@
             this.lblLoc = new System.Windows.Forms.Label();
             this.txtTimKiem = new System.Windows.Forms.TextBox();
             this.lblSearch = new System.Windows.Forms.Label();
-            this.lblTitle = new System.Windows.Forms.Label();
             this.flpSanPham = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlRight = new System.Windows.Forms.Panel();
             this.btnTrangThai = new System.Windows.Forms.Button();
@@ -79,7 +78,6 @@
             this.pnlTop.Controls.Add(this.lblLoc);
             this.pnlTop.Controls.Add(this.txtTimKiem);
             this.pnlTop.Controls.Add(this.lblSearch);
-            this.pnlTop.Controls.Add(this.lblTitle);
             this.pnlTop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlTop.Location = new System.Drawing.Point(0, 0);
             this.pnlTop.Margin = new System.Windows.Forms.Padding(0);
@@ -152,19 +150,6 @@
             this.lblSearch.Size = new System.Drawing.Size(77, 21);
             this.lblSearch.TabIndex = 1;
             this.lblSearch.Text = "Tìm kiếm:";
-            // 
-            // lblTitle
-            // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTitle.Location = new System.Drawing.Point(12, 13);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(267, 30);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "🛒 QUẢN LÝ SẢN PHẨM";
-            this.lblTitle.Click += new System.EventHandler(this.lblTitle_Click);
             // 
             // flpSanPham
             // 
@@ -394,7 +379,6 @@
 
         private System.Windows.Forms.TableLayoutPanel tlpMain;
         private System.Windows.Forms.Panel pnlTop;
-        private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Label lblSearch;
         private System.Windows.Forms.TextBox txtTimKiem;
         private System.Windows.Forms.Label lblLoc;

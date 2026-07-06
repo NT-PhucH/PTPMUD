@@ -155,6 +155,7 @@ namespace QLST
             if (clickedButton == btnHome)
             {
                 panelContent.Controls.Add(_ucHome); // Vẫn dùng bình thường [2]
+                lblHeader.Text = "TRANG CHỦ";
             }
             else if (clickedButton == btnUser)
             {
@@ -162,70 +163,73 @@ namespace QLST
                 if (_ucUser == null) _ucUser = new ucQuanLyNhanVien { Dock = DockStyle.Fill };
                 panelContent.Controls.Add(_ucUser);
                 _ucUser.Show();
+                lblHeader.Text = "QUẢN LÝ NHÂN VIÊN";
             }
             else if (clickedButton == btnTichDiem)
             {
                 if (_ucTichDiem == null) _ucTichDiem = new ucTichDiem { Dock = DockStyle.Fill };
                 panelContent.Controls.Add(_ucTichDiem);
                 _ucTichDiem.Show();
+                lblHeader.Text = "QUẢN LÝ KHÁCH HÀNG & TÍCH ĐIỂM";
             }
             else if (clickedButton == btnThongKe)
             {
                 if (_ucThongKe == null) _ucThongKe = new ucThongKe { Dock = DockStyle.Fill };
                 panelContent.Controls.Add(_ucThongKe);
+                lblHeader.Text = "THỐNG KÊ DOANH THU";
             }
             else if (clickedButton == btnSettings)
             {
                 if (_ucSettings == null) _ucSettings = new ucSettings { Dock = DockStyle.Fill };
                 panelContent.Controls.Add(_ucSettings);
                 _ucSettings.Show();
+                lblHeader.Text = "CÀI ĐẶT HỆ THỐNG";
             }
             else if (clickedButton == btnLSHD)
             {
                 if (_ucLichSuDon == null) _ucLichSuDon = new ucLichSuDon { Dock = DockStyle.Fill };
                 panelContent.Controls.Add(_ucLichSuDon);
                 _ucLichSuDon.Show();
+                lblHeader.Text = "LỊCH SỬ ĐƠN HÀNG";
             }
             else if (clickedButton == btnQLSP)
             {
                 if (_ucQLSP == null) _ucQLSP = new ucQLSP { Dock = DockStyle.Fill };
                 panelContent.Controls.Add(_ucQLSP);
+                lblHeader.Text = "QUẢN LÝ SẢN PHẨM";
             }
             else if (clickedButton == btnQLNCC)
             {
-                /* if (_frmNCC == null) _frmNCC = new frmQuanLyNCC { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
-                 panelContent.Controls.Add(_frmNCC);
-                 _frmNCC.Show();*/
+                
                 ucQuanLyNCC quanLyNCC = new ucQuanLyNCC { Dock = DockStyle.Fill };
                 panelContent.Controls.Add(quanLyNCC);
                 quanLyNCC.Show();
-            }
-            else if (clickedButton == btnShopping)
-            {
-                if (_frmThuNgan == null) _frmThuNgan = new FormThuNgan { TopLevel = false, FormBorderStyle = FormBorderStyle.None, Dock = DockStyle.Fill };
-                panelContent.Controls.Add(_frmThuNgan);
-                _frmThuNgan.Show();
+                lblHeader.Text = "QUẢN LÝ NHÀ CUNG CẤP";
             }
             // Các nút con của Kho
             else if (clickedButton == btnNhapHang)
             {
                 if (_ucNhapHang == null) _ucNhapHang = new ucNhapHang { Dock = DockStyle.Fill };
                 panelContent.Controls.Add(_ucNhapHang);
+                lblHeader.Text = "QUẢN LÝ NHẬP HÀNG";
             }
             else if (clickedButton == btnXuatKho)
             {
                 if (_ucXuatKho == null) _ucXuatKho = new ucXuatKho { Dock = DockStyle.Fill };
                 panelContent.Controls.Add(_ucXuatKho);
+                lblHeader.Text = "QUẢN LÝ XUẤT KHO";
             }
             else if (clickedButton == btnLichSu)
             {
                 if (_ucLichSu == null) _ucLichSu = new ucLichSu { Dock = DockStyle.Fill };
                 panelContent.Controls.Add(_ucLichSu);
+                lblHeader.Text = "LỊCH SỬ KHO";
             }
             else if (clickedButton == btnCanhBao)
             {
                 if (_ucCanhBao == null) _ucCanhBao = new ucCanhBao { Dock = DockStyle.Fill };
                 panelContent.Controls.Add(_ucCanhBao);
+                lblHeader.Text = "CẢNH BÁO TỒN KHO";
             }
         }
         private void btnLogOut_Click(object sender, EventArgs e)
