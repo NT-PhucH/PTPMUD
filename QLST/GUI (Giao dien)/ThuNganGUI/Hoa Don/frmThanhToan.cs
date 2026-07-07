@@ -46,79 +46,6 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
             _cfg = new Setting_DAL().Get();
             this.Load += frmThanhToan_Load;
         }
-
-        // ══════════════════════════════════════════════════════════════════════
-        // SỰ KIỆN CHO THANH TIÊU ĐỀ (Đóng, Ẩn, Kéo thả)
-        // ══════════════════════════════════════════════════════════════════════
-        private void btnMinimize_Click(object sender, EventArgs e)
-        {
-            this.DialogResult = DialogResult.Retry; // bật cờ báo cho from thu ngân là cần lưu tạm
-            this.Close();
-        }
-
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void titleBar_MouseDown(object sender, MouseEventArgs e)
-        {
-            dragging = true;
-            dragStartPoint = new Point(e.X, e.Y);
-        }
-
-        private void titleBar_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (dragging)
-            {
-                Point currentScreenPoint = PointToScreen(e.Location);
-                this.Location = new Point(currentScreenPoint.X - dragStartPoint.X, currentScreenPoint.Y - dragStartPoint.Y);
-            }
-        }
-
-        private void titleBar_MouseUp(object sender, MouseEventArgs e)
-        {
-            dragging = false;
-        }
-
-        // ══════════════════════════════════════════════════════════════════════
-        // LOAD
-        // ══════════════════════════════════════════════════════════════════════
-        private void frmThanhToan_Load(object sender, EventArgs e)
-        {
-            NhungUcHoaDon();
-            KhoiTaoSuKien();
-            TinhVaHienThi();
-
-            // KHỞI TẠO QR ĐỘNG
-            _picQR = new PictureBox
-            {
-                Dock = DockStyle.Fill,
-                SizeMode = PictureBoxSizeMode.Zoom,
-                BackColor = Color.White,
-                Visible = false,
-            };
-            panel2.Controls.Add(_picQR);
-            _picQR.BringToFront();
-        }
-
-        // ── Nhúng ucHoaDon vào panel1 ─────────────────────────────────────────
-        private void NhungUcHoaDon()
-        {
-            _ucHD = new ucHoaDon { Dock = DockStyle.Fill };
-            panel1.Controls.Add(_ucHD);
-
-            // GÁN DỮ LIỆU VÀO KHAY THAY VÌ GÁN TRỰC TIẾP VÀO ucHD
-            _hdData.CauHinh = _cfg;
-            _hdData.MaHoaDon = $"HD{DateTime.Now:ddMMyyyy}{new Random().Next(1000, 9999)}";
-            _hdData.TenThuNgan = SessionManager.NhanVienDangNhap?.TenNV ?? "";
-            _hdData.MaThuNgan = SessionManager.NhanVienDangNhap?.MaNV ?? "";
-            _hdData.DanhSachSP = _danhSachSP;
-            _hdData.TenKhach = "Khách lẻ";
-
-            CapNhatHoaDon(); // Truyền khay vào ucHD
-        }
-
         // ── Gán sự kiện ──────────────────────────────────────────────────────
         private void KhoiTaoSuKien()
         {
@@ -198,6 +125,80 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
 
             CapNhatHoaDon();
         }
+
+        // ══════════════════════════════════════════════════════════════════════
+        // SỰ KIỆN CHO THANH TIÊU ĐỀ (Đóng, Ẩn, Kéo thả)
+        // ══════════════════════════════════════════════════════════════════════
+        private void btnMinimize_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Retry; // bật cờ báo cho from thu ngân là cần lưu tạm
+            this.Close();
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void titleBar_MouseDown(object sender, MouseEventArgs e)
+        {
+            dragging = true;
+            dragStartPoint = new Point(e.X, e.Y);
+        }
+
+        private void titleBar_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (dragging)
+            {
+                Point currentScreenPoint = PointToScreen(e.Location);
+                this.Location = new Point(currentScreenPoint.X - dragStartPoint.X, currentScreenPoint.Y - dragStartPoint.Y);
+            }
+        }
+
+        private void titleBar_MouseUp(object sender, MouseEventArgs e)
+        {
+            dragging = false;
+        }
+
+        // ══════════════════════════════════════════════════════════════════════
+        // LOAD
+        // ══════════════════════════════════════════════════════════════════════
+        private void frmThanhToan_Load(object sender, EventArgs e)
+        {
+            NhungUcHoaDon();
+            KhoiTaoSuKien();
+            TinhVaHienThi();
+
+            // KHỞI TẠO QR ĐỘNG
+            _picQR = new PictureBox
+            {
+                Dock = DockStyle.Fill,
+                SizeMode = PictureBoxSizeMode.Zoom,
+                BackColor = Color.White,
+                Visible = false,
+            };
+            panel2.Controls.Add(_picQR);
+            _picQR.BringToFront();
+        }
+
+        // ── Nhúng ucHoaDon vào panel1 ─────────────────────────────────────────
+        private void NhungUcHoaDon()
+        {
+            _ucHD = new ucHoaDon { Dock = DockStyle.Fill };
+            panel1.Controls.Add(_ucHD);
+
+            // GÁN DỮ LIỆU VÀO KHAY THAY VÌ GÁN TRỰC TIẾP VÀO ucHD
+            _hdData.CauHinh = _cfg;
+            _hdData.MaHoaDon = $"HD{DateTime.Now:ddMMyyyy}{new Random().Next(1000, 9999)}";
+            _hdData.TenThuNgan = SessionManager.NhanVienDangNhap?.TenNV ?? "";
+            _hdData.MaThuNgan = SessionManager.NhanVienDangNhap?.MaNV ?? "";
+            _hdData.DanhSachSP = _danhSachSP;
+            _hdData.TenKhach = "Khách lẻ";
+
+            CapNhatHoaDon(); // Truyền khay vào ucHD
+        }
+
+        
 
         // ══════════════════════════════════════════════════════════════════════
         // TÌM KIẾM KHÁCH HÀNG — GỢI Ý REALTIME TRONG PANEL5

@@ -35,6 +35,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>shopping-cart.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="BCrypt-Net-Next, Version=4.2.0.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
       <HintPath>packages\BCrypt.Net-Next.4.2.0\lib\net48\BCrypt-Net-Next.dll</HintPath>
@@ -545,10 +551,12 @@
   <ItemGroup>
     <None Include="Resources\Icon\user.png" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <Folder Include="Resources\Anh_SP\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="shopping-cart.ico" />
     <None Include="Resources\Icon\users.png" />
-    <Content Include="Resources\Anh_SP\20260707113728_Gemini_Generated_Image_q9gb66q9gb66q9gb.png" />
     <Content Include="Resources\Icon\user_main.png" />
     <None Include="Resources\Icon\arrow_up.png" />
     <None Include="Resources\Icon\arrow_down.png" />
