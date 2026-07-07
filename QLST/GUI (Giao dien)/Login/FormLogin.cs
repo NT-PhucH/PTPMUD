@@ -22,6 +22,12 @@ namespace QLST
         public FormLogin()
         {
             InitializeComponent();
+            // Thêm đoạn code này để chống giật nền (Double Buffering)
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer |
+                          ControlStyles.UserPaint |
+                          ControlStyles.AllPaintingInWmPaint, true);
+            this.UpdateStyles();
+            this.DoubleBuffered = true;
         }
 
         private void FormLogin_Load(object sender, EventArgs e)
