@@ -92,7 +92,7 @@
             this.cmbLoaiSP.FormattingEnabled = true;
             this.cmbLoaiSP.Location = new System.Drawing.Point(100, 357);
             this.cmbLoaiSP.Name = "cmbLoaiSP";
-            this.cmbLoaiSP.Size = new System.Drawing.Size(165, 28);
+            this.cmbLoaiSP.Size = new System.Drawing.Size(165, 23);
             this.cmbLoaiSP.TabIndex = 9;
             // 
             // lblLoaiSP
@@ -101,7 +101,7 @@
             this.lblLoaiSP.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLoaiSP.Location = new System.Drawing.Point(20, 360);
             this.lblLoaiSP.Name = "lblLoaiSP";
-            this.lblLoaiSP.Size = new System.Drawing.Size(60, 20);
+            this.lblLoaiSP.Size = new System.Drawing.Size(48, 15);
             this.lblLoaiSP.TabIndex = 8;
             this.lblLoaiSP.Text = "Loại SP:";
             // 
@@ -111,7 +111,7 @@
             this.txtGiaBan.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.txtGiaBan.Location = new System.Drawing.Point(100, 317);
             this.txtGiaBan.Name = "txtGiaBan";
-            this.txtGiaBan.Size = new System.Drawing.Size(230, 29);
+            this.txtGiaBan.Size = new System.Drawing.Size(230, 24);
             this.txtGiaBan.TabIndex = 7;
             // 
             // lblGiaBan
@@ -120,7 +120,7 @@
             this.lblGiaBan.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGiaBan.Location = new System.Drawing.Point(20, 320);
             this.lblGiaBan.Name = "lblGiaBan";
-            this.lblGiaBan.Size = new System.Drawing.Size(73, 20);
+            this.lblGiaBan.Size = new System.Drawing.Size(58, 15);
             this.lblGiaBan.TabIndex = 6;
             this.lblGiaBan.Text = "Giá bán: *";
             // 
@@ -130,7 +130,7 @@
             this.txtTenSP.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.txtTenSP.Location = new System.Drawing.Point(100, 277);
             this.txtTenSP.Name = "txtTenSP";
-            this.txtTenSP.Size = new System.Drawing.Size(230, 29);
+            this.txtTenSP.Size = new System.Drawing.Size(230, 24);
             this.txtTenSP.TabIndex = 5;
             // 
             // lblTenSP
@@ -139,7 +139,7 @@
             this.lblTenSP.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTenSP.Location = new System.Drawing.Point(20, 280);
             this.lblTenSP.Name = "lblTenSP";
-            this.lblTenSP.Size = new System.Drawing.Size(65, 20);
+            this.lblTenSP.Size = new System.Drawing.Size(53, 15);
             this.lblTenSP.TabIndex = 4;
             this.lblTenSP.Text = "Tên SP: *";
             // 
@@ -149,7 +149,7 @@
             this.txtMaVach.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.txtMaVach.Location = new System.Drawing.Point(100, 237);
             this.txtMaVach.Name = "txtMaVach";
-            this.txtMaVach.Size = new System.Drawing.Size(230, 29);
+            this.txtMaVach.Size = new System.Drawing.Size(230, 24);
             this.txtMaVach.TabIndex = 3;
             // 
             // lblMaVach
@@ -158,7 +158,7 @@
             this.lblMaVach.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMaVach.Location = new System.Drawing.Point(20, 240);
             this.lblMaVach.Name = "lblMaVach";
-            this.lblMaVach.Size = new System.Drawing.Size(67, 20);
+            this.lblMaVach.Size = new System.Drawing.Size(55, 15);
             this.lblMaVach.TabIndex = 2;
             this.lblMaVach.Text = "Mã vạch:";
             // 
@@ -176,6 +176,7 @@
             this.btnChonAnh.TabIndex = 1;
             this.btnChonAnh.Text = "Chọn ảnh";
             this.btnChonAnh.UseVisualStyleBackColor = false;
+            this.btnChonAnh.Click += new System.EventHandler(this.btnChonAnh_Click_1);
             // 
             // picHinhAnh
             // 
@@ -190,7 +191,7 @@
             // 
             // ucThemSP
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.pnlContainer);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);

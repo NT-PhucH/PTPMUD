@@ -1,6 +1,7 @@
 ﻿using QLST.BLL__Bat_ngoai_le_.QuanLyBLL;
 using QLST.DTO__Type_OTP_.QuanLyDTO;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -25,12 +26,12 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
         public ucQLSP()
         {
             InitializeComponent();
-            _productImagesPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\Resources", "Anh_SP");
+            _productImagesPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\Resources", "Anh_SP"));
             LoadLoai();
             LoadData();
             GhepSuKien();
         }
-
+        // Hàm gán sự kiện
         private void GhepSuKien()
         {
             txtTimKiem.TextChanged += (s, e) => LoadData();
@@ -406,9 +407,34 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    _selectedImagePath = dlg.FileName;
-                    if (picAnh.Image != null) picAnh.Image.Dispose();
-                    picAnh.Image = LoadImageNoLock(_selectedImagePath);
+                    // Xóa ảnh cũ khỏi PictureBox
+                    if (picAnh.Image != null)
+                    {
+                        picAnh.Image.Dispose();
+                        picAnh.Image = null;
+                    }
+
+                    // Cơ chế xóa file ảnh cũ trong thư mục dự án
+                    if (!string.IsNullOrEmpty(_selectedImagePath))
+                    {
+                        string duongDanAnhCu = Path.Combine(Application.StartupPath, _selectedImagePath);
+                        if (File.Exists(duongDanAnhCu)) // Hàm có sẵn của thư viện để kiểm tra file tồn tại
+                        {
+                            File.Delete(duongDanAnhCu); // Hàm có sẵn của thư viện để xóa cứng file
+                        }
+                    }
+
+                    // Copy ảnh mới vào project
+                    string thuMucDich = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\Resources", "Anh_SP");
+                    if (!Directory.Exists(thuMucDich)) Directory.CreateDirectory(thuMucDich);
+
+                    string tenFileMoi = DateTime.Now.ToString("yyyyMMddHHmmss") + "_" + Path.GetFileName(dlg.FileName);
+                    string duongDanDich = Path.Combine(thuMucDich, tenFileMoi);
+                    File.Copy(dlg.FileName, duongDanDich, true);
+
+                    // Lưu đường dẫn tương đối
+                    _selectedImagePath = tenFileMoi;
+                    picAnh.Image = LoadImageNoLock(duongDanDich);
                 }
             }
         }
@@ -484,6 +510,11 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
         private void lblTitle_Click(object sender, EventArgs e)
         {
             ClearForm();
+        }
+
+        private void btnChonAnh_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

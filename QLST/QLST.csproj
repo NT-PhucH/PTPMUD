@@ -477,86 +477,84 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\home.png" />
+    <None Include="Resources\Icon\home.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\home1.png" />
+    <None Include="Resources\Icon\home1.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\home2.png" />
+    <None Include="Resources\Icon\home2.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\home3.png" />
+    <None Include="Resources\Icon\home3.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\shopping.png" />
+    <None Include="Resources\Icon\shopping.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\boxes.png" />
+    <None Include="Resources\Icon\boxes.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\users.png" />
+    <None Include="Resources\Icon\supplier.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\supplier.png" />
+    <None Include="Resources\Icon\chat-arrow-grow.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\chat-arrow-grow.png" />
+    <None Include="Resources\Icon\settings.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\settings.png" />
+    <None Include="Resources\Icon\logout.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\logout.png" />
+    <None Include="Resources\Icon\bar-chart.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\bar-chart.png" />
+    <None Include="Resources\Icon\box.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\box.png" />
+    <None Include="Resources\Icon\line-chart.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\line-chart.png" />
+    <None Include="Resources\Icon\line-chart %281%29.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\line-chart %281%29.png" />
+    <None Include="Resources\Icon\crisis.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\crisis.png" />
+    <None Include="Resources\Icon\alarm.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\alarm.png" />
+    <None Include="Resources\Icon\decrease.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\decrease.png" />
+    <None Include="Resources\Icon\shopping-cart.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\shopping-cart.png" />
+    <None Include="Resources\Icon\shopping-cart %281%29.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\shopping-cart %281%29.png" />
+    <None Include="Resources\Icon\loupe.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\loupe.png" />
+    <None Include="Resources\Icon\bell.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\bell.png" />
+    <None Include="Resources\Icon\logout %281%29.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\logout %281%29.png" />
+    <None Include="Resources\Icon\user.png" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <None Include="Resources\user.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\Anh_SP\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\userlogo.png" />
-    <None Include="Resources\arrow_up.png" />
-    <None Include="Resources\arrow_down.png" />
-    <Content Include="Resources\hide.png" />
-    <Content Include="Resources\show.png" />
+    <None Include="Resources\Icon\users.png" />
+    <Content Include="Resources\Anh_SP\20260707113728_Gemini_Generated_Image_q9gb66q9gb66q9gb.png" />
+    <Content Include="Resources\Icon\user_main.png" />
+    <None Include="Resources\Icon\arrow_up.png" />
+    <None Include="Resources\Icon\arrow_down.png" />
+    <Content Include="Resources\Icon\hide.png" />
+    <Content Include="Resources\Icon\people.png" />
+    <Content Include="Resources\Icon\show.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

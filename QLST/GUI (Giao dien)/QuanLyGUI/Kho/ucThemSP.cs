@@ -1,9 +1,10 @@
-﻿using QLST.BLL__Bat_ngoai_le_.QuanLyBLL;
+﻿using Microsoft.VisualBasic; // Để dùng Interaction.InputBox (Cần Add Reference Microsoft.VisualBasic)
+using QLST.BLL__Bat_ngoai_le_.QuanLyBLL;
 using QLST.DTO__Type_OTP_.QuanLyDTO;
 using System;
+using System.IO;
 using System.Drawing;
 using System.Windows.Forms;
-using Microsoft.VisualBasic; // Để dùng Interaction.InputBox (Cần Add Reference Microsoft.VisualBasic)
 
 namespace QLST.GUI__Giao_dien_.QuanLyGUI
 {
@@ -17,7 +18,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             InitializeComponent();
             WireEvents();
         }
-
+        // Hàm Gán sự kiện các nút
         private void WireEvents()
         {
             this.Load += UcThemSP_Load;
@@ -48,8 +49,27 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
                 ofd.Title = "Chọn ảnh sản phẩm";
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    _duongDanAnh = ofd.FileName;
-                    picHinhAnh.Image = Image.FromFile(_duongDanAnh);
+                    // Tạo đường dẫn đến thư mục Resources/Anh_SP
+                    string thuMucDich = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\Resources", "Anh_SP");
+
+                    if (!Directory.Exists(thuMucDich))
+                    {
+                        Directory.CreateDirectory(thuMucDich);
+                    }
+
+                    // Đổi tên file
+                    string tenFileMoi = DateTime.Now.ToString("yyyyMMddHHmmss") + "_" + Path.GetFileName(ofd.FileName);
+                    string duongDanDich = Path.Combine(thuMucDich, tenFileMoi);
+
+                    // Sao chép file từ máy vào thư mục nội bộ của dự án (Hàm có sẵn của thư viện)
+                    File.Copy(ofd.FileName, duongDanDich, true);
+
+                    //Lưu đường dẫn TƯƠNG ĐỐI vào database
+                    _duongDanAnh = tenFileMoi;
+
+                    //Hiển thị ảnh lên giao diện bằng file đã được copy vào dự án
+                    if (picHinhAnh.Image != null) picHinhAnh.Image.Dispose();
+                    picHinhAnh.Image = Image.FromFile(duongDanDich);
                 }
             }
         }
@@ -125,6 +145,11 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
                 picHinhAnh.Image = null;
             }
             txtMaVach.Focus();
+        }
+
+        private void btnChonAnh_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }
