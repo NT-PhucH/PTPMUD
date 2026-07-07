@@ -374,6 +374,9 @@
     <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Hoa Don\ucHoaDon.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Hoa Don\ucHoaDon.Designer.cs">
+      <DependentUpon>ucHoaDon.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI %28Giao dien%29\ThuNganGUI\Hoa Don\UnderlineTextBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -445,9 +448,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI %28Giao dien%29\ThuNganGUI\Hoa Don\PaymentSelectorBar.resx">
       <DependentUpon>PaymentSelectorBar.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI %28Giao dien%29\ThuNganGUI\Hoa Don\ucHoaDon.resx">
-      <DependentUpon>ucHoaDon.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
