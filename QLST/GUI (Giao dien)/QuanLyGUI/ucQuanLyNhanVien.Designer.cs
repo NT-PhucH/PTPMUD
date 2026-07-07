@@ -82,7 +82,7 @@
             this.lblMaNV.AutoSize = true;
             this.lblMaNV.Location = new System.Drawing.Point(15, 20);
             this.lblMaNV.Name = "lblMaNV";
-            this.lblMaNV.Size = new System.Drawing.Size(72, 21);
+            this.lblMaNV.Size = new System.Drawing.Size(61, 17);
             this.lblMaNV.TabIndex = 0;
             this.lblMaNV.Text = "Mã NV: *";
             // 
@@ -91,7 +91,7 @@
             this.txtMaNV.Location = new System.Drawing.Point(15, 45);
             this.txtMaNV.Name = "txtMaNV";
             this.txtMaNV.ReadOnly = true;
-            this.txtMaNV.Size = new System.Drawing.Size(200, 29);
+            this.txtMaNV.Size = new System.Drawing.Size(200, 24);
             this.txtMaNV.TabIndex = 1;
             // 
             // lblTenNV
@@ -99,7 +99,7 @@
             this.lblTenNV.AutoSize = true;
             this.lblTenNV.Location = new System.Drawing.Point(15, 85);
             this.lblTenNV.Name = "lblTenNV";
-            this.lblTenNV.Size = new System.Drawing.Size(75, 21);
+            this.lblTenNV.Size = new System.Drawing.Size(65, 17);
             this.lblTenNV.TabIndex = 3;
             this.lblTenNV.Text = "Họ & Tên: *";
             // 
@@ -107,7 +107,7 @@
             // 
             this.txtTenNV.Location = new System.Drawing.Point(15, 110);
             this.txtTenNV.Name = "txtTenNV";
-            this.txtTenNV.Size = new System.Drawing.Size(310, 29);
+            this.txtTenNV.Size = new System.Drawing.Size(310, 24);
             this.txtTenNV.TabIndex = 4;
             // 
             // lblUser
@@ -115,7 +115,7 @@
             this.lblUser.AutoSize = true;
             this.lblUser.Location = new System.Drawing.Point(15, 150);
             this.lblUser.Name = "lblUser";
-            this.lblUser.Size = new System.Drawing.Size(95, 21);
+            this.lblUser.Size = new System.Drawing.Size(79, 17);
             this.lblUser.TabIndex = 5;
             this.lblUser.Text = "Username: *";
             // 
@@ -123,7 +123,7 @@
             // 
             this.txtUser.Location = new System.Drawing.Point(15, 175);
             this.txtUser.Name = "txtUser";
-            this.txtUser.Size = new System.Drawing.Size(310, 29);
+            this.txtUser.Size = new System.Drawing.Size(310, 24);
             this.txtUser.TabIndex = 6;
             // 
             // lblPass
@@ -131,7 +131,7 @@
             this.lblPass.AutoSize = true;
             this.lblPass.Location = new System.Drawing.Point(15, 215);
             this.lblPass.Name = "lblPass";
-            this.lblPass.Size = new System.Drawing.Size(90, 21);
+            this.lblPass.Size = new System.Drawing.Size(76, 17);
             this.lblPass.TabIndex = 7;
             this.lblPass.Text = "Password: *";
             // 
@@ -139,16 +139,17 @@
             // 
             this.txtPass.Location = new System.Drawing.Point(15, 240);
             this.txtPass.Name = "txtPass";
-            this.txtPass.Size = new System.Drawing.Size(310, 29);
+            this.txtPass.Size = new System.Drawing.Size(310, 24);
             this.txtPass.TabIndex = 8;
             this.txtPass.UseSystemPasswordChar = true;
+            this.txtPass.TextChanged += new System.EventHandler(this.txtPass_TextChanged);
             // 
             // chkShowPass
             // 
             this.chkShowPass.AutoSize = true;
             this.chkShowPass.Location = new System.Drawing.Point(250, 215);
             this.chkShowPass.Name = "chkShowPass";
-            this.chkShowPass.Size = new System.Drawing.Size(91, 25);
+            this.chkShowPass.Size = new System.Drawing.Size(77, 21);
             this.chkShowPass.TabIndex = 9;
             this.chkShowPass.Text = "Hiện MK";
             this.chkShowPass.CheckedChanged += new System.EventHandler(this.chkShowPass_CheckedChanged);
@@ -158,7 +159,7 @@
             this.lblRole.AutoSize = true;
             this.lblRole.Location = new System.Drawing.Point(15, 280);
             this.lblRole.Name = "lblRole";
-            this.lblRole.Size = new System.Drawing.Size(114, 21);
+            this.lblRole.Size = new System.Drawing.Size(96, 17);
             this.lblRole.TabIndex = 10;
             this.lblRole.Text = "Vai trò (Role): *";
             // 
@@ -172,7 +173,7 @@
             "4 - Bảo vệ"});
             this.cboRole.Location = new System.Drawing.Point(15, 305);
             this.cboRole.Name = "cboRole";
-            this.cboRole.Size = new System.Drawing.Size(310, 29);
+            this.cboRole.Size = new System.Drawing.Size(310, 25);
             this.cboRole.TabIndex = 11;
             // 
             // lblSDT
@@ -180,7 +181,7 @@
             this.lblSDT.AutoSize = true;
             this.lblSDT.Location = new System.Drawing.Point(15, 345);
             this.lblSDT.Name = "lblSDT";
-            this.lblSDT.Size = new System.Drawing.Size(41, 21);
+            this.lblSDT.Size = new System.Drawing.Size(34, 17);
             this.lblSDT.TabIndex = 12;
             this.lblSDT.Text = "SĐT:";
             // 
@@ -188,7 +189,7 @@
             // 
             this.txtSDT.Location = new System.Drawing.Point(15, 370);
             this.txtSDT.Name = "txtSDT";
-            this.txtSDT.Size = new System.Drawing.Size(145, 29);
+            this.txtSDT.Size = new System.Drawing.Size(145, 24);
             this.txtSDT.TabIndex = 13;
             // 
             // lblCaLam
@@ -196,7 +197,7 @@
             this.lblCaLam.AutoSize = true;
             this.lblCaLam.Location = new System.Drawing.Point(170, 345);
             this.lblCaLam.Name = "lblCaLam";
-            this.lblCaLam.Size = new System.Drawing.Size(61, 21);
+            this.lblCaLam.Size = new System.Drawing.Size(51, 17);
             this.lblCaLam.TabIndex = 14;
             this.lblCaLam.Text = "Ca làm:";
             // 
@@ -210,7 +211,7 @@
             "Fulltime"});
             this.cboCaLam.Location = new System.Drawing.Point(170, 370);
             this.cboCaLam.Name = "cboCaLam";
-            this.cboCaLam.Size = new System.Drawing.Size(155, 29);
+            this.cboCaLam.Size = new System.Drawing.Size(155, 25);
             this.cboCaLam.TabIndex = 15;
             // 
             // btnSave
@@ -291,7 +292,7 @@
             this.lblSearch.AutoSize = true;
             this.lblSearch.Location = new System.Drawing.Point(10, 20);
             this.lblSearch.Name = "lblSearch";
-            this.lblSearch.Size = new System.Drawing.Size(103, 21);
+            this.lblSearch.Size = new System.Drawing.Size(85, 17);
             this.lblSearch.TabIndex = 0;
             this.lblSearch.Text = "🔍 Tìm kiếm:";
             this.lblSearch.Click += new System.EventHandler(this.lblSearch_Click);
@@ -300,7 +301,7 @@
             // 
             this.txtSearch.Location = new System.Drawing.Point(90, 17);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(200, 29);
+            this.txtSearch.Size = new System.Drawing.Size(200, 24);
             this.txtSearch.TabIndex = 1;
             // 
             // lblLocRole
@@ -308,7 +309,7 @@
             this.lblLocRole.AutoSize = true;
             this.lblLocRole.Location = new System.Drawing.Point(310, 20);
             this.lblLocRole.Name = "lblLocRole";
-            this.lblLocRole.Size = new System.Drawing.Size(70, 21);
+            this.lblLocRole.Size = new System.Drawing.Size(59, 17);
             this.lblLocRole.TabIndex = 2;
             this.lblLocRole.Text = "Bộ phận:";
             // 
@@ -323,7 +324,7 @@
             "Bảo vệ"});
             this.cboLocRole.Location = new System.Drawing.Point(380, 17);
             this.cboLocRole.Name = "cboLocRole";
-            this.cboLocRole.Size = new System.Drawing.Size(130, 29);
+            this.cboLocRole.Size = new System.Drawing.Size(130, 25);
             this.cboLocRole.TabIndex = 3;
             // 
             // chkLocNghiViec
@@ -331,7 +332,7 @@
             this.chkLocNghiViec.AutoSize = true;
             this.chkLocNghiViec.Location = new System.Drawing.Point(530, 20);
             this.chkLocNghiViec.Name = "chkLocNghiViec";
-            this.chkLocNghiViec.Size = new System.Drawing.Size(159, 25);
+            this.chkLocNghiViec.Size = new System.Drawing.Size(136, 21);
             this.chkLocNghiViec.TabIndex = 4;
             this.chkLocNghiViec.Text = "Hiện cả TK bị khóa";
             // 

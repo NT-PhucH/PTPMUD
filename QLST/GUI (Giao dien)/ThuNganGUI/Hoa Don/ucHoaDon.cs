@@ -11,34 +11,21 @@ using System.Windows.Forms;
 
 namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
 {
-    public class ucHoaDon : UserControl
+    public partial class ucHoaDon : UserControl
     {
         // ── CHỈ NHẬN ĐÚNG 1 KHAY DỮ LIỆU TỪ BLL TRUYỀN XUỐNG ──────────────────
         public HoaDonIn_DTO DuLieu { get; set; }
 
-        private Panel _scroll;
-        private Panel _paper;
-
         public ucHoaDon()
         {
-            BackColor = Color.FromArgb(200, 200, 200);
-            BuildUI();
+            InitializeComponent();
         }
 
-        private void BuildUI()
+        private void Scroll_Resize(object sender, EventArgs e)
         {
-            _scroll = new Panel { Dock = DockStyle.Fill, AutoScroll = true, BackColor = Color.FromArgb(200, 200, 200) };
-            _paper = new Panel { Width = 302, BackColor = Color.White, Location = new Point(5, 5) };
-
-            _paper.Paint += Paper_Paint;
-            _scroll.Controls.Add(_paper);
-            Controls.Add(_scroll);
-
-            _scroll.Resize += (s, e) => {
-                int cx = (_scroll.ClientSize.Width - _paper.Width) / 2;
-                _paper.Left = Math.Max(5, cx);
-                CapNhat();
-            };
+            int cx = (_scroll.ClientSize.Width - _paper.Width) / 2;
+            _paper.Left = Math.Max(5, cx);
+            CapNhat();
         }
 
         public void CapNhat()
@@ -57,110 +44,141 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
             _paper.Invalidate();
         }
 
+        /// <summary>
+        /// Hàm tổng quản lý cấu trúc hóa đơn. 
+        /// Muốn đổi thứ tự hiển thị, bạn chỉ cần thay đổi vị trí các dòng gọi hàm bên dưới.
+        /// </summary>
         public int VeHoaDonChung(Graphics g, int startX, int startY, int width)
         {
             if (DuLieu == null) return startY;
 
-            int px = startX; int py = startY; int pw = width;
+            // Khởi tạo bộ ngữ cảnh vẽ (chứa tọa độ Y hiện tại, font chữ và các hàm helper)
+            var ctx = new DrawingContext(g, startX, startY, width);
 
-            var fTitle = new Font("Courier New", 9f, FontStyle.Bold);
-            var fBold = new Font("Courier New", 8f, FontStyle.Bold);
-            var fNormal = new Font("Courier New", 7.5f);
-            var fSmall = new Font("Courier New", 7f);
-            var fItalic = new Font("Courier New", 7f, FontStyle.Italic);
+            // =================================================================
+            // CÁC MODULE - BẠN CÓ THỂ KÉO/THAY ĐỔI THỨ TỰ CÁC DÒNG NÀY DỄ DÀNG:
+            // =================================================================
+            Vemodule_Header(ctx);               // Khối 1: Tên cửa hàng, tiêu đề, ngày tháng
+            Vemodule_DanhSachSanPham(ctx);      // Khối 2: Bảng danh sách sản phẩm mua
+            Vemodule_TongTien(ctx);             // Khối 3: Tổng số lượng, VAT, tổng tiền, tiền thừa
+            Vemodule_ThongTinKhachHang(ctx);    // Khối 4: Tên khách hàng, điểm tích lũy
+            Vemodule_Footer(ctx);               // Khối 5: Lời chào, chân trang hóa đơn
+            // =================================================================
 
-            void Ctr(string t, Font f) { var sz = g.MeasureString(t, f); g.DrawString(t, f, Brushes.Black, px + (pw - sz.Width) / 2, py); py += (int)sz.Height + 1; }
-            void Lft(string t, Font f) { g.DrawString(t, f, Brushes.Black, px, py); py += (int)g.MeasureString("A", f).Height + 2; }
-            void Row(string left, string right, Font f) { g.DrawString(left, f, Brushes.Black, px, py); var rs = g.MeasureString(right, f); g.DrawString(right, f, Brushes.Black, px + pw - rs.Width, py); py += (int)g.MeasureString("A", f).Height + 2; }
-            void Eq() { Lft(new string('=', 40), fNormal); }
-            void Dsh() { Lft(new string('-', 40), fNormal); }
-            void Gap(int h = 4) { py += h; }
+            ctx.Gap(15);
+            return ctx.CurrentY; // Trả về chiều cao thực tế sau khi vẽ xong tất cả module
+        }
 
-            // ── HEADER ────────────────────────────────────────────────────────
-            Ctr((DuLieu.CauHinh?.TenCuaHang ?? "TÊN CỬA HÀNG").ToUpper(), fTitle);
-            Ctr("HÓA ĐƠN BÁN HÀNG", fBold);
-            Eq();
+        // ── 1. MODULE: TIÊU ĐỀ & THÔNG TIN CHUNG ─────────────────────────────
+        private void Vemodule_Header(DrawingContext ctx)
+        {
+            ctx.Ctr((DuLieu.CauHinh?.TenCuaHang ?? "TÊN CỬA HÀNG").ToUpper(), ctx.fTitle);
+            ctx.Ctr("HÓA ĐƠN BÁN HÀNG", ctx.fBold);
+            ctx.Eq();
 
-            Lft($"Ngày: {DateTime.Now:dd/MM/yyyy HH:mm} - Số HĐ: {(string.IsNullOrEmpty(DuLieu.MaHoaDon) ? "------" : DuLieu.MaHoaDon)}", fNormal);
+            ctx.Lft($"Ngày: {DateTime.Now:dd/MM/yyyy HH:mm} - Số HĐ: {(string.IsNullOrEmpty(DuLieu.MaHoaDon) ? "------" : DuLieu.MaHoaDon)}", ctx.fNormal);
 
             if (!string.IsNullOrEmpty(DuLieu.CauHinh?.DiaChi))
-                foreach (var wl in Wrap($"Đ/c: {DuLieu.CauHinh.DiaChi}", fNormal, g, pw))
-                { g.DrawString(wl, fNormal, Brushes.Black, px, py); py += 13; }
+            {
+                foreach (var wl in WrapText($"Đ/c: {DuLieu.CauHinh.DiaChi}", ctx.fNormal, ctx.Graphics, ctx.Width))
+                {
+                    ctx.Graphics.DrawString(wl, ctx.fNormal, Brushes.Black, ctx.StartX, ctx.CurrentY);
+                    ctx.CurrentY += 13;
+                }
+            }
 
-            if (!string.IsNullOrEmpty(DuLieu.CauHinh?.HotlineShip)) Lft($"Hotline ship hàng: {DuLieu.CauHinh.HotlineShip}", fNormal);
-            if (!string.IsNullOrEmpty(DuLieu.TenThuNgan)) Lft($"Thu Ngân: {DuLieu.TenThuNgan} ({DuLieu.MaThuNgan})", fNormal);
+            if (!string.IsNullOrEmpty(DuLieu.CauHinh?.HotlineShip)) ctx.Lft($"Hotline ship hàng: {DuLieu.CauHinh.HotlineShip}", ctx.fNormal);
+            if (!string.IsNullOrEmpty(DuLieu.TenThuNgan)) ctx.Lft($"Thu Ngân: {DuLieu.TenThuNgan} ({DuLieu.MaThuNgan})", ctx.fNormal);
 
-            Gap(2); Ctr("******** HÓA ĐƠN ********", fBold); Eq();
+            ctx.Gap(2);
+            ctx.Ctr("******** HÓA ĐƠN ********", ctx.fBold);
+            ctx.Eq();
+        }
 
-            // ── BẢNG SẢN PHẨM ────────────────────────────────────────────────
-            g.DrawString("Tên Hàng", fBold, Brushes.Black, px, py);
-            g.DrawString("SL", fBold, Brushes.Black, px + 170, py);
-            g.DrawString("Đơn giá", fBold, Brushes.Black, px + 195, py);
-            var thStr = g.MeasureString("T.Tiền", fBold);
-            g.DrawString("T.Tiền", fBold, Brushes.Black, px + pw - thStr.Width, py);
-            py += 14;
+        // ── 2. MODULE: BẢNG CHI TIẾT SẢN PHẨM ────────────────────────────────
+        private void Vemodule_DanhSachSanPham(DrawingContext ctx)
+        {
+            ctx.Graphics.DrawString("Tên Hàng", ctx.fBold, Brushes.Black, ctx.StartX, ctx.CurrentY);
+            ctx.Graphics.DrawString("SL", ctx.fBold, Brushes.Black, ctx.StartX + 170, ctx.CurrentY);
+            ctx.Graphics.DrawString("Đơn giá", ctx.fBold, Brushes.Black, ctx.StartX + 195, ctx.CurrentY);
+            var thStr = ctx.Graphics.MeasureString("T.Tiền", ctx.fBold);
+            ctx.Graphics.DrawString("T.Tiền", ctx.fBold, Brushes.Black, ctx.StartX + ctx.Width - thStr.Width, ctx.CurrentY);
+            ctx.CurrentY += 14;
 
             if (DuLieu.DanhSachSP == null || DuLieu.DanhSachSP.Count == 0)
             {
-                Ctr("(Chưa có sản phẩm)", fItalic);
+                ctx.Ctr("(Chưa có sản phẩm)", ctx.fItalic);
             }
             else
             {
                 foreach (var sp in DuLieu.DanhSachSP)
                 {
-                    var wrappedTen = Wrap(sp.TenSP, fNormal, g, 165);
+                    var wrappedTen = WrapText(sp.TenSP, ctx.fNormal, ctx.Graphics, 165);
                     for (int i = 0; i < wrappedTen.Count; i++)
-                    { g.DrawString(wrappedTen[i], fNormal, Brushes.Black, px, py); py += 13; }
+                    {
+                        ctx.Graphics.DrawString(wrappedTen[i], ctx.fNormal, Brushes.Black, ctx.StartX, ctx.CurrentY);
+                        ctx.CurrentY += 13;
+                    }
 
-                    g.DrawString(sp.SoLuong.ToString(), fNormal, Brushes.Black, px + 170, py);
-                    g.DrawString($"{sp.DonGia:N0}", fNormal, Brushes.Black, px + 190, py);
+                    ctx.Graphics.DrawString(sp.SoLuong.ToString(), ctx.fNormal, Brushes.Black, ctx.StartX + 170, ctx.CurrentY);
+                    ctx.Graphics.DrawString($"{sp.DonGia:N0}", ctx.fNormal, Brushes.Black, ctx.StartX + 190, ctx.CurrentY);
                     string tienStr = $"{sp.ThanhTien:N0}";
-                    var tsz = g.MeasureString(tienStr, fNormal);
-                    g.DrawString(tienStr, fNormal, Brushes.Black, px + pw - tsz.Width, py);
-                    py += 14;
+                    var tsz = ctx.Graphics.MeasureString(tienStr, ctx.fNormal);
+                    ctx.Graphics.DrawString(tienStr, ctx.fNormal, Brushes.Black, ctx.StartX + ctx.Width - tsz.Width, ctx.CurrentY);
+                    ctx.CurrentY += 14;
                 }
             }
-            Eq();
+            ctx.Eq();
+        }
 
-            // ── TỔNG TIỀN ─────────────────────────────────────────────────────
+        // ── 3. MODULE: KHỐI TÍNH TOÁN TỔNG TIỀN ────────────────────────────────
+        private void Vemodule_TongTien(DrawingContext ctx)
+        {
             int tongSL = 0;
             if (DuLieu.DanhSachSP != null) foreach (var sp in DuLieu.DanhSachSP) tongSL += sp.SoLuong;
 
-            Row("Tổng số lượng:", tongSL.ToString(), fNormal);
-            if ((DuLieu.CauHinh?.VAT ?? 0) > 0) Row($"VAT {DuLieu.CauHinh.VAT}%:", $"{DuLieu.TienVAT:N0}", fNormal);
+            ctx.Row("Tổng số lượng:", tongSL.ToString(), ctx.fNormal);
+            if ((DuLieu.CauHinh?.VAT ?? 0) > 0) ctx.Row($"VAT {DuLieu.CauHinh.VAT}%:", $"{DuLieu.TienVAT:N0}", ctx.fNormal);
 
-            Row("Tổng tiền (Đã bao gồm VAT):", $"{DuLieu.TongTienSau:N0}", fBold);
-            Row($"+ {DuLieu.PhuongThucTT}:", $"{DuLieu.TienKhachDua:N0}", fNormal);
+            ctx.Row("Tổng tiền (Đã bao gồm VAT):", $"{DuLieu.TongTienSau:N0}", ctx.fBold);
+            ctx.Row($"+ {DuLieu.PhuongThucTT}:", $"{DuLieu.TienKhachDua:N0}", ctx.fNormal);
 
-            if (!DuLieu.AnTienThua) Row("Tiền trả lại KH (VND):", $"{DuLieu.TienThua:N0}", fNormal);
-            Eq();
+            if (!DuLieu.AnTienThua) ctx.Row("Tiền trả lại KH (VND):", $"{DuLieu.TienThua:N0}", ctx.fNormal);
+            ctx.Eq();
+        }
 
-            // ── KHÁCH HÀNG ────────────────────────────────────────────────────
-            Lft($"Tên khách: {DuLieu.TenKhach}", fNormal);
-            Lft($"Mã KH: {DuLieu.MaKhach}", fNormal);
-            Lft($"Tổng điểm tích lũy: {DuLieu.DiemTichLuy}", fNormal);
-            Dsh(); Gap(4);
+        // ── 4. MODULE: THÔNG TIN KHÁCH HÀNG THÂN THIẾT ────────────────────────
+        private void Vemodule_ThongTinKhachHang(DrawingContext ctx)
+        {
+            ctx.Lft($"Tên khách: {DuLieu.TenKhach}", ctx.fNormal);
+            ctx.Lft($"Mã KH: {DuLieu.MaKhach}", ctx.fNormal);
+            ctx.Lft($"Tổng điểm tích lũy: {DuLieu.DiemTichLuy}", ctx.fNormal);
+            ctx.Dsh();
+            ctx.Gap(4);
+        }
 
-            // ── FOOTER ────────────────────────────────────────────────────────
+        // ── 5. MODULE: CHÂN HÓA ĐƠN VÀ LỜI CHÀO ───────────────────────────────
+        private void Vemodule_Footer(DrawingContext ctx)
+        {
             if (!string.IsNullOrEmpty(DuLieu.CauHinh?.FooterHoaDon))
             {
                 foreach (var line in DuLieu.CauHinh.FooterHoaDon.Split('\n'))
                 {
                     string t = line.Trim();
-                    if (string.IsNullOrEmpty(t)) { Gap(5); continue; }
-                    foreach (var wl in Wrap(t, fItalic, g, pw)) Ctr(wl, fItalic);
+                    if (string.IsNullOrEmpty(t)) { ctx.Gap(5); continue; }
+                    foreach (var wl in WrapText(t, ctx.fItalic, ctx.Graphics, ctx.Width)) ctx.Ctr(wl, ctx.fItalic);
                 }
             }
-            Gap(15); return py;
         }
 
+        // ── CÁC HÀM TIỆN ÍCH HỆ THỐNG ─────────────────────────────────────────
         private void Paper_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.Clear(Color.White);
             VeHoaDonChung(e.Graphics, 5, 8, _paper.Width - 10);
         }
 
-        private List<string> Wrap(string text, Font f, Graphics g, int maxW)
+        private List<string> WrapText(string text, Font f, Graphics g, int maxW)
         {
             var result = new List<string>();
             var words = text.Split(' '); string line = "";
@@ -192,11 +210,32 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
             ppd.ShowDialog();
         }
 
-        private void InitializeComponent()
+        // ── LỚP NGỮ CẢNH VẼ TRỢ GIÚP (ĐÓNG GÓI BIẾN CHẠY ĐỂ TRÁNH XUNG ĐỘT) ────
+        public class DrawingContext
         {
-            this.SuspendLayout();
-            this.Name = "ucHoaDon";
-            this.ResumeLayout(false);
+            public Graphics Graphics { get; set; }
+            public int StartX { get; set; }
+            public int CurrentY { get; set; }
+            public int Width { get; set; }
+
+            // Quản lý tập trung Font chữ toàn hóa đơn tại đây
+            public Font fTitle = new Font("Courier New", 9f, FontStyle.Bold);
+            public Font fBold = new Font("Courier New", 8f, FontStyle.Bold);
+            public Font fNormal = new Font("Courier New", 7.5f);
+            public Font fSmall = new Font("Courier New", 7f);
+            public Font fItalic = new Font("Courier New", 7f, FontStyle.Italic);
+
+            public DrawingContext(Graphics g, int x, int y, int w)
+            {
+                Graphics = g; StartX = x; CurrentY = y; Width = w;
+            }
+
+            public void Ctr(string t, Font f) { var sz = Graphics.MeasureString(t, f); Graphics.DrawString(t, f, Brushes.Black, StartX + (Width - sz.Width) / 2, CurrentY); CurrentY += (int)sz.Height + 1; }
+            public void Lft(string t, Font f) { Graphics.DrawString(t, f, Brushes.Black, StartX, CurrentY); CurrentY += (int)Graphics.MeasureString("A", f).Height + 2; }
+            public void Row(string left, string right, Font f) { Graphics.DrawString(left, f, Brushes.Black, StartX, CurrentY); var rs = Graphics.MeasureString(right, f); Graphics.DrawString(right, f, Brushes.Black, StartX + Width - rs.Width, CurrentY); CurrentY += (int)Graphics.MeasureString("A", f).Height + 2; }
+            public void Eq() { Lft(new string('=', 40), fNormal); }
+            public void Dsh() { Lft(new string('-', 40), fNormal); }
+            public void Gap(int h = 4) { CurrentY += h; }
         }
     }
 }

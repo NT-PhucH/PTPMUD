@@ -109,6 +109,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(947, 531);
             this.tableLayoutPanel1.TabIndex = 1;
+            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
             // panel1
             // 
@@ -212,7 +213,7 @@
             this.lblMatKhau.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.lblMatKhau.Location = new System.Drawing.Point(0, 0);
             this.lblMatKhau.Name = "lblMatKhau";
-            this.lblMatKhau.Size = new System.Drawing.Size(82, 23);
+            this.lblMatKhau.Size = new System.Drawing.Size(62, 17);
             this.lblMatKhau.TabIndex = 1;
             this.lblMatKhau.Text = "Mật khẩu";
             this.lblMatKhau.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -222,9 +223,9 @@
             // 
             this.txtMatKhau.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtMatKhau.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.txtMatKhau.Location = new System.Drawing.Point(0, 38);
+            this.txtMatKhau.Location = new System.Drawing.Point(0, 42);
             this.txtMatKhau.Name = "txtMatKhau";
-            this.txtMatKhau.Size = new System.Drawing.Size(252, 22);
+            this.txtMatKhau.Size = new System.Drawing.Size(252, 18);
             this.txtMatKhau.TabIndex = 0;
             this.txtMatKhau.UseSystemPasswordChar = true;
             this.txtMatKhau.Enter += new System.EventHandler(this.TxtMatKhau_Enter);
@@ -264,7 +265,7 @@
             this.lblEmail.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.lblEmail.Location = new System.Drawing.Point(0, 0);
             this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(124, 23);
+            this.lblEmail.Size = new System.Drawing.Size(95, 17);
             this.lblEmail.TabIndex = 1;
             this.lblEmail.Text = "Tên đăng nhập";
             this.lblEmail.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -274,9 +275,9 @@
             // 
             this.txtEmail.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtEmail.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.txtEmail.Location = new System.Drawing.Point(0, 38);
+            this.txtEmail.Location = new System.Drawing.Point(0, 42);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(287, 22);
+            this.txtEmail.Size = new System.Drawing.Size(287, 18);
             this.txtEmail.TabIndex = 0;
             this.txtEmail.Enter += new System.EventHandler(this.TxtEmail_Enter);
             this.txtEmail.Leave += new System.EventHandler(this.TxtEmail_Leave);
@@ -326,7 +327,7 @@
             // FormLogin
             // 
             this.AcceptButton = this.btnLogIn;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnClose;

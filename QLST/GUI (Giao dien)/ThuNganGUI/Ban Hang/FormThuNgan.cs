@@ -299,7 +299,7 @@ namespace QLST
             formThanhToan.StartPosition = FormStartPosition.CenterParent;
             DialogResult ketQua = formThanhToan.ShowDialog();
 
-            if (ketQua == DialogResult.Retry)
+            if (ketQua == DialogResult.Retry) // bắt được cờ lưu tạm
             {
                 LuuTamHoaDonHienTai();
             }

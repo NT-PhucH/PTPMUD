@@ -128,7 +128,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.dtpFromDate.Location = new System.Drawing.Point(3, 28);
             this.dtpFromDate.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
             this.dtpFromDate.Name = "dtpFromDate";
-            this.dtpFromDate.Size = new System.Drawing.Size(148, 27);
+            this.dtpFromDate.Size = new System.Drawing.Size(148, 23);
             this.dtpFromDate.TabIndex = 1;
             // 
             // lblToDate
@@ -148,7 +148,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.dtpToDate.Location = new System.Drawing.Point(164, 28);
             this.dtpToDate.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
             this.dtpToDate.Name = "dtpToDate";
-            this.dtpToDate.Size = new System.Drawing.Size(148, 27);
+            this.dtpToDate.Size = new System.Drawing.Size(148, 23);
             this.dtpToDate.TabIndex = 3;
             // 
             // lblPaymentMethod
@@ -173,7 +173,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.cboPaymentMethod.Location = new System.Drawing.Point(325, 28);
             this.cboPaymentMethod.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
             this.cboPaymentMethod.Name = "cboPaymentMethod";
-            this.cboPaymentMethod.Size = new System.Drawing.Size(148, 28);
+            this.cboPaymentMethod.Size = new System.Drawing.Size(148, 23);
             this.cboPaymentMethod.TabIndex = 5;
             // 
             // lblCustomer
@@ -192,7 +192,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.txtCustomer.Location = new System.Drawing.Point(486, 28);
             this.txtCustomer.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
             this.txtCustomer.Name = "txtCustomer";
-            this.txtCustomer.Size = new System.Drawing.Size(148, 27);
+            this.txtCustomer.Size = new System.Drawing.Size(148, 23);
             this.txtCustomer.TabIndex = 7;
             // 
             // lblCashier
@@ -211,7 +211,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             this.txtCashier.Location = new System.Drawing.Point(647, 28);
             this.txtCashier.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
             this.txtCashier.Name = "txtCashier";
-            this.txtCashier.Size = new System.Drawing.Size(148, 27);
+            this.txtCashier.Size = new System.Drawing.Size(148, 23);
             this.txtCashier.TabIndex = 9;
             // 
             // roundedButton1
@@ -354,7 +354,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             // 
             // ucLichSuDon
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(252)))));
             this.Controls.Add(this.tlpMain);

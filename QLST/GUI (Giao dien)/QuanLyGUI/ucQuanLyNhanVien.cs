@@ -193,5 +193,10 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
         private void lblSearch_Click(object sender, EventArgs e)
         {
         }
+
+        private void txtPass_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

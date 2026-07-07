@@ -27,11 +27,10 @@ namespace QLST.BLL__Bat_ngoai_le_.QuanLyBLL
             if (_dal.IsUsernameExist(nv.Username, isAdd ? 0 : nv.NhanVienID))
                 return (false, "Tên đăng nhập (Username) này đã có người sử dụng. Vui lòng chọn tên khác!");
 
-            if (!nv.Password.StartsWith("$2a$") && !nv.Password.StartsWith("$2b$") && !nv.Password.StartsWith("$2y$"))
-            {
-                // Băm mật khẩu gốc thành mã Hash an toàn
-                nv.Password = BCrypt.Net.BCrypt.HashPassword(nv.Password);
-            }
+
+            // Băm mật khẩu gốc thành mã Hash an toàn
+            nv.Password = BCrypt.Net.BCrypt.HashPassword(nv.Password);
+
 
             // 3. Thực thi
             bool success = isAdd ? _dal.Insert(nv) : _dal.Update(nv);
