@@ -46,52 +46,6 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
             _cfg = new Setting_DAL().Get();
             this.Load += frmThanhToan_Load;
         }
-        // ── Gán sự kiện ──────────────────────────────────────────────────────
-        private void KhoiTaoSuKien()
-        {
-            // Gợi ý KH khi gõ SĐT (realtime)
-            txtSDT.TextChanged += (s, e) => GoiYKhachHang();
-            txtSDT.KeyDown += (s, e) => { if (e.KeyCode == Keys.Escape) DatKhachLe(); };
-
-            // Tính tiền thừa khi nhập tiền khách đưa
-            txtKhachDua.TextChanged += (s, e) => TinhTienThua();
-
-            // Chọn phương thức thanh toán
-            paymentSelectorBar1.Click += (s, e) => {
-                this.BeginInvoke(new Action(() => {
-                    bool laChuyenKhoan = !paymentSelectorBar1.IsCashSelected;
-
-                    _hdData.PhuongThucTT = laChuyenKhoan ? "Chuyển Khoản" : "Tiền Mặt";
-                    _hdData.AnTienThua = laChuyenKhoan;
-
-                    panel14.Visible = !laChuyenKhoan;
-                    if (_picQR != null) _picQR.Visible = laChuyenKhoan; // Hiện/ẩn QR [11]
-
-                    if (laChuyenKhoan)
-                    {
-                        int vatPct = _cfg?.VAT ?? 0;
-                        long tongSau = (long)(_tongTienChua * (1 + vatPct / 100.0));
-
-                        _hdData.TienKhachDua = tongSau;
-                        _hdData.TienThua = 0;
-                        CapNhatHoaDon();
-
-                        // ============== GỌI VIETQR API ==============
-                        if (!string.IsNullOrEmpty(_cfg?.SoTaiKhoan))
-                        {
-                            string bankCode = LayMaNganHangVietQR(_cfg.NganHang);
-                            string qrUrl = $"https://img.vietqr.io/image/{bankCode}-{_cfg.SoTaiKhoan}-compact2.png?amount={tongSau}&addInfo={_hdData.MaHoaDon}&accountName={Uri.EscapeDataString(_cfg.TenTaiKhoan ?? "")}";
-                            _picQR.LoadAsync(qrUrl);
-                        }
-                        // ============================================
-                    }
-                    else
-                    {
-                        TinhTienThua();
-                    }
-                }));
-            };
-        }
 
         // ══════════════════════════════════════════════════════════════════════
         // SỰ KIỆN CHO THANH TIÊU ĐỀ (Đóng, Ẩn, Kéo thả)
