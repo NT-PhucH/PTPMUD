@@ -71,7 +71,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
 
             foreach (var nv in list)
             {
-                string roleText = nv.Role == 1 ? "Admin" : nv.Role == 2 ? "Thu ngân" : nv.Role == 3 ? "Kho" : "Bảo vệ";
+                string roleText = nv.Role == 1 ? "Quản Lý" : nv.Role == 2 ? "Thu ngân" : "Bảo vệ";
 
                 int idx = dgvNV.Rows.Add(nv.MaNV, nv.TenNV, nv.Username, roleText, nv.CaLamViec);
                 dgvNV.Rows[idx].Tag = nv;
@@ -195,6 +195,11 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
         }
 
         private void txtPass_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cboRole_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

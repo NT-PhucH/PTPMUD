@@ -167,14 +167,13 @@
             // 
             this.cboRole.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboRole.Items.AddRange(new object[] {
-            "1 - Admin",
-            "2 - Thu ngân",
-            "3 - Kho",
-            "4 - Bảo vệ"});
+            "1 - Quản Lý",
+            "2 - Thu ngân",});
             this.cboRole.Location = new System.Drawing.Point(15, 305);
             this.cboRole.Name = "cboRole";
             this.cboRole.Size = new System.Drawing.Size(310, 25);
             this.cboRole.TabIndex = 11;
+            this.cboRole.SelectedIndexChanged += new System.EventHandler(this.cboRole_SelectedIndexChanged);
             // 
             // lblSDT
             // 
