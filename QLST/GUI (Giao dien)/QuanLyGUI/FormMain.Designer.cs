@@ -32,26 +32,31 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblHeader = new System.Windows.Forms.Label();
             this.panelMenu = new System.Windows.Forms.Panel();
-            this.btnQLSP = new System.Windows.Forms.Button();
-            this.btnLSHD = new System.Windows.Forms.Button();
-            this.btnQLNCC = new System.Windows.Forms.Button();
             this.btnSettings = new System.Windows.Forms.Button();
             this.btnThongKe = new System.Windows.Forms.Button();
+            this.btnLSHD = new System.Windows.Forms.Button();
             this.btnTichDiem = new System.Windows.Forms.Button();
             this.btnUser = new System.Windows.Forms.Button();
+            this.btnQLNCC = new System.Windows.Forms.Button();
             this.panelKhoSubMenu = new System.Windows.Forms.Panel();
             this.btnCanhBao = new System.Windows.Forms.Button();
             this.btnLichSu = new System.Windows.Forms.Button();
             this.btnXuatKho = new System.Windows.Forms.Button();
             this.btnNhapHang = new System.Windows.Forms.Button();
             this.btnKho = new System.Windows.Forms.Button();
+            this.btnQLSP = new System.Windows.Forms.Button();
             this.btnHome = new System.Windows.Forms.Button();
             this.panelLogo = new System.Windows.Forms.Panel();
+            this.picAvatar = new System.Windows.Forms.PictureBox();
             this.btnLogOut = new System.Windows.Forms.Button();
             this.panelContent = new System.Windows.Forms.Panel();
+            this.lblDisplayName = new System.Windows.Forms.Label();
+            this.lblUsername = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panelMenu.SuspendLayout();
             this.panelKhoSubMenu.SuspendLayout();
+            this.panelLogo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picAvatar)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -62,7 +67,7 @@
             this.panel1.Location = new System.Drawing.Point(235, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(882, 80);
+            this.panel1.Size = new System.Drawing.Size(882, 100);
             this.panel1.TabIndex = 1;
             // 
             // lblHeader
@@ -70,12 +75,11 @@
             this.lblHeader.AutoSize = true;
             this.lblHeader.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblHeader.ForeColor = System.Drawing.Color.White;
-            this.lblHeader.Location = new System.Drawing.Point(17, 18);
+            this.lblHeader.Location = new System.Drawing.Point(22, 29);
             this.lblHeader.Name = "lblHeader";
             this.lblHeader.Size = new System.Drawing.Size(113, 45);
             this.lblHeader.TabIndex = 0;
             this.lblHeader.Text = "label1";
-            this.lblHeader.Click += new System.EventHandler(this.label1_Click);
             // 
             // panelMenu
             // 
@@ -99,69 +103,6 @@
             this.panelMenu.Size = new System.Drawing.Size(235, 913);
             this.panelMenu.TabIndex = 2;
             // 
-            // btnQLSP
-            // 
-            this.btnQLSP.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
-            this.btnQLSP.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnQLSP.FlatAppearance.BorderSize = 0;
-            this.btnQLSP.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnQLSP.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnQLSP.ForeColor = System.Drawing.Color.Gainsboro;
-            this.btnQLSP.Image = global::QLST.Properties.Resources.shopping;
-            this.btnQLSP.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnQLSP.Location = new System.Drawing.Point(0, 140);
-            this.btnQLSP.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnQLSP.Name = "btnQLSP";
-            this.btnQLSP.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.btnQLSP.Size = new System.Drawing.Size(235, 60);
-            this.btnQLSP.TabIndex = 28;
-            this.btnQLSP.Text = "        Q.Lý Sản Phẩm";
-            this.btnQLSP.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnQLSP.UseVisualStyleBackColor = false;
-            this.btnQLSP.Click += new System.EventHandler(this.MenuButton_Click);
-            // 
-            // btnLSHD
-            // 
-            this.btnLSHD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
-            this.btnLSHD.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnLSHD.FlatAppearance.BorderSize = 0;
-            this.btnLSHD.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLSHD.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLSHD.ForeColor = System.Drawing.Color.Gainsboro;
-            this.btnLSHD.Image = ((System.Drawing.Image)(resources.GetObject("btnLSHD.Image")));
-            this.btnLSHD.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLSHD.Location = new System.Drawing.Point(0, 596);
-            this.btnLSHD.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnLSHD.Name = "btnLSHD";
-            this.btnLSHD.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.btnLSHD.Size = new System.Drawing.Size(235, 60);
-            this.btnLSHD.TabIndex = 28;
-            this.btnLSHD.Text = "        L.Sử đơn hàng";
-            this.btnLSHD.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLSHD.UseVisualStyleBackColor = false;
-            this.btnLSHD.Click += new System.EventHandler(this.MenuButton_Click);
-            // 
-            // btnQLNCC
-            // 
-            this.btnQLNCC.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
-            this.btnQLNCC.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnQLNCC.FlatAppearance.BorderSize = 0;
-            this.btnQLNCC.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnQLNCC.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnQLNCC.ForeColor = System.Drawing.Color.Gainsboro;
-            this.btnQLNCC.Image = global::QLST.Properties.Resources.supplier;
-            this.btnQLNCC.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnQLNCC.Location = new System.Drawing.Point(0, 416);
-            this.btnQLNCC.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnQLNCC.Name = "btnQLNCC";
-            this.btnQLNCC.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.btnQLNCC.Size = new System.Drawing.Size(235, 60);
-            this.btnQLNCC.TabIndex = 27;
-            this.btnQLNCC.Text = "        Q.Lý NCC";
-            this.btnQLNCC.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnQLNCC.UseVisualStyleBackColor = false;
-            this.btnQLNCC.Click += new System.EventHandler(this.MenuButton_Click);
-            // 
             // btnSettings
             // 
             this.btnSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
@@ -172,7 +113,7 @@
             this.btnSettings.ForeColor = System.Drawing.Color.Gainsboro;
             this.btnSettings.Image = global::QLST.Properties.Resources.settings;
             this.btnSettings.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSettings.Location = new System.Drawing.Point(0, 716);
+            this.btnSettings.Location = new System.Drawing.Point(0, 736);
             this.btnSettings.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
@@ -193,7 +134,7 @@
             this.btnThongKe.ForeColor = System.Drawing.Color.Gainsboro;
             this.btnThongKe.Image = global::QLST.Properties.Resources.chat_arrow_grow;
             this.btnThongKe.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnThongKe.Location = new System.Drawing.Point(0, 656);
+            this.btnThongKe.Location = new System.Drawing.Point(0, 676);
             this.btnThongKe.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnThongKe.Name = "btnThongKe";
             this.btnThongKe.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
@@ -203,6 +144,27 @@
             this.btnThongKe.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnThongKe.UseVisualStyleBackColor = false;
             this.btnThongKe.Click += new System.EventHandler(this.MenuButton_Click);
+            // 
+            // btnLSHD
+            // 
+            this.btnLSHD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
+            this.btnLSHD.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnLSHD.FlatAppearance.BorderSize = 0;
+            this.btnLSHD.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLSHD.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLSHD.ForeColor = System.Drawing.Color.Gainsboro;
+            this.btnLSHD.Image = ((System.Drawing.Image)(resources.GetObject("btnLSHD.Image")));
+            this.btnLSHD.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLSHD.Location = new System.Drawing.Point(0, 616);
+            this.btnLSHD.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnLSHD.Name = "btnLSHD";
+            this.btnLSHD.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
+            this.btnLSHD.Size = new System.Drawing.Size(235, 60);
+            this.btnLSHD.TabIndex = 28;
+            this.btnLSHD.Text = "        L.Sử đơn hàng";
+            this.btnLSHD.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLSHD.UseVisualStyleBackColor = false;
+            this.btnLSHD.Click += new System.EventHandler(this.MenuButton_Click);
             // 
             // btnTichDiem
             // 
@@ -214,7 +176,7 @@
             this.btnTichDiem.ForeColor = System.Drawing.Color.Gainsboro;
             this.btnTichDiem.Image = ((System.Drawing.Image)(resources.GetObject("btnTichDiem.Image")));
             this.btnTichDiem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnTichDiem.Location = new System.Drawing.Point(0, 536);
+            this.btnTichDiem.Location = new System.Drawing.Point(0, 556);
             this.btnTichDiem.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnTichDiem.Name = "btnTichDiem";
             this.btnTichDiem.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
@@ -235,7 +197,7 @@
             this.btnUser.ForeColor = System.Drawing.Color.Gainsboro;
             this.btnUser.Image = global::QLST.Properties.Resources.users;
             this.btnUser.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnUser.Location = new System.Drawing.Point(0, 476);
+            this.btnUser.Location = new System.Drawing.Point(0, 496);
             this.btnUser.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnUser.Name = "btnUser";
             this.btnUser.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
@@ -246,6 +208,27 @@
             this.btnUser.UseVisualStyleBackColor = false;
             this.btnUser.Click += new System.EventHandler(this.MenuButton_Click);
             // 
+            // btnQLNCC
+            // 
+            this.btnQLNCC.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
+            this.btnQLNCC.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnQLNCC.FlatAppearance.BorderSize = 0;
+            this.btnQLNCC.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnQLNCC.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnQLNCC.ForeColor = System.Drawing.Color.Gainsboro;
+            this.btnQLNCC.Image = global::QLST.Properties.Resources.supplier;
+            this.btnQLNCC.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnQLNCC.Location = new System.Drawing.Point(0, 436);
+            this.btnQLNCC.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnQLNCC.Name = "btnQLNCC";
+            this.btnQLNCC.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
+            this.btnQLNCC.Size = new System.Drawing.Size(235, 60);
+            this.btnQLNCC.TabIndex = 27;
+            this.btnQLNCC.Text = "        Q.Lý NCC";
+            this.btnQLNCC.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnQLNCC.UseVisualStyleBackColor = false;
+            this.btnQLNCC.Click += new System.EventHandler(this.MenuButton_Click);
+            // 
             // panelKhoSubMenu
             // 
             this.panelKhoSubMenu.AutoSize = true;
@@ -254,7 +237,7 @@
             this.panelKhoSubMenu.Controls.Add(this.btnXuatKho);
             this.panelKhoSubMenu.Controls.Add(this.btnNhapHang);
             this.panelKhoSubMenu.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelKhoSubMenu.Location = new System.Drawing.Point(0, 260);
+            this.panelKhoSubMenu.Location = new System.Drawing.Point(0, 280);
             this.panelKhoSubMenu.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panelKhoSubMenu.Name = "panelKhoSubMenu";
             this.panelKhoSubMenu.Size = new System.Drawing.Size(235, 156);
@@ -344,7 +327,7 @@
             this.btnKho.ForeColor = System.Drawing.Color.Gainsboro;
             this.btnKho.Image = global::QLST.Properties.Resources.boxes;
             this.btnKho.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnKho.Location = new System.Drawing.Point(0, 200);
+            this.btnKho.Location = new System.Drawing.Point(0, 220);
             this.btnKho.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnKho.Name = "btnKho";
             this.btnKho.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
@@ -356,6 +339,27 @@
             this.btnKho.Click += new System.EventHandler(this.MenuButton_Click);
             this.btnKho.Paint += new System.Windows.Forms.PaintEventHandler(this.btnKho_Paint);
             // 
+            // btnQLSP
+            // 
+            this.btnQLSP.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
+            this.btnQLSP.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnQLSP.FlatAppearance.BorderSize = 0;
+            this.btnQLSP.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnQLSP.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnQLSP.ForeColor = System.Drawing.Color.Gainsboro;
+            this.btnQLSP.Image = global::QLST.Properties.Resources.shopping;
+            this.btnQLSP.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnQLSP.Location = new System.Drawing.Point(0, 160);
+            this.btnQLSP.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnQLSP.Name = "btnQLSP";
+            this.btnQLSP.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
+            this.btnQLSP.Size = new System.Drawing.Size(235, 60);
+            this.btnQLSP.TabIndex = 28;
+            this.btnQLSP.Text = "        Q.Lý Sản Phẩm";
+            this.btnQLSP.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnQLSP.UseVisualStyleBackColor = false;
+            this.btnQLSP.Click += new System.EventHandler(this.MenuButton_Click);
+            // 
             // btnHome
             // 
             this.btnHome.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
@@ -366,7 +370,7 @@
             this.btnHome.ForeColor = System.Drawing.Color.Gainsboro;
             this.btnHome.Image = global::QLST.Properties.Resources.home2;
             this.btnHome.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnHome.Location = new System.Drawing.Point(0, 80);
+            this.btnHome.Location = new System.Drawing.Point(0, 100);
             this.btnHome.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnHome.Name = "btnHome";
             this.btnHome.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
@@ -380,12 +384,27 @@
             // panelLogo
             // 
             this.panelLogo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(58)))));
+            this.panelLogo.Controls.Add(this.lblUsername);
+            this.panelLogo.Controls.Add(this.lblDisplayName);
+            this.panelLogo.Controls.Add(this.picAvatar);
             this.panelLogo.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelLogo.Location = new System.Drawing.Point(0, 0);
             this.panelLogo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panelLogo.Name = "panelLogo";
-            this.panelLogo.Size = new System.Drawing.Size(235, 80);
+            this.panelLogo.Size = new System.Drawing.Size(235, 100);
             this.panelLogo.TabIndex = 19;
+            // 
+            // picAvatar
+            // 
+            this.picAvatar.BackColor = System.Drawing.Color.Transparent;
+            this.picAvatar.ErrorImage = global::QLST.Properties.Resources.crisis1;
+            this.picAvatar.Image = global::QLST.Properties.Resources.userlogo;
+            this.picAvatar.Location = new System.Drawing.Point(12, 29);
+            this.picAvatar.Name = "picAvatar";
+            this.picAvatar.Size = new System.Drawing.Size(50, 50);
+            this.picAvatar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picAvatar.TabIndex = 0;
+            this.picAvatar.TabStop = false;
             // 
             // btnLogOut
             // 
@@ -411,11 +430,33 @@
             // panelContent
             // 
             this.panelContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelContent.Location = new System.Drawing.Point(235, 80);
+            this.panelContent.Location = new System.Drawing.Point(235, 100);
             this.panelContent.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panelContent.Name = "panelContent";
-            this.panelContent.Size = new System.Drawing.Size(882, 833);
+            this.panelContent.Size = new System.Drawing.Size(882, 813);
             this.panelContent.TabIndex = 3;
+            // 
+            // lblDisplayName
+            // 
+            this.lblDisplayName.AutoSize = true;
+            this.lblDisplayName.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDisplayName.ForeColor = System.Drawing.Color.White;
+            this.lblDisplayName.Location = new System.Drawing.Point(68, 29);
+            this.lblDisplayName.Name = "lblDisplayName";
+            this.lblDisplayName.Size = new System.Drawing.Size(121, 23);
+            this.lblDisplayName.TabIndex = 1;
+            this.lblDisplayName.Text = "Display Name";
+            // 
+            // lblUsername
+            // 
+            this.lblUsername.AutoSize = true;
+            this.lblUsername.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUsername.ForeColor = System.Drawing.Color.Gainsboro;
+            this.lblUsername.Location = new System.Drawing.Point(69, 62);
+            this.lblUsername.Name = "lblUsername";
+            this.lblUsername.Size = new System.Drawing.Size(65, 17);
+            this.lblUsername.TabIndex = 2;
+            this.lblUsername.Text = "username";
             // 
             // FormMain
             // 
@@ -438,6 +479,9 @@
             this.panelMenu.ResumeLayout(false);
             this.panelMenu.PerformLayout();
             this.panelKhoSubMenu.ResumeLayout(false);
+            this.panelLogo.ResumeLayout(false);
+            this.panelLogo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picAvatar)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -463,5 +507,8 @@
         private System.Windows.Forms.Button btnQLNCC;
         private System.Windows.Forms.Button btnQLSP;
         private System.Windows.Forms.Label lblHeader;
+        private System.Windows.Forms.PictureBox picAvatar;
+        private System.Windows.Forms.Label lblUsername;
+        private System.Windows.Forms.Label lblDisplayName;
     }
 }

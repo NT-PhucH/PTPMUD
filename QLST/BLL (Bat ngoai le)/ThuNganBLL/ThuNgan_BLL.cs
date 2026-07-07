@@ -34,7 +34,7 @@ namespace QLST.BLL__Bat_ngoai_le_
                 list.Insert(0, new LoaiSanPham_DTO
                 {
                     LoaiSanPhamID = 0,
-                    TenLoai = "--- Tất cả sản phẩm ---",
+                    TenLoai = "Tất cả sản phẩm",
                     TrangThai = true
                 });
 

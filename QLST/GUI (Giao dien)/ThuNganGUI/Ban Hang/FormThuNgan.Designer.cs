@@ -30,10 +30,13 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormThuNgan));
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.cboLoaiSanPham = new System.Windows.Forms.ComboBox();
+            this.pnlUserInfo = new System.Windows.Forms.Panel();
+            this.lblDisplayName = new System.Windows.Forms.Label();
+            this.lblUsername = new System.Windows.Forms.Label();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.cboLoaiSanPham = new System.Windows.Forms.ComboBox();
             this.txtTimKiem = new System.Windows.Forms.TextBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -58,10 +61,11 @@
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnThanhToan = new System.Windows.Forms.Button();
-            this.chuyenTrang1 = new QLST.GUI__Giao_dien_.Thu_Ngan.ChuyenTrang();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.panel1.SuspendLayout();
+            this.chuyenTrang1 = new QLST.GUI__Giao_dien_.Thu_Ngan.ChuyenTrang();
+            this.pnlUserInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -76,12 +80,55 @@
             this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
+            // pnlUserInfo
+            // 
+            this.pnlUserInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlUserInfo.Controls.Add(this.lblDisplayName);
+            this.pnlUserInfo.Controls.Add(this.lblUsername);
+            this.pnlUserInfo.Controls.Add(this.pictureBox4);
+            this.pnlUserInfo.Location = new System.Drawing.Point(660, 0);
+            this.pnlUserInfo.Name = "pnlUserInfo";
+            this.pnlUserInfo.Size = new System.Drawing.Size(210, 56);
+            this.pnlUserInfo.TabIndex = 7;
+            // 
+            // lblDisplayName
+            // 
+            this.lblDisplayName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDisplayName.Location = new System.Drawing.Point(0, 10);
+            this.lblDisplayName.Name = "lblDisplayName";
+            this.lblDisplayName.Size = new System.Drawing.Size(165, 20);
+            this.lblDisplayName.TabIndex = 0;
+            this.lblDisplayName.Text = "Display Name";
+            this.lblDisplayName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblUsername
+            // 
+            this.lblUsername.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUsername.ForeColor = System.Drawing.Color.DimGray;
+            this.lblUsername.Location = new System.Drawing.Point(0, 30);
+            this.lblUsername.Name = "lblUsername";
+            this.lblUsername.Size = new System.Drawing.Size(165, 17);
+            this.lblUsername.TabIndex = 1;
+            this.lblUsername.Text = "@username";
+            this.lblUsername.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Image = global::QLST.Properties.Resources.user;
+            this.pictureBox4.Location = new System.Drawing.Point(165, 12);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(32, 32);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox4.TabIndex = 5;
+            this.pictureBox4.TabStop = false;
+            this.pictureBox4.Click += new System.EventHandler(this.MenuDangXuat_Click);
+            // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Controls.Add(this.cboLoaiSanPham);
-            this.panel1.Controls.Add(this.pictureBox4);
+            this.panel1.Controls.Add(this.pnlUserInfo);
             this.panel1.Controls.Add(this.pictureBox3);
+            this.panel1.Controls.Add(this.cboLoaiSanPham);
             this.panel1.Controls.Add(this.txtTimKiem);
             this.panel1.Controls.Add(this.pictureBox2);
             this.panel1.Controls.Add(this.pictureBox1);
@@ -91,32 +138,11 @@
             this.panel1.Size = new System.Drawing.Size(876, 56);
             this.panel1.TabIndex = 0;
             // 
-            // cboLoaiSanPham
-            // 
-            this.cboLoaiSanPham.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboLoaiSanPham.FormattingEnabled = true;
-            this.cboLoaiSanPham.Location = new System.Drawing.Point(660, 24);
-            this.cboLoaiSanPham.Name = "cboLoaiSanPham";
-            this.cboLoaiSanPham.Size = new System.Drawing.Size(210, 24);
-            this.cboLoaiSanPham.TabIndex = 6;
-            // 
-            // pictureBox4
-            // 
-            this.pictureBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox4.Image = global::QLST.Properties.Resources.user;
-            this.pictureBox4.Location = new System.Drawing.Point(764, 10);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(32, 32);
-            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox4.TabIndex = 5;
-            this.pictureBox4.TabStop = false;
-            this.pictureBox4.Click += new System.EventHandler(this.MenuDangXuat_Click);
-            // 
             // pictureBox3
             // 
             this.pictureBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox3.Image = global::QLST.Properties.Resources.bell;
-            this.pictureBox3.Location = new System.Drawing.Point(532, 12);
+            this.pictureBox3.Location = new System.Drawing.Point(622, 12);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(32, 32);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -124,17 +150,26 @@
             this.pictureBox3.TabStop = false;
             this.pictureBox3.Click += new System.EventHandler(this.PictureBox3_Click);
             // 
+            // cboLoaiSanPham
+            // 
+            this.cboLoaiSanPham.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboLoaiSanPham.FormattingEnabled = true;
+            this.cboLoaiSanPham.Location = new System.Drawing.Point(570, 20);
+            this.cboLoaiSanPham.Name = "cboLoaiSanPham";
+            this.cboLoaiSanPham.Size = new System.Drawing.Size(190, 24);
+            this.cboLoaiSanPham.TabIndex = 6;
+            // 
             // txtTimKiem
             // 
-            this.txtTimKiem.Location = new System.Drawing.Point(243, 24);
+            this.txtTimKiem.Location = new System.Drawing.Point(150, 20);
             this.txtTimKiem.Name = "txtTimKiem";
-            this.txtTimKiem.Size = new System.Drawing.Size(405, 22);
+            this.txtTimKiem.Size = new System.Drawing.Size(400, 22);
             this.txtTimKiem.TabIndex = 2;
             // 
             // pictureBox2
             // 
             this.pictureBox2.Image = global::QLST.Properties.Resources.loupe;
-            this.pictureBox2.Location = new System.Drawing.Point(173, 12);
+            this.pictureBox2.Location = new System.Drawing.Point(90, 12);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(32, 32);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -144,7 +179,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::QLST.Properties.Resources.shopping_cart__1_;
-            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(20, 12);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(32, 32);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -374,7 +409,6 @@
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel5.Size = new System.Drawing.Size(341, 500);
             this.tableLayoutPanel5.TabIndex = 3;
             // 
@@ -414,6 +448,14 @@
             this.btnThanhToan.UseVisualStyleBackColor = true;
             this.btnThanhToan.Click += new System.EventHandler(this.btnThanhToan_Click);
             // 
+            // flowLayoutPanel2
+            // 
+            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(335, 364);
+            this.flowLayoutPanel2.TabIndex = 2;
+            // 
             // chuyenTrang1
             // 
             this.chuyenTrang1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -422,14 +464,6 @@
             this.chuyenTrang1.Name = "chuyenTrang1";
             this.chuyenTrang1.Size = new System.Drawing.Size(92, 44);
             this.chuyenTrang1.TabIndex = 1;
-            // 
-            // flowLayoutPanel2
-            // 
-            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 3);
-            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(335, 364);
-            this.flowLayoutPanel2.TabIndex = 2;
             // 
             // FormThuNgan
             // 
@@ -446,9 +480,11 @@
             this.Text = "Thu Ngân";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FormThuNgan_Load);
+            this.pnlUserInfo.ResumeLayout(false);
+            this.pnlUserInfo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -498,5 +534,8 @@
         private System.Windows.Forms.ToolStripMenuItem tíchĐiểmToolStripMenuItem;
         private System.Windows.Forms.TextBox txtTimKiem;
         private System.Windows.Forms.ComboBox cboLoaiSanPham;
+        private System.Windows.Forms.Panel pnlUserInfo;
+        private System.Windows.Forms.Label lblDisplayName;
+        private System.Windows.Forms.Label lblUsername;
     }
 }

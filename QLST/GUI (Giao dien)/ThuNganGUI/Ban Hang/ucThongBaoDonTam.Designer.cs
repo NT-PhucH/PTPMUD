@@ -57,6 +57,7 @@
             this.Name = "ucThongBaoDonTam";
             this.Size = new System.Drawing.Size(350, 400);
             this.ResumeLayout(false);
+
         }
     }
 }

@@ -419,6 +419,9 @@
     <EmbeddedResource Include="GUI %28Giao dien%29\QuanLyGUI\ucTichDiem.resx">
       <DependentUpon>ucTichDiem.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI %28Giao dien%29\ThuNganGUI\Ban Hang\ucThongBaoDonTam.resx">
+      <DependentUpon>ucThongBaoDonTam.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI %28Giao dien%29\ThuNganGUI\Hoa Don\frmThanhToan.resx">
       <DependentUpon>frmThanhToan.cs</DependentUpon>
     </EmbeddedResource>
@@ -549,6 +552,7 @@
     <Folder Include="Resources\Anh_SP\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\userlogo.png" />
     <None Include="Resources\arrow_up.png" />
     <None Include="Resources\arrow_down.png" />
     <Content Include="Resources\hide.png" />

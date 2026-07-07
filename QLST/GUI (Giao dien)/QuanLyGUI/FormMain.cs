@@ -49,15 +49,18 @@ namespace QLST
 
         private void FormMain_Load(object sender, EventArgs e)
         {
+
             // Khởi tạo sẵn các UserControl ngay khi load Form
             _ucHome = new ucHome { Dock = DockStyle.Fill };
-            _ucUser = new ucQuanLyNhanVien { Dock = DockStyle.Fill };
 
             // Tự động kích hoạt tab Home đầu tiên
             MenuButton_Click(btnHome, e);
 
-            // (Tùy chọn) Bạn có thể dùng biến _nhanVienHienTai để hiển thị tên lên giao diện ở đây
-            // Ví dụ: lblTenNhanVien.Text = "Xin chào: " + _nhanVienHienTai.TenNV;
+            if (_nhanVienHienTai != null)
+            {
+                lblDisplayName.Text = _nhanVienHienTai.TenNV; 
+                lblUsername.Text = "@" + _nhanVienHienTai.Username; 
+            }
         }
 
         // 2. Các hàm bổ trợ (Helper Methods)
@@ -259,11 +262,6 @@ namespace QLST
                 // Vẽ mũi tên lên mặt nút
                 e.Graphics.DrawImage(arrow, x, y, arrow.Width, arrow.Height);
             }
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
         }
 
         // Xóa bỏ các hàm Paint trống nếu không dùng để code gọn gàng hơn

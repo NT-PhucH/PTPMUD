@@ -19,6 +19,7 @@ namespace QLST
     {
         private readonly ThuNgan_BLL _thuNganBLL = new ThuNgan_BLL();
         private readonly Setting_BLL _settingBLL = new Setting_BLL();
+        private QLNV_DTO _nhanVienDangNhap;
 
         #region 1. HẰNG SỐ & BIẾN TOÀN CỤC
 
@@ -49,11 +50,13 @@ namespace QLST
 
         #region 2. KHỞI TẠO FORM & SỰ KIỆN HỆ THỐNG
 
-        public FormThuNgan()
+        public FormThuNgan(QLNV_DTO nhanVien = null)
         {
             InitializeComponent();
+            this._nhanVienDangNhap = nhanVien;
             RegisterEvents();
         }
+
 
         private void RegisterEvents()
         {
@@ -88,6 +91,10 @@ namespace QLST
             LoadDuLieuBanDau();
             KhoiTaoGiaoDienThongBao();
             KhoiTaoAutoComplete();
+            if (_nhanVienDangNhap != null)
+            {
+                CapNhatThongTinNhanVien(_nhanVienDangNhap.TenNV, _nhanVienDangNhap.Username);
+            }
 
             đăngXuấtToolStripMenuItem.Click -= MenuDangXuat_Click;
             đăngXuấtToolStripMenuItem.Click += MenuDangXuat_Click;
@@ -99,6 +106,12 @@ namespace QLST
             {
                 HienThiDanhSachSanPham();
             }
+        }
+
+        public void CapNhatThongTinNhanVien(string displayName, string username)
+        {
+            lblDisplayName.Text = displayName;
+            lblUsername.Text = $"@{username}";
         }
 
         private void LoadDanhSachLoaiSanPham()

@@ -221,7 +221,7 @@ namespace QLST
                 }
                 else
                 {
-                    FormThuNgan thuNganForm = new FormThuNgan();
+                    FormThuNgan thuNganForm = new FormThuNgan(loggedInUser);
                     thuNganForm.ShowDialog();
                 }
 
