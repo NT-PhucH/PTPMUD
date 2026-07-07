@@ -55,6 +55,7 @@
             // 
             // panelTitleBar
             // 
+            this.panelTitleBar.BackColor = System.Drawing.Color.Transparent;
             this.panelTitleBar.Controls.Add(this.btnMinimize);
             this.panelTitleBar.Controls.Add(this.btnClose);
             this.panelTitleBar.Dock = System.Windows.Forms.DockStyle.Top;
@@ -98,6 +99,7 @@
             // 
             // tableLayoutPanel1
             // 
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
@@ -143,7 +145,7 @@
             // 
             // btnLogIn
             // 
-            this.btnLogIn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.btnLogIn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(107)))), ((int)(((byte)(72)))));
             this.btnLogIn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnLogIn.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnLogIn.FlatAppearance.BorderSize = 0;
@@ -209,11 +211,11 @@
             // lblMatKhau
             // 
             this.lblMatKhau.AutoSize = true;
-            this.lblMatKhau.BackColor = System.Drawing.Color.White;
+            this.lblMatKhau.BackColor = System.Drawing.Color.Transparent;
             this.lblMatKhau.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.lblMatKhau.Location = new System.Drawing.Point(0, 0);
             this.lblMatKhau.Name = "lblMatKhau";
-            this.lblMatKhau.Size = new System.Drawing.Size(62, 17);
+            this.lblMatKhau.Size = new System.Drawing.Size(82, 23);
             this.lblMatKhau.TabIndex = 1;
             this.lblMatKhau.Text = "Mật khẩu";
             this.lblMatKhau.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -221,11 +223,12 @@
             // 
             // txtMatKhau
             // 
+            this.txtMatKhau.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(235)))), ((int)(((byte)(228)))));
             this.txtMatKhau.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtMatKhau.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.txtMatKhau.Location = new System.Drawing.Point(0, 42);
+            this.txtMatKhau.Location = new System.Drawing.Point(0, 38);
             this.txtMatKhau.Name = "txtMatKhau";
-            this.txtMatKhau.Size = new System.Drawing.Size(252, 18);
+            this.txtMatKhau.Size = new System.Drawing.Size(252, 22);
             this.txtMatKhau.TabIndex = 0;
             this.txtMatKhau.UseSystemPasswordChar = true;
             this.txtMatKhau.Enter += new System.EventHandler(this.TxtMatKhau_Enter);
@@ -261,11 +264,11 @@
             // lblEmail
             // 
             this.lblEmail.AutoSize = true;
-            this.lblEmail.BackColor = System.Drawing.Color.White;
+            this.lblEmail.BackColor = System.Drawing.Color.Transparent;
             this.lblEmail.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.lblEmail.Location = new System.Drawing.Point(0, 0);
             this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(95, 17);
+            this.lblEmail.Size = new System.Drawing.Size(124, 23);
             this.lblEmail.TabIndex = 1;
             this.lblEmail.Text = "Tên đăng nhập";
             this.lblEmail.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -273,11 +276,12 @@
             // 
             // txtEmail
             // 
+            this.txtEmail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(235)))), ((int)(((byte)(228)))));
             this.txtEmail.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtEmail.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.txtEmail.Location = new System.Drawing.Point(0, 42);
+            this.txtEmail.Location = new System.Drawing.Point(0, 38);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(287, 18);
+            this.txtEmail.Size = new System.Drawing.Size(287, 22);
             this.txtEmail.TabIndex = 0;
             this.txtEmail.Enter += new System.EventHandler(this.TxtEmail_Enter);
             this.txtEmail.Leave += new System.EventHandler(this.TxtEmail_Leave);
@@ -296,6 +300,7 @@
             // 
             this.lblWelcomeBack.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblWelcomeBack.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblWelcomeBack.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(107)))), ((int)(((byte)(72)))));
             this.lblWelcomeBack.Location = new System.Drawing.Point(0, 50);
             this.lblWelcomeBack.Name = "lblWelcomeBack";
             this.lblWelcomeBack.Size = new System.Drawing.Size(326, 52);
@@ -327,9 +332,11 @@
             // FormLogin
             // 
             this.AcceptButton = this.btnLogIn;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(947, 561);
             this.Controls.Add(this.tableLayoutPanel1);

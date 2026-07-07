@@ -10,7 +10,8 @@ namespace QLST
         {
             this.FlatStyle = FlatStyle.Flat;
             this.FlatAppearance.BorderSize = 0;
-            this.BackColor = Color.FromArgb(25, 25, 25);
+            // Thay đổi màu nền mặc định thành màu cam cho khớp với giao diện
+            this.BackColor = Color.FromArgb(211, 107, 72);
             this.ForeColor = Color.White;
             this.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             this.Cursor = Cursors.Hand;
@@ -20,14 +21,10 @@ namespace QLST
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-            if (this.Parent != null)
-            {
-                e.Graphics.Clear(this.Parent.BackColor);
-            }
-            else
-            {
-                e.Graphics.Clear(Color.White);
-            }
+            // XỬ LÝ LỖI GÓC ĐEN: 
+            // Thay vì dùng e.Graphics.Clear(), ta yêu cầu WinForms vẽ lại 
+            // chính xác những gì nằm dưới nền của nút (kể cả ảnh nền hay panel trong suốt)
+            ButtonRenderer.DrawParentBackground(e.Graphics, this.ClientRectangle, this);
 
             using (GraphicsPath path = new GraphicsPath())
             {
