@@ -47,11 +47,11 @@
             this.btnQLSP = new System.Windows.Forms.Button();
             this.btnHome = new System.Windows.Forms.Button();
             this.panelLogo = new System.Windows.Forms.Panel();
+            this.lblUsername = new System.Windows.Forms.Label();
+            this.lblDisplayName = new System.Windows.Forms.Label();
             this.picAvatar = new System.Windows.Forms.PictureBox();
             this.btnLogOut = new System.Windows.Forms.Button();
             this.panelContent = new System.Windows.Forms.Panel();
-            this.lblDisplayName = new System.Windows.Forms.Label();
-            this.lblUsername = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panelMenu.SuspendLayout();
             this.panelKhoSubMenu.SuspendLayout();
@@ -195,7 +195,7 @@
             this.btnUser.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUser.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnUser.ForeColor = System.Drawing.Color.Gainsboro;
-            this.btnUser.Image = global::QLST.Properties.Resources.users;
+            this.btnUser.Image = ((System.Drawing.Image)(resources.GetObject("btnUser.Image")));
             this.btnUser.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnUser.Location = new System.Drawing.Point(0, 496);
             this.btnUser.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -394,6 +394,28 @@
             this.panelLogo.Size = new System.Drawing.Size(235, 100);
             this.panelLogo.TabIndex = 19;
             // 
+            // lblUsername
+            // 
+            this.lblUsername.AutoSize = true;
+            this.lblUsername.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUsername.ForeColor = System.Drawing.Color.Gainsboro;
+            this.lblUsername.Location = new System.Drawing.Point(69, 62);
+            this.lblUsername.Name = "lblUsername";
+            this.lblUsername.Size = new System.Drawing.Size(65, 17);
+            this.lblUsername.TabIndex = 2;
+            this.lblUsername.Text = "username";
+            // 
+            // lblDisplayName
+            // 
+            this.lblDisplayName.AutoSize = true;
+            this.lblDisplayName.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDisplayName.ForeColor = System.Drawing.Color.White;
+            this.lblDisplayName.Location = new System.Drawing.Point(68, 29);
+            this.lblDisplayName.Name = "lblDisplayName";
+            this.lblDisplayName.Size = new System.Drawing.Size(121, 23);
+            this.lblDisplayName.TabIndex = 1;
+            this.lblDisplayName.Text = "Display Name";
+            // 
             // picAvatar
             // 
             this.picAvatar.BackColor = System.Drawing.Color.Transparent;
@@ -435,28 +457,6 @@
             this.panelContent.Name = "panelContent";
             this.panelContent.Size = new System.Drawing.Size(882, 813);
             this.panelContent.TabIndex = 3;
-            // 
-            // lblDisplayName
-            // 
-            this.lblDisplayName.AutoSize = true;
-            this.lblDisplayName.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDisplayName.ForeColor = System.Drawing.Color.White;
-            this.lblDisplayName.Location = new System.Drawing.Point(68, 29);
-            this.lblDisplayName.Name = "lblDisplayName";
-            this.lblDisplayName.Size = new System.Drawing.Size(121, 23);
-            this.lblDisplayName.TabIndex = 1;
-            this.lblDisplayName.Text = "Display Name";
-            // 
-            // lblUsername
-            // 
-            this.lblUsername.AutoSize = true;
-            this.lblUsername.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUsername.ForeColor = System.Drawing.Color.Gainsboro;
-            this.lblUsername.Location = new System.Drawing.Point(69, 62);
-            this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(65, 17);
-            this.lblUsername.TabIndex = 2;
-            this.lblUsername.Text = "username";
             // 
             // FormMain
             // 
