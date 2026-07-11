@@ -110,7 +110,6 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
             UpdateStatistics();
             ClearOldImages();
             RenderCards();
-
             ClearForm();
             UpdateCardMargins();
         }
@@ -375,7 +374,7 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
         private void BtnSua_Click(object sender, EventArgs e)
         {
             if (_selectedID <= 0) { MessageBox.Show("Vui lòng chọn sản phẩm!"); return; }
-            var sp = BuildDTO();
+            var sp = BuildDTO(); // map lại thông tin
             if (sp == null) return;
             sp.SanPhamID = _selectedID;
 
@@ -513,6 +512,21 @@ namespace QLST.GUI__Giao_dien_.QuanLyGUI
         }
 
         private void btnChonAnh_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void picAnh_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void flpSanPham_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void btnSua_Click_1(object sender, EventArgs e)
         {
 
         }

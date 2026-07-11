@@ -161,6 +161,7 @@
             this.flpSanPham.Padding = new System.Windows.Forms.Padding(10);
             this.flpSanPham.Size = new System.Drawing.Size(829, 660);
             this.flpSanPham.TabIndex = 2;
+            this.flpSanPham.Paint += new System.Windows.Forms.PaintEventHandler(this.flpSanPham_Paint);
             // 
             // pnlRight
             // 
@@ -213,6 +214,7 @@
             this.btnSua.TabIndex = 14;
             this.btnSua.Text = "✏ SỬA";
             this.btnSua.UseVisualStyleBackColor = false;
+            this.btnSua.Click += new System.EventHandler(this.btnSua_Click_1);
             // 
             // btnThemLoai
             // 
@@ -315,6 +317,7 @@
             this.picAnh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picAnh.TabIndex = 2;
             this.picAnh.TabStop = false;
+            this.picAnh.Click += new System.EventHandler(this.picAnh_Click);
             // 
             // pnlThongTin
             // 

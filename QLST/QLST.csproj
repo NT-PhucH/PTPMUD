@@ -553,6 +553,7 @@
     <Folder Include="Resources\Anh_SP\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="QuanLySieuThiv2.sql" />
     <Content Include="shopping-cart.ico" />
     <None Include="Resources\Icon\users.png" />
     <Content Include="Resources\Icon\user_main.png" />

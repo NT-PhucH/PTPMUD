@@ -37,8 +37,6 @@ namespace QLST.BLL__Bat_ngoai_le_
 
                 // ==========================================
                 // 4. KIỂM TRA MẬT KHẨU BẰNG BCRYPT
-                // So sánh 'password' (text thường) với 'nv.Password' (chuỗi băm từ DB)
-                // ==========================================
                 bool isPasswordValid = BCrypt.Net.BCrypt.Verify(password, nv.Password);
 
                 if (!isPasswordValid)

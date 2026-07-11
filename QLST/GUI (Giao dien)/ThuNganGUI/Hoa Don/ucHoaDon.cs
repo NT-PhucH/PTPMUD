@@ -194,12 +194,12 @@ namespace QLST.GUI__Giao_dien_.ThuNganGUI.Hoa_Don
 
         public void InHoaDon()
         {
-            var pd = new PrintDocument();
+            var pd = new PrintDocument();//thư viện có sẵn
             int chieuCaoThucTe = 0;
             using (Bitmap nhap = new Bitmap(1, 1))
             using (Graphics gNhap = Graphics.FromImage(nhap))
             {
-                chieuCaoThucTe = VeHoaDonChung(gNhap, 8, 8, 315 - 16);
+                chieuCaoThucTe = VeHoaDonChung(gNhap, 8, 8, 315 - 16);//hàm vẽ hóa đơn
             }
 
             pd.DefaultPageSettings.PaperSize = new PaperSize("K80", 315, chieuCaoThucTe + 20);
